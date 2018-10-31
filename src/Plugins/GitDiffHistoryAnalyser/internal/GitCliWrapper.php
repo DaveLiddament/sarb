@@ -97,7 +97,7 @@ class GitCliWrapper implements GitWrapper
         $addCommand = $this->getGitCommand('add .');
         $this->runCommand($addCommand, $addCommand);
 
-        $commitCommand = $this->getGitCommand("commit -m \"$message\"");
+        $commitCommand = $this->getGitCommand("-c \"user.name=Anon\" -c \"user.email=anon@example.com\" commit -m \"$message\"");
         $this->runCommand($commitCommand, $commitCommand);
     }
 }
