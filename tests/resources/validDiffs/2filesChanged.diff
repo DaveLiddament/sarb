@@ -1,0 +1,24 @@
+diff --git a/src/Baz.php b/src/Baz.php
+index d00c062..d9e7976 100644
+--- a/src/Baz.php
++++ b/src/Baz.php
+@@ -2,7 +2,6 @@
+
+ class Foo
+ {
+-
+     public function print(User $user)
+     {
+          $name = $user->getFirstName();
+diff --git a/src/User.php b/src/User.php
+index 6aa3383..dfdd0f1 100644
+--- a/src/User.php
++++ b/src/User.php
+@@ -2,7 +2,6 @@
+
+ declare(strict_types=1);
+
+-
+ namespace CodeDiff;
+
+ class User

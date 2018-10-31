@@ -1,0 +1,3 @@
+diff --git a/src/Printer.php b/src/Foo.php
+similarity index 100%
+rename from src/Printer.php

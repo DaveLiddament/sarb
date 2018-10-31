@@ -1,0 +1,15 @@
+diff --git a/src/Bar.php b/src/Baz.php
+similarity index 100%
+rename from src/Bar.php
+rename to src/Baz.php
+diff --git a/src/User.php b/src/User.php
+index 9495a30..6aa3383 100644
+--- a/src/User.php
++++ b/src/User.php
+@@ -5,7 +5,6 @@ declare(strict_types=1);
+
+ namespace CodeDiff;
+
+-
+ class User
+ {

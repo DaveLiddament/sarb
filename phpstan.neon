@@ -1,0 +1,10 @@
+parameters:
+    level: 7
+    paths:
+    - src
+    excludes_analyse:
+    - tests/resources
+    - tests/scratchpad
+includes:
+- vendor/phpstan/phpstan-webmozart-assert/extension.neon
+- vendor/phpstan/phpstan-strict-rules/rules.neon

@@ -1,0 +1,36 @@
+[
+  {
+    "severity":"error",
+    "line_from":25,
+    "line_to":25,
+    "type":"PossiblyNullReference",
+    "message":"Cannot call method getLineNumber on possibly null variable ",
+    "file_name":"src\/DiffHistoryAnalyser\/internal\/OriginalLineNumberCalculator.php",
+    "file_path":"\/vagrant\/static-analysis-baseliner\/src\/DiffHistoryAnalyser\/internal\/OriginalLineNumberCalculator.php",
+    "snippet":"                $targetNewLineNumber = $lineMutation->getNewLine()->getLineNumber();",
+    "selected_text":"$lineMutation->getNewLine()",
+    "from":782,
+    "to":809,
+    "snippet_from":743,
+    "snippet_to":827,
+    "column_from":40,
+    "column_to":67
+  },
+  {
+    "severity":"error",
+    "line_from":41,
+    "line_to":41,
+    "type":"PossiblyNullReference",
+    "message":"Cannot call method getLineNumber on possibly null variable ",
+    "file_name":"src\/DiffHistoryAnalyser\/internal\/OriginalLineNumberCalculator.php",
+    "file_path":"\/vagrant\/static-analysis-baseliner\/src\/DiffHistoryAnalyser\/internal\/OriginalLineNumberCalculator.php",
+    "snippet":"                $targetOriginalLineNumber = $lineMutation->getOriginalLine()->getLineNumber();",
+    "selected_text":"$lineMutation->getOriginalLine()",
+    "from":1404,
+    "to":1436,
+    "snippet_from":1360,
+    "snippet_to":1454,
+    "column_from":45,
+    "column_to":77
+  }
+]

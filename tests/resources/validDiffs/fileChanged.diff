@@ -1,0 +1,37 @@
+diff --git a/src/Person.php b/src/Person.php
+index 81ee914..a7005b2 100644
+--- a/src/Person.php
++++ b/src/Person.php
+@@ -15,12 +15,18 @@ class Person
+     private $name;
+
+     /**
++     * @var bool
++     */
++    private $isAdmin;
++
++    /**
+      * Person constructor.
+      * @param string $name
+      */
+-    public function __construct(string $name)
++    public function __construct(string $name, bool $isAdmin)
+     {
+         $this->name = $name;
++        $this->isAdmin = $isAdmin;
+     }
+
+     /**
+@@ -31,4 +37,12 @@ class Person
+         return $this->name;
+     }
+
++    /**
++     * @return bool
++     */
++    public function isAdmin(): bool
++    {
++        return $this->isAdmin;
++    }
++
+ }

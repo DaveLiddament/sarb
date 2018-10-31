@@ -1,0 +1,55 @@
+diff --git a/src/User.php b/src/User.php
+deleted file mode 100644
+index a86c17c..0000000
+--- a/src/User.php
++++ /dev/null
+@@ -1,49 +0,0 @@
+-<?php
+-
+-declare(strict_types=1);
+-
+-
+-namespace CodeDiff;
+-
+-
+-class User
+-{
+-
+-    /**
+-     * @var string
+-     */
+-    private $name;
+-
+-    /**
+-     * @var bool
+-     */
+-    private $isAdmin;
+-
+-    /**
+-     * User constructor.
+-     * @param string $name
+-     * @param bool $isAdmin
+-     */
+-    public function __construct(string $name, bool $isAdmin)
+-    {
+-        $this->name = $name;
+-        $this->isAdmin = $isAdmin;
+-    }
+-
+-    /**
+-     * @return string
+-     */
+-    public function getName(): string
+-    {
+-        return $this->name;
+-    }
+-
+-    /**
+-     * @return bool
+-     */
+-    public function isAdmin(): bool
+-    {
+-        return $this->isAdmin;
+-    }
+-
+-}

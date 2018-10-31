@@ -1,0 +1,4 @@
+.idea
+.vagrant
+vendor
+*.log

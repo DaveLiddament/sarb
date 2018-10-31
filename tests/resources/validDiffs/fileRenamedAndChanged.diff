@@ -1,0 +1,25 @@
+diff --git a/src/User.php b/src/Person.php
+similarity index 93%
+rename from src/User.php
+rename to src/Person.php
+index a86c17c..3d4462c 100644
+--- a/src/User.php
++++ b/src/Person.php
+@@ -6,7 +6,7 @@ declare(strict_types=1);
+ namespace CodeDiff;
+
+
+-class User
++class Person
+ {
+
+     /**
+@@ -20,7 +20,7 @@ class User
+     private $isAdmin;
+
+     /**
+-     * User constructor.
++     * Person constructor.
+      * @param string $name
+      * @param bool $isAdmin
+      */

@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+
+    docker:
+    - image: circleci/php:7.2-apache-stretch-node-browsers
+
+    steps:
+    - checkout
+
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "composer.lock" }}
+        - v1-dependencies-
+
+    - run: composer install -n --prefer-dist
+
+    - save_cache:
+        key: v1-dependencies-{{ checksum "composer.lock" }}
+        paths:
+        - vendor
+
+    - run: ./vendor/bin/phing
