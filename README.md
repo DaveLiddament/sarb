@@ -1,4 +1,4 @@
-# Static Analysis Baseliner (SARB)
+# Static Analysis Results Baseliner (SARB)
 
  * [Why SARB](#why-sarb)
  * [Requirements](#requirements)
