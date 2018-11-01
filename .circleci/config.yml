@@ -20,4 +20,4 @@ jobs:
         paths:
         - vendor
 
-    - run: ./vendor/bin/phing
+    - run: composer ci
