@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e055dfa1d7d91c0995a0fc8aea5f7a4",
+    "content-hash": "c8e633bfaa2533b94ab7ac8000962158",
     "packages": [
         {
             "name": "psr/container",
@@ -4011,16 +4011,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "2.0.15",
+            "version": "2.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "8b525a066b107b9936f338ec7c2c5618cf9a1764"
+                "reference": "f7a37d05b93f85a8310c908fddf603b4ca82f512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/8b525a066b107b9936f338ec7c2c5618cf9a1764",
-                "reference": "8b525a066b107b9936f338ec7c2c5618cf9a1764",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f7a37d05b93f85a8310c908fddf603b4ca82f512",
+                "reference": "f7a37d05b93f85a8310c908fddf603b4ca82f512",
                 "shasum": ""
             },
             "require": {
@@ -4082,7 +4082,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2018-10-19T18:04:22+00:00"
+            "time": "2018-11-02T17:09:04+00:00"
         },
         {
             "name": "webmozart/glob",
