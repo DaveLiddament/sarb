@@ -1,4 +1,4 @@
-# Static Analysis Results Baseliner (SARB)
+# Static Analysis Baseliner (SARB)
 
  * [Why SARB](#why-sarb)
  * [Requirements](#requirements)
@@ -16,6 +16,8 @@ It's unrealistic to fix all but the most critical ones before continuing develop
 SARB is used to create a baseline of these results. As work on the project
 progresses SARB can takes the latest static analysis results, removes
 those issues in the baseline and reports the issues raised since the baseline.
+SARB does this, in conjunction with git, by tracking lines of code between commits.
+Currently SARB only supports git but it is possible to [add support for other SCMs](docs/NewHistoryAnalyser.md).
 
 SARB is written in PHP, however it can be used to baseline results for any language and any static analysis tool.
 
@@ -38,11 +40,14 @@ You can either add directly to the project you wish to run analysis on:
     composer require --dev dave-liddament/sarb
 ```
 
-Or you can download as a standalone project (e.g. if you want to use it on a non PHP project):
+Or you can install SARB globally (e.g. if you want to use it on a non PHP project):
 
 ```
-    composer create-project dave-liddament/sarb --no-dev
+    composer global require dave-liddament/sarb
 ```
+
+If you install globally make sure the composer bin directory is in your path.
+
 
 ## Using SARB
 
