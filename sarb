@@ -14,7 +14,25 @@ declare(strict_types=1);
 
 use DaveLiddament\StaticAnalysisBaseliner\Framework\Container\Container;
 
-require_once __DIR__ . "/vendor/autoload.php";
+
+function loadAutoloader(): void
+{
+    $autoloaderLocations = [
+        __DIR__ . '/vendor/autoload.php',
+        __DIR__ . '/../../autoload.php',
+    ];
+    
+    foreach($autoloaderLocations as $autoloaderLocation) {
+        if (file_exists($autoloaderLocation)) {
+            require($autoloaderLocation);
+	    return;
+        }
+    }
+
+    die("Can not find autoloader");
+}
+
+loadAutoloader();
 
 $container = new Container();
 $application = $container->getApplication();
