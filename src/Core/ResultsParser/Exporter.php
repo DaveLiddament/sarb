@@ -43,6 +43,7 @@ class Exporter
      * @param AnalysisResults $analysisResults
      * @param StaticAnalysisResultsParser $resultsParser
      * @param FileName $outputFile
+     *
      * @throws JsonParseException
      * @throws FileAccessException
      */

@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
