@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Unit\Core\Analyser\internal;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Analyser\internal;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Analyser\internal\BaseLineResultsComparator;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Type;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\internal\BaseLineResultsComparator;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use PHPUnit\Framework\TestCase;
 
 class BaseLineResultsComparatorTest extends TestCase

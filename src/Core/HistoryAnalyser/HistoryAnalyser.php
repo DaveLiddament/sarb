@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\PreviousLocation;
 
 /**
  * Provides mappings between the current Location (file and line number) and where it in the baseline. (If anywhere).

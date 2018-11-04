@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\internal;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\internal;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\StringUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\StringUtils;
 
 class LineTypeDetector
 {

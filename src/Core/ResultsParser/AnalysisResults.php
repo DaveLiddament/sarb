@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayUtils;
 
 /**
  * Holds all results from a run of the static analysis results.

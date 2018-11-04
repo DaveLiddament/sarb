@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Plugins\GitDiffHistoryAnalyser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryMarker;
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryMarkerFactory;
-use DaveLiddament\StaticAnalysisBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryMarker;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryMarkerFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
 
 class GitHistoryMarkerFactory implements HistoryMarkerFactory
 {

@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\internal;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\internal;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\FileMutation;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\FileMutations;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\FileMutation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\FileMutations;
 
 class FileMutationsBuilder
 {

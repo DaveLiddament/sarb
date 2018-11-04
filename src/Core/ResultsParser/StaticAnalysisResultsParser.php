@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\InvalidFileFormatException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\JsonParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\InvalidFileFormatException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ParseAtLocationException;
 
 interface StaticAnalysisResultsParser
 {

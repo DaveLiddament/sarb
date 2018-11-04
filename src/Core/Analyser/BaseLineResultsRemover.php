@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\Analyser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Analyser\internal\BaseLineResultsComparator;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\BaseLine;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryAnalyser;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResult;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\internal\BaseLineResultsComparator;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryAnalyser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResult;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
 
 class BaseLineResultsRemover
 {

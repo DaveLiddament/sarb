@@ -10,13 +10,13 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\FileImportException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\FileReader;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\InvalidFileFormatException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileImportException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileReader;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\InvalidFileFormatException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ParseAtLocationException;
 
 /**
  * Imports a AnalysisResults from a file on disk.

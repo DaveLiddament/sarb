@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Framework\Container;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
 use Webmozart\Assert\Assert;
 
 class HistoryFactoryRegistry

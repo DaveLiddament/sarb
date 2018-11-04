@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Framework\Command\internal;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
 use Exception;
 

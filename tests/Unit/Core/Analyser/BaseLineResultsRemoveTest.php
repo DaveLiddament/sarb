@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Unit\Core\Analyser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Analyser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Analyser\BaseLineResultsRemover;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\BaseLine;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Type;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\LineMutation;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\NewFileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\OriginalFileName;
-use DaveLiddament\StaticAnalysisBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
-use DaveLiddament\StaticAnalysisBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
-use DaveLiddament\StaticAnalysisBaseliner\Plugins\PsalmResultsParser\PsalmJsonIdentifier;
-use DaveLiddament\StaticAnalysisBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
-use DaveLiddament\StaticAnalysisBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\BaseLineResultsRemover;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\LineMutation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\NewFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\OriginalFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmResultsParser\PsalmJsonIdentifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
 use PHPUnit\Framework\TestCase;
 
 class BaseLineResultsRemoveTest extends TestCase

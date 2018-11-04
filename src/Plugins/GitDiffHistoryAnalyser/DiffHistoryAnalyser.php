@@ -10,15 +10,15 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Plugins\GitDiffHistoryAnalyser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\PreviousLocation;
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryAnalyser;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\FileMutations;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\NewFileName;
-use DaveLiddament\StaticAnalysisBaseliner\Plugins\GitDiffHistoryAnalyser\internal\OriginalLineNumberCalculator;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryAnalyser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\FileMutations;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\NewFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\OriginalLineNumberCalculator;
 
 class DiffHistoryAnalyser implements HistoryAnalyser
 {

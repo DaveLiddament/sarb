@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\Common;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryMarker;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryMarker;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
 
 class BaseLine
 {

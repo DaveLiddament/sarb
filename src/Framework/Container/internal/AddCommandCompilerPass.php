@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Framework\Container\internal;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal;
 
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Container\Container;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\Container;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

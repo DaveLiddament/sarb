@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Unit\Plugins\PsalmResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\PsalmResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Type;
-use DaveLiddament\StaticAnalysisBaseliner\Plugins\PsalmResultsParser\PsalmJsonResultsParser;
-use DaveLiddament\StaticAnalysisBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmResultsParser\PsalmJsonResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PsalmResultsParserTest extends TestCase

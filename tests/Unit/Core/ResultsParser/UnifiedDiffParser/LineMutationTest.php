@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Unit\Core\ResultsParser\UnifiedDiffParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\ResultsParser\UnifiedDiffParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\LineMutation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\LineMutation;
 use PHPUnit\Framework\TestCase;
 
 class LineMutationTest extends TestCase

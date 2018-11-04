@@ -10,18 +10,18 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Framework\Command;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Analyser\BaseLineResultsRemover;
-use DaveLiddament\StaticAnalysisBaseliner\Core\BaseLiner\BaseLineImporter;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryFactory;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\Exporter;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\Importer;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Command\internal\AbstractCommand;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Container\HistoryFactoryRegistry;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\BaseLineResultsRemover;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\BaseLiner\BaseLineImporter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Exporter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Importer;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\HistoryFactoryRegistry;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

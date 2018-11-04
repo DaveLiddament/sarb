@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\File;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\File;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\SarbException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\SarbException;
 
 /**
  * Used when one of the files being imported is invalid.

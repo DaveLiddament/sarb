@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\Utils;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\SarbException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\SarbException;
 
 class JsonParseException extends SarbException
 {

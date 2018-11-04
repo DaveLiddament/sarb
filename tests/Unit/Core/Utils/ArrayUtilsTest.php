@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Unit\Core\Utils;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayUtils;
 use PHPUnit\Framework\TestCase;
 
 class ArrayUtilsTest extends TestCase

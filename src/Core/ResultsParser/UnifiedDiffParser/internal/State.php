@@ -8,7 +8,7 @@
  * For the full copyright and licence information please view the LICENSE file distributed with this source code.
  */
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\UnifiedDiffParser\internal;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\internal;
 
 interface State
 {

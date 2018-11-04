@@ -10,22 +10,22 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Plugins\PsalmResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Type;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\InvalidFileFormatException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResult;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\Identifier;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayUtils;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\JsonParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\JsonUtils;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\InvalidFileFormatException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResult;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ParseAtLocationException;
 
 class PsalmJsonResultsParser implements StaticAnalysisResultsParser
 {

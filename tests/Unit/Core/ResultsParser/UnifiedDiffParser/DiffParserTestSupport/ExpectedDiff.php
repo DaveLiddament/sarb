@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Unit\UnifiedDiffParser\DiffParserTestSupport;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\UnifiedDiffParser\DiffParserTestSupport;
 
 class ExpectedDiff
 {

@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Plugins\PsalmResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
 
 class PsalmJsonIdentifier implements Identifier
 {

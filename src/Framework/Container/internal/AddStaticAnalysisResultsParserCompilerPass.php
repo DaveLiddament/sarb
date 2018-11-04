@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Framework\Container\internal;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal;
 
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Container\Container;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\Container;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

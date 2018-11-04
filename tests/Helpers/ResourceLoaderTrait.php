@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Helpers;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers;
 
 trait ResourceLoaderTrait
 {

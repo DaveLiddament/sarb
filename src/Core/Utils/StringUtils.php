@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\Utils;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils;
 
 use Webmozart\Assert\Assert;
 

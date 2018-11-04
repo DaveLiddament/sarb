@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\File;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\File;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\JsonParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\JsonUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonUtils;
 
 class FileWriter
 {

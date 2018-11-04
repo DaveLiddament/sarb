@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\SarbException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\SarbException;
 
 /**
  * Exception for anything relating to HistoryAnalyser.

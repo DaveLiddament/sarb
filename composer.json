@@ -36,12 +36,12 @@
   "bin" : ["sarb"],
   "autoload": {
     "psr-4": {
-      "DaveLiddament\\StaticAnalysisBaseliner\\" : "src/"
+      "DaveLiddament\\StaticAnalysisResultsBaseliner\\" : "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "DaveLiddament\\StaticAnalysisBaseliner\\Tests\\" : "tests/"
+      "DaveLiddament\\StaticAnalysisResultsBaseliner\\Tests\\" : "tests/"
     }
   },
   "scripts": {

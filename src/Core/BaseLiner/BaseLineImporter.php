@@ -10,19 +10,19 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\BaseLiner;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\BaseLiner;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\BaseLine;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\FileAccessException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\FileImportException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\FileReader;
-use DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser\HistoryMarkerFactory;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayUtils;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileAccessException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileImportException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileReader;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryMarkerFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonParseException;
 use Webmozart\Assert\Assert;
 
 /**

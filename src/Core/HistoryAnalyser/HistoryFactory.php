@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\HistoryAnalyser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser;
 
 interface HistoryFactory
 {

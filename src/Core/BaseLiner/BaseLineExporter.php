@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\BaseLiner;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\BaseLiner;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\BaseLine;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\FileWriter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileWriter;
 
 /**
  * Exports a BaseLine to a file.

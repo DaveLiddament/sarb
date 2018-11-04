@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\Common;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common;
 
 /**
  * Represents type of static analysis violation.

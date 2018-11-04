@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\Type;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayParseException;
-use DaveLiddament\StaticAnalysisBaseliner\Core\Utils\ArrayUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayUtils;
 
 /**
  * Holds a single result from the static analysis results.

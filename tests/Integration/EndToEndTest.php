@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Tests\Integration;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Integration;
 
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Command\CreateBaseLineCommand;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Command\ListHistoryAnalysersCommand;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Command\ListResultsParsesCommand;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Command\RemoveBaseLineFromResultsCommand;
-use DaveLiddament\StaticAnalysisBaseliner\Framework\Container\Container;
-use DaveLiddament\StaticAnalysisBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitCliWrapper;
-use DaveLiddament\StaticAnalysisBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListHistoryAnalysersCommand;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListResultsParsesCommand;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\RemoveBaseLineFromResultsCommand;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\Container;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitCliWrapper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

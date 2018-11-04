@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser;
 
 interface Identifier
 {

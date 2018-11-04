@@ -10,10 +10,12 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisBaseliner\Core\ResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser;
 
-use DaveLiddament\StaticAnalysisBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisBaseliner\Core\File\FileWriter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileAccessException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileWriter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonParseException;
 
 /**
  * Writes AnalysisResults to disk (via the FileWriter).
@@ -28,7 +30,7 @@ class Exporter
     /**
      * Exporter constructor.
      *
-     * @param \DaveLiddament\StaticAnalysisBaseliner\Core\File\FileWriter $fileWriter
+     * @param FileWriter $fileWriter
      */
     public function __construct(FileWriter $fileWriter)
     {
@@ -41,6 +43,8 @@ class Exporter
      * @param AnalysisResults $analysisResults
      * @param StaticAnalysisResultsParser $resultsParser
      * @param FileName $outputFile
+     * @throws JsonParseException
+     * @throws FileAccessException
      */
     public function exportAnalysisResults(
         AnalysisResults $analysisResults,
