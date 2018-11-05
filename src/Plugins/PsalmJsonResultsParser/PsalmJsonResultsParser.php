@@ -20,14 +20,14 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\InvalidFileFormatExce
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ParseAtLocationException;
 
-class PsalmJsonResultsParser implements StaticAnalysisResultsParser
+class PsalmJsonResultsParser implements ResultsParser
 {
     const LINE_FROM = 'line_from';
     const TYPE = 'type';

@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddCommandCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddHistoryFactoryCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddStaticAnalysisResultsParserCompilerPass;
@@ -41,7 +41,7 @@ class Container
         $loader->load('services.yml');
 
         $containerBuilder->registerForAutoconfiguration(Command::class)->addTag(self::COMMAND_TAG);
-        $containerBuilder->registerForAutoconfiguration(StaticAnalysisResultsParser::class)->addTag(self::RESULTS_PARSER_TAG);
+        $containerBuilder->registerForAutoconfiguration(ResultsParser::class)->addTag(self::RESULTS_PARSER_TAG);
         $containerBuilder->registerForAutoconfiguration(HistoryFactory::class)->addTag(self::HISTORY_FACTORY_TAG);
         $containerBuilder->addCompilerPass(new AddCommandCompilerPass());
         $containerBuilder->addCompilerPass(new AddStaticAnalysisResultsParserCompilerPass());

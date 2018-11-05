@@ -19,7 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFac
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Importer;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\InvalidResultsParserException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
@@ -52,7 +52,7 @@ class CreateBaseLineCommand extends AbstractCommand
     /**
      * @var StaticAnalysisResultsParsersRegistry
      */
-    private $staticAnalysisResultsParsersRegistry;
+    private $resultsParsersRegistry;
 
     /**
      * @var HistoryFactoryLookupService
@@ -73,7 +73,7 @@ class CreateBaseLineCommand extends AbstractCommand
         BaseLineExporter $exporter,
         Importer $resultsImporter
     ) {
-        $this->staticAnalysisResultsParsersRegistry = $staticAnalysisResultsParserRegistry;
+        $this->resultsParsersRegistry = $staticAnalysisResultsParserRegistry;
         $this->historyFactoryLookupService = $historyFactoryLookupService;
         $this->baseLineExporter = $exporter;
         $this->resultsImporter = $resultsImporter;
@@ -87,7 +87,7 @@ class CreateBaseLineCommand extends AbstractCommand
     {
         $this->setDescription('Creates a baseline of the static analysis results for the specified static analysis tool');
 
-        $staticAnalysisParserIdentifiers = implode('|', $this->staticAnalysisResultsParsersRegistry->getIdentifiers());
+        $staticAnalysisParserIdentifiers = implode('|', $this->resultsParsersRegistry->getIdentifiers());
 
         $this->addArgument(
             self::STATIC_ANALYSIS_TOOL,
@@ -132,14 +132,14 @@ class CreateBaseLineCommand extends AbstractCommand
      *
      * @throws InvalidConfigException
      *
-     * @return StaticAnalysisResultsParser
+     * @return ResultsParser
      */
-    private function getResultsParser(InputInterface $input): StaticAnalysisResultsParser
+    private function getResultsParser(InputInterface $input): ResultsParser
     {
         $identifier = $this->getArgument($input, self::STATIC_ANALYSIS_TOOL);
 
         try {
-            return $this->staticAnalysisResultsParsersRegistry->getResultsParser($identifier);
+            return $this->resultsParsersRegistry->getResultsParser($identifier);
         } catch (InvalidResultsParserException $e) {
             $validIdentifiers = array_map(function (Identifier $identifier): string {
                 return $identifier->getCode();

@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryMarker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
 
 class BaseLine
 {
@@ -36,7 +36,7 @@ class BaseLine
     private $analysisResults;
 
     /**
-     * @var StaticAnalysisResultsParser
+     * @var ResultsParser
      */
     private $resultsParser;
 
@@ -50,13 +50,13 @@ class BaseLine
      *
      * @param HistoryFactory $historyFactory
      * @param AnalysisResults $analysisResults
-     * @param StaticAnalysisResultsParser $resultsParser
+     * @param ResultsParser $resultsParser
      * @param HistoryMarker $historyMarker
      */
     public function __construct(
         HistoryFactory $historyFactory,
         AnalysisResults $analysisResults,
-        StaticAnalysisResultsParser $resultsParser,
+        ResultsParser $resultsParser,
         HistoryMarker $historyMarker
     ) {
         $this->historyFactory = $historyFactory;
@@ -82,9 +82,9 @@ class BaseLine
     }
 
     /**
-     * @return StaticAnalysisResultsParser
+     * @return ResultsParser
      */
-    public function getResultsParser(): StaticAnalysisResultsParser
+    public function getResultsParser(): ResultsParser
     {
         return $this->resultsParser;
     }

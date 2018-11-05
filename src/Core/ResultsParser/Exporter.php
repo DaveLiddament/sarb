@@ -41,7 +41,7 @@ class Exporter
      * Exports AnalysisResults to the given $outputFile.
      *
      * @param AnalysisResults $analysisResults
-     * @param StaticAnalysisResultsParser $resultsParser
+     * @param ResultsParser $resultsParser
      * @param FileName $outputFile
      *
      * @throws JsonParseException
@@ -49,7 +49,7 @@ class Exporter
      */
     public function exportAnalysisResults(
         AnalysisResults $analysisResults,
-        StaticAnalysisResultsParser $resultsParser,
+        ResultsParser $resultsParser,
         FileName $outputFile
     ): void {
         $fileContents = $resultsParser->convertToString($analysisResults);

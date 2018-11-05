@@ -41,7 +41,7 @@ class Importer
     /**
      * Imports AnalysisResults from $fileName.
      *
-     * @param StaticAnalysisResultsParser $resultsParser
+     * @param ResultsParser $resultsParser
      * @param FileName $fileName
      *
      * @throws FileImportException
@@ -49,7 +49,7 @@ class Importer
      * @return AnalysisResults
      */
     public function importFromFile(
-        StaticAnalysisResultsParser $resultsParser,
+        ResultsParser $resultsParser,
         FileName $fileName
     ): AnalysisResults {
         try {

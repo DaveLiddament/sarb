@@ -16,7 +16,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\InvalidFileFormatExce
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ParseAtLocationException;
 
-interface StaticAnalysisResultsParser
+interface ResultsParser
 {
     /**
      * Takes a string representation of the static analysis results and converts to AnalysisResults.

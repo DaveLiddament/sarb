@@ -14,33 +14,33 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\InvalidResultsParserException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParserLookupService;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
 use Webmozart\Assert\Assert;
 
 class StaticAnalysisResultsParsersRegistry implements ResultsParserLookupService
 {
     /**
-     * @var StaticAnalysisResultsParser[]
-     * @psalm-var array<string, StaticAnalysisResultsParser>
+     * @var ResultsParser[]
+     * @psalm-var array<string, ResultsParser>
      */
-    private $staticAnalysisResultsParsers;
+    private $resultsParsers;
 
     /**
-     * StaticAnalysisResultsParsersRegistry constructor.
+     * resultsParsersRegistry constructor.
      *
-     * @param StaticAnalysisResultsParser[] $staticAnalysisResultsParsers
+     * @param ResultsParser[] $resultsParsers
      */
-    public function __construct(iterable $staticAnalysisResultsParsers)
+    public function __construct(iterable $resultsParsers)
     {
-        $this->staticAnalysisResultsParsers = [];
-        foreach ($staticAnalysisResultsParsers as $staticAnalysisResultsParser) {
+        $this->resultsParsers = [];
+        foreach ($resultsParsers as $staticAnalysisResultsParser) {
             $this->addStaticAnalysisResultsParser($staticAnalysisResultsParser);
         }
     }
 
     /**
-     * Returns a list of all StaticAnalysisResultsParser codes.
+     * Returns a list of all ResultsParser codes.
      *
      * These are used to identify which Static Analysis tool is being used for generating a baseline or comparing
      * baseline results to.
@@ -49,40 +49,40 @@ class StaticAnalysisResultsParsersRegistry implements ResultsParserLookupService
      */
     public function getIdentifiers(): array
     {
-        return array_keys($this->staticAnalysisResultsParsers);
+        return array_keys($this->resultsParsers);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getResultsParser(string $identifier): StaticAnalysisResultsParser
+    public function getResultsParser(string $identifier): ResultsParser
     {
-        if (array_key_exists($identifier, $this->staticAnalysisResultsParsers)) {
-            return $this->staticAnalysisResultsParsers[$identifier];
+        if (array_key_exists($identifier, $this->resultsParsers)) {
+            return $this->resultsParsers[$identifier];
         }
 
-        $identifiers = array_map(function (StaticAnalysisResultsParser $staticAnalysisResultsParser): Identifier {
+        $identifiers = array_map(function (ResultsParser $staticAnalysisResultsParser): Identifier {
             return $staticAnalysisResultsParser->getIdentifier();
-        }, $this->staticAnalysisResultsParsers);
+        }, $this->resultsParsers);
 
         throw new InvalidResultsParserException($identifier, $identifiers);
     }
 
     /**
-     * @return StaticAnalysisResultsParser[]
+     * @return ResultsParser[]
      */
     public function getAll(): array
     {
-        return $this->staticAnalysisResultsParsers;
+        return $this->resultsParsers;
     }
 
-    private function addStaticAnalysisResultsParser(StaticAnalysisResultsParser $staticAnalysisResultsParser): void
+    private function addStaticAnalysisResultsParser(ResultsParser $staticAnalysisResultsParser): void
     {
         $identifier = $staticAnalysisResultsParser->getIdentifier()->getCode();
-        Assert::keyNotExists($this->staticAnalysisResultsParsers, $identifier,
+        Assert::keyNotExists($this->resultsParsers, $identifier,
             "Multiple Static Analysis Results Parsers configured with the identifier [$identifier]"
         );
 
-        $this->staticAnalysisResultsParsers[$identifier] = $staticAnalysisResultsParser;
+        $this->resultsParsers[$identifier] = $staticAnalysisResultsParser;
     }
 }

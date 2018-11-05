@@ -13,7 +13,7 @@ interface ResultsParserLookupService
      *
      * @throws InvalidResultsParserException
      *
-     * @return StaticAnalysisResultsParser
+     * @return ResultsParser
      */
-    public function getResultsParser(string $name): StaticAnalysisResultsParser;
+    public function getResultsParser(string $name): ResultsParser;
 }
