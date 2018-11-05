@@ -18,7 +18,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParse
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParserLookupService;
 use Webmozart\Assert\Assert;
 
-class StaticAnalysisResultsParsersRegistry implements ResultsParserLookupService
+class ResultsParsersRegistry implements ResultsParserLookupService
 {
     /**
      * @var ResultsParser[]

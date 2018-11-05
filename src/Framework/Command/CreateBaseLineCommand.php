@@ -22,7 +22,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\InvalidResul
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsParsersRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -50,7 +50,7 @@ class CreateBaseLineCommand extends AbstractCommand
     private $resultsImporter;
 
     /**
-     * @var StaticAnalysisResultsParsersRegistry
+     * @var ResultsParsersRegistry
      */
     private $resultsParsersRegistry;
 
@@ -62,18 +62,18 @@ class CreateBaseLineCommand extends AbstractCommand
     /**
      * CreateBaseLineCommand constructor.
      *
-     * @param StaticAnalysisResultsParsersRegistry $staticAnalysisResultsParserRegistry
+     * @param ResultsParsersRegistry $resultsParsersRegistry
      * @param HistoryFactoryLookupService $historyFactoryLookupService
      * @param BaseLineExporter $exporter
      * @param Importer $resultsImporter
      */
     public function __construct(
-        StaticAnalysisResultsParsersRegistry $staticAnalysisResultsParserRegistry,
+        ResultsParsersRegistry $resultsParsersRegistry,
         HistoryFactoryLookupService $historyFactoryLookupService,
         BaseLineExporter $exporter,
         Importer $resultsImporter
     ) {
-        $this->resultsParsersRegistry = $staticAnalysisResultsParserRegistry;
+        $this->resultsParsersRegistry = $resultsParsersRegistry;
         $this->historyFactoryLookupService = $historyFactoryLookupService;
         $this->baseLineExporter = $exporter;
         $this->resultsImporter = $resultsImporter;
