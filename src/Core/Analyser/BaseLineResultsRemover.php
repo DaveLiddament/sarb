@@ -16,6 +16,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\internal\BaseLine
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryAnalyser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
 
@@ -26,15 +27,17 @@ class BaseLineResultsRemover
      *
      * @param AnalysisResults $latestAnalysisResults
      * @param BaseLine $baseLine
-     * @param HistoryAnalyser $historyAnalyser
+     *
+     * @throws HistoryAnalyserException
      *
      * @return AnalysisResults
      */
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
-        BaseLine $baseLine,
-        HistoryAnalyser $historyAnalyser
+        BaseLine $baseLine
     ): AnalysisResults {
+        $historyAnalyser = $baseLine->getHistoryFactory()->newHistoryAnalyser($baseLine->getHistoryMarker());
+
         $prunedAnalysisResults = new AnalysisResults();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLine->getAnalysisResults());
 

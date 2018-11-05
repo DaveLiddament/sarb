@@ -36,7 +36,7 @@ interface GitWrapper
     /**
      * Set path to root directory of project being analysed.
      *
-     * @param string $projectRootDirectory
+     * @param string|null $projectRootDirectory
      */
-    public function setProjectRoot(string $projectRootDirectory): void;
+    public function setProjectRoot(?string $projectRootDirectory): void;
 }

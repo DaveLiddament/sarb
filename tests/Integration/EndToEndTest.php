@@ -75,7 +75,6 @@ class EndToEndTest extends TestCase
     public function testInvalidBaselineSupplied(): void
     {
         $arguments = [
-            'static-analysis-tool' => 'psalm-json',
             'baseline-file' => $this->getPath(self::COMMIT_2_PSALM_RESULTS),
             'static-analysis-output-file' => $this->getPath(self::COMMIT_1_PSALM_RESULTS),
             'output-results-file' => $this->getSarbOutputFile('dummy.json'),
@@ -177,7 +176,6 @@ class EndToEndTest extends TestCase
         $outputResults = $this->getSarbOutputFile('output-after-baseline-removed.json');
 
         $arguments = [
-            'static-analysis-tool' => 'psalm-json',
             'baseline-file' => $this->getBaselineFilePath(),
             'static-analysis-output-file' => $this->getPath($psalmResults),
             'output-results-file' => $outputResults,

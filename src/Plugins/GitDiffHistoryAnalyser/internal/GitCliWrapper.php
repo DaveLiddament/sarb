@@ -49,7 +49,7 @@ class GitCliWrapper implements GitWrapper
     /**
      * {@inheritdoc}
      */
-    public function setProjectRoot(string $projectRoot): void
+    public function setProjectRoot(?string $projectRoot): void
     {
         $this->projectRoot = $projectRoot;
     }

@@ -42,7 +42,7 @@ interface HistoryFactory
     /**
      * Set path to root of project being analysed.
      *
-     * @param string $projectRoot
+     * @param string|null $projectRoot
      */
-    public function setProjectRoot(string $projectRoot): void;
+    public function setProjectRoot(?string $projectRoot): void;
 }

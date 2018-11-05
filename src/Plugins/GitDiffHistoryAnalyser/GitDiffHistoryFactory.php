@@ -76,7 +76,7 @@ class GitDiffHistoryFactory implements HistoryFactory
     /**
      * {@inheritdoc}
      */
-    public function setProjectRoot(string $projectRoot): void
+    public function setProjectRoot(?string $projectRoot): void
     {
         $this->gitCliWrapper->setProjectRoot($projectRoot);
     }

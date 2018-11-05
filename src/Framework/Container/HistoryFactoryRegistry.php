@@ -13,9 +13,11 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactoryLookupService;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\InvalidHistoryFactoryException;
 use Webmozart\Assert\Assert;
 
-class HistoryFactoryRegistry
+class HistoryFactoryRegistry implements HistoryFactoryLookupService
 {
     /**
      * @var HistoryFactory[]
@@ -48,9 +50,14 @@ class HistoryFactoryRegistry
         return array_keys($this->historyFactories);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getHistoryFactory(string $identifier): HistoryFactory
     {
-        Assert::keyExists($this->historyFactories, $identifier);
+        if (!array_key_exists($identifier, $this->historyFactories)) {
+            throw new InvalidHistoryFactoryException($identifier);
+        }
 
         return $this->historyFactories[$identifier];
     }

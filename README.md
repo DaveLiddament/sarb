@@ -126,7 +126,6 @@ Continue coding. When done:
 If you are running SARB within your project then run this command:
 ```
     vendor/bin/sarb remove-baseline-results \
-                        psalm-json \
                         reports/latest_psalm_issues.json \
                         reports/sarb_baseline.json \
                         reports/issues_since_baseline.json
@@ -135,8 +134,7 @@ If you are running SARB within your project then run this command:
 Breaking this down:
 
  * Firstly we are specifying that we wish to remove issues from the baseline with `remove-baseline-results`.
- * Then specify the static analysis tool. This is a combination of both tool and format. Here it is `psalm-json`.
- * Now specify the latest results from the static analysis tool. In this example `reports/latest_psalm_issues.json`
+ * Then specify the latest results from the static analysis tool. In this example `reports/latest_psalm_issues.json`
  * Now specify SARB's baseline output. Here `reports/sarb_baseline.json`
  * Finally we specify the output file. This will be in the same format as the output from the static analysis, but will only contain the issues introduced since the baseline.
 

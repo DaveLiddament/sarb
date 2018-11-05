@@ -12,10 +12,13 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\InvalidResultsParserException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParserLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
 use Webmozart\Assert\Assert;
 
-class StaticAnalysisResultsParsersRegistry
+class StaticAnalysisResultsParsersRegistry implements ResultsParserLookupService
 {
     /**
      * @var StaticAnalysisResultsParser[]
@@ -50,17 +53,19 @@ class StaticAnalysisResultsParsersRegistry
     }
 
     /**
-     * Returns StaticAnalysisResultsParser of the given name.
-     *
-     * @param string $identifier
-     *
-     * @return StaticAnalysisResultsParser
+     * {@inheritdoc}
      */
-    public function getStaticAnalysisResultsParser(string $identifier): StaticAnalysisResultsParser
+    public function getResultsParser(string $identifier): StaticAnalysisResultsParser
     {
-        Assert::keyExists($this->staticAnalysisResultsParsers, $identifier);
+        if (array_key_exists($identifier, $this->staticAnalysisResultsParsers)) {
+            return $this->staticAnalysisResultsParsers[$identifier];
+        }
 
-        return $this->staticAnalysisResultsParsers[$identifier];
+        $identifiers = array_map(function (StaticAnalysisResultsParser $staticAnalysisResultsParser): Identifier {
+            return $staticAnalysisResultsParser->getIdentifier();
+        }, $this->staticAnalysisResultsParsers);
+
+        throw new InvalidResultsParserException($identifier, $identifiers);
     }
 
     /**

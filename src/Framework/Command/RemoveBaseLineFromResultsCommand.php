@@ -15,13 +15,9 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\BaseLineResultsRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\BaseLiner\BaseLineImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Exporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Importer;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\HistoryFactoryRegistry;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -62,26 +58,18 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
     /**
      * CreateBaseLineCommand constructor.
      *
-     * @param StaticAnalysisResultsParsersRegistry $staticAnalysisResultsParserRegistry
-     * @param HistoryFactoryRegistry $historyFactoryRegistry
      * @param BaseLineResultsRemover $baseLineResultsRemover
      * @param BaseLineImporter $baseLineImporter
      * @param Importer $resultsImporter
      * @param Exporter $resultsExporter
      */
     public function __construct(
-        StaticAnalysisResultsParsersRegistry $staticAnalysisResultsParserRegistry,
-        HistoryFactoryRegistry $historyFactoryRegistry,
         BaseLineResultsRemover $baseLineResultsRemover,
         BaseLineImporter $baseLineImporter,
         Importer $resultsImporter,
         Exporter $resultsExporter
     ) {
-        parent::__construct(
-            self::COMMAND_NAME,
-            $staticAnalysisResultsParserRegistry,
-            $historyFactoryRegistry
-        );
+        parent::__construct(self::COMMAND_NAME);
         $this->baseLineResultsRemover = $baseLineResultsRemover;
         $this->baseLineImporter = $baseLineImporter;
         $this->resultsExporter = $resultsExporter;
@@ -112,30 +100,22 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
     protected function executeHook(
         InputInterface $input,
         OutputInterface $output,
-        StaticAnalysisResultsParser $staticAnalysisResultsParser,
         FileName $resultsFileName,
         FileName $baseLineFileName,
-        HistoryFactory $historyFactory
+        ?string $projectRoot
     ): int {
         $outputResultsFile = $this->getFileName($input, self::OUTPUT_RESULTS_FILE);
 
-        $inputAnalysisResults = $this->resultsImporter->importFromFile($staticAnalysisResultsParser, $resultsFileName);
+        $baseLine = $this->baseLineImporter->import($baseLineFileName);
+        $baseLine->getHistoryFactory()->setProjectRoot($projectRoot);
+        $resultsParser = $baseLine->getResultsParser();
 
-        $baseLine = $this->baseLineImporter->import(
-            $staticAnalysisResultsParser,
-            $historyFactory->newHistoryMarkerFactory(),
-            $baseLineFileName
-        );
-
-        $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
-            $inputAnalysisResults,
-            $baseLine,
-            $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker())
-        );
+        $inputAnalysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName);
+        $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine($inputAnalysisResults, $baseLine);
 
         $this->resultsExporter->exportAnalysisResults(
             $outputAnalysisResults,
-            $staticAnalysisResultsParser,
+            $resultsParser,
             $outputResultsFile
         );
 

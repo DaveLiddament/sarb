@@ -12,21 +12,23 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryMarker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\StaticAnalysisResultsParser;
 
 class BaseLine
 {
     public const HISTORY_MARKER = 'historyMarker';
+    public const HISTORY_ANALYSER = 'historyAnalyser';
     public const ANALYSIS_RESULTS = 'analysisResults';
-    public const ANALYSER = 'analyser';
-    const BASE_LINE = 'SARB BaseLine';
+    public const RESULTS_PARSER = 'resultsParser';
+    public const BASE_LINE = 'SARB BaseLine';
 
     /**
-     * @var HistoryMarker
+     * @var HistoryFactory
      */
-    private $historyMarker;
+    private $historyFactory;
 
     /**
      * @var AnalysisResults
@@ -34,30 +36,41 @@ class BaseLine
     private $analysisResults;
 
     /**
-     * @var Identifier
+     * @var StaticAnalysisResultsParser
      */
-    private $identifier;
+    private $resultsParser;
+
+    /**
+     * @var HistoryMarker
+     */
+    private $historyMarker;
 
     /**
      * BaseLine constructor.
      *
-     * @param HistoryMarker $historyMarker
+     * @param HistoryFactory $historyFactory
      * @param AnalysisResults $analysisResults
-     * @param Identifier $identifier
+     * @param StaticAnalysisResultsParser $resultsParser
+     * @param HistoryMarker $historyMarker
      */
-    public function __construct(HistoryMarker $historyMarker, AnalysisResults $analysisResults, Identifier $identifier)
-    {
-        $this->historyMarker = $historyMarker;
+    public function __construct(
+        HistoryFactory $historyFactory,
+        AnalysisResults $analysisResults,
+        StaticAnalysisResultsParser $resultsParser,
+        HistoryMarker $historyMarker
+    ) {
+        $this->historyFactory = $historyFactory;
         $this->analysisResults = $analysisResults;
-        $this->identifier = $identifier;
+        $this->resultsParser = $resultsParser;
+        $this->historyMarker = $historyMarker;
     }
 
     /**
-     * @return HistoryMarker
+     * @return HistoryFactory
      */
-    public function getHistoryMarker(): HistoryMarker
+    public function getHistoryFactory(): HistoryFactory
     {
-        return $this->historyMarker;
+        return $this->historyFactory;
     }
 
     /**
@@ -69,10 +82,18 @@ class BaseLine
     }
 
     /**
-     * @return Identifier
+     * @return StaticAnalysisResultsParser
      */
-    public function getIdentifier(): Identifier
+    public function getResultsParser(): StaticAnalysisResultsParser
     {
-        return $this->identifier;
+        return $this->resultsParser;
+    }
+
+    /**
+     * @return HistoryMarker
+     */
+    public function getHistoryMarker(): HistoryMarker
+    {
+        return $this->historyMarker;
     }
 }
