@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\UnifiedDiffParser\DiffParserTestSupport;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\LineMutation;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\NewFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\OriginalFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\LineMutation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\NewFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\OriginalFileName;
 
 class ExpectedFileMutations
 {

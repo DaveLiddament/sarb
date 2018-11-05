@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\BaseLineResultsRemover;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\BaseLiner\BaseLineImporter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Exporter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Importer;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImporter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Exporter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

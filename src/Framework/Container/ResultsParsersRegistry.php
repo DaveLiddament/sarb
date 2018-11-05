@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\InvalidResultsParserException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParserLookupService;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\InvalidResultsParserException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParserLookupService;
 use Webmozart\Assert\Assert;
 
 class ResultsParsersRegistry implements ResultsParserLookupService

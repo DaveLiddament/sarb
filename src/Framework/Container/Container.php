@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactory;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddCommandCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddHistoryFactoryCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddStaticAnalysisResultsParserCompilerPass;

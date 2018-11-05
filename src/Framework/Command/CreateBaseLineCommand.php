@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\BaseLiner\BaseLineExporter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\HistoryAnalyser\HistoryFactoryLookupService;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Identifier;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\Importer;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\InvalidResultsParserException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\ResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineExporter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactoryLookupService;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\InvalidResultsParserException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsParsersRegistry;

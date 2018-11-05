@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayParseException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\ArrayUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use PHPUnit\Framework\TestCase;
 
 class ArrayUtilsTest extends TestCase

@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\SarbException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\File\FileImportException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileImportException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
