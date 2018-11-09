@@ -83,17 +83,17 @@ If your tool or format is in this list then create your own ResultsParser.
 If you are running SARB within your project then run this command:
 ```
 vendor/bin/sarb create-baseline \
-                psalm-json \
                 reports/baseline_psalm_issues.json \
-                reports/sarb_baseline.json
+                reports/sarb_baseline.json \
+                psalm-json
 ```
 
 Breaking this down:
 
  * Firstly we are specifying that we wish to create a baseline with `create-baseline`.
- * Then specify the static analysis tool. This is a combination of both tool and format. Here it is `psalm-json`.
  * Now specify the initial baseline results from the static analysis tool. In this example `reports/baseline_psalm_issues.json`
- * Finally specify SARB's baseline output. Here `reports/sarb_baseline.json`
+ * Then specify SARB's baseline output. Here `reports/sarb_baseline.json`
+ * Finally specify the static analysis tool. This is a combination of both tool and format. Here it is `psalm-json`.
 
 **NOTE: SARB will create the baseline and record the git SHA that the project is currently at. Make sure this is correct.**
 
@@ -102,9 +102,9 @@ If you are running SARB in standalone mode then you need 1 extra option:
 ```
 ./sarb create-baseline \
        --project-root=path/to/project/root \
-       psalm-json \
        reports/baseline_psalm_issues.json \
-       reports/sarb_baseline.json
+       reports/sarb_baseline.json \
+       psalm-json
 ```
 
 You must specify the option `--project-root`. This must point to the root of the project (where the `.git` directory lives).
