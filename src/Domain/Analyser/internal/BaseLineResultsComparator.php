@@ -14,6 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 
 /**
@@ -22,9 +23,12 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 class BaseLineResultsComparator
 {
     /**
-     * @var AnalysisResults
+     * Stores base line results. With file name as key.
+     *
+     * @var array
+     * @psalm-var array<string, array<mixed,AnalysisResult>>
      */
-    private $baseLineResults;
+    private $baseLine;
 
     /**
      * BaseLineResultsComparator constructor.
@@ -33,7 +37,16 @@ class BaseLineResultsComparator
      */
     public function __construct(AnalysisResults $baseLineAnalysisResults)
     {
-        $this->baseLineResults = $baseLineAnalysisResults;
+        $this->baseLine = [];
+
+        // For performance reasons put results into an array with the file name as the key
+        foreach ($baseLineAnalysisResults->getAnalysisResults() as $baseLineAnalysisResult) {
+            $fileNameAsString = $baseLineAnalysisResult->getLocation()->getFileName()->getFileName();
+            if (!array_key_exists($fileNameAsString, $this->baseLine)) {
+                $this->baseLine[$fileNameAsString] = [];
+            }
+            $this->baseLine[$fileNameAsString][] = $baseLineAnalysisResult;
+        }
     }
 
     /**
@@ -46,10 +59,13 @@ class BaseLineResultsComparator
      */
     public function isInBaseLine(Location $location, Type $type): bool
     {
-        // Quite a simplistic approach maybe investigate performance for large results and, if needed, make a more
-        // efficient searching mechanism
+        // Check if file is in baseline
+        $fileNameAsString = $location->getFileName()->getFileName();
+        if (!array_key_exists($fileNameAsString, $this->baseLine)) {
+            return false;
+        }
 
-        foreach ($this->baseLineResults->getAnalysisResults() as $baseLineResult) {
+        foreach ($this->baseLine[$fileNameAsString] as $baseLineResult) {
             if ($baseLineResult->isMatch($location, $type)) {
                 return true;
             }
