@@ -1,4 +1,4 @@
-# Static Analysis Baseliner (SARB)
+# Static Analysis Results Baseliner (SARB)
 
  * [Why SARB](#why-sarb)
  * [Requirements](#requirements)
@@ -15,7 +15,7 @@ It's unrealistic to fix all but the most critical ones before continuing develop
 
 SARB is used to create a baseline of these results. As work on the project
 progresses SARB can takes the latest static analysis results, removes
-those issues in the baseline and reports the issues raised since the baseline.
+those issues in the baseline and report the issues raised since the baseline.
 SARB does this, in conjunction with git, by tracking lines of code between commits.
 Currently SARB only supports git but it is possible to [add support for other SCMs](docs/NewHistoryAnalyser.md).
 
@@ -37,13 +37,13 @@ SARB requires PHP >= 7.1 to run. The project being analysed does not need to run
 You can either add directly to the project you wish to run analysis on:
 
 ```
-    composer require --dev dave-liddament/sarb
+composer require --dev dave-liddament/sarb
 ```
 
 Or you can install SARB globally (e.g. if you want to use it on a non PHP project):
 
 ```
-    composer global require dave-liddament/sarb
+composer global require dave-liddament/sarb
 ```
 
 If you install globally make sure the composer bin directory is in your path.
@@ -63,7 +63,7 @@ Run the static analyser and output results to a file.
 
 E.g. with using the JSON format for Psalm:
 ```
-    vendor/bin/psalm --report=reports/baseline_psalm_issues.json
+vendor/bin/psalm --report=reports/baseline_psalm_issues.json
 ```
 
 It is this output that will be used to create the baseline.
@@ -72,7 +72,7 @@ It is this output that will be used to create the baseline.
 **NOTE:** Make sure that both the tool and format are supported. To get a list use:
 
 ```
-    vendor/bin/sarb list-static-analysis-tools
+vendor/bin/sarb list-static-analysis-tools
 ```
 
 If your tool or format is in this list then create your own ResultsParser.
@@ -82,10 +82,10 @@ If your tool or format is in this list then create your own ResultsParser.
 
 If you are running SARB within your project then run this command:
 ```
-    vendor/bin/sarb create-baseline \
-                        psalm-json \
-                        reports/baseline_psalm_issues.json \
-                        reports/sarb_baseline.json
+vendor/bin/sarb create-baseline \
+                psalm-json \
+                reports/baseline_psalm_issues.json \
+                reports/sarb_baseline.json
 ```
 
 Breaking this down:
@@ -100,11 +100,11 @@ Breaking this down:
 If you are running SARB in standalone mode then you need 1 extra option:
 
 ```
-    ./sarb create-baseline \
-                        --project-root=path/to/project/root \
-                        psalm-json \
-                        reports/baseline_psalm_issues.json \
-                        reports/sarb_baseline.json
+./sarb create-baseline \
+       --project-root=path/to/project/root \
+       psalm-json \
+       reports/baseline_psalm_issues.json \
+       reports/sarb_baseline.json
 ```
 
 You must specify the option `--project-root`. This must point to the root of the project (where the `.git` directory lives).
@@ -117,7 +117,7 @@ Continue coding. When done:
  * Rerun the static analysis on the latest code. e.g.:
 
 ```
-    vendor/bin/psalm --report=reports/latest_psalm_issues.json
+vendor/bin/psalm --report=reports/latest_psalm_issues.json
 ```
 
 
@@ -125,10 +125,10 @@ Continue coding. When done:
 
 If you are running SARB within your project then run this command:
 ```
-    vendor/bin/sarb remove-baseline-results \
-                        reports/latest_psalm_issues.json \
-                        reports/sarb_baseline.json \
-                        reports/issues_since_baseline.json
+vendor/bin/sarb remove-baseline-results \
+                reports/latest_psalm_issues.json \
+                reports/sarb_baseline.json \
+                reports/issues_since_baseline.json
 ```
 
 Breaking this down:
@@ -141,7 +141,7 @@ Breaking this down:
 
 As before if you are running SARB in standalone mode then you need 1 extra option:
 ```
-                        --project-root=path/to/project/root
+    --project-root=path/to/project/root
 ```
 
 If you are running this in CI then you can add the flag `-f`. This means a none zero return code is returned if any issues have been introduced sinde the baseline.
