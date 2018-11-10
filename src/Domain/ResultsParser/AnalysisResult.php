@@ -24,10 +24,10 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
  */
 class AnalysisResult
 {
-    const LINE_NUMBER = 'lineNumber';
-    const FILE_NAME = 'fileName';
-    const TYPE = 'type';
-    const FULL_DETAILS = 'fullDetails';
+    private const LINE_NUMBER = 'lineNumber';
+    private const FILE_NAME = 'fileName';
+    private const TYPE = 'type';
+    private const FULL_DETAILS = 'fullDetails';
 
     /**
      * @var Location
