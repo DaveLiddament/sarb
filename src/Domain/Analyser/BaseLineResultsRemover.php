@@ -15,9 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 
@@ -27,25 +25,18 @@ class BaseLineResultsRemover
      * Returns AnalysisResults stripping out those that appear in the BaseLine.
      *
      * @param AnalysisResults $latestAnalysisResults
-     * @param BaseLine $baseLine
-     * @param ProjectRoot $projectRoot
-     *
-     * @throws HistoryAnalyserException
+     * @param HistoryAnalyser $historyAnalyser
+     * @param AnalysisResults $baseLineAnalysisResults
      *
      * @return AnalysisResults
-     *
-     *
-     * TODO remove need to pass in ProjectRoot to here
      */
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
-        BaseLine $baseLine,
-        ProjectRoot $projectRoot
+        HistoryAnalyser $historyAnalyser,
+        AnalysisResults $baseLineAnalysisResults
     ): AnalysisResults {
-        $historyAnalyser = $baseLine->getHistoryFactory()->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
-
         $prunedAnalysisResults = new AnalysisResults();
-        $baseLineResultsComparator = new BaseLineResultsComparator($baseLine->getAnalysisResults());
+        $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);
 
         foreach ($latestAnalysisResults->getAnalysisResults() as $analysisResult) {
             if (!$this->isInHistoricResults($analysisResult, $baseLineResultsComparator, $historyAnalyser)) {

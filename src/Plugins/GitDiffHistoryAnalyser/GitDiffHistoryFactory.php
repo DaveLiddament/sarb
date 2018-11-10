@@ -48,12 +48,12 @@ class GitDiffHistoryFactory implements HistoryFactory
     /**
      * {@inheritdoc}
      */
-    public function newHistoryAnalyser(HistoryMarker $historyMarker, ProjectRoot $projectRoot): HistoryAnalyser
+    public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
-        /** @var GitCommit $historyMarker */
-        Assert::isInstanceOf($historyMarker, GitCommit::class);
+        /** @var GitCommit $baseLineHistoryMarker */
+        Assert::isInstanceOf($baseLineHistoryMarker, GitCommit::class);
         $newDiff = $this->gitCliWrapper->getCurrentSha($projectRoot);
-        $diff = $this->gitCliWrapper->getGitDiff($projectRoot, $historyMarker, $newDiff);
+        $diff = $this->gitCliWrapper->getGitDiff($projectRoot, $baseLineHistoryMarker, $newDiff);
         $fileMutations = $this->parser->parseDiff($diff);
 
         return new DiffHistoryAnalyser($fileMutations);

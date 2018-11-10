@@ -19,13 +19,14 @@ interface HistoryFactory
     /**
      * Creates a HistoryAnalyser by passing in HistoryMarker for when BaseLine was created.
      *
-     * @param HistoryMarker $historyMarker
+     * @param HistoryMarker $baseLineHistoryMarker
+     * @param ProjectRoot $projectRoot
      *
      * @throws HistoryAnalyserException
      *
      * @return HistoryAnalyser
      */
-    public function newHistoryAnalyser(HistoryMarker $historyMarker, ProjectRoot $projectRoot): HistoryAnalyser;
+    public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser;
 
     /**
      * Return factory for creating a HistoryMarker from a string representation of it.

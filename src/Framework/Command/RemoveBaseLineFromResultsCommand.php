@@ -109,9 +109,23 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
 
         $baseLine = $this->baseLineImporter->import($baseLineFileName);
         $resultsParser = $baseLine->getResultsParser();
+        $historyFactory = $baseLine->getHistoryFactory();
+
+        $output->writeln(
+            sprintf('<info>Baseline uses ResultsParser [%s] and HistoryAnalyser [%s]</info>',
+                $resultsParser->getIdentifier()->getCode(),
+                $historyFactory->getIdentifier())
+        );
+
+        $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
+        $baseLineAnalysisResults = $baseLine->getAnalysisResults();
 
         $inputAnalysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName, $projectRoot);
-        $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine($inputAnalysisResults, $baseLine, $projectRoot);
+        $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
+            $inputAnalysisResults,
+            $historyAnalyser,
+            $baseLineAnalysisResults
+        );
 
         $this->resultsExporter->exportAnalysisResults(
             $outputAnalysisResults,

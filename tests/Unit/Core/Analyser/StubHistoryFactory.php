@@ -34,7 +34,7 @@ class StubHistoryFactory implements HistoryFactory
     /**
      * {@inheritdoc}
      */
-    public function newHistoryAnalyser(HistoryMarker $historyMarker, ProjectRoot $projectRoot): HistoryAnalyser
+    public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
         return new DiffHistoryAnalyser($this->fileMutations);
     }
