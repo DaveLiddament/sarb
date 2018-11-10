@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitHistoryMarkerFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Assertions\AssertGitCommit;
@@ -33,7 +34,7 @@ class GitHistoryMarkerFactoryTest extends TestCase
 
     public function testNewCurrentHistoryMarker(): void
     {
-        $actual = $this->gitHistoryMarkerFactory->newCurrentHistoryMarker();
+        $actual = $this->gitHistoryMarkerFactory->newCurrentHistoryMarker(new ProjectRoot('/foo'));
         $this->assertGitCommit(StubGitWrapper::GIT_SHA_1, $actual);
         $this->assertInstanceOf(GitCommit::class, $actual);
     }

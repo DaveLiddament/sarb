@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use RuntimeException;
 use Symfony\Component\Process\Process;
@@ -19,16 +20,11 @@ use Symfony\Component\Process\Process;
 class GitCliWrapper implements GitWrapper
 {
     /**
-     * @var string|null
-     */
-    private $projectRoot;
-
-    /**
      * {@inheritdoc}
      */
-    public function getCurrentSha(): GitCommit
+    public function getCurrentSha(ProjectRoot $projectRoot): GitCommit
     {
-        $gitCommand = $this->getGitCommand('rev-parse HEAD');
+        $gitCommand = $this->getGitCommand('rev-parse HEAD', $projectRoot);
         $rawOutput = $this->runCommand($gitCommand, 'Failed to get SHA');
         $processOutput = trim($rawOutput);
 
@@ -38,20 +34,12 @@ class GitCliWrapper implements GitWrapper
     /**
      * {@inheritdoc}
      */
-    public function getGitDiff(GitCommit $originalCommit, GitCommit $newCommit): string
+    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit, GitCommit $newCommit): string
     {
         $arguments = sprintf('diff -w -M %s..%s', $originalCommit->asString(), $newCommit->asString());
-        $command = $this->getGitCommand($arguments);
+        $command = $this->getGitCommand($arguments, $projectRoot);
 
         return $this->runCommand($command, 'Failed to get git-diff');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setProjectRoot(?string $projectRoot): void
-    {
-        $this->projectRoot = $projectRoot;
     }
 
     private function runCommand(string $gitCommand, string $context): string
@@ -73,31 +61,26 @@ class GitCliWrapper implements GitWrapper
         throw new RuntimeException($errorMessage);
     }
 
-    private function getGitCommand(string $arguments): string
+    private function getGitCommand(string $arguments, ProjectRoot $projectRoot): string
     {
-        $projectRootConfig = '';
-        if (null !== $this->projectRoot) {
-            $projectRootConfig = "--git-dir=\"{$this->projectRoot}\"/.git --work-tree=\"{$this->projectRoot}\"";
-        }
+        $projectRootConfig = "--git-dir=\"{$projectRoot}\"/.git --work-tree=\"{$projectRoot}\"";
 
         return "git {$projectRootConfig} {$arguments} ";
     }
 
-    public function init(): void
+    public function init(ProjectRoot $projectRoot): void
     {
-        $command = 'git init ';
-        if (null !== $this->projectRoot) {
-            $command .= $this->projectRoot;
-        }
+        $command = "git init {$projectRoot}";
         $this->runCommand($command, $command);
     }
 
-    public function addAndCommt(string $message): void
+    public function addAndCommt(string $message, ProjectRoot $projectRoot): void
     {
-        $addCommand = $this->getGitCommand('add .');
+        $addCommand = $this->getGitCommand('add .', $projectRoot);
         $this->runCommand($addCommand, $addCommand);
 
-        $commitCommand = $this->getGitCommand("-c \"user.name=Anon\" -c \"user.email=anon@example.com\" commit -m \"$message\"");
+        $commitCommand = $this->getGitCommand(
+            "-c \"user.name=Anon\" -c \"user.email=anon@example.com\" commit -m \"$message\"", $projectRoot);
         $this->runCommand($commitCommand, $commitCommand);
     }
 }

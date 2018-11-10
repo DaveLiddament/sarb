@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Integration;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListHistoryAnalysersCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListResultsParsesCommand;
@@ -43,9 +44,9 @@ class EndToEndTest extends TestCase
     private $gitWrapper;
 
     /**
-     * @var string
+     * @var ProjectRoot
      */
-    private $testDirectory;
+    private $projectRoot;
 
     /**
      * @var Application
@@ -58,7 +59,6 @@ class EndToEndTest extends TestCase
         $this->gitWrapper = new GitCliWrapper();
         $container = new Container();
         $this->application = $container->getApplication();
-        $this->testDirectory = '';
     }
 
     public function testInvalidConfig(): void
@@ -89,7 +89,7 @@ class EndToEndTest extends TestCase
     public function testHappyPath()
     {
         $this->createTestDirectory();
-        $this->gitWrapper->init();
+        $this->gitWrapper->init($this->projectRoot);
 
         $this->commit(self::COMMIT_1_DIRECTORY);
         $this->runCreateBaseLineCommand();
@@ -142,17 +142,22 @@ class EndToEndTest extends TestCase
 
     private function createTestDirectory(): void
     {
-        $dateTimeFolderName = date('Ymd_His');
-        $this->testDirectory = __DIR__."/../scratchpad/{$dateTimeFolderName}";
-        $this->fileSystem->mkdir($this->testDirectory);
-        $this->gitWrapper->setProjectRoot($this->testDirectory);
+        $currentDirectory = __DIR__;
+        $directories = explode(\DIRECTORY_SEPARATOR, $currentDirectory);
+        array_pop($directories);
+        array_push($directories, 'scratchpad');
+        array_push($directories, 'test');
+        $testDirectory = implode(\DIRECTORY_SEPARATOR, $directories);
+        $this->fileSystem->remove($testDirectory);
+        $this->fileSystem->mkdir($testDirectory);
+        $this->projectRoot = new ProjectRoot($testDirectory);
     }
 
     private function commit(string $directory): void
     {
         $source = $this->getPath($directory);
-        $this->fileSystem->mirror($source, $this->testDirectory, null, ['override' => true]);
-        $this->gitWrapper->addAndCommt("Updating code to $directory");
+        $this->fileSystem->mirror($source, (string) $this->projectRoot, null, ['override' => true]);
+        $this->gitWrapper->addAndCommt("Updating code to $directory", $this->projectRoot);
     }
 
     private function runCreateBaseLineCommand(): void
@@ -161,7 +166,7 @@ class EndToEndTest extends TestCase
             'static-analysis-tool' => 'psalm-json',
             'baseline-file' => $this->getBaselineFilePath(),
             'static-analysis-output-file' => $this->getPath(self::COMMIT_1_PSALM_RESULTS),
-            '--project-root' => $this->testDirectory,
+            '--project-root' => (string) $this->projectRoot,
         ];
 
         $this->runCommand(CreateBaseLineCommand::COMMAND_NAME, $arguments, 0);
@@ -179,7 +184,7 @@ class EndToEndTest extends TestCase
             'baseline-file' => $this->getBaselineFilePath(),
             'static-analysis-output-file' => $this->getPath($psalmResults),
             'output-results-file' => $outputResults,
-            '--project-root' => $this->testDirectory,
+            '--project-root' => (string) $this->projectRoot,
         ];
 
         if ($failureOnResultsAfterBaseline) {
@@ -206,7 +211,7 @@ class EndToEndTest extends TestCase
 
     private function getBaselineFilePath(): string
     {
-        return $this->testDirectory.'/baseline.json';
+        return "{$this->projectRoot}/baseline.json";
     }
 
     private function loadJson(string $path): array
@@ -218,11 +223,11 @@ class EndToEndTest extends TestCase
 
     private function removeTestDirectory(): void
     {
-        $this->fileSystem->remove($this->testDirectory);
+        $this->fileSystem->remove((string) $this->projectRoot);
     }
 
     private function getSarbOutputFile(string $filename): string
     {
-        return "{$this->testDirectory}/$filename";
+        return "{$this->projectRoot}/$filename";
     }
 }

@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
@@ -38,6 +39,8 @@ class BaseLineResultsRemoveTest extends TestCase
 
     public function testRemoveBaseLineResults(): void
     {
+        $projectRoot = new ProjectRoot('/foo');
+
         // Create file mutations
         $fileMutationsBuilder = new FileMutationsBuilder();
         $fileMutationBuilder = new FileMutationBuilder($fileMutationsBuilder);
@@ -67,7 +70,7 @@ class BaseLineResultsRemoveTest extends TestCase
         // Prune baseline results from latest results
         $historyAnalyser = new DiffHistoryAnalyser($fileMutations);
         $baseLineResultsRemover = new BaseLineResultsRemover();
-        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine($latestAnalysisResults, $baseLine);
+        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine($latestAnalysisResults, $baseLine, $projectRoot);
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();
 

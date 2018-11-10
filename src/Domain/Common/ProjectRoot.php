@@ -58,4 +58,9 @@ class ProjectRoot
 
         return StringUtils::removeFromStart($this->rootDirectory, $fullPath);
     }
+
+    public function __toString(): string
+    {
+        return $this->rootDirectory;
+    }
 }

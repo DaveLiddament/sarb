@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
@@ -22,13 +23,14 @@ interface ResultsParser
      * Takes a string representation of the static analysis results and converts to AnalysisResults.
      *
      * @param string $resultsAsString
+     * @param ProjectRoot $projectRoot
      *
      * @throws ParseAtLocationException
      * @throws InvalidFileFormatException
      *
      * @return AnalysisResults
      */
-    public function convertFromString(string $resultsAsString): AnalysisResults;
+    public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults;
 
     /**
      * Create a string representation of the Analysis results (for persisting to a file).

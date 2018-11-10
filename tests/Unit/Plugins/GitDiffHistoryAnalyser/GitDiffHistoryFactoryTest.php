@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\Parser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
@@ -31,17 +32,23 @@ class GitDiffHistoryFactoryTest extends TestCase
      */
     private $gitWrapper;
 
+    /**
+     * @var ProjectRoot
+     */
+    private $projectRoot;
+
     protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
     {
         $this->gitWrapper = new StubGitWrapper(StubGitWrapper::GIT_SHA_1, '');
         $parser = new Parser();
         $this->gitDiffHistoryFactory = new GitDiffHistoryFactory($this->gitWrapper, $parser);
+        $this->projectRoot = new ProjectRoot('/foo');
     }
 
     public function testNewHistoryAnalyser(): void
     {
         $gitCommit = new GitCommit(StubGitWrapper::GIT_SHA_2);
-        $diffHistoryAnalyser = $this->gitDiffHistoryFactory->newHistoryAnalyser($gitCommit);
+        $diffHistoryAnalyser = $this->gitDiffHistoryFactory->newHistoryAnalyser($gitCommit, $this->projectRoot);
         $this->assertInstanceOf(DiffHistoryAnalyser::class, $diffHistoryAnalyser);
     }
 
@@ -54,16 +61,9 @@ class GitDiffHistoryFactoryTest extends TestCase
     {
         $historyMarkerFactory = $this->gitDiffHistoryFactory->newHistoryMarkerFactory();
 
-        // To check everything is setup correctly we'll call the newCurrentHitsoryMarker
+        // To check everything is setup correctly we'll call the newCurrentHistoryMarker
         // (SHA set in setup method via the StubGitWrapper)
-        $currentCommit = $historyMarkerFactory->newCurrentHistoryMarker();
+        $currentCommit = $historyMarkerFactory->newCurrentHistoryMarker($this->projectRoot);
         $this->assertGitCommit(StubGitWrapper::GIT_SHA_1, $currentCommit);
-    }
-
-    public function testSetProjectRoot(): void
-    {
-        $this->assertNull($this->gitWrapper->getProjectRootDirectory());
-        $this->gitDiffHistoryFactory->setProjectRoot(self::PROJECT_ROOT);
-        $this->assertSame(self::PROJECT_ROOT, $this->gitWrapper->getProjectRootDirectory());
     }
 }

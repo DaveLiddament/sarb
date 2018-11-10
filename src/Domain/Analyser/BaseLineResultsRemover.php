@@ -15,6 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
@@ -27,16 +28,21 @@ class BaseLineResultsRemover
      *
      * @param AnalysisResults $latestAnalysisResults
      * @param BaseLine $baseLine
+     * @param ProjectRoot $projectRoot
      *
      * @throws HistoryAnalyserException
      *
      * @return AnalysisResults
+     *
+     *
+     * TODO remove need to pass in ProjectRoot to here
      */
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
-        BaseLine $baseLine
+        BaseLine $baseLine,
+        ProjectRoot $projectRoot
     ): AnalysisResults {
-        $historyAnalyser = $baseLine->getHistoryFactory()->newHistoryAnalyser($baseLine->getHistoryMarker());
+        $historyAnalyser = $baseLine->getHistoryFactory()->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
 
         $prunedAnalysisResults = new AnalysisResults();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLine->getAnalysisResults());

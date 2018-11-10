@@ -15,6 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsP
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
@@ -31,12 +32,12 @@ class PsalmJsonResultsParser implements ResultsParser
 {
     const LINE_FROM = 'line_from';
     const TYPE = 'type';
-    const FILE = 'file_name';
+    const FILE = 'file_path';
 
     /**
      * {@inheritdoc}
      */
-    public function convertFromString(string $resultsAsString): AnalysisResults
+    public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         try {
             $asArray = JsonUtils::toArray($resultsAsString);
@@ -44,7 +45,7 @@ class PsalmJsonResultsParser implements ResultsParser
             throw new InvalidFileFormatException('Not a valid JSON format');
         }
 
-        return $this->convertFromArray($asArray);
+        return $this->convertFromArray($asArray, $projectRoot);
     }
 
     /**
@@ -72,12 +73,13 @@ class PsalmJsonResultsParser implements ResultsParser
      * Converts from an array.
      *
      * @param array $analysisResultsAsArray
+     * @param ProjectRoot $projectRoot
      *
      * @throws ParseAtLocationException
      *
      * @return AnalysisResults
      */
-    private function convertFromArray(array $analysisResultsAsArray): AnalysisResults
+    private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
     {
         $analysisResults = new AnalysisResults();
 
@@ -88,7 +90,7 @@ class PsalmJsonResultsParser implements ResultsParser
             ++$resultsCount;
             try {
                 ArrayUtils::assertArray($analysisResultAsArray);
-                $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray);
+                $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                 $analysisResults->addAnalysisResult($analysisResult);
             } catch (ArrayParseException | JsonParseException $e) {
                 throw new ParseAtLocationException("Result [$resultsCount]", $e);
@@ -106,14 +108,15 @@ class PsalmJsonResultsParser implements ResultsParser
      *
      * @return AnalysisResult
      */
-    private function convertAnalysisResultFromArray(array $analysisResultAsArray): AnalysisResult
+    private function convertAnalysisResultFromArray(array $analysisResultAsArray, ProjectRoot $projectRoot): AnalysisResult
     {
-        $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
+        $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE_FROM);
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
+        $relativeFileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFileNameAsString);
 
         $location = new Location(
-            new FileName($fileNameAsString),
+            new FileName($relativeFileNameAsString),
             new LineNumber($lineAsInt)
         );
 

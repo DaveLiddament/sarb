@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+
 interface HistoryFactory
 {
     /**
@@ -23,7 +25,7 @@ interface HistoryFactory
      *
      * @return HistoryAnalyser
      */
-    public function newHistoryAnalyser(HistoryMarker $historyMarker): HistoryAnalyser;
+    public function newHistoryAnalyser(HistoryMarker $historyMarker, ProjectRoot $projectRoot): HistoryAnalyser;
 
     /**
      * Return factory for creating a HistoryMarker from a string representation of it.
@@ -38,11 +40,4 @@ interface HistoryFactory
      * @return string
      */
     public function getIdentifier(): string;
-
-    /**
-     * Set path to root of project being analysed.
-     *
-     * @param string|null $projectRoot
-     */
-    public function setProjectRoot(?string $projectRoot): void;
 }
