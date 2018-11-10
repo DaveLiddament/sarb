@@ -69,11 +69,15 @@ class PsalmJsonResultsParser implements ResultsParser
     }
 
     /**
-     * {@inheritdoc}
+     * Converts from an array.
      *
-     * TODO can this become private?
+     * @param array $analysisResultsAsArray
+     *
+     * @throws ParseAtLocationException
+     *
+     * @return AnalysisResults
      */
-    public function convertFromArray(array $analysisResultsAsArray): AnalysisResults
+    private function convertFromArray(array $analysisResultsAsArray): AnalysisResults
     {
         $analysisResults = new AnalysisResults();
 

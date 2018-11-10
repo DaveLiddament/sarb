@@ -47,17 +47,4 @@ interface ResultsParser
      * @return Identifier
      */
     public function getIdentifier(): Identifier;
-
-    /**
-     * TODO: can this be removed?
-     *
-     * Converts from an array.
-     *
-     * @param array $analysisResults
-     *
-     * @throws ParseAtLocationException
-     *
-     * @return AnalysisResults
-     */
-    public function convertFromArray(array $analysisResults): AnalysisResults;
 }
