@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Analyser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Analyser\BaseLineResultsRemover;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Location;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\LineMutation;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\NewFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\ResultsParser\UnifiedDiffParser\OriginalFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\LineMutation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\NewFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\OriginalFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser\PsalmJsonIdentifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser\PsalmJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
 use PHPUnit\Framework\TestCase;
@@ -38,14 +38,6 @@ class BaseLineResultsRemoveTest extends TestCase
 
     public function testRemoveBaseLineResults(): void
     {
-        // Create baseline
-        $historyMarker = new GitCommit(StubGitWrapper::GIT_SHA_1);
-        $baselineAnalysisResults = new AnalysisResults();
-        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_1, self::LINE_10, self::TYPE_1);
-        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_2, self::LINE_15, self::TYPE_2);
-        $identifier = new PsalmJsonIdentifier();
-        $baseLine = new BaseLine($historyMarker, $baselineAnalysisResults, $identifier);
-
         // Create file mutations
         $fileMutationsBuilder = new FileMutationsBuilder();
         $fileMutationBuilder = new FileMutationBuilder($fileMutationsBuilder);
@@ -54,6 +46,16 @@ class BaseLineResultsRemoveTest extends TestCase
         $fileMutationBuilder->addLineMutation(LineMutation::newLineNumber(new LineNumber(self::LINE_9)));
         $fileMutationBuilder->build();
         $fileMutations = $fileMutationsBuilder->build();
+
+        // Create baseline
+        $historyMarker = new GitCommit(StubGitWrapper::GIT_SHA_1);
+        $baselineAnalysisResults = new AnalysisResults();
+        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_1, self::LINE_10, self::TYPE_1);
+        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_2, self::LINE_15, self::TYPE_2);
+
+        $resultsParser = new PsalmJsonResultsParser();
+        $historyFactory = new StubHistoryFactory($fileMutations);
+        $baseLine = new BaseLine($historyFactory, $baselineAnalysisResults, $resultsParser, $historyMarker);
 
         // Create latest results
         $latestAnalysisResults = new AnalysisResults();
@@ -65,10 +67,7 @@ class BaseLineResultsRemoveTest extends TestCase
         // Prune baseline results from latest results
         $historyAnalyser = new DiffHistoryAnalyser($fileMutations);
         $baseLineResultsRemover = new BaseLineResultsRemover();
-        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine(
-            $latestAnalysisResults,
-            $baseLine,
-            $historyAnalyser);
+        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine($latestAnalysisResults, $baseLine);
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();
 

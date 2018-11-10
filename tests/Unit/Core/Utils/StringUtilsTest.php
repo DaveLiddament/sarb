@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Core\Utils\StringUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

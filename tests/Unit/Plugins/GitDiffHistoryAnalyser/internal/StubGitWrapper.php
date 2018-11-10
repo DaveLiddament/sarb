@@ -52,7 +52,7 @@ class StubGitWrapper implements GitWrapper
     /**
      * {@inheritdoc}
      */
-    public function setProjectRoot(string $projectRootDirectory): void
+    public function setProjectRoot(?string $projectRootDirectory): void
     {
         $this->projectRootDirectory = $projectRootDirectory;
     }

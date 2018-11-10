@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsParsersRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,19 +27,19 @@ class ListResultsParsesCommand extends Command
     protected static $defaultName = self::COMMAND_NAME;
 
     /**
-     * @var StaticAnalysisResultsParsersRegistry
+     * @var ResultsParsersRegistry
      */
     private $staticAnalysisResultsParsersRegistry;
 
     /**
      * Constructor.
      *
-     * @param StaticAnalysisResultsParsersRegistry $staticAnalysisResultsParserRegistry
+     * @param ResultsParsersRegistry $resultsParsersRegistry
      */
-    public function __construct(StaticAnalysisResultsParsersRegistry $staticAnalysisResultsParserRegistry)
+    public function __construct(ResultsParsersRegistry $resultsParsersRegistry)
     {
         parent::__construct(self::COMMAND_NAME);
-        $this->staticAnalysisResultsParsersRegistry = $staticAnalysisResultsParserRegistry;
+        $this->staticAnalysisResultsParsersRegistry = $resultsParsersRegistry;
     }
 
     /**

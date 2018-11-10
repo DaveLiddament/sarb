@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\Container;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\StaticAnalysisResultsParsersRegistry;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsParsersRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -22,7 +22,7 @@ class AddStaticAnalysisResultsParserCompilerPass implements CompilerPassInterfac
 {
     public function process(ContainerBuilder $container): void
     {
-        $definition = $container->getDefinition(StaticAnalysisResultsParsersRegistry::class);
+        $definition = $container->getDefinition(ResultsParsersRegistry::class);
         $taggedServices = $container->findTaggedServiceIds(Container::RESULTS_PARSER_TAG);
         $services = [];
         foreach ($taggedServices as $id => $tags) {
