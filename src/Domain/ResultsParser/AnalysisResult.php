@@ -47,7 +47,7 @@ class AnalysisResult
     /**
      * AnalysisResult constructor.
      *
-     * NOTE: $stringRepresentation should be a serialised version of the violation containing all the details that the
+     * NOTE: $fullDetails should be a serialised version of the violation containing all the details that the
      * static analysis tool provided. It must be possible to reproduce the original violation from this string
      *
      * @param Location $location
