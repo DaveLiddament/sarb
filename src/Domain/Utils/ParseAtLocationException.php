@@ -21,6 +21,7 @@ class ParseAtLocationException extends SarbException
 {
     public function __construct(string $location, SarbException $locationException)
     {
-        parent::__construct($location, 0, $locationException);
+        $message = "$location [{$locationException->getMessage()}]";
+        parent::__construct($message);
     }
 }

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
-use Webmozart\Assert\Assert;
+use Webmozart\PathUtil\Path;
 
 /**
  * Holds the root directory for the project being analysed.
@@ -15,11 +14,6 @@ use Webmozart\Assert\Assert;
  * stored as relative to the project root.
  *
  * NOTE: Assuming the GitHistoryAnalyser is being used then the root directory contains the .git directory.
- *
- *
- * TODO: provide support for relative paths (need to add current working directory to constructor)
- * TODO: make work with paths like /foo/bar/../baz
- * TODO: make work with windows
  */
 class ProjectRoot
 {
@@ -31,18 +25,18 @@ class ProjectRoot
     /**
      * ProjectRoot constructor.
      *
+     * If
+     *
      * @param string $rootDirectory
+     * @param string $currentWorkingDirectory
      */
-    public function __construct(string $rootDirectory)
+    public function __construct(string $rootDirectory, string $currentWorkingDirectory)
     {
-        // TODO remove assertions once proper support for paths is added.
-        Assert::startsWith($rootDirectory, \DIRECTORY_SEPARATOR);
-        Assert::false(strpos($rootDirectory, '..'));
-
-        if (!StringUtils::endsWith(\DIRECTORY_SEPARATOR, $rootDirectory)) {
-            $rootDirectory .= \DIRECTORY_SEPARATOR;
+        if (Path::isAbsolute($rootDirectory)) {
+            $this->rootDirectory = Path::canonicalize($rootDirectory);
+        } else {
+            $this->rootDirectory = Path::makeAbsolute($rootDirectory, $currentWorkingDirectory);
         }
-        $this->rootDirectory = $rootDirectory;
     }
 
     /**
@@ -50,13 +44,17 @@ class ProjectRoot
      *
      * @param string $fullPath
      *
+     * @throws InvalidPathException
+     *
      * @return string
      */
     public function getPathRelativeToRootDirectory(string $fullPath): string
     {
-        Assert::startsWith($fullPath, $this->rootDirectory, "Path [$fullPath] not within project root [{$this->rootDirectory}]");
+        if (!Path::isBasePath($this->rootDirectory, $fullPath)) {
+            throw new InvalidPathException($fullPath, $this->rootDirectory);
+        }
 
-        return StringUtils::removeFromStart($this->rootDirectory, $fullPath);
+        return Path::makeRelative($fullPath, $this->rootDirectory);
     }
 
     public function __toString(): string

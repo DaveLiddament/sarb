@@ -42,7 +42,7 @@ class GitDiffHistoryFactoryTest extends TestCase
         $this->gitWrapper = new StubGitWrapper(StubGitWrapper::GIT_SHA_1, '');
         $parser = new Parser();
         $this->gitDiffHistoryFactory = new GitDiffHistoryFactory($this->gitWrapper, $parser);
-        $this->projectRoot = new ProjectRoot('/foo');
+        $this->projectRoot = new ProjectRoot('/foo', '/home/sarb');
     }
 
     public function testNewHistoryAnalyser(): void

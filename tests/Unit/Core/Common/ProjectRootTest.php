@@ -4,47 +4,52 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Common;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 
 class ProjectRootTest extends TestCase
 {
-    public function invalidProjectRootDataProvider(): array
+    private const CURRENT_WORKING_DIRECTORY = '/home/sarb';
+    private const RELATIVE_PATH = 'foo/bar';
+    private const ABSOLUTE_PATH = '/vagrant/code';
+
+    public function testInstantiateRelativeToCurrentWorkingDirectory(): void
     {
-        return [
-            'relativePath' => ['foo/bar'],
-            'doubleDots' => ['/foo/bar/../baz'],
-        ];
+        $projectRoot = new ProjectRoot(self::RELATIVE_PATH, self::CURRENT_WORKING_DIRECTORY);
+        $this->assertEquals(self::CURRENT_WORKING_DIRECTORY.\DIRECTORY_SEPARATOR.self::RELATIVE_PATH, (string) $projectRoot);
     }
 
-    /**
-     * @dataProvider invalidProjectRootDataProvider
-     */
-    public function testInvalidProjectRoot(string $invalidProjectRoot): void
+    public function testInstantiateWithAbsolutePath(): void
     {
-        $this->expectException(LogicException::class);
-        new ProjectRoot($invalidProjectRoot);
+        $projectRoot = new ProjectRoot(self::ABSOLUTE_PATH, self::CURRENT_WORKING_DIRECTORY);
+        $this->assertEquals(self::ABSOLUTE_PATH, (string) $projectRoot);
     }
 
-    public function testRemoveProjectRootNoTrailngSlash(): void
+    public function testNonCanonicalPath(): void
     {
-        $projectRoot = new ProjectRoot('/foo/bar');
+        $projectRoot = new ProjectRoot('/foo/baz/../bar', self::CURRENT_WORKING_DIRECTORY);
+        $this->assertEquals('/foo/bar', (string) $projectRoot);
+    }
+
+    public function testRemoveProjectRootNoTrailingSlash(): void
+    {
+        $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
         $actual = $projectRoot->getPathRelativeToRootDirectory('/foo/bar/baz/hello.php');
         $this->assertSame('baz/hello.php', $actual);
     }
 
-    public function testRemoveProjectRootWithTrailngSlash(): void
+    public function testRemoveProjectRootWithTrailingSlash(): void
     {
-        $projectRoot = new ProjectRoot('/foo/bar/');
+        $projectRoot = new ProjectRoot('/foo/bar/', self::CURRENT_WORKING_DIRECTORY);
         $actual = $projectRoot->getPathRelativeToRootDirectory('/foo/bar/baz/hello.php');
         $this->assertSame('baz/hello.php', $actual);
     }
 
     public function testPathNotInProjectRoot(): void
     {
-        $this->expectException(LogicException::class);
-        $projectRoot = new ProjectRoot('/foo/bar');
+        $this->expectException(InvalidPathException::class);
+        $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
         $projectRoot->getPathRelativeToRootDirectory('bar/baz.php');
     }
 }

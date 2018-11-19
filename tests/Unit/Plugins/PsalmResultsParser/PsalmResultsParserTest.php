@@ -19,7 +19,7 @@ class PsalmResultsParserTest extends TestCase
 
     public function testConversion(): void
     {
-        $projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner');
+        $projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
 
         $psalmResultsParser = new PsalmJsonResultsParser();
         $original = $this->getResource('psalm/psalm.json');

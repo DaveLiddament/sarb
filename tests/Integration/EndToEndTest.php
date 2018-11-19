@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Integration;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListHistoryAnalysersCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListResultsParsesCommand;
@@ -16,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
+use Webmozart\PathUtil\Path;
 
 // TODO this is getting a bit big. Split into multiple files.
 class EndToEndTest extends TestCase
@@ -23,15 +25,15 @@ class EndToEndTest extends TestCase
     use ResourceLoaderTrait;
 
     const COMMIT_1_DIRECTORY = 'integration/commit1';
-    const COMMIT_1_PSALM_RESULTS = 'integration/psalmResults/commit1.json';
+    const COMMIT_1_PSALM_RESULTS = 'commit1.json';
 
     const COMMIT_2_DIRECTORY = 'integration/commit2';
-    const COMMIT_2_PSALM_RESULTS = 'integration/psalmResults/commit2.json';
-    const COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS = 'integration/expectedResults/commit2-baseline-removed.json';
+    const COMMIT_2_PSALM_RESULTS = 'commit2.json';
+    const COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS = 'expected-commit2-baseline-removed.json';
 
     const COMMIT_3_DIRECTORY = 'integration/commit3';
-    const COMMIT_3_PSALM_RESULTS = 'integration/psalmResults/commit3.json';
-    const COMMIT_3_BASELINE_REMOVED_EXPECTED_RESULTS = 'integration/expectedResults/commit3-baseline-removed.json';
+    const COMMIT_3_PSALM_RESULTS = 'commit3.json';
+    const COMMIT_3_BASELINE_REMOVED_EXPECTED_RESULTS = 'expected-commit3-baseline-removed.json';
 
     /**
      * @var Filesystem
@@ -63,21 +65,26 @@ class EndToEndTest extends TestCase
 
     public function testInvalidConfig(): void
     {
+        $this->createTestDirectory();
         $arguments = [
             'static-analysis-tool' => 'rubbish',
             'baseline-file' => $this->getBaselineFilePath(),
-            'static-analysis-output-file' => $this->getPath(self::COMMIT_1_PSALM_RESULTS),
+            'static-analysis-output-file' => $this->getProjectRootFilename(self::COMMIT_1_PSALM_RESULTS),
         ];
 
         $this->runCommand(CreateBaseLineCommand::COMMAND_NAME, $arguments, 2);
+
+        // Only delete test directory if tests passed. Keep to investigate test failures
+        $this->removeTestDirectory();
     }
 
     public function testInvalidBaselineSupplied(): void
     {
+        $this->createTestDirectory();
         $arguments = [
-            'baseline-file' => $this->getPath(self::COMMIT_2_PSALM_RESULTS),
-            'static-analysis-output-file' => $this->getPath(self::COMMIT_1_PSALM_RESULTS),
-            'output-results-file' => $this->getSarbOutputFile('dummy.json'),
+            'baseline-file' => $this->getProjectRootFilename(self::COMMIT_2_PSALM_RESULTS),
+            'static-analysis-output-file' => $this->getProjectRootFilename(self::COMMIT_1_PSALM_RESULTS),
+            'output-results-file' => $this->getProjectRootFilename('dummy.json'),
         ];
 
         $this->runCommand(RemoveBaseLineFromResultsCommand::COMMAND_NAME, $arguments, 3);
@@ -142,21 +149,17 @@ class EndToEndTest extends TestCase
 
     private function createTestDirectory(): void
     {
-        $currentDirectory = __DIR__;
-        $directories = explode(\DIRECTORY_SEPARATOR, $currentDirectory);
-        array_pop($directories);
-        array_push($directories, 'scratchpad');
-        array_push($directories, 'test');
-        $testDirectory = implode(\DIRECTORY_SEPARATOR, $directories);
-        $this->fileSystem->remove($testDirectory);
+        $dateTimeFolderName = date('Ymd_His');
+        $testDirectory = __DIR__."/../scratchpad/{$dateTimeFolderName}";
         $this->fileSystem->mkdir($testDirectory);
-        $this->projectRoot = new ProjectRoot($testDirectory);
+        $this->projectRoot = new ProjectRoot($testDirectory, getcwd());
     }
 
     private function commit(string $directory): void
     {
         $source = $this->getPath($directory);
         $this->fileSystem->mirror($source, (string) $this->projectRoot, null, ['override' => true]);
+        $this->updatePathsInJsonFiles((string) $this->projectRoot);
         $this->gitWrapper->addAndCommt("Updating code to $directory", $this->projectRoot);
     }
 
@@ -165,7 +168,7 @@ class EndToEndTest extends TestCase
         $arguments = [
             'static-analysis-tool' => 'psalm-json',
             'baseline-file' => $this->getBaselineFilePath(),
-            'static-analysis-output-file' => $this->getPath(self::COMMIT_1_PSALM_RESULTS),
+            'static-analysis-output-file' => $this->getProjectRootFilename(self::COMMIT_1_PSALM_RESULTS),
             '--project-root' => (string) $this->projectRoot,
         ];
 
@@ -178,11 +181,11 @@ class EndToEndTest extends TestCase
         string $expectedResultsJson,
         bool $failureOnResultsAfterBaseline
     ): void {
-        $outputResults = $this->getSarbOutputFile('output-after-baseline-removed.json');
+        $outputResults = $this->getProjectRootFilename('output-after-baseline-removed.json');
 
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
-            'static-analysis-output-file' => $this->getPath($psalmResults),
+            'static-analysis-output-file' => $this->getProjectRootFilename($psalmResults),
             'output-results-file' => $outputResults,
             '--project-root' => (string) $this->projectRoot,
         ];
@@ -195,7 +198,7 @@ class EndToEndTest extends TestCase
 
         // Now check both JSON are equal
         $actualResults = $this->loadJson($outputResults);
-        $expectedResults = $this->loadJson($this->getPath($expectedResultsJson));
+        $expectedResults = $this->loadJson($this->getProjectRootFilename($expectedResultsJson));
         $this->assertEquals($expectedResults, $actualResults);
     }
 
@@ -226,8 +229,21 @@ class EndToEndTest extends TestCase
         $this->fileSystem->remove((string) $this->projectRoot);
     }
 
-    private function getSarbOutputFile(string $filename): string
+    private function getProjectRootFilename(string $filename): string
     {
-        return "{$this->projectRoot}/$filename";
+        return Path::makeAbsolute($filename, (string) $this->projectRoot);
+    }
+
+    private function updatePathsInJsonFiles(string $directory): void
+    {
+        $files = scandir($directory);
+        foreach ($files as $file) {
+            if (StringUtils::endsWith('.json', $file)) {
+                $fullPath = Path::makeAbsolute($file, $directory);
+                $contents = file_get_contents($fullPath);
+                $newContents = str_replace('__SCRATCH_PAD_PATH__', $directory, $contents);
+                file_put_contents($fullPath, $newContents);
+            }
+        }
     }
 }

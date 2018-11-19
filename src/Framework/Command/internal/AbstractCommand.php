@@ -66,14 +66,17 @@ abstract class AbstractCommand extends Command
             $resultsFileName = $this->getFileName($input, self::RESULTS_FILE);
             $baseLineFileName = $this->getFileName($input, self::BASELINE_FILE);
             $projectRootAsString = $this->getOption($input, self::PROJECT_ROOT);
-            if (null === $projectRootAsString) {
-                $projectRootAsString = getcwd();
-                if (false === $projectRootAsString) {
-                    throw new SarbException('Can not get current working directory. Specify project root with options: '.self::PROJECT_ROOT);
-                }
+
+            $cwd = getcwd();
+            if (false === $cwd) {
+                throw new SarbException('Can not get current working directory. Specify project root with options: '.self::PROJECT_ROOT);
             }
 
-            $projectRoot = new ProjectRoot($projectRootAsString);
+            if (null === $projectRootAsString) {
+                $projectRootAsString = $cwd;
+            }
+
+            $projectRoot = new ProjectRoot($projectRootAsString, $cwd);
 
             return $this->executeHook(
                 $input,

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
@@ -92,7 +93,7 @@ class PsalmJsonResultsParser implements ResultsParser
                 ArrayUtils::assertArray($analysisResultAsArray);
                 $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                 $analysisResults->addAnalysisResult($analysisResult);
-            } catch (ArrayParseException | JsonParseException $e) {
+            } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
                 throw new ParseAtLocationException("Result [$resultsCount]", $e);
             }
         }
@@ -105,6 +106,7 @@ class PsalmJsonResultsParser implements ResultsParser
      *
      * @throws ArrayParseException
      * @throws JsonParseException
+     * @throws InvalidPathException
      *
      * @return AnalysisResult
      */
