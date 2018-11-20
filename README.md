@@ -155,3 +155,7 @@ If you are running this in CI then you can add the flag `-f`. This means a none 
  * [Unified Diff Terminology](docs/UnifiedDiffTerminology.md)
 
 
+## Authors
+
+ * [Dave Liddament](https://www.daveliddament.co.uk) [@daveliddament](https://twitter.com/daveliddament)
+ * [Community contributors](https://github.com/daveliddament/sarb/graphs/contributors)
