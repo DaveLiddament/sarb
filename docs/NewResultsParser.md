@@ -269,14 +269,16 @@ If it isn't then probably the wrong file has been specified.
 
 SARB needs to pull out:
 
- - file name (`file_name` in Psalm's JSON output)
+ - file path (`file_path` in Psalm's JSON output)
  - line number ('line_from` in Psalm's JSON output)
  - type ('type` in Psalm's JSON output)
+
+**NOTE:** The file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path.
 
 It does this like so:
 
 ```
-                $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'file_name');
+                $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'file_path');
                 $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, 'line_from');
                 $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'type');
 ```
