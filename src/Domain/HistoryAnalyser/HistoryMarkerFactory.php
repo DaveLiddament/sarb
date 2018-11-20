@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+
 interface HistoryMarkerFactory
 {
     /**
@@ -26,7 +28,9 @@ interface HistoryMarkerFactory
     /**
      * Return HistoryMarker representing current state of the code.
      *
+     * @param ProjectRoot $projectRoot
+     *
      * @return HistoryMarker
      */
-    public function newCurrentHistoryMarker(): HistoryMarker;
+    public function newCurrentHistoryMarker(ProjectRoot $projectRoot): HistoryMarker;
 }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileImportException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
@@ -43,6 +44,7 @@ class Importer
      *
      * @param ResultsParser $resultsParser
      * @param FileName $fileName
+     * @param ProjectRoot $projectRoot
      *
      * @throws FileImportException
      *
@@ -50,12 +52,13 @@ class Importer
      */
     public function importFromFile(
         ResultsParser $resultsParser,
-        FileName $fileName
+        FileName $fileName,
+        ProjectRoot $projectRoot
     ): AnalysisResults {
         try {
             $fileContents = $this->fileReader->readFile($fileName);
 
-            return $resultsParser->convertFromString($fileContents);
+            return $resultsParser->convertFromString($fileContents, $projectRoot);
         } catch (InvalidFileFormatException | ParseAtLocationException $e) {
             throw new FileImportException($resultsParser->getIdentifier()->getCode(), $fileName, $e->getMessage());
         }

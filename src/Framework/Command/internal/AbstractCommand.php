@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileImportException;
 use Symfony\Component\Console\Command\Command;
@@ -64,7 +65,18 @@ abstract class AbstractCommand extends Command
         try {
             $resultsFileName = $this->getFileName($input, self::RESULTS_FILE);
             $baseLineFileName = $this->getFileName($input, self::BASELINE_FILE);
-            $projectRoot = $this->getOption($input, self::PROJECT_ROOT);
+            $projectRootAsString = $this->getOption($input, self::PROJECT_ROOT);
+
+            $cwd = getcwd();
+            if (false === $cwd) {
+                throw new SarbException('Can not get current working directory. Specify project root with options: '.self::PROJECT_ROOT);
+            }
+
+            if (null === $projectRootAsString) {
+                $projectRootAsString = $cwd;
+            }
+
+            $projectRoot = new ProjectRoot($projectRootAsString, $cwd);
 
             return $this->executeHook(
                 $input,
@@ -98,6 +110,7 @@ abstract class AbstractCommand extends Command
      * @param OutputInterface $output
      * @param FileName $resultsFileName
      * @param FileName $baseLineFileName
+     * @param ProjectRoot $projectRoot
      *
      * @throws SarbException
      * @throws InvalidConfigException
@@ -110,7 +123,7 @@ abstract class AbstractCommand extends Command
         OutputInterface $output,
         FileName $resultsFileName,
         FileName $baseLineFileName,
-        ?string  $projectRoot
+        ProjectRoot $projectRoot
     ): int;
 
     /**

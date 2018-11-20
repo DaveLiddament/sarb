@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 
 interface GitWrapper
@@ -19,24 +20,20 @@ interface GitWrapper
     /**
      * Returns a GitCommit representing the git HEAD or the project being analysed.
      *
+     * @param ProjectRoot $projectRoot
+     *
      * @return GitCommit
      */
-    public function getCurrentSha(): GitCommit;
+    public function getCurrentSha(ProjectRoot $projectRoot): GitCommit;
 
     /**
      * Returns a diff (as a string) between the 2 commits.
      *
+     * @param ProjectRoot $projectRoot
      * @param GitCommit $originalCommit
      * @param GitCommit $newCommit
      *
      * @return string
      */
-    public function getGitDiff(GitCommit $originalCommit, GitCommit $newCommit): string;
-
-    /**
-     * Set path to root directory of project being analysed.
-     *
-     * @param string|null $projectRootDirectory
-     */
-    public function setProjectRoot(?string $projectRootDirectory): void;
+    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit, GitCommit $newCommit): string;
 }

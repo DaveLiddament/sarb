@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarker;
@@ -47,11 +48,12 @@ class GitDiffHistoryFactory implements HistoryFactory
     /**
      * {@inheritdoc}
      */
-    public function newHistoryAnalyser(HistoryMarker $historyMarker): HistoryAnalyser
+    public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
-        Assert::isInstanceOf($historyMarker, GitCommit::class);
-        $newDiff = $this->gitCliWrapper->getCurrentSha();
-        $diff = $this->gitCliWrapper->getGitDiff($historyMarker, $newDiff);
+        /** @var GitCommit $baseLineHistoryMarker */
+        Assert::isInstanceOf($baseLineHistoryMarker, GitCommit::class);
+        $newDiff = $this->gitCliWrapper->getCurrentSha($projectRoot);
+        $diff = $this->gitCliWrapper->getGitDiff($projectRoot, $baseLineHistoryMarker, $newDiff);
         $fileMutations = $this->parser->parseDiff($diff);
 
         return new DiffHistoryAnalyser($fileMutations);
@@ -71,13 +73,5 @@ class GitDiffHistoryFactory implements HistoryFactory
     public function getIdentifier(): string
     {
         return 'git';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setProjectRoot(?string $projectRoot): void
-    {
-        $this->gitCliWrapper->setProjectRoot($projectRoot);
     }
 }

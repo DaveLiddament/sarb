@@ -15,6 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Exporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
@@ -102,16 +103,29 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
         OutputInterface $output,
         FileName $resultsFileName,
         FileName $baseLineFileName,
-        ?string $projectRoot
+        ProjectRoot $projectRoot
     ): int {
         $outputResultsFile = $this->getFileName($input, self::OUTPUT_RESULTS_FILE);
 
         $baseLine = $this->baseLineImporter->import($baseLineFileName);
-        $baseLine->getHistoryFactory()->setProjectRoot($projectRoot);
         $resultsParser = $baseLine->getResultsParser();
+        $historyFactory = $baseLine->getHistoryFactory();
 
-        $inputAnalysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName);
-        $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine($inputAnalysisResults, $baseLine);
+        $output->writeln(
+            sprintf('<info>Baseline uses ResultsParser [%s] and HistoryAnalyser [%s]</info>',
+                $resultsParser->getIdentifier()->getCode(),
+                $historyFactory->getIdentifier())
+        );
+
+        $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
+        $baseLineAnalysisResults = $baseLine->getAnalysisResults();
+
+        $inputAnalysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName, $projectRoot);
+        $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
+            $inputAnalysisResults,
+            $historyAnalyser,
+            $baseLineAnalysisResults
+        );
 
         $this->resultsExporter->exportAnalysisResults(
             $outputAnalysisResults,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
 
@@ -11,11 +12,6 @@ class StubGitWrapper implements GitWrapper
 {
     public const GIT_SHA_1 = '683031e66625ba768350e5cb90d01121eae2ba00';
     public const GIT_SHA_2 = '0dcb42273e9deffb76997926d6748aa04487a75c';
-
-    /**
-     * @var string|null
-     */
-    private $projectRootDirectory;
 
     /**
      * @var string
@@ -36,7 +32,7 @@ class StubGitWrapper implements GitWrapper
     /**
      * {@inheritdoc}
      */
-    public function getCurrentSha(): GitCommit
+    public function getCurrentSha(ProjectRoot $projectRoot): GitCommit
     {
         return new GitCommit($this->sha);
     }
@@ -44,26 +40,8 @@ class StubGitWrapper implements GitWrapper
     /**
      * {@inheritdoc}
      */
-    public function getGitDiff(GitCommit $originalCommit, GitCommit $newCommit): string
+    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit, GitCommit $newCommit): string
     {
         return $this->diff;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setProjectRoot(?string $projectRootDirectory): void
-    {
-        $this->projectRootDirectory = $projectRootDirectory;
-    }
-
-    /**
-     * For testing purposes to check this has been called correctly.
-     *
-     * @return null|string
-     */
-    public function getProjectRootDirectory(): ?string
-    {
-        return $this->projectRootDirectory;
     }
 }

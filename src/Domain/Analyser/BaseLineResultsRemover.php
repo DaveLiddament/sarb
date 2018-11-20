@@ -16,7 +16,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLi
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 
@@ -26,20 +25,18 @@ class BaseLineResultsRemover
      * Returns AnalysisResults stripping out those that appear in the BaseLine.
      *
      * @param AnalysisResults $latestAnalysisResults
-     * @param BaseLine $baseLine
-     *
-     * @throws HistoryAnalyserException
+     * @param HistoryAnalyser $historyAnalyser
+     * @param AnalysisResults $baseLineAnalysisResults
      *
      * @return AnalysisResults
      */
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
-        BaseLine $baseLine
+        HistoryAnalyser $historyAnalyser,
+        AnalysisResults $baseLineAnalysisResults
     ): AnalysisResults {
-        $historyAnalyser = $baseLine->getHistoryFactory()->newHistoryAnalyser($baseLine->getHistoryMarker());
-
         $prunedAnalysisResults = new AnalysisResults();
-        $baseLineResultsComparator = new BaseLineResultsComparator($baseLine->getAnalysisResults());
+        $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);
 
         foreach ($latestAnalysisResults->getAnalysisResults() as $analysisResult) {
             if (!$this->isInHistoricResults($analysisResult, $baseLineResultsComparator, $historyAnalyser)) {

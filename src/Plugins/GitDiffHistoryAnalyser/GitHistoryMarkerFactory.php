@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarkerFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
@@ -44,8 +45,8 @@ class GitHistoryMarkerFactory implements HistoryMarkerFactory
     /**
      * {@inheritdoc}
      */
-    public function newCurrentHistoryMarker(): HistoryMarker
+    public function newCurrentHistoryMarker(ProjectRoot $projectRoot): HistoryMarker
     {
-        return $this->gitCliWrapper->getCurrentSha();
+        return $this->gitCliWrapper->getCurrentSha($projectRoot);
     }
 }

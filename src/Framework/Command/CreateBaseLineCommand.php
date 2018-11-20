@@ -15,6 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineExporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactoryLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
@@ -104,14 +105,13 @@ class CreateBaseLineCommand extends AbstractCommand
         OutputInterface $output,
         FileName $resultsFileName,
         FileName $baseLineFileName,
-        ?string $projectRoot
+        ProjectRoot $projectRoot
     ): int {
         $historyFactory = $this->historyFactoryLookupService->getHistoryFactory(self::DEFAULT_HISTORY_FACTORY_NAME);
-        $historyFactory->setProjectRoot($projectRoot);
-        $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker();
+        $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker($projectRoot);
         $resultsParser = $this->getResultsParser($input);
 
-        $analysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName);
+        $analysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName, $projectRoot);
         $baseLine = new BaseLine(
             $historyFactory,
             $analysisResults,

@@ -44,4 +44,19 @@ class StringUtils
 
         return substr($haystack, $length);
     }
+
+    /**
+     * Returns true if $haystack ends with $needle.
+     *
+     * @param string $needle
+     * @param string $haystack
+     *
+     * @return bool
+     */
+    public static function endsWith(string $needle, string $haystack): bool
+    {
+        $length = strlen($needle);
+
+        return substr($haystack, -$length) === $needle;
+    }
 }

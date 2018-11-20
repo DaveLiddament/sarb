@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Analyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarker;
@@ -33,7 +34,7 @@ class StubHistoryFactory implements HistoryFactory
     /**
      * {@inheritdoc}
      */
-    public function newHistoryAnalyser(HistoryMarker $historyMarker): HistoryAnalyser
+    public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
         return new DiffHistoryAnalyser($this->fileMutations);
     }
@@ -52,13 +53,5 @@ class StubHistoryFactory implements HistoryFactory
     public function getIdentifier(): string
     {
         return 'stub';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setProjectRoot(?string $projectRoot): void
-    {
-        // Nothing to do.
     }
 }
