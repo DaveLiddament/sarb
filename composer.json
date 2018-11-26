@@ -31,6 +31,7 @@
     "phpstan/phpstan-strict-rules": "^0.10.1",
     "phpstan/phpstan-webmozart-assert": "^0.10.0",
     "phpunit/phpunit": "^7.0",
+    "sensiolabs/security-checker": "^5.0",
     "symfony/filesystem": "^4.1",
     "vimeo/psalm": "^2.0.16"
   },
@@ -53,7 +54,8 @@
       "@cs",
       "@test",
       "@psalm",
-      "@phpstan"
+      "@phpstan",
+      "@security"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
@@ -62,6 +64,7 @@
     "cs-fix" : "php-cs-fixer fix -v",
     "psalm" : "psalm",
     "phpstan" : "phpstan -n --no-progress  analyse",
-    "test" : "phpunit"
+    "test" : "phpunit",
+    "security" : "security-checker security:check"
   }
 }

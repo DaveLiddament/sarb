@@ -1,23 +1,67 @@
+defaults: &image
+  docker:
+  - image: circleci/php:7.2-apache-stretch-node-browsers
+
+restore-cache: &restore-cache
+  restore_cache:
+      keys:
+      - v1-dependencies-{{ checksum "composer.lock" }}
+      - v1-dependencies-
+
+composer-install: &composer-install
+  run:
+    name: Composer install
+    command: composer install  --no-interaction --no-scripts --prefer-dist
+
+save-cache: &save-cache
+  save_cache:
+    key: v1-dependencies-{{ checksum "composer.lock" }}
+    paths:
+    - vendor
+
+
+
 version: 2
+
 jobs:
   build:
-
-    docker:
-    - image: circleci/php:7.2-apache-stretch-node-browsers
+    <<: *image
 
     steps:
-    - checkout
+      - checkout
+      - *restore-cache
+      - *composer-install
+      - *save-cache
+      - run:
+          name: Run full CI process
+          command: composer ci
 
-    - restore_cache:
-        keys:
-        - v1-dependencies-{{ checksum "composer.lock" }}
-        - v1-dependencies-
 
-    - run: composer install -n --prefer-dist
+  security:
+    <<: *image
 
-    - save_cache:
-        key: v1-dependencies-{{ checksum "composer.lock" }}
-        paths:
-        - vendor
+    steps:
+      - checkout
+      - *restore-cache
+      - *composer-install
+      - *save-cache
+      - run:
+          name: Run security check
+          command: composer security
 
-    - run: composer ci
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+
+  security-check:
+    triggers:
+      - schedule:
+          cron: "33 12 * * *"
+          filters:
+            branches:
+              only: master
+
+    jobs:
+      - security
