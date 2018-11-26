@@ -54,7 +54,8 @@
       "@cs",
       "@test",
       "@psalm",
-      "@phpstan"
+      "@phpstan",
+      "@security"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
@@ -63,6 +64,7 @@
     "cs-fix" : "php-cs-fixer fix -v",
     "psalm" : "psalm",
     "phpstan" : "phpstan -n --no-progress  analyse",
-    "test" : "phpunit"
+    "test" : "phpunit",
+    "security" : "security-checker security:check"
   }
 }
