@@ -34,6 +34,7 @@ class CreateBaseLineCommand extends AbstractCommand
 
     private const STATIC_ANALYSIS_TOOL = 'static-analysis-tool';
     private const DEFAULT_HISTORY_FACTORY_NAME = 'git';
+    private const DOC_URL = 'https://github.com/DaveLiddament/sarb/blob/master/docs/ViolationTypeClassificationGuessing.md';
 
     /**
      * @var string
@@ -109,7 +110,7 @@ class CreateBaseLineCommand extends AbstractCommand
     ): int {
         $historyFactory = $this->historyFactoryLookupService->getHistoryFactory(self::DEFAULT_HISTORY_FACTORY_NAME);
         $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker($projectRoot);
-        $resultsParser = $this->getResultsParser($input);
+        $resultsParser = $this->getResultsParser($input, $output);
 
         $analysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName, $projectRoot);
         $baseLine = new BaseLine(
@@ -134,12 +135,12 @@ class CreateBaseLineCommand extends AbstractCommand
      *
      * @return ResultsParser
      */
-    private function getResultsParser(InputInterface $input): ResultsParser
+    private function getResultsParser(InputInterface $input, OutputInterface $output): ResultsParser
     {
         $identifier = $this->getArgument($input, self::STATIC_ANALYSIS_TOOL);
 
         try {
-            return $this->resultsParsersRegistry->getResultsParser($identifier);
+            $resultsParser = $this->resultsParsersRegistry->getResultsParser($identifier);
         } catch (InvalidResultsParserException $e) {
             $validIdentifiers = array_map(function (Identifier $identifier): string {
                 return $identifier->getCode();
@@ -148,5 +149,15 @@ class CreateBaseLineCommand extends AbstractCommand
             $message = 'Pick static analysis tool from one of: '.implode('|', $validIdentifiers);
             throw new InvalidConfigException(self::STATIC_ANALYSIS_TOOL, $message);
         }
+
+        if ($resultsParser->showTypeGuessingWarning()) {
+            $warning = '[%s] guesses the classification of violations.';
+            $warning .= 'This means results might not be 100%% accurate. ';
+            $warning .= 'See %s for more details.';
+
+            $output->writeln(sprintf($warning, $identifier, self::DOC_URL));
+        }
+
+        return $resultsParser;
     }
 }
