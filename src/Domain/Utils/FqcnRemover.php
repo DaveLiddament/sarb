@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
+/**
+ * Use case for this is when static analysis tools don't provide a classification for the type of bug found.
+ * See docs/ViolationTypeClassificationGuessing.md.
+ */
 class FqcnRemover
 {
     /**
