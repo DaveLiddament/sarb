@@ -126,7 +126,7 @@ The method that needs implementing looks like this:
 
 This is what Psalm's JSON output looks like:
 
-```
+```php
 [
     {
         "severity":"error",
@@ -214,7 +214,7 @@ SARB catches this and asks the user if they submitted the correct file.
 
 The that does this is:
 
-```
+```php
     try {
         $asArray = JsonUtils::asArray($resultsAsString);
     } catch (JsonParseException $e) {
@@ -225,7 +225,7 @@ The that does this is:
 
 Next an instance of `AnalysisResults` is created. This is what is returned from the `convertFromString` method.
 
-```
+```php
         $analysisResults = new AnalysisResults();
 ```
 
@@ -233,7 +233,7 @@ Next an instance of `AnalysisResults` is created. This is what is returned from 
 Now we iterate through the JSON array:
 
 
-```
+```php
         $resultsCount = 0;
 
         foreach ($analysisResultsAsArray as $analysisResultAsArray) {
@@ -260,7 +260,7 @@ specified. SARB will ask the user if they supplied the correct file.
 The first thing to do is check that `$analysisResultAsArray` is actually an array.
 If it isn't then probably the wrong file has been specified.
 
-```
+```php
                 ArrayUtils::assertArray($analysisResultAsArray);
 ```
 
@@ -277,7 +277,7 @@ SARB needs to pull out:
 
 It does this like so:
 
-```
+```php
                 $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'file_path');
                 $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, 'line_from');
                 $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'type');
@@ -290,7 +290,7 @@ This is needed to recreate a file that looks like Psalm's JSON output with the b
 
 The easiest way to do this is to take the array that represents the entire violation and serialise it as a string:
 
-```
+```php
                 $location = new Location(
                     new FileName($fileNameAsString),
                     new LineNumber($lineAsInt)
@@ -306,7 +306,7 @@ The easiest way to do this is to take the array that represents the entire viola
 
 Finally each individual `AnalysisResult` should be added to the `AnalysisResults`
 
-```
+```php
                 $analysisResults->addAnalysisResult($analysisResult);
 ```
 
@@ -315,12 +315,12 @@ And that's it!
 
 #### Method: convertToString
 
-The final method to implement needs to convert `AnalysisResults` into a string that is in the same format of the static analysis tool's output.
+The next method to implement needs to convert `AnalysisResults` into a string that is in the same format of the static analysis tool's output.
 `AnalysisResults` will hold only the violations that were not in the baseline.
 
 In the case of Psalm JSON format this is simple.
 
-```
+```php
     /**
      * Create a string representation of the Analysis results (for persisting to a file).
      *
@@ -341,3 +341,24 @@ In the case of Psalm JSON format this is simple.
     }
 ```
 
+#### Method: showTypeGuessingWarning
+
+The final method to implement just returns true or false.
+
+```php
+    /**
+     * Returns true if the ResultsParser has to guess the violation type.
+     *
+     * See docs/ViolationTypeClassificationGuessing.md
+     *
+     * @return bool
+     */
+    public function showTypeGuessingWarning(): bool
+    {
+        return false;
+    }
+```
+
+Read more about [guessing violation type classification](ViolationTypeClassificationGuessing.md).
+In this example the static analysis tool provides a warning so we are not guessing the
+classification. So this will return false.

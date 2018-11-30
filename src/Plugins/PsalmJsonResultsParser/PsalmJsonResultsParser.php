@@ -71,6 +71,14 @@ class PsalmJsonResultsParser implements ResultsParser
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function showTypeGuessingWarning(): bool
+    {
+        return false;
+    }
+
+    /**
      * Converts from an array.
      *
      * @param array $analysisResultsAsArray

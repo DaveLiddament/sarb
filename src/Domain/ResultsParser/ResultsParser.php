@@ -49,4 +49,13 @@ interface ResultsParser
      * @return Identifier
      */
     public function getIdentifier(): Identifier;
+
+    /**
+     * Returns true if the ResultsParser has to guess the violation type.
+     *
+     * See docs/ViolationTypeClassificationGuessing.md
+     *
+     * @return bool
+     */
+    public function showTypeGuessingWarning(): bool;
 }
