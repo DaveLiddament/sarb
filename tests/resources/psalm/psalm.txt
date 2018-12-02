@@ -1,0 +1,3 @@
+/vagrant/static-analysis-baseliner/src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php:51:13:error - Cannot assign $analysisResult to a mixed type
+/vagrant/static-analysis-baseliner/src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php:51:38:error - Method DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser\PsalmTextResultsParser::processline does not exist
+/vagrant/static-analysis-baseliner/src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php:52:49:error - Argument 1 of DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults::addAnalysisResult cannot be mixed, expecting DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult
