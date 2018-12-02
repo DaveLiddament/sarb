@@ -95,4 +95,35 @@ class ArrayUtils
             throw ArrayParseException::invalidType('base level', 'array');
         }
     }
+
+    /**
+     * Extracts a integer value from an array, however the integer is in string format.
+     *
+     * e.g. Assume the following code:
+     *
+     *   $array = ['age' => '21'];
+     *   $age = ArrayUtils::getIntAsStringValue($array, 'age');
+     *
+     * $age would be the integer value 21.
+     *
+     * @param array $array
+     * @param string $key
+     *
+     * @throws ArrayParseException
+     *
+     * @return int
+     */
+    public static function getIntAsStringValue(array $array, string $key): int
+    {
+        self::assertArrayKeyExists($array, $key);
+        if (is_string($array[$key])) {
+            $valueAsString = $array[$key];
+            $valueAsInt = (int) $valueAsString;
+            $intValueAsString = (string) $valueAsInt;
+            if ($intValueAsString === $valueAsString) {
+                return $valueAsInt;
+            }
+        }
+        throw ArrayParseException::invalidType($key, 'int as string');
+    }
 }

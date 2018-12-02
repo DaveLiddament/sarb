@@ -14,6 +14,7 @@ class ArrayUtilsTest extends TestCase
         self::NAME_KEY => self::NAME_VALUE,
         self::AGE_KEY => self::AGE_VALUE,
         self::ADDRESS_KEY => self::ADDRESS_VALUE,
+        self::INT_AS_STRING_KEY => self::INT_AS_STRING_VALUE,
     ];
 
     private const NAME_KEY = 'name';
@@ -21,6 +22,9 @@ class ArrayUtilsTest extends TestCase
     private const ADDRESS_KEY = 'address';
     private const NAME_VALUE = 'dave';
     private const AGE_VALUE = 21;
+    private const INT_AS_STRING_KEY = 'number';
+    private const INT_AS_STRING_VALUE = '31';
+    private const INT_AS_INT_VALUE = 31;
     private const ADDRESS_VALUE = [
         'some street',
         'some town',
@@ -42,6 +46,12 @@ class ArrayUtilsTest extends TestCase
     {
         $actual = ArrayUtils::getArrayValue(self::TEST_ARRAY, self::ADDRESS_KEY);
         $this->assertEquals(self::ADDRESS_VALUE, $actual);
+    }
+
+    public function testGetIntAsString(): void
+    {
+        $actual = ArrayUtils::getIntAsStringValue(self::TEST_ARRAY, self::INT_AS_STRING_KEY);
+        $this->assertEquals(self::INT_AS_INT_VALUE, $actual);
     }
 
     public function testGetStringOnNoneString(): void
