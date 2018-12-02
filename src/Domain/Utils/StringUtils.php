@@ -59,4 +59,16 @@ class StringUtils
 
         return substr($haystack, -$length) === $needle;
     }
+
+    /**
+     * Returns true if line is empty (or contains only white space).
+     *
+     * @param string $line
+     *
+     * @return bool
+     */
+    public static function isEmptyLine(string $line): bool
+    {
+        return '' === trim($line);
+    }
 }

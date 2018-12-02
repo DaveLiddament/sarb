@@ -50,4 +50,19 @@ class StringUtilsTest extends TestCase
     {
         $this->assertFalse(StringUtils::endsWith('d', 'abcde'));
     }
+
+    public function testIsEmpty(): void
+    {
+        $this->assertTrue(StringUtils::isEmptyLine(''));
+    }
+
+    public function testIsEmptyWithWhiteSpaces(): void
+    {
+        $this->assertTrue(StringUtils::isEmptyLine('     '));
+    }
+
+    public function testIsNotEmpty(): void
+    {
+        $this->assertFalse(StringUtils::isEmptyLine('  a   '));
+    }
 }
