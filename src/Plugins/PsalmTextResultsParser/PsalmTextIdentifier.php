@@ -29,6 +29,6 @@ class PsalmTextIdentifier implements Identifier
      */
     public function getDescription(): string
     {
-        return 'Psalm results (text format). To generate use: --report=<filename>.txt';
+        return 'Psalm results (text format). To generate use: psalm --report=<filename>.txt';
     }
 }

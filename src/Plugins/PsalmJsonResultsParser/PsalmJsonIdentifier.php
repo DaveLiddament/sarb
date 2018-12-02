@@ -29,6 +29,6 @@ class PsalmJsonIdentifier implements Identifier
      */
     public function getDescription(): string
     {
-        return 'Psalm results (JSON format)';
+        return 'Psalm results (JSON format). To generate use: psalm --report=<filename>.json';
     }
 }
