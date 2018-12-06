@@ -1,21 +1,25 @@
-defaults: &image
+image71: &image-71
+  docker:
+  - image: circleci/php:7.1-apache-stretch-node-browsers
+
+image72: &image-72
   docker:
   - image: circleci/php:7.2-apache-stretch-node-browsers
 
-restore-cache: &restore-cache
+restore-cache: &restore-72-cache
   restore_cache:
       keys:
-      - v1-dependencies-{{ checksum "composer.lock" }}
-      - v1-dependencies-
+      - v1-72-dependencies-{{ checksum "composer.lock" }}
+      - v1-72-dependencies-
 
 composer-install: &composer-install
   run:
     name: Composer install
     command: composer install  --no-interaction --no-scripts --prefer-dist
 
-save-cache: &save-cache
+save-cache: &save-72-cache
   save_cache:
-    key: v1-dependencies-{{ checksum "composer.lock" }}
+    key: v1-72-dependencies-{{ checksum "composer.lock" }}
     paths:
     - vendor
 
@@ -24,27 +28,46 @@ save-cache: &save-cache
 version: 2
 
 jobs:
-  build:
-    <<: *image
+
+  build-71:
+    <<: *image-71
 
     steps:
       - checkout
-      - *restore-cache
+      - restore_cache:
+          keys:
+          - v1-71-dependencies-{{ checksum "composer.lock" }}
+          - v1-71-dependencies-
       - *composer-install
-      - *save-cache
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.lock" }}
+          paths:
+          - vendor
+      - run:
+          name: Run full CI process
+          command: composer ci
+
+  build-72:
+    <<: *image-72
+
+    steps:
+      - checkout
+      - *restore-72-cache
+      - *composer-install
+      - *save-72-cache
       - run:
           name: Run full CI process
           command: composer ci
 
 
   security:
-    <<: *image
+    <<: *image-72
 
     steps:
       - checkout
-      - *restore-cache
+      - *restore-72-cache
       - *composer-install
-      - *save-cache
+      - *save-72-cache
       - run:
           name: Run security check
           command: composer security
@@ -53,7 +76,8 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build
+      - build-71
+      - build-72
 
   security-check:
     triggers:
