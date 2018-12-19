@@ -9,29 +9,46 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PhpstanJsonResultsParser\PhpstanJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser\PsalmJsonResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PsalmJsonResultsParserTest extends TestCase
 {
+    use AssertFileContentsSameTrait;
     use ResourceLoaderTrait;
 
-    public function testConversion(): void
+    /**
+     * @var AnalysisResults
+     */
+    private $analysisResults;
+
+    /**
+     * @var PhpstanJsonResultsParser
+     */
+    private $psalmResultsParser;
+
+    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
     {
         $projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
 
-        $psalmResultsParser = new PsalmJsonResultsParser();
+        $this->psalmResultsParser = new PsalmJsonResultsParser();
         $original = $this->getResource('psalm/psalm.json');
 
         // Convert both ways
-        $analysisResults = $psalmResultsParser->convertFromString($original, $projectRoot);
+        $this->analysisResults = $this->psalmResultsParser->convertFromString($original, $projectRoot);
+    }
 
-        $this->assertCount(3, $analysisResults->getAnalysisResults());
+    public function testConversion(): void
+    {
+        $this->assertCount(3, $this->analysisResults->getAnalysisResults());
 
-        $result1 = $analysisResults->getAnalysisResults()[0];
-        $result2 = $analysisResults->getAnalysisResults()[1];
-        $result3 = $analysisResults->getAnalysisResults()[2];
+        $result1 = $this->analysisResults->getAnalysisResults()[0];
+        $result2 = $this->analysisResults->getAnalysisResults()[1];
+        $result3 = $this->analysisResults->getAnalysisResults()[2];
 
         $this->assertTrue($result1->isMatch(
             new Location(
@@ -56,5 +73,12 @@ class PsalmJsonResultsParserTest extends TestCase
             ),
             new Type('MixedAssignment')
         ));
+    }
+
+    public function testConvertToString(): void
+    {
+        $asString = $this->psalmResultsParser->convertToString($this->analysisResults);
+
+        $this->assertFileContentsSame($this->getResource('psalm/psalm-only-errors.json'), $asString);
     }
 }
