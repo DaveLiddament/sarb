@@ -42,6 +42,8 @@ class PhpstanJsonResultsParser implements ResultsParser
     private const TYPE = 'message';
     private const FILES = 'files';
     private const MESSAGES = 'messages';
+    private const MESSAGE = 'message';
+    private const ABSOLUTE_FILE_PATH = 'absoluteFilePath';
 
     /**
      * @var FqcnRemover
@@ -79,15 +81,15 @@ class PhpstanJsonResultsParser implements ResultsParser
     {
         $files = [];
         foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $location = $analysisResult->getLocation();
-            $fileName = $location->getFileName();
-            $fileNameAsString = $fileName->getFileName();
+            $fullDetails = JsonUtils::toArray($analysisResult->getFullDetails());
+            $message = ArrayUtils::getArrayValue($fullDetails, self::MESSAGE);
+            $absoluteFilePath = ArrayUtils::getStringValue($fullDetails, self::ABSOLUTE_FILE_PATH);
 
-            if (!array_key_exists($fileNameAsString, $files)) {
-                $files[$fileNameAsString] = [];
+            if (!array_key_exists($absoluteFilePath, $files)) {
+                $files[$absoluteFilePath] = [];
             }
 
-            $files[$fileNameAsString][] = JsonUtils::toArray($analysisResult->getFullDetails());
+            $files[$absoluteFilePath][] = $message;
         }
 
         $asArray = [
@@ -151,14 +153,17 @@ class PhpstanJsonResultsParser implements ResultsParser
                 if (!is_string($absoluteFilePath)) {
                     throw new ArrayParseException('Expected filename to be of type string');
                 }
+
+                ArrayUtils::assertArray($fileErrors);
+
                 $fileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFilePath);
                 $fileName = new FileName($fileNameAsString);
 
-                $messages = ArrayUtils::getArrayValue($filesErrors, self::MESSAGES);
+                $messages = ArrayUtils::getArrayValue($fileErrors, self::MESSAGES);
 
                 foreach ($messages as $message) {
                     ArrayUtils::assertArray($message);
-                    $analysisResult = $this->convertAnalysisResultFromArray($message, $fileName);
+                    $analysisResult = $this->convertAnalysisResultFromArray($message, $fileName, $absoluteFilePath);
                     $analysisResults->addAnalysisResult($analysisResult);
                 }
             } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
@@ -172,14 +177,18 @@ class PhpstanJsonResultsParser implements ResultsParser
     /**
      * @param array $analysisResultAsArray
      * @param FileName $fileName
+     * @param string $absoluteFilePath
      *
      * @throws ArrayParseException
      * @throws JsonParseException
      *
      * @return AnalysisResult
      */
-    private function convertAnalysisResultFromArray(array $analysisResultAsArray, FileName $fileName): AnalysisResult
-    {
+    private function convertAnalysisResultFromArray(
+        array $analysisResultAsArray,
+        FileName $fileName,
+        string $absoluteFilePath
+    ): AnalysisResult {
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $rawType = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
         $type = $this->fqcnRemover->removeRqcn($rawType);
@@ -192,7 +201,10 @@ class PhpstanJsonResultsParser implements ResultsParser
         return new AnalysisResult(
             $location,
             new Type($type),
-            JsonUtils::toString($analysisResultAsArray)
+            JsonUtils::toString([
+                self::ABSOLUTE_FILE_PATH => $absoluteFilePath,
+                self::MESSAGE => $analysisResultAsArray,
+            ])
         );
     }
 }
