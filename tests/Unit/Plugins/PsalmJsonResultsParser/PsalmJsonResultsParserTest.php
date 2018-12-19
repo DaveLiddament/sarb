@@ -27,7 +27,7 @@ class PsalmJsonResultsParserTest extends TestCase
     private $analysisResults;
 
     /**
-     * @var PhpstanJsonResultsParser
+     * @var PsalmJsonResultsParser
      */
     private $psalmResultsParser;
 
