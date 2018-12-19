@@ -34,6 +34,8 @@ class PsalmJsonResultsParser implements ResultsParser
     const LINE_FROM = 'line_from';
     const TYPE = 'type';
     const FILE = 'file_path';
+    const SEVERITY = 'severity';
+    const ERROR_SEVERITY_LEVEL = 'error';
 
     /**
      * {@inheritdoc}
@@ -99,8 +101,11 @@ class PsalmJsonResultsParser implements ResultsParser
             ++$resultsCount;
             try {
                 ArrayUtils::assertArray($analysisResultAsArray);
-                $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
-                $analysisResults->addAnalysisResult($analysisResult);
+                $severity = ArrayUtils::getStringValue($analysisResultAsArray, self::SEVERITY);
+                if (self::ERROR_SEVERITY_LEVEL === $severity) {
+                    $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
+                    $analysisResults->addAnalysisResult($analysisResult);
+                }
             } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
                 throw new ParseAtLocationException("Result [$resultsCount]", $e);
             }
@@ -118,8 +123,10 @@ class PsalmJsonResultsParser implements ResultsParser
      *
      * @return AnalysisResult
      */
-    private function convertAnalysisResultFromArray(array $analysisResultAsArray, ProjectRoot $projectRoot): AnalysisResult
-    {
+    private function convertAnalysisResultFromArray(
+        array $analysisResultAsArray,
+        ProjectRoot $projectRoot
+    ): AnalysisResult {
         $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE_FROM);
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);

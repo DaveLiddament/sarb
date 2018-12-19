@@ -19,9 +19,10 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 
 class PsalmTextResultsParser extends AbstractTextResultsParser
 {
-    const REG_EX = '/(.*):(\d+):(\d+):error - (.*)/';
+    const REG_EX = '/(.*):(\d+):(\d+):(error|warning) - (.*)/';
     const LINE_FROM = '2';
-    const TYPE = '4';
+    const TYPE = '5';
+    const SEVERITY = '4';
     const FILE = '1';
 
     /**
@@ -59,5 +60,10 @@ class PsalmTextResultsParser extends AbstractTextResultsParser
     public function showTypeGuessingWarning(): bool
     {
         return true;
+    }
+
+    protected function includeLine(array $matches): bool
+    {
+        return 'error' === $matches[self::SEVERITY];
     }
 }

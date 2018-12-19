@@ -80,7 +80,9 @@ abstract class AbstractTextResultsParser implements ResultsParser
                 } catch (SarbException $e) {
                     throw new ParseAtLocationException("Line [$lineNumber]", $e);
                 }
-                $analysisResults->addAnalysisResult($analysisResult);
+                if (null !== $analysisResult) {
+                    $analysisResults->addAnalysisResult($analysisResult);
+                }
             }
         }
 
@@ -106,15 +108,20 @@ abstract class AbstractTextResultsParser implements ResultsParser
      *
      * @throws SarbException
      *
-     * @return AnalysisResult
+     * @return AnalysisResult|null
      */
-    private function processLine(ProjectRoot $projectRoot, string $line): AnalysisResult
+    private function processLine(ProjectRoot $projectRoot, string $line): ?AnalysisResult
     {
         $matches = [];
         $isMatch = preg_match($this->regEx, $line, $matches);
         if (1 !== $isMatch) {
             throw new SarbException('Incorrect format');
         }
+
+        if (!$this->includeLine($matches)) {
+            return null;
+        }
+
         $absoluteFileNameAsString = ArrayUtils::getStringValue($matches, $this->fileNamePosition);
         $lineAsInt = ArrayUtils::getIntAsStringValue($matches, $this->lineNumberPosition);
         $typeAsString = ArrayUtils::getStringValue($matches, $this->typePosition);
@@ -135,4 +142,16 @@ abstract class AbstractTextResultsParser implements ResultsParser
     }
 
     abstract protected function getType(string $rawType): string;
+
+    /**
+     * Override if it is possible that you might not want to include this line in the results.
+     *
+     * @param string[] $matches
+     *
+     * @return bool
+     */
+    protected function includeLine(array $matches): bool
+    {
+        return true;
+    }
 }

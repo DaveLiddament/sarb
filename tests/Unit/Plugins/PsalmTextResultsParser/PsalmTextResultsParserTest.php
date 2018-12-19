@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\PsalmResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\PsalmTextResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
@@ -44,11 +44,10 @@ class PsalmTextResultsParserTest extends TestCase
     {
         $analysisResults = $this->psalmTextResultsParser->convertFromString($this->fileContents, $this->projectRoot);
 
-        $this->assertCount(3, $analysisResults->getAnalysisResults());
+        $this->assertCount(2, $analysisResults->getAnalysisResults());
 
         $result1 = $analysisResults->getAnalysisResults()[0];
         $result2 = $analysisResults->getAnalysisResults()[1];
-        $result3 = $analysisResults->getAnalysisResults()[2];
 
         $this->assertTrue($result1->isMatch(
             new Location(
@@ -59,14 +58,6 @@ class PsalmTextResultsParserTest extends TestCase
         ));
 
         $this->assertTrue($result2->isMatch(
-            new Location(
-                new FileName('src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php'),
-                new LineNumber(51)
-            ),
-            new Type('Method does not exist')
-        ));
-
-        $this->assertTrue($result3->isMatch(
             new Location(
                 new FileName('src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php'),
                 new LineNumber(52)
@@ -80,7 +71,7 @@ class PsalmTextResultsParserTest extends TestCase
         $analysisResults = $this->psalmTextResultsParser->convertFromString($this->fileContents, $this->projectRoot);
         $asString = $this->psalmTextResultsParser->convertToString($analysisResults);
 
-        $trimmedExpected = trim($this->fileContents);
+        $trimmedExpected = trim($this->getResource('psalm/psalm-only-errors.txt'));
         $trimmedActual = trim($asString);
 
         $this->assertEquals($trimmedExpected, $trimmedActual);
