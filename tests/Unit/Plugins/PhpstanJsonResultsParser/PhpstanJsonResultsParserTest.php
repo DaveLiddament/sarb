@@ -11,11 +11,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PhpstanJsonResultsParser\PhpstanJsonResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PhpstanJsonResultsParserTest extends TestCase
 {
+    use AssertFileContentsSameTrait;
     use ResourceLoaderTrait;
 
     /**
@@ -80,16 +82,6 @@ class PhpstanJsonResultsParserTest extends TestCase
         $analysisResults = $this->PhpstanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
         $asString = $this->PhpstanJsonResultsParser->convertToString($analysisResults);
 
-        $cleanExpected = $this->clean($this->fileContents);
-        $cleanActual = $this->clean($asString);
-
-        $this->assertEquals($cleanExpected, $cleanActual);
-    }
-
-    private function clean(string $dirty): string
-    {
-        $trimmed = trim($dirty);
-
-        return str_replace('\\/', '/', $trimmed);
+        $this->assertFileContentsSame($this->fileContents, $asString);
     }
 }

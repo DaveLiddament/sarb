@@ -11,11 +11,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmTextResultsParser\PsalmTextResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PsalmTextResultsParserTest extends TestCase
 {
+    use AssertFileContentsSameTrait;
     use ResourceLoaderTrait;
 
     /**
@@ -71,9 +73,6 @@ class PsalmTextResultsParserTest extends TestCase
         $analysisResults = $this->psalmTextResultsParser->convertFromString($this->fileContents, $this->projectRoot);
         $asString = $this->psalmTextResultsParser->convertToString($analysisResults);
 
-        $trimmedExpected = trim($this->getResource('psalm/psalm-only-errors.txt'));
-        $trimmedActual = trim($asString);
-
-        $this->assertEquals($trimmedExpected, $trimmedActual);
+        $this->assertFileContentsSame($this->getResource('psalm/psalm-only-errors.txt'), $asString);
     }
 }

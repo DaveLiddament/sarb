@@ -11,11 +11,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PhpstanTextResultsParser\PhpstanTextResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PhpstanTextResultsParserTest extends TestCase
 {
+    use AssertFileContentsSameTrait;
     use ResourceLoaderTrait;
 
     /**
@@ -62,9 +64,6 @@ class PhpstanTextResultsParserTest extends TestCase
         $analysisResults = $this->phpstanTextResultsParser->convertFromString($this->fileContents, $this->projectRoot);
         $asString = $this->phpstanTextResultsParser->convertToString($analysisResults);
 
-        $trimmedExpected = trim($this->fileContents);
-        $trimmedActual = trim($asString);
-
-        $this->assertEquals($trimmedExpected, $trimmedActual);
+        $this->assertFileContentsSame($this->fileContents, $asString);
     }
 }
