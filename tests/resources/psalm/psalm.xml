@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+  <item>
+    <severity>error</severity>
+    <line_from>67</line_from>
+    <line_to>67</line_to>
+    <type>MismatchingDocblockParamType</type>
+    <message>Parameter $array has wrong type 'array&lt;mixed, mixed&gt;', should be 'int'</message>
+    <file_name>src/Domain/ResultsParser/AnalysisResults.php</file_name>
+    <file_path>/vagrant/static-analysis-baseliner/src/Domain/ResultsParser/AnalysisResults.php</file_path>
+    <snippet>    /**
+     * Deserialises array representation to AnalysisResults.
+     *
+     * @param array $array
+     *
+     * @throws ArrayParseException
+     *
+     * @return AnalysisResults
+     */
+    public static function fromArray(int $array): self</snippet>
+    <selected_text>array</selected_text>
+    <from>1495</from>
+    <to>1500</to>
+    <snippet_from>1405</snippet_from>
+    <snippet_to>1650</snippet_to>
+    <column_from>15</column_from>
+    <column_to>20</column_to>
+  </item>
+  <item>
+    <severity>info</severity>
+    <line_from>71</line_from>
+    <line_to>71</line_to>
+    <type>MixedInferredReturnType</type>
+    <message>Could not verify return type 'DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults' for DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults::fromArray</message>
+    <file_name>src/Domain/ResultsParser/AnalysisResults.php</file_name>
+    <file_path>/vagrant/static-analysis-baseliner/src/Domain/ResultsParser/AnalysisResults.php</file_path>
+    <snippet>    /**
+     * Deserialises array representation to AnalysisResults.
+     *
+     * @param array $array
+     *
+     * @throws ArrayParseException
+     *
+     * @return AnalysisResults
+     */
+    public static function fromArray(int $array): self
+    {
+        $analysisResults = new self();
+
+        /** @pslam-suppress MixedAssignment */
+        foreach ($array as $entry) {</snippet>
+    <selected_text>@return AnalysisResults</selected_text>
+    <from>1564</from>
+    <to>1587</to>
+    <snippet_from>1405</snippet_from>
+    <snippet_to>1780</snippet_to>
+    <column_from>8</column_from>
+    <column_to>31</column_to>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>29</line_from>
+    <line_to>29</line_to>
+    <type>MixedAssignment</type>
+    <message>Cannot assign $asArray to a mixed type</message>
+    <file_name>src/Domain/Utils/JsonUtils.php</file_name>
+    <file_path>/vagrant/static-analysis-baseliner/src/Domain/Utils/JsonUtils.php</file_path>
+    <snippet>        /** @pslam-suppress MixedAssignment */
+        $asArray = json_decode($jsonAsString, true);</snippet>
+    <selected_text>$asArray</selected_text>
+    <from>636</from>
+    <to>644</to>
+    <snippet_from>581</snippet_from>
+    <snippet_to>680</snippet_to>
+    <column_from>9</column_from>
+    <column_to>17</column_to>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>90</line_from>
+    <line_to>90</line_to>
+    <type>MixedAssignment</type>
+    <message>Cannot assign $analysisResultAsArray to a mixed type</message>
+    <file_name>src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php</file_name>
+    <file_path>/vagrant/static-analysis-baseliner/src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php</file_path>
+    <snippet>        foreach ($analysisResultsAsArray as $analysisResultAsArray) {</snippet>
+    <selected_text>$analysisResultAsArray</selected_text>
+    <from>3186</from>
+    <to>3208</to>
+    <snippet_from>3142</snippet_from>
+    <snippet_to>3211</snippet_to>
+    <column_from>45</column_from>
+    <column_to>67</column_to>
+  </item>
+</report>
