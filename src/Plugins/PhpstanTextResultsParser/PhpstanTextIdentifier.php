@@ -21,7 +21,7 @@ class PhpstanTextIdentifier implements Identifier
      */
     public function getCode(): string
     {
-        return 'phpstan-text';
+        return 'phpstan-text-tmp';
     }
 
     /**
@@ -29,6 +29,6 @@ class PhpstanTextIdentifier implements Identifier
      */
     public function getDescription(): string
     {
-        return 'PHPStan results (text format). To generate use: phpstan analyse --error-format raw > <filename>.txt';
+        return 'PHPStan results (text format). To generate use: phpstan analyse --error-format raw > <filename>.txt  NOTE: this will be deprecated once this enhancement has been released: https://github.com/phpstan/phpstan/issues/1686';
     }
 }

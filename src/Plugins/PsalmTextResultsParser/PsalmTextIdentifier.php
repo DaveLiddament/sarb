@@ -21,7 +21,7 @@ class PsalmTextIdentifier implements Identifier
      */
     public function getCode(): string
     {
-        return 'psalm-text';
+        return 'psalm-text-tmp';
     }
 
     /**
@@ -29,6 +29,6 @@ class PsalmTextIdentifier implements Identifier
      */
     public function getDescription(): string
     {
-        return 'Psalm results (text format). To generate use: psalm --report=<filename>.txt';
+        return 'Psalm results (text format). To generate use: psalm --report=<filename>.txt  NOTE: this will be deprecated once this PR is released https://github.com/vimeo/psalm/pull/1139';
     }
 }
