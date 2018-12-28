@@ -16,9 +16,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResults
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Exporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -141,10 +143,58 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
         $output->writeln("<info>Errors in baseline $errorsInBaseLine</info>");
         $output->writeln("<info>Errors introduced since baseline $errorsAfterBaseLine</info>");
 
-        if (true === $input->getOption(self::FAILURE_ON_ANALYSIS_RESULT)) {
-            return (0 === count($outputAnalysisResults->getAnalysisResults())) ? 0 : 1;
+        if ($errorsAfterBaseLine > 0) {
+            $this->displayErrorsSinceBaseLine($output, $outputAnalysisResults->getOrderedAnalysisResults());
+
+            if (true === $input->getOption(self::FAILURE_ON_ANALYSIS_RESULT)) {
+                return 1;
+            }
         }
 
         return 0;
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param AnalysisResult[] $analysisResults
+     */
+    private function displayErrorsSinceBaseLine(OutputInterface $output, array $analysisResults): void
+    {
+        /** @var string[] $headings */
+        $headings = [
+            'Line',
+            'Description',
+        ];
+
+        /** @var FileName $currentFileName */
+        $currentFileName = null;
+        /** @var Table|null $currentTable */
+        $currentTable = null;
+        foreach ($analysisResults as $analysisResult) {
+            $fileName = $analysisResult->getLocation()->getFileName();
+
+            if ($currentFileName !== $fileName->getFileName()) {
+                $this->renderTable($currentTable);
+
+                $output->writeln("\nFILE: {$fileName->getFileName()}");
+                $currentFileName = $fileName;
+                $currentTable = new Table($output);
+                $currentTable->setHeaders($headings);
+            }
+
+            $currentTable->addRow([
+                $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
+                $analysisResult->getMessage(),
+            ]);
+        }
+
+        $this->renderTable($currentTable);
+    }
+
+    private function renderTable(?Table $table): void
+    {
+        if (null !== $table) {
+            $table->render();
+        }
     }
 }
