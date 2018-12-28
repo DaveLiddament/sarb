@@ -27,9 +27,10 @@ trait AnalysisResultsAdderTrait
         int $lineNumber,
         string $type
     ): void {
-        $details = "$fileName-$lineNumber-$type";
+        $message = "message-$type";
+        $details = "$fileName-$lineNumber-$type-$message";
         $location = new Location(new FileName($fileName), new LineNumber($lineNumber));
-        $analysisResult = new AnalysisResult($location, new Type($type), $details);
+        $analysisResult = new AnalysisResult($location, new Type($type), $message, $details);
         $analysisResults->addAnalysisResult($analysisResult);
     }
 }

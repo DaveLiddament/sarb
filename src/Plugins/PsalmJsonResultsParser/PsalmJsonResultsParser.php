@@ -36,6 +36,7 @@ class PsalmJsonResultsParser implements ResultsParser
     const FILE = 'file_path';
     const SEVERITY = 'severity';
     const ERROR_SEVERITY_LEVEL = 'error';
+    const MESSAGE = 'message';
 
     /**
      * {@inheritdoc}
@@ -140,6 +141,7 @@ class PsalmJsonResultsParser implements ResultsParser
         return new AnalysisResult(
             $location,
             new Type($typeAsString),
+            ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
             JsonUtils::toString($analysisResultAsArray)
         );
     }
