@@ -168,6 +168,7 @@ workflows:
       - build-72-lowest
       - build-72-current
       - build-72-highest
+      - security
 
   security-check:
     triggers:
