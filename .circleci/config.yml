@@ -35,6 +35,8 @@ jobs:
       - run:
           name: Run full CI process
           command: composer ci
+      - store-artifacts:
+          path: reports
 
 
   security:
