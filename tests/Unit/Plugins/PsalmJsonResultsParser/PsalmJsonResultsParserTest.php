@@ -80,4 +80,9 @@ class PsalmJsonResultsParserTest extends TestCase
 
         $this->assertFileContentsSame($this->getResource('psalm/psalm-only-errors.json'), $asString);
     }
+
+    public function testTypeGuesser(): void
+    {
+        $this->assertFalse($this->psalmResultsParser->showTypeGuessingWarning());
+    }
 }

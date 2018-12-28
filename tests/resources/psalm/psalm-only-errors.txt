@@ -1,2 +1,3 @@
-/vagrant/static-analysis-baseliner/src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php:51:13:error - Cannot assign $analysisResult to a mixed type
-/vagrant/static-analysis-baseliner/src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php:52:49:error - Argument 1 of DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults::addAnalysisResult cannot be mixed, expecting DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult
+/vagrant/static-analysis-baseliner/src/Domain/ResultsParser/AnalysisResults.php:67:15:error - MismatchingDocblockParamType: Parameter $array has wrong type 'array<mixed, mixed>', should be 'int'
+/vagrant/static-analysis-baseliner/src/Domain/Utils/JsonUtils.php:29:9:error - MixedAssignment: Cannot assign $asArray to a mixed type
+/vagrant/static-analysis-baseliner/src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php:90:45:error - MixedAssignment: Cannot assign $analysisResultAsArray to a mixed type

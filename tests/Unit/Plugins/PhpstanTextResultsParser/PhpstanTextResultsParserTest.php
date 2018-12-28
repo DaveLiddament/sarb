@@ -66,4 +66,9 @@ class PhpstanTextResultsParserTest extends TestCase
 
         $this->assertFileContentsSame($this->fileContents, $asString);
     }
+
+    public function testTypeGuesser(): void
+    {
+        $this->assertTrue($this->phpstanTextResultsParser->showTypeGuessingWarning());
+    }
 }
