@@ -25,6 +25,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Webmozart\Assert\Assert;
 
 class RemoveBaseLineFromResultsCommand extends AbstractCommand
 {
@@ -173,7 +174,7 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
         foreach ($analysisResults as $analysisResult) {
             $fileName = $analysisResult->getLocation()->getFileName();
 
-            if ($currentFileName !== $fileName->getFileName()) {
+            if ($currentFileName !== $fileName) {
                 $this->renderTable($currentTable);
 
                 $output->writeln("\nFILE: {$fileName->getFileName()}");
@@ -182,6 +183,7 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
                 $currentTable->setHeaders($headings);
             }
 
+            Assert::notNull($currentTable);
             $currentTable->addRow([
                 $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
                 $analysisResult->getMessage(),
