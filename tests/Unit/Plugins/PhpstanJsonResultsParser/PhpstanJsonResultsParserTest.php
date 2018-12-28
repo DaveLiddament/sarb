@@ -28,7 +28,7 @@ class PhpstanJsonResultsParserTest extends TestCase
     /**
      * @var PhpstanJsonResultsParser
      */
-    private $PhpstanJsonResultsParser;
+    private $phpstanJsonResultsParser;
 
     /**
      * @var string
@@ -38,13 +38,13 @@ class PhpstanJsonResultsParserTest extends TestCase
     protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
     {
         $this->projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
-        $this->PhpstanJsonResultsParser = new PhpstanJsonResultsParser(new FqcnRemover());
+        $this->phpstanJsonResultsParser = new PhpstanJsonResultsParser(new FqcnRemover());
         $this->fileContents = $this->getResource('phpstan/phpstan.json');
     }
 
     public function testConversionFromString(): void
     {
-        $analysisResults = $this->PhpstanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
+        $analysisResults = $this->phpstanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
 
         $this->assertCount(3, $analysisResults->getAnalysisResults());
 
@@ -79,14 +79,14 @@ class PhpstanJsonResultsParserTest extends TestCase
 
     public function testConvertToString(): void
     {
-        $analysisResults = $this->PhpstanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
-        $asString = $this->PhpstanJsonResultsParser->convertToString($analysisResults);
+        $analysisResults = $this->phpstanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
+        $asString = $this->phpstanJsonResultsParser->convertToString($analysisResults);
 
         $this->assertFileContentsSame($this->fileContents, $asString);
     }
 
     public function testTypeGuesser(): void
     {
-        $this->assertTrue($this->PhpstanJsonResultsParser->showTypeGuessingWarning());
+        $this->assertTrue($this->phpstanJsonResultsParser->showTypeGuessingWarning());
     }
 }
