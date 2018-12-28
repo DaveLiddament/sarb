@@ -6,22 +6,59 @@ image72: &image-72
   docker:
   - image: circleci/php:7.2-apache-stretch-node-browsers
 
-restore-cache: &restore-72-cache
+restore-71-cache: &restore-71-cache
+  restore_cache:
+      keys:
+      - v1-71-dependencies-{{ checksum "composer.lock" }}
+      - v1-71-dependencies-
+
+restore-72-cache: &restore-72-cache
   restore_cache:
       keys:
       - v1-72-dependencies-{{ checksum "composer.lock" }}
       - v1-72-dependencies-
 
-composer-install: &composer-install
-  run:
-    name: Composer install
-    command: composer install  --no-interaction --no-scripts --prefer-dist
+save-71-cache: &save-71-cache
+  save_cache:
+    key: v1-71-dependencies-{{ checksum "composer.lock" }}
+    paths:
+    - vendor
 
-save-cache: &save-72-cache
+save-72-cache: &save-72-cache
   save_cache:
     key: v1-72-dependencies-{{ checksum "composer.lock" }}
     paths:
     - vendor
+
+
+composer-install: &composer-install
+  run:
+    name: Composer install
+    command: composer install  --no-interaction --no-scripts --prefer-dist
+    
+composer-update-lowest: &composer-update-lowest
+  run:
+    name: Downgrade to lowest packages
+    command: composer update --prefer-lowest
+
+composer-update: &composer-update
+  run:
+    name: Updrade to highest packages
+    command: composer update --prefer-lowest
+
+ci: &ci
+  run:
+    name: Run CI
+    command: composer ci
+
+store-test-results: &store-test-results
+  store-test-results:
+    path: reports
+    
+store-artifacts: &store-artifacts
+  store-artifacts:
+    path: reports
+
 
 
 
@@ -29,25 +66,46 @@ version: 2
 
 jobs:
 
-  build-71:
+  build-71-lowest:
     <<: *image-71
 
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v1-71-dependencies-{{ checksum "composer.lock" }}
-          - v1-71-dependencies-
+      - *restore-71-cache
       - *composer-install
-      - save_cache:
-          key: v1-dependencies-{{ checksum "composer.lock" }}
-          paths:
-          - vendor
-      - run:
-          name: Run full CI process
-          command: composer ci
+      - *save-71-cache
+      - *composer-update-lowest
+      - *ci
+      - *store-test-results
+      - *store-artifacts
 
-  build-72:
+  build-71-current:
+    <<: *image-71
+
+    steps:
+      - checkout
+      - *restore-71-cache
+      - *composer-install
+      - *save-71-cache
+      - *ci
+      - *store-test-results
+      - *store-artifacts
+
+  build-71-highest:
+    <<: *image-71
+
+    steps:
+      - checkout
+      - *restore-71-cache
+      - *composer-install
+      - *save-71-cache
+      - *composer-update
+      - *ci
+      - *store-test-results
+      - *store-artifacts
+
+
+  build-72-lowest:
     <<: *image-72
 
     steps:
@@ -55,13 +113,37 @@ jobs:
       - *restore-72-cache
       - *composer-install
       - *save-72-cache
-      - run:
-          name: Run full CI process
-          command: composer ci
-      - store-test-results:
-          path: reports
-      - store-artifacts:
-          path: reports
+      - *composer-update-lowest
+      - *ci
+      - *store-test-results
+      - *store-artifacts
+
+  build-72-current:
+    <<: *image-72
+
+    steps:
+      - checkout
+      - *restore-72-cache
+      - *composer-install
+      - *save-72-cache
+      - *ci
+      - *store-test-results
+      - *store-artifacts
+
+  build-72-highest:
+    <<: *image-72
+
+    steps:
+      - checkout
+      - *restore-72-cache
+      - *composer-install
+      - *save-72-cache
+      - *composer-update
+      - *ci
+      - *store-test-results
+      - *store-artifacts
+
+
 
 
   security:
@@ -80,8 +162,12 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build-71
-      - build-72
+      - build-71-lowest
+      - build-71-current
+      - build-71-highest
+      - build-72-lowest
+      - build-72-current
+      - build-72-highest
 
   security-check:
     triggers:
