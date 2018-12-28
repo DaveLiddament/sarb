@@ -19,7 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 class PhpstanTextResultsParser extends AbstractTextResultsParser
 {
     private const LINE_FROM = '2';
-    private const TYPE = '3';
+    private const MESSAGE = '3';
     private const FILE = '1';
     private const REGEX = '/(.*):(\d+):(.*)/';
 
@@ -35,7 +35,7 @@ class PhpstanTextResultsParser extends AbstractTextResultsParser
      */
     public function __construct(FqcnRemover $fqcnRemover)
     {
-        parent::__construct(self::REGEX, self::FILE, self::LINE_FROM, self::TYPE);
+        parent::__construct(self::REGEX, self::FILE, self::LINE_FROM, self::MESSAGE, self::MESSAGE);
         $this->fqcnRemover = $fqcnRemover;
     }
 

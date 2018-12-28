@@ -23,10 +23,11 @@ class PsalmTextResultsParser extends AbstractTextResultsParser
     const TYPE = '5';
     const SEVERITY = '4';
     const FILE = '1';
+    const MESSAGE = '6';
 
     public function __construct()
     {
-        parent::__construct(self::REG_EX, self::FILE, self::LINE_FROM, self::TYPE);
+        parent::__construct(self::REG_EX, self::FILE, self::LINE_FROM, self::TYPE, self::MESSAGE);
     }
 
     protected function getType(string $rawType): string

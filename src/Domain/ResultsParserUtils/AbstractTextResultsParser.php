@@ -43,23 +43,31 @@ abstract class AbstractTextResultsParser implements ResultsParser
     private $typePosition;
 
     /**
+     * @var string
+     */
+    private $messagePosition;
+
+    /**
      * AbstractTextResultsParser constructor.
      *
      * @param string $regEx
      * @param string $fileNamePosition
      * @param string $lineNumberPosition
      * @param string $typePosition
+     * @param string $messagePosition
      */
     protected function __construct(
         string $regEx,
         string $fileNamePosition,
         string $lineNumberPosition,
-        string $typePosition
+        string $typePosition,
+        string $messagePosition
     ) {
         $this->regEx = $regEx;
         $this->fileNamePosition = $fileNamePosition;
         $this->lineNumberPosition = $lineNumberPosition;
         $this->typePosition = $typePosition;
+        $this->messagePosition = $messagePosition;
     }
 
     /**
@@ -125,6 +133,7 @@ abstract class AbstractTextResultsParser implements ResultsParser
         $absoluteFileNameAsString = ArrayUtils::getStringValue($matches, $this->fileNamePosition);
         $lineAsInt = ArrayUtils::getIntAsStringValue($matches, $this->lineNumberPosition);
         $typeAsString = ArrayUtils::getStringValue($matches, $this->typePosition);
+        $message = ArrayUtils::getStringValue($matches, $this->messagePosition);
         $relativeFileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFileNameAsString);
 
         $type = $this->getType($typeAsString);
@@ -137,6 +146,7 @@ abstract class AbstractTextResultsParser implements ResultsParser
         return new AnalysisResult(
             $location,
             new Type($type),
+            $message,
             $line
         );
     }

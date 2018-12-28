@@ -27,6 +27,7 @@ class AnalysisResult
     private const LINE_NUMBER = 'lineNumber';
     private const FILE_NAME = 'fileName';
     private const TYPE = 'type';
+    private const MESSAGE = 'message';
     private const FULL_DETAILS = 'fullDetails';
 
     /**
@@ -42,6 +43,11 @@ class AnalysisResult
     /**
      * @var string
      */
+    private $message;
+
+    /**
+     * @var string
+     */
     private $fullDetails;
 
     /**
@@ -52,12 +58,14 @@ class AnalysisResult
      *
      * @param Location $location
      * @param Type $type
+     * @param string $message
      * @param string $fullDetails
      */
-    public function __construct(Location $location, Type $type, string $fullDetails)
+    public function __construct(Location $location, Type $type, string $message, string $fullDetails)
     {
         $this->location = $location;
         $this->type = $type;
+        $this->message = $message;
         $this->fullDetails = $fullDetails;
     }
 
@@ -85,6 +93,11 @@ class AnalysisResult
         return $this->fullDetails;
     }
 
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
     /**
      * Return true if AnalysisResult matches given FileName, LineNumber and type.
      *
@@ -104,6 +117,7 @@ class AnalysisResult
             self::LINE_NUMBER => $this->location->getLineNumber()->getLineNumber(),
             self::FILE_NAME => $this->location->getFileName()->getFileName(),
             self::TYPE => $this->type->getType(),
+            self::MESSAGE => $this->message,
             self::FULL_DETAILS => $this->getFullDetails(),
         ];
     }
@@ -121,7 +135,9 @@ class AnalysisResult
         $fileName = new FileName(ArrayUtils::getStringValue($array, self::FILE_NAME));
         $type = new Type(ArrayUtils::getStringValue($array, self::TYPE));
         $location = new Location($fileName, $lineNumber);
+        $message = ArrayUtils::getStringValue($array, self::MESSAGE);
+        $fullDetails = ArrayUtils::getStringValue($array, self::FULL_DETAILS);
 
-        return new self($location, $type, ArrayUtils::getStringValue($array, self::FULL_DETAILS));
+        return new self($location, $type, $message, $fullDetails);
     }
 }
