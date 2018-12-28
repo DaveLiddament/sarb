@@ -84,4 +84,9 @@ class PhpstanJsonResultsParserTest extends TestCase
 
         $this->assertFileContentsSame($this->fileContents, $asString);
     }
+
+    public function testTypeGuesser(): void
+    {
+        $this->assertTrue($this->PhpstanJsonResultsParser->showTypeGuessingWarning());
+    }
 }
