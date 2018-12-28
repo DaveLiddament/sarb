@@ -15,35 +15,23 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmTextResultsP
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParserUtils\AbstractTextResultsParser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 
 class PsalmTextResultsParser extends AbstractTextResultsParser
 {
-    const REG_EX = '/(.*):(\d+):(\d+):(error|warning) - (.*)/';
+    const REG_EX = '/(.*):(\d+):(\d+):(error|warning) - (.*): (.*)/';
     const LINE_FROM = '2';
     const TYPE = '5';
     const SEVERITY = '4';
     const FILE = '1';
 
-    /**
-     * @var FqcnRemover
-     */
-    private $fqcnRemover;
-
-    /**
-     * PsalmTextResultsParser constructor.
-     *
-     * @param FqcnRemover $fqcnRemover
-     */
-    public function __construct(FqcnRemover $fqcnRemover)
+    public function __construct()
     {
         parent::__construct(self::REG_EX, self::FILE, self::LINE_FROM, self::TYPE);
-        $this->fqcnRemover = $fqcnRemover;
     }
 
     protected function getType(string $rawType): string
     {
-        return $this->fqcnRemover->removeRqcn($rawType);
+        return $rawType;
     }
 
     /**
@@ -59,7 +47,7 @@ class PsalmTextResultsParser extends AbstractTextResultsParser
      */
     public function showTypeGuessingWarning(): bool
     {
-        return true;
+        return false;
     }
 
     protected function includeLine(array $matches): bool
