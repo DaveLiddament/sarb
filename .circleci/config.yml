@@ -35,6 +35,8 @@ jobs:
       - run:
           name: Run full CI process
           command: composer ci
+      - store-test-results:
+          path: reports
       - store-artifacts:
           path: reports
 
