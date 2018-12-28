@@ -63,4 +63,20 @@ class Location
     {
         return $this->fileName->isEqual($other->getFileName()) && $this->lineNumber->isEqual($other->getLineNumber());
     }
+
+    /**
+     * Used for ordering Locations, first by FileName then by line number.
+     *
+     * @param self $other
+     *
+     * @return int
+     */
+    public function compareTo(self $other): int
+    {
+        if ($this->fileName->getFileName() !== $other->fileName->getFileName()) {
+            return $this->fileName->getFileName() <=> $other->fileName->getFileName();
+        }
+
+        return $this->lineNumber->getLineNumber() <=> $other->lineNumber->getLineNumber();
+    }
 }

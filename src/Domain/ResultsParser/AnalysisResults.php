@@ -47,6 +47,20 @@ class AnalysisResults
     }
 
     /**
+     * Ordered by Location.
+     *
+     * @return AnalysisResult[]
+     */
+    public function getOrderedAnalysisResults(): array
+    {
+        usort($this->analysisResults, function (AnalysisResult $a, AnalysisResult $b): int {
+            return $a->getLocation()->compareTo($b->getLocation());
+        });
+
+        return $this->analysisResults;
+    }
+
+    /**
      * Return as an array of arrays (ready for storing in a file).
      *
      * @return array
