@@ -24,7 +24,7 @@ class GitCliWrapper implements GitWrapper
      */
     public function getCurrentSha(ProjectRoot $projectRoot): GitCommit
     {
-        $gitCommand = $this->getGitCommand('rev-parse HEAD', $projectRoot);
+        $gitCommand = $this->getGitCommand(['rev-parse', 'HEAD'], $projectRoot);
         $rawOutput = $this->runCommand($gitCommand, 'Failed to get SHA');
         $processOutput = trim($rawOutput);
 
@@ -36,13 +36,25 @@ class GitCliWrapper implements GitWrapper
      */
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit, GitCommit $newCommit): string
     {
-        $arguments = sprintf('diff -w -M %s..%s', $originalCommit->asString(), $newCommit->asString());
+        $range = sprintf('%s..%s', $originalCommit->asString(), $newCommit->asString());
+        $arguments = [
+            'diff',
+            '-w',
+            '-M',
+            $range,
+        ];
         $command = $this->getGitCommand($arguments, $projectRoot);
 
         return $this->runCommand($command, 'Failed to get git-diff');
     }
 
-    private function runCommand(string $gitCommand, string $context): string
+    /**
+     * @param string[] $gitCommand
+     * @param string $context
+     *
+     * @return string
+     */
+    private function runCommand(array $gitCommand, string $context): string
     {
         $process = new Process($gitCommand);
 
@@ -61,26 +73,47 @@ class GitCliWrapper implements GitWrapper
         throw new RuntimeException($errorMessage);
     }
 
-    private function getGitCommand(string $arguments, ProjectRoot $projectRoot): string
+    /**
+     * @param string[] $arguments
+     * @param ProjectRoot $projectRoot
+     *
+     * @return string[]
+     */
+    private function getGitCommand(array $arguments, ProjectRoot $projectRoot): array
     {
-        $projectRootConfig = "--git-dir=\"{$projectRoot}\"/.git --work-tree=\"{$projectRoot}\"";
+        $gitCommand = [
+            'git',
+            "--git-dir={$projectRoot}/.git",
+            "--work-tree={$projectRoot}",
+        ];
 
-        return "git {$projectRootConfig} {$arguments} ";
+        return array_merge($gitCommand, $arguments);
     }
 
     public function init(ProjectRoot $projectRoot): void
     {
-        $command = "git init {$projectRoot}";
-        $this->runCommand($command, $command);
+        $command = [
+            'git',
+            'init',
+            (string) $projectRoot,
+        ];
+        $this->runCommand($command, "git init {$projectRoot}");
     }
 
     public function addAndCommt(string $message, ProjectRoot $projectRoot): void
     {
-        $addCommand = $this->getGitCommand('add .', $projectRoot);
-        $this->runCommand($addCommand, $addCommand);
+        $addCommand = $this->getGitCommand(['add', '.'], $projectRoot);
+        $this->runCommand($addCommand, 'Git add .');
 
-        $commitCommand = $this->getGitCommand(
-            "-c \"user.name=Anon\" -c \"user.email=anon@example.com\" commit -m \"$message\"", $projectRoot);
-        $this->runCommand($commitCommand, $commitCommand);
+        $commitCommand = $this->getGitCommand([
+            '-c',
+            'user.name=Anon',
+            '-c',
+            'user.email=anon@example.com',
+            'commit',
+            '-m',
+            "$message",
+        ], $projectRoot);
+        $this->runCommand($commitCommand, 'git commit');
     }
 }
