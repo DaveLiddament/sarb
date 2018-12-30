@@ -34,14 +34,13 @@ class GitCliWrapper implements GitWrapper
     /**
      * {@inheritdoc}
      */
-    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit, GitCommit $newCommit): string
+    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string
     {
-        $range = sprintf('%s..%s', $originalCommit->asString(), $newCommit->asString());
         $arguments = [
             'diff',
             '-w',
             '-M',
-            $range,
+            $originalCommit->asString(),
         ];
         $command = $this->getGitCommand($arguments, $projectRoot);
 
@@ -83,7 +82,7 @@ class GitCliWrapper implements GitWrapper
     {
         $gitCommand = [
             'git',
-            "--git-dir={$projectRoot}/.git",
+            '--git-dir='.$projectRoot.\DIRECTORY_SEPARATOR.'.git',
             "--work-tree={$projectRoot}",
         ];
 
