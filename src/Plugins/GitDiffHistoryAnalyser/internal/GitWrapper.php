@@ -31,9 +31,8 @@ interface GitWrapper
      *
      * @param ProjectRoot $projectRoot
      * @param GitCommit $originalCommit
-     * @param GitCommit $newCommit
      *
      * @return string
      */
-    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit, GitCommit $newCommit): string;
+    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string;
 }

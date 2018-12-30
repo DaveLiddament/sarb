@@ -40,7 +40,7 @@ class StubGitWrapper implements GitWrapper
     /**
      * {@inheritdoc}
      */
-    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit, GitCommit $newCommit): string
+    public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string
     {
         return $this->diff;
     }
