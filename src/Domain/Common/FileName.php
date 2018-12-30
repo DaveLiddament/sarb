@@ -40,8 +40,12 @@ class FileName
         return $this->fileName;
     }
 
-    public function isEqual(self $fileName): bool
+    public function isEqual(?self $fileName): bool
     {
+        if (null === $fileName) {
+            return false;
+        }
+
         return $this->fileName === $fileName->getFileName();
     }
 }

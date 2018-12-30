@@ -174,7 +174,7 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
         foreach ($analysisResults as $analysisResult) {
             $fileName = $analysisResult->getLocation()->getFileName();
 
-            if ($currentFileName !== $fileName) {
+            if (!$fileName->isEqual($currentFileName)) {
                 $this->renderTable($currentTable);
 
                 $output->writeln("\nFILE: {$fileName->getFileName()}");
