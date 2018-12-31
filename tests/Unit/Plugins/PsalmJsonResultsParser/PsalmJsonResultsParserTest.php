@@ -56,6 +56,10 @@ class PsalmJsonResultsParserTest extends TestCase
             ),
             new Type('MismatchingDocblockParamType')
         ));
+        $this->assertSame(
+            "Parameter \$array has wrong type 'array<mixed, mixed>', should be 'int'",
+            $result1->getMessage()
+        );
 
         $this->assertTrue($result2->isMatch(
             new Location(

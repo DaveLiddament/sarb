@@ -59,6 +59,10 @@ class PhpstanJsonResultsParserTest extends TestCase
             ),
             new Type('Parameter #1 $array of static method expects int, array given.')
         ));
+        $this->assertSame(
+            'Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.',
+            $result1->getMessage()
+        );
 
         $this->assertTrue($result2->isMatch(
             new Location(

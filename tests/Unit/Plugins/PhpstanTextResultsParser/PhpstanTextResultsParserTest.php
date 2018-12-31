@@ -57,6 +57,10 @@ class PhpstanTextResultsParserTest extends TestCase
             ),
             new Type('Call to an undefined method')
         ));
+        $this->assertSame(
+            'Call to an undefined method DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmTextResultsParser\PsalmTextResultsParser::processLine().',
+            $result1->getMessage()
+        );
     }
 
     public function testConvertToString(): void
