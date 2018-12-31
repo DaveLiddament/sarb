@@ -201,7 +201,7 @@ class PhpstanJsonResultsParser implements ResultsParser
         return new AnalysisResult(
             $location,
             new Type($type),
-            self::MESSAGE,
+            $rawType,
             JsonUtils::toString([
                 self::ABSOLUTE_FILE_PATH => $absoluteFilePath,
                 self::MESSAGE => $analysisResultAsArray,
