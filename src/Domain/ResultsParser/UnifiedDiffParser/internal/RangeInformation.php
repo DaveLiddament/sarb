@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
+
 class RangeInformation
 {
     /**
@@ -44,16 +46,26 @@ class RangeInformation
     public function __construct(string $line)
     {
         $matches = [];
-        $match = preg_match('/^@@ -(\d+),(\d+) \+(\d+),(\d+) @@/', $line, $matches);
+        $match = preg_match('/^@@ -(\d+)(,\d+){0,1} \+(\d+)(,\d+){0,1} @@/', $line, $matches);
 
         if (1 !== $match) {
             throw DiffParseException::invalidRangeInformation($line);
         }
 
         $this->originalFileStartLine = (int) $matches[1];
-        $this->originalFileHunkSize = (int) $matches[2];
+
+        if ($matches[2] === "") {
+            $this->originalFileHunkSize = 1;
+        } else {
+            $this->originalFileHunkSize = (int) StringUtils::removeFromStart(',', $matches[2]);
+        }
         $this->newFileStartLine = (int) $matches[3];
-        $this->newFileHunkSize = (int) $matches[4];
+
+        if (count($matches) === 5) {
+            $this->newFileHunkSize = (int) StringUtils::removeFromStart(',', $matches[4]);
+        } else {
+            $this->newFileHunkSize = 1;
+        }
     }
 
     /**
