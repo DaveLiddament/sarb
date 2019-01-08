@@ -54,14 +54,14 @@ class RangeInformation
 
         $this->originalFileStartLine = (int) $matches[1];
 
-        if ($matches[2] === "") {
+        if ('' === $matches[2]) {
             $this->originalFileHunkSize = 1;
         } else {
             $this->originalFileHunkSize = (int) StringUtils::removeFromStart(',', $matches[2]);
         }
         $this->newFileStartLine = (int) $matches[3];
 
-        if (count($matches) === 5) {
+        if (5 === count($matches)) {
             $this->newFileHunkSize = (int) StringUtils::removeFromStart(',', $matches[4]);
         } else {
             $this->newFileHunkSize = 1;
