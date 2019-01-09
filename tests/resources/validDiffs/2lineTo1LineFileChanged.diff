@@ -1,0 +1,8 @@
+diff --git a/message.txt b/message.txt
+index 7bdcc40..ce01362 100644
+--- a/message.txt
++++ b/message.txt
+@@ -1,2 +1 @@
+-goodbye
+-this is the another line
++hello
