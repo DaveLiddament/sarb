@@ -179,6 +179,53 @@ class DiffParserTest extends TestCase
                     ],
                 ],
             ],
+            '1lineFileChanged' => [
+                '1lineFileChanged.diff',
+                [
+                    [
+                        new OriginalFileName('message.txt'),
+                        new NewFileName('message.txt'),
+                        false,
+                        false,
+                        [
+                            LineMutation::originalLineNumber(new LineNumber(1)),
+                            LineMutation::newLineNumber(new LineNumber(1)),
+                        ],
+                    ],
+                ],
+            ],
+            '1lineTo2LinesFileChanged' => [
+                '1lineTo2LinesFileChanged.diff',
+                [
+                    [
+                        new OriginalFileName('message.txt'),
+                        new NewFileName('message.txt'),
+                        false,
+                        false,
+                        [
+                            LineMutation::originalLineNumber(new LineNumber(1)),
+                            LineMutation::newLineNumber(new LineNumber(1)),
+                            LineMutation::newLineNumber(new LineNumber(2)),
+                        ],
+                    ],
+                ],
+            ],
+            '2lineTo1LineFileChanged' => [
+                '2lineTo1LineFileChanged.diff',
+                [
+                    [
+                        new OriginalFileName('message.txt'),
+                        new NewFileName('message.txt'),
+                        false,
+                        false,
+                        [
+                            LineMutation::originalLineNumber(new LineNumber(1)),
+                            LineMutation::originalLineNumber(new LineNumber(2)),
+                            LineMutation::newLineNumber(new LineNumber(1)),
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
