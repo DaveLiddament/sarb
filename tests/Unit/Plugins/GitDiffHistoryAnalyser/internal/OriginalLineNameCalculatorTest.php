@@ -81,4 +81,10 @@ class OriginalLineNameCalculatorTest extends TestCase
         $originalLineNumber = OriginalLineNumberCalculator::calculateOriginalLineNumber($this->fileMutation, $newLineNumber);
         $this->assertSame($expectedOriginalLineNumber, $originalLineNumber);
     }
+
+    public function testLineNumber0(): void
+    {
+        $originalLineNumber = OriginalLineNumberCalculator::calculateOriginalLineNumber($this->fileMutation, 0);
+        $this->assertSame(0, $originalLineNumber);
+    }
 }

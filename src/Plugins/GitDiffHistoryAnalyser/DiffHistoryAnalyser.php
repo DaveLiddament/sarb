@@ -55,7 +55,7 @@ class DiffHistoryAnalyser implements HistoryAnalyser
             return PreviousLocation::fromLocation($location);
         }
 
-        // If file added then
+        // If file added then this is not in the baseline.
         if ($fileMutation->isAddedFile()) {
             return PreviousLocation::noPreviousLocation();
         }
