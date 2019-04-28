@@ -31,7 +31,7 @@ class LineNumber
      */
     public function __construct(int $lineNumber)
     {
-        Assert::greaterThan($lineNumber, 0, 'Line number must be positive integer. Got: %s');
+        Assert::greaterThanEq($lineNumber, 0, 'Line number must be positive integer or 0. Got: %s');
         $this->lineNumber = $lineNumber;
     }
 

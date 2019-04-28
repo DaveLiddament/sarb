@@ -46,11 +46,25 @@ class PhpstanTextResultsParserTest extends TestCase
     {
         $analysisResults = $this->phpstanTextResultsParser->convertFromString($this->fileContents, $this->projectRoot);
 
-        $this->assertCount(1, $analysisResults->getAnalysisResults());
+        $this->assertCount(2, $analysisResults->getAnalysisResults());
 
         $result1 = $analysisResults->getAnalysisResults()[0];
 
         $this->assertTrue($result1->isMatch(
+            new Location(
+                new FileName('src/Employee.php'),
+                new LineNumber(0)
+            ),
+            new Type('Class not found and could not be autoloaded.')
+        ));
+        $this->assertSame(
+            'Class Demo\Foo not found and could not be autoloaded.',
+            $result1->getMessage()
+        );
+
+        $result2 = $analysisResults->getAnalysisResults()[1];
+
+        $this->assertTrue($result2->isMatch(
             new Location(
                 new FileName('src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php'),
                 new LineNumber(50)
@@ -59,7 +73,7 @@ class PhpstanTextResultsParserTest extends TestCase
         ));
         $this->assertSame(
             'Call to an undefined method DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmTextResultsParser\PsalmTextResultsParser::processLine().',
-            $result1->getMessage()
+            $result2->getMessage()
         );
     }
 
