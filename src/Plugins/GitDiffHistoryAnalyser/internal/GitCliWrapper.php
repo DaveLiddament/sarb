@@ -63,10 +63,12 @@ class GitCliWrapper implements GitWrapper
             return $process->getOutput();
         }
 
+        $exitCode = $process->getExitCode();
+
         $errorMessage = sprintf(
-            '%s. Return code [%d] Error: %s',
+            '%s. Return code [%s] Error: %s',
             $context,
-            $process->getExitCode(),
+            null === $exitCode ? 'null' : (string) $exitCode,
             $process->getErrorOutput()
         );
         throw new RuntimeException($errorMessage);
