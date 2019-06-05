@@ -34,7 +34,7 @@ class ExakatJsonResultsParser implements ResultsParser
     const LINE_FROM = 'line';
     const TYPE = 'type';
     const FILE = 'file';
-// Not used yet 
+    // Not used yet
 //    const SEVERITY = 'severity';
 //    const ERROR_SEVERITY_LEVEL = 'error';
 //    const MESSAGE = 'message';
@@ -129,7 +129,7 @@ class ExakatJsonResultsParser implements ResultsParser
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE_FROM);
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
         $relativeFileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFileNameAsString);
-        
+
         $location = new Location(
             new FileName($relativeFileNameAsString),
             new LineNumber($lineAsInt)
