@@ -34,10 +34,6 @@ class ExakatJsonResultsParser implements ResultsParser
     const LINE_FROM = 'line';
     const TYPE = 'type';
     const FILE = 'file';
-    // Not used yet
-//    const SEVERITY = 'severity';
-//    const ERROR_SEVERITY_LEVEL = 'error';
-//    const MESSAGE = 'message';
 
     /**
      * {@inheritdoc}
@@ -98,6 +94,7 @@ class ExakatJsonResultsParser implements ResultsParser
 
         $resultsCount = 0;
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($analysisResultsAsArray as $analysisResultAsArray) {
             ++$resultsCount;
             try {
