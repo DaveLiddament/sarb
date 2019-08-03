@@ -1,0 +1,20 @@
+FILE: /vagrant/src/Domain/Common/InvalidPathException.php
+--------------------------------------------------------------------
+FOUND 3 ERRORS AND 1 WARNING AFFECTING 4 LINES
+--------------------------------------------------------------------
+  2 | ERROR   | Missing file doc comment
+  7 | ERROR   | Missing doc comment for class InvalidPathException
+  9 | ERROR   | Missing doc comment for function __construct()
+ 11 | WARNING | Line exceeds 85 characters; contains 109 characters
+--------------------------------------------------------------------
+
+
+FILE: /vagrant/src/Domain/BaseLiner/BaseLineImporter.php
+------------------------------------------------------------------------
+FOUND 1 ERROR AND 1 WARNING AFFECTING 2 LINES
+------------------------------------------------------------------------
+  8 | WARNING | [ ] Line exceeds 85 characters; contains 113 characters
+ 52 | ERROR   | [x] Expected 18 spaces after parameter type; 1 found
+------------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+------------------------------------------------------------------------
