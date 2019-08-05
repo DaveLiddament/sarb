@@ -149,7 +149,10 @@ As before if you are running SARB in standalone mode then you need 1 extra optio
 If you are running this in CI then you can add the flag `-f`. This means a none zero return code is returned if any issues have been introduced sinde the baseline.
 
 ## Further Reading
-
+ 
+ * Instructions for using with
+   * [Exakat](https://www.exakat.io/exakat-1-8-3-review/)
+   * [PHP CodeSniffer](docs/PhpCodeSniffer.md)
  * [How SARB works](docs/HowSarbWorks.md)
  * [Adding support for new static analysis tools / format](docs/NewResultsParser.md)
  * [Adding support for SCMs other than git](docs/NewHistoryAnalyser.md)
