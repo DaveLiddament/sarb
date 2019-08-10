@@ -1,5 +1,7 @@
 # Static Analysis Results Baseliner (SARB)
 
+[![CircleCI](https://circleci.com/gh/DaveLiddament/sarb.svg?style=svg)](https://circleci.com/gh/DaveLiddament/sarb)
+
 **This is still in beta.**
 
  * [Why SARB](#why-sarb)
