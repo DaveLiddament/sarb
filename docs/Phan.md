@@ -7,7 +7,7 @@ Instructions for using SARB with [Phan](https://github.com/phan/phan).
 
 ```
 composer require --dev phan/phan
-composer require --dev daveliddament/sarb
+composer require --dev dave-liddament/sarb
 ```
 
 ## Before create the baseline
