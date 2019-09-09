@@ -7,7 +7,7 @@ Instructions for using SARB with [PHP CodeSniffer](https://github.com/squizlabs/
 
 ```
 composer require --dev squizlabs/php_codesniffer
-composer require --dev daveliddament/sarb
+composer require --dev dave-liddament/sarb
 ```
 
 ## Before create the baseline
