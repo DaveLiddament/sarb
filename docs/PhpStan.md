@@ -7,7 +7,7 @@ Instructions for using SARB with [PHPStan](https://github.com/phpstan/phpstan).
 
 ```
 composer require --dev phpstan/phpstan
-composer require --dev daveliddament/sarb
+composer require --dev dave-liddament/sarb
 ```
 
 ## Before create the baseline
