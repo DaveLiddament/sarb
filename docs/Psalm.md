@@ -8,7 +8,7 @@ Firstly check out Psalm's own [baseline functionality](https://psalm.dev/docs/ru
 
 ```
 composer require --dev psalm/psalm
-composer require --dev daveliddament/sarb
+composer require --dev dave-liddament/sarb
 ```
 
 ## Before create the baseline
