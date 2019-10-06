@@ -167,6 +167,7 @@ If you are running this in CI then you can add the flag `-f`. This means a none 
  * [Adding support for SCMs other than git](docs/NewHistoryAnalyser.md)
  * [How to contribute](docs/Contributing.md)
  * [Unified Diff Terminology](docs/UnifiedDiffTerminology.md)
+ * [SARB format](docs/SarbFormat.md)
 
 
 ## Authors

@@ -4,6 +4,8 @@
 To support a new static analysis tool a new Results Parser is required.
 This document explains how to create a ResultsParser.
 
+**NOTE:** It might be easier to get the static analysis tool to output results in the `sarb.json` [format](SarbFormat.md).  
+
 ## Overview
 
 Results Parses are specific to both:
@@ -20,6 +22,7 @@ For each violation that is found the following information needs to be extracted
  - Filename violation occurred.
  - Line number violation occurred.
  - Type of violation (e.g. `PossibleNullReturn`),
+ - A human readable description of the issue (e.g. `Cannot assign $asArray to a mixed type`)
  - Serialised version of violation. This is not used by SARB itself but is needed when reconstructing the analysis results with the baseline removed.
 
 
@@ -179,6 +182,7 @@ A valid implementation to do this would be this...
                 $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'file_name');
                 $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, 'line_from');
                 $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'type');
+                $message = ArrayUtils::getStringValue($analysisResultAsArray, 'message');
 
                 $location = new Location(
                     new FileName($fileNameAsString),
@@ -188,6 +192,7 @@ A valid implementation to do this would be this...
                 $analysisResult =  new AnalysisResult(
                     $location,
                     new Type($typeAsString),
+                    $message,
                     JsonUtils::toString($analysisResultAsArray)
                 );
 
@@ -270,8 +275,9 @@ If it isn't then probably the wrong file has been specified.
 SARB needs to pull out:
 
  - file path (`file_path` in Psalm's JSON output)
- - line number ('line_from` in Psalm's JSON output)
- - type ('type` in Psalm's JSON output)
+ - line number (`line_from` in Psalm's JSON output)
+ - type (`type` in Psalm's JSON output)
+ - message (`message` in Psalm's JSON output)
 
 **NOTE:** The file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path.
 
@@ -281,6 +287,7 @@ It does this like so:
                 $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'file_path');
                 $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, 'line_from');
                 $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'type');
+                $message = ArrayUtils::getStringValue($analysisResultAsArray, 'message');
 ```
 
 
@@ -299,6 +306,7 @@ The easiest way to do this is to take the array that represents the entire viola
                 $analysisResult =  new AnalysisResult(
                     $location,
                     new Type($typeAsString),
+                    $message,
                     JsonUtils::toString($analysisResultAsArray)
                 );
 ```
@@ -360,5 +368,5 @@ The final method to implement just returns true or false.
 ```
 
 Read more about [guessing violation type classification](ViolationTypeClassificationGuessing.md).
-In this example the static analysis tool provides a warning so we are not guessing the
+In this example the static analysis tool provides a type so we are not guessing the
 classification. So this will return false.
