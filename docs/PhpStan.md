@@ -10,13 +10,13 @@ composer require --dev phpstan/phpstan
 composer require --dev dave-liddament/sarb
 ```
 
-## Before create the baseline
+## Before creating the baseline
 
 First fix all the issues you want to fix before creating the baseline. 
 
 Make sure before creating the baseline that:
 
-- all code is committed to git. Running `git status` should return with ` nothing to commit, working tree clean` in the response.
+- all code is committed to git. Running `git status` should return with `nothing to commit, working tree clean` in the response.
 - the current commit is the one you want to use as the baseline.
 
 **This is very important as SARB uses the current git SHA when working out what code has changed from the baseline.** 
@@ -47,7 +47,7 @@ You'll probably want to check the baseline file into your repo, so CI or other d
 ## Removing baseline from results
 
 After you've created the baseline, edit the code. Once done run PHPStan and SARB again, 
-this time removing the baseline to make you've not added any extra issues.
+this time removing the baseline to make sure you've not added any extra issues.
 
 ```
 vendor/bin/phpstan analyse --error-format=json > /tmp/phpstan.json
