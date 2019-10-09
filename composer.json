@@ -27,13 +27,13 @@
     "friendsofphp/php-cs-fixer": "^2.13.1",
     "jakub-onderka/php-parallel-lint": "~0.9",
     "jakub-onderka/php-var-dump-check": "~0.2",
-    "phpstan/phpstan": "^0.10.5",
-    "phpstan/phpstan-strict-rules": "^0.10.1",
-    "phpstan/phpstan-webmozart-assert": "^0.10.0",
+    "phpstan/phpstan": "^0.11.6",
+    "phpstan/phpstan-strict-rules": "^0.11",
+    "phpstan/phpstan-webmozart-assert": "^0.11",
     "phpunit/phpunit": "^7.0",
     "sensiolabs/security-checker": "^5.0",
     "symfony/filesystem": "^3.4 || ^4.0",
-    "vimeo/psalm": "^3.0.7"
+    "vimeo/psalm": "^3.5.3"
   },
   "bin" : ["sarb"],
   "autoload": {
