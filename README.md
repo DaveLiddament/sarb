@@ -1,6 +1,10 @@
 # Static Analysis Results Baseliner (SARB)
 
-[![CircleCI](https://circleci.com/gh/DaveLiddament/sarb.svg?style=svg)](https://circleci.com/gh/DaveLiddament/sarb)
+[![CircleCI](https://circleci.com/gh/DaveLiddament/sarb.svg?style=svg)](https://circleci.com/gh/DaveLiddament/sarb) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
+[![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb)
+[![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://packagist.org/packages/dave-liddament/sarb)
 
 **This is still in beta.**
 
