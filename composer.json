@@ -33,7 +33,7 @@
     "phpunit/phpunit": "^7.0",
     "sensiolabs/security-checker": "^5.0",
     "symfony/filesystem": "^3.4 || ^4.0",
-    "vimeo/psalm": "^3.0.7"
+    "vimeo/psalm": "^3.5.3"
   },
   "bin" : ["sarb"],
   "autoload": {
