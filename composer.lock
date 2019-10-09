@@ -4266,16 +4266,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.3.0",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "a1eb191f57cd6ac1963ce7818d010f981564bb74"
+                "reference": "f327d75116a15e88431668c36b9613f1e3dd62a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/a1eb191f57cd6ac1963ce7818d010f981564bb74",
-                "reference": "a1eb191f57cd6ac1963ce7818d010f981564bb74",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f327d75116a15e88431668c36b9613f1e3dd62a4",
+                "reference": "f327d75116a15e88431668c36b9613f1e3dd62a4",
                 "shasum": ""
             },
             "require": {
@@ -4325,7 +4325,10 @@
                 "psr-4": {
                     "Psalm\\Plugin\\": "src/Psalm/Plugin",
                     "Psalm\\": "src/Psalm"
-                }
+                },
+                "files": [
+                    "src/functions.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4342,7 +4345,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-05-21T03:14:41+00:00"
+            "time": "2019-06-05T12:50:24+00:00"
         },
         {
             "name": "webmozart/glob",
