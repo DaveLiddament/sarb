@@ -55,7 +55,8 @@
       "@cs",
       "@test",
       "@psalm",
-      "@phpstan"
+      "@phpstan",
+      "@deptrac"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
@@ -64,6 +65,7 @@
     "cs-fix" : "php-cs-fixer fix -v",
     "psalm" : "psalm",
     "phpstan" : "phpstan -n --no-progress  analyse",
+    "deptrac" : "deptrac",
     "test" : "phpunit --log-junit reports/phpunit.xml",
     "security" : "security-checker security:check"
   }
