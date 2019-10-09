@@ -31,7 +31,7 @@ It is very important `Type` must not have file name, class name, function or lin
 [
   {
     "file": "/home/johnsmith/project/Controller/HomeController.php",
-    "lineNumber": 10,
+    "line": 10,
     "type": "MixedType",
     "message" : "Cannot assign $asArray to a mixed type"
   },

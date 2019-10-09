@@ -31,7 +31,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 
 class SarbJsonResultsParser implements ResultsParser
 {
-    private const LINE_FROM = 'line';
+    private const LINE = 'line';
     private const TYPE = 'type';
     private const FILE = 'file';
     private const MESSAGE = 'message';
@@ -124,7 +124,7 @@ class SarbJsonResultsParser implements ResultsParser
         ProjectRoot $projectRoot
     ): AnalysisResult {
         $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
-        $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE_FROM);
+        $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
         $relativeFileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFileNameAsString);
 
