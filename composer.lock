@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cc7d96deb0743edde21f8776fdc313f",
+    "content-hash": "432cfc66e495ad242fbe93abc24e0991",
     "packages": [
         {
             "name": "psr/container",
@@ -3910,6 +3910,48 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
+        },
+        {
+            "name": "sensiolabs-de/deptrac-shim",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs-de/deptrac-shim.git",
+                "reference": "551e560e1403261fd2e066aeaf426cd45ab77da3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs-de/deptrac-shim/zipball/551e560e1403261fd2e066aeaf426cd45ab77da3",
+                "reference": "551e560e1403261fd2e066aeaf426cd45ab77da3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-tokenizer": "*",
+                "ext-zlib": "*",
+                "php": "^7.1"
+            },
+            "replace": {
+                "sensiolabs-de/astrunner": "^1.0",
+                "sensiolabs-de/deptrac": "self.version"
+            },
+            "bin": [
+                "deptrac"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Simon Mönch",
+                    "email": "simon.moench@sensiolabs.de",
+                    "role": "maintainer"
+                }
+            ],
+            "description": "deptrac phar distribution",
+            "time": "2019-03-15T14:24:52+00:00"
         },
         {
             "name": "sensiolabs/security-checker",
