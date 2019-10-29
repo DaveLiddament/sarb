@@ -18,6 +18,5 @@
 
     <stubs>
 	    <file name="stubs/Symfony/Component/DependencyInjection/ContainerBuilder.php" />	    
-	    <file name="stubs/Webmozart/Assert/Assert.php" />	    
     </stubs>
 </psalm>
