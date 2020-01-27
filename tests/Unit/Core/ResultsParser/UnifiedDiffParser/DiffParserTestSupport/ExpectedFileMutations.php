@@ -96,33 +96,21 @@ class ExpectedFileMutations
         return $this;
     }
 
-    /**
-     * @return OriginalFileName
-     */
     public function getOriginalFileName(): OriginalFileName
     {
         return $this->originalFileName;
     }
 
-    /**
-     * @return NewFileName
-     */
     public function getNewFileName(): NewFileName
     {
         return $this->newFileName;
     }
 
-    /**
-     * @return bool
-     */
     public function isAddedFile(): bool
     {
         return $this->isAddedFile;
     }
 
-    /**
-     * @return bool
-     */
     public function isDeletedFile(): bool
     {
         return $this->isDeletedFile;

@@ -42,8 +42,6 @@ class FileMutationBuilder
 
     /**
      * FileMutationBuilder constructor.
-     *
-     * @param FileMutationsBuilder $fileMutationsBuilder
      */
     public function __construct(FileMutationsBuilder $fileMutationsBuilder)
     {

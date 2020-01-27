@@ -26,9 +26,6 @@ class ProjectRoot
      * ProjectRoot constructor.
      *
      * If
-     *
-     * @param string $rootDirectory
-     * @param string $currentWorkingDirectory
      */
     public function __construct(string $rootDirectory, string $currentWorkingDirectory)
     {
@@ -42,11 +39,7 @@ class ProjectRoot
     /**
      * Returns path relative to project root.
      *
-     * @param string $fullPath
-     *
      * @throws InvalidPathException
-     *
-     * @return string
      */
     public function getPathRelativeToRootDirectory(string $fullPath): string
     {

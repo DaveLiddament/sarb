@@ -33,8 +33,6 @@ class ListResultsParsesCommand extends Command
 
     /**
      * Constructor.
-     *
-     * @param ResultsParsersRegistry $resultsParsersRegistry
      */
     public function __construct(ResultsParsersRegistry $resultsParsersRegistry)
     {

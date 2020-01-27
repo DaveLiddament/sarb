@@ -30,8 +30,6 @@ class BaseLineExporter
 
     /**
      * BaseLineExporter constructor.
-     *
-     * @param FileWriter $fileWriter
      */
     public function __construct(FileWriter $fileWriter)
     {
@@ -40,9 +38,6 @@ class BaseLineExporter
 
     /**
      * Export BaseLine results to the given FileName.
-     *
-     * @param BaseLine $baseLine
-     * @param FileName $fileName
      *
      * @throws FileAccessException
      * @throws JsonParseException

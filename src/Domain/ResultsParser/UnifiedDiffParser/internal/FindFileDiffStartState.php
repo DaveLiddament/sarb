@@ -21,8 +21,6 @@ class FindFileDiffStartState implements State
 
     /**
      * FindFileDiffStartState constructor.
-     *
-     * @param FileMutationsBuilder $fileMutationsBuilder
      */
     public function __construct(FileMutationsBuilder $fileMutationsBuilder)
     {

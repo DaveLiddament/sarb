@@ -23,12 +23,6 @@ class BaseLineResultsRemover
 {
     /**
      * Returns AnalysisResults stripping out those that appear in the BaseLine.
-     *
-     * @param AnalysisResults $latestAnalysisResults
-     * @param HistoryAnalyser $historyAnalyser
-     * @param AnalysisResults $baseLineAnalysisResults
-     *
-     * @return AnalysisResults
      */
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,

@@ -52,8 +52,6 @@ class PhpstanJsonResultsParser implements ResultsParser
 
     /**
      * PhpstanJsonResultsParser constructor.
-     *
-     * @param FqcnRemover $fqcnRemover
      */
     public function __construct(FqcnRemover $fqcnRemover)
     {
@@ -130,12 +128,7 @@ class PhpstanJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
-     * @param array $analysisResultsAsArray
-     * @param ProjectRoot $projectRoot
-     *
      * @throws ParseAtLocationException
-     *
-     * @return AnalysisResults
      */
     private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -175,14 +168,8 @@ class PhpstanJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @param array $analysisResultAsArray
-     * @param FileName $fileName
-     * @param string $absoluteFilePath
-     *
      * @throws ArrayParseException
      * @throws JsonParseException
-     *
-     * @return AnalysisResult
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,

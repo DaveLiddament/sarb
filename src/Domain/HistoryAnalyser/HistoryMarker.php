@@ -21,8 +21,6 @@ interface HistoryMarker
 {
     /**
      * Return the history maker as a string (to be stored in BaseLine).
-     *
-     * @return string
      */
     public function asString(): string;
 }

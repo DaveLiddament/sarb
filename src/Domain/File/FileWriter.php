@@ -21,9 +21,6 @@ class FileWriter
     /**
      * Write $contents to the file.
      *
-     * @param FileName $fileName
-     * @param array $contents
-     *
      * @throws JsonParseException
      * @throws FileAccessException
      */
@@ -35,9 +32,6 @@ class FileWriter
 
     /**
      * Write $contents to the file.
-     *
-     * @param FileName $fileName
-     * @param string $contents
      *
      * @throws FileAccessException
      */

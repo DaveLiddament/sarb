@@ -8,8 +8,6 @@ class PersonFinder
 {
     /**
      * @param Person[] $people
-     *
-     * @return array
      */
     public function findBobs(array $people): array
     {

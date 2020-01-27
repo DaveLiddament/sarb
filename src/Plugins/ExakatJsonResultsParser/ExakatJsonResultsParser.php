@@ -81,12 +81,7 @@ class ExakatJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
-     * @param array $analysisResultsAsArray
-     * @param ProjectRoot $projectRoot
-     *
      * @throws ParseAtLocationException
-     *
-     * @return AnalysisResults
      */
     private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -110,13 +105,9 @@ class ExakatJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @param array $analysisResultAsArray
-     *
      * @throws ArrayParseException
      * @throws JsonParseException
      * @throws InvalidPathException
-     *
-     * @return AnalysisResult
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,

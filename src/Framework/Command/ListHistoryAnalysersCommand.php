@@ -33,8 +33,6 @@ class ListHistoryAnalysersCommand extends Command
 
     /**
      * Constructor.
-     *
-     * @param HistoryFactoryRegistry $historyFactoryRegistry
      */
     public function __construct(HistoryFactoryRegistry $historyFactoryRegistry)
     {

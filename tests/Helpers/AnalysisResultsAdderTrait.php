@@ -15,11 +15,6 @@ trait AnalysisResultsAdderTrait
 {
     /**
      * Adds an AnalysisResult (combination of fileName, lineNumber and type) to AnalysisResults.
-     *
-     * @param AnalysisResults $analysisResults
-     * @param string $fileName
-     * @param int $lineNumber
-     * @param string $type
      */
     private function addAnalysisResult(
         AnalysisResults $analysisResults,

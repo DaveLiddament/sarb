@@ -27,8 +27,6 @@ class FindOriginalFileNameState implements State
 
     /**
      * FindOriginalFileNameState constructor.
-     *
-     * @param FileMutationsBuilder $fileMutationsBuilder
      */
     public function __construct(FileMutationsBuilder $fileMutationsBuilder)
     {

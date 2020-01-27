@@ -12,10 +12,6 @@ class FqcnRemover
 {
     /**
      * Removes anything that looks like a FQCN from the string.
-     *
-     * @param string $raw
-     *
-     * @return string
      */
     public function removeRqcn(string $raw): string
     {

@@ -231,9 +231,6 @@ class DiffParserTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param string $inputFile
-     * @param array $expectedFileMutations
      */
     public function testDiffParser(string $inputFile, array $expectedFileMutations): void
     {

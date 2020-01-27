@@ -50,17 +50,11 @@ class DiffParseException extends Exception
         $this->details = $details;
     }
 
-    /**
-     * @return string
-     */
     public function getReason(): string
     {
         return $this->reason;
     }
 
-    /**
-     * @return string
-     */
     public function getDetails(): string
     {
         return $this->details;

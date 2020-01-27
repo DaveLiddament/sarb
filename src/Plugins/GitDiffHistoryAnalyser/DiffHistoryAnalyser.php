@@ -29,8 +29,6 @@ class DiffHistoryAnalyser implements HistoryAnalyser
 
     /**
      * DiffHistoryAnalyser constructor.
-     *
-     * @param FileMutations $fileMutations
      */
     public function __construct(FileMutations $fileMutations)
     {
@@ -39,10 +37,6 @@ class DiffHistoryAnalyser implements HistoryAnalyser
 
     /**
      * Returns the location of the line number in the baseline (if it exists).
-     *
-     * @param Location $location
-     *
-     * @return PreviousLocation
      */
     public function getPreviousLocation(Location $location): PreviousLocation
     {

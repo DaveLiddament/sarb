@@ -24,8 +24,6 @@ class GitCommit implements HistoryMarker
 
     /**
      * GitCommit constructor.
-     *
-     * @param string $gitSha
      */
     public function __construct(string $gitSha)
     {
@@ -43,10 +41,6 @@ class GitCommit implements HistoryMarker
 
     /**
      * Validates the string provided could be a valid git SHA.
-     *
-     * @param string $gitSha
-     *
-     * @return bool
      */
     public static function validateGitSha(string $gitSha): bool
     {

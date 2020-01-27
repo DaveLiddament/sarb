@@ -35,9 +35,6 @@ class GitDiffHistoryFactory implements HistoryFactory
 
     /**
      * GitDiffHistoryFactory constructor.
-     *
-     * @param GitWrapper $gitCliWrapper
-     * @param Parser $parser
      */
     public function __construct(GitWrapper $gitCliWrapper, Parser $parser)
     {

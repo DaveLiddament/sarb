@@ -38,10 +38,6 @@ class InvalidDiffParserTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param string $inputFile
-     * @param string $location
-     * @param string $reason
      */
     public function testInvalidDiff(string $inputFile, string $location, string $reason): void
     {

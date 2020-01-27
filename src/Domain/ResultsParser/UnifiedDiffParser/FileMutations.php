@@ -39,11 +39,6 @@ class FileMutations
 
     /**
      * Returns FileMutations for the given file name. Or null if there are no file mutations for that file in the diff.
-     *
-     *
-     * @param NewFileName $newFileName
-     *
-     * @return FileMutation|null
      */
     public function getFileMutation(NewFileName $newFileName): ?FileMutation
     {
@@ -66,8 +61,6 @@ class FileMutations
 
     /**
      * Returns number of FileMutations (only usecase is for testing).
-     *
-     * @return int
      */
     public function getCount(): int
     {

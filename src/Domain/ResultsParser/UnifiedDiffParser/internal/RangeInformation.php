@@ -39,8 +39,6 @@ class RangeInformation
     /**
      * RangeInformation constructor.
      *
-     * @param string $line
-     *
      * @throws DiffParseException
      */
     public function __construct(string $line)
@@ -68,33 +66,21 @@ class RangeInformation
         }
     }
 
-    /**
-     * @return int
-     */
     public function getOriginalFileStartLine(): int
     {
         return $this->originalFileStartLine;
     }
 
-    /**
-     * @return int
-     */
     public function getOriginalFileHunkSize(): int
     {
         return $this->originalFileHunkSize;
     }
 
-    /**
-     * @return int
-     */
     public function getNewFileStartLine(): int
     {
         return $this->newFileStartLine;
     }
 
-    /**
-     * @return int
-     */
     public function getNewFileHunkSize(): int
     {
         return $this->newFileHunkSize;

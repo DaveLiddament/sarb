@@ -20,11 +20,7 @@ interface HistoryFactoryLookupService
     /**
      * Return HistoryFactory of the given name.
      *
-     * @param string $identifier
-     *
      * @throws InvalidHistoryFactoryException
-     *
-     * @return HistoryFactory
      */
     public function getHistoryFactory(string $identifier): HistoryFactory;
 }

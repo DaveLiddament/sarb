@@ -26,8 +26,6 @@ class FindChangeHunkStartState implements State
 
     /**
      * FindChangeHunkStartState constructor.
-     *
-     * @param FileMutationBuilder $fileMutationBuilder
      */
     public function __construct(FileMutationBuilder $fileMutationBuilder)
     {

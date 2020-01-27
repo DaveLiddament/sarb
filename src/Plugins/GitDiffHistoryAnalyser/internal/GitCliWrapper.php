@@ -49,9 +49,6 @@ class GitCliWrapper implements GitWrapper
 
     /**
      * @param string[] $gitCommand
-     * @param string $context
-     *
-     * @return string
      */
     private function runCommand(array $gitCommand, string $context): string
     {
@@ -76,7 +73,6 @@ class GitCliWrapper implements GitWrapper
 
     /**
      * @param string[] $arguments
-     * @param ProjectRoot $projectRoot
      *
      * @return string[]
      */

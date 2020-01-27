@@ -16,8 +16,6 @@ interface Identifier
 {
     /**
      * Should be a short code (all identifiers must be unique).
-     *
-     * @return string
      */
     public function getCode(): string;
 
@@ -25,8 +23,6 @@ interface Identifier
      * Human readable description with plenty of detail.
      *
      * E.g. "Psalm results (JSON format)"
-     *
-     * @return string
      */
     public function getDescription(): string;
 }

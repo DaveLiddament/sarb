@@ -29,8 +29,6 @@ class FindRenameToState implements State
 
     /**
      * FindRenameToState constructor.
-     *
-     * @param FileMutationBuilder $fileMutationBuilder
      */
     public function __construct(FileMutationBuilder $fileMutationBuilder)
     {

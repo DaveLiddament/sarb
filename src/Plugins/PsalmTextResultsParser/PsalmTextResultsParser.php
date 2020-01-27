@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmTextResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParserUtils\AbstractTextResultsParser;
 

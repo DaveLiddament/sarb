@@ -29,8 +29,6 @@ class Exporter
 
     /**
      * Exporter constructor.
-     *
-     * @param FileWriter $fileWriter
      */
     public function __construct(FileWriter $fileWriter)
     {
@@ -39,10 +37,6 @@ class Exporter
 
     /**
      * Exports AnalysisResults to the given $outputFile.
-     *
-     * @param AnalysisResults $analysisResults
-     * @param ResultsParser $resultsParser
-     * @param FileName $outputFile
      *
      * @throws JsonParseException
      * @throws FileAccessException

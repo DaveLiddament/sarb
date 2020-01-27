@@ -36,17 +36,11 @@ class PreviousLocation
         $this->location = $location;
     }
 
-    /**
-     * @return bool
-     */
     public function isNoPreviousLocation(): bool
     {
         return null === $this->location;
     }
 
-    /**
-     * @return Location
-     */
     public function getLocation(): Location
     {
         Assert::notNull($this->location, 'Trying to get Location when PreviousLocation is not set');

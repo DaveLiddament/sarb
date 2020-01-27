@@ -24,17 +24,12 @@ class Type
 
     /**
      * Type constructor.
-     *
-     * @param string $type
      */
     public function __construct(string $type)
     {
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
@@ -44,8 +39,6 @@ class Type
      * Return true if equal.
      *
      * @param Type $type
-     *
-     * @return bool
      */
     public function isEqual(self $type): bool
     {

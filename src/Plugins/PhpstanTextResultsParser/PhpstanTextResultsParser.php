@@ -30,8 +30,6 @@ class PhpstanTextResultsParser extends AbstractTextResultsParser
 
     /**
      * PsalmTextResultsParser constructor.
-     *
-     * @param FqcnRemover $fqcnRemover
      */
     public function __construct(FqcnRemover $fqcnRemover)
     {

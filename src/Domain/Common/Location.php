@@ -26,9 +26,6 @@ class Location
 
     /**
      * Location constructor.
-     *
-     * @param FileName $fileName
-     * @param LineNumber $lineNumber
      */
     public function __construct(FileName $fileName, LineNumber $lineNumber)
     {
@@ -36,17 +33,11 @@ class Location
         $this->lineNumber = $lineNumber;
     }
 
-    /**
-     * @return FileName
-     */
     public function getFileName(): FileName
     {
         return $this->fileName;
     }
 
-    /**
-     * @return LineNumber
-     */
     public function getLineNumber(): LineNumber
     {
         return $this->lineNumber;
@@ -56,8 +47,6 @@ class Location
      * Returns true if $other refers to same location as this Location object.
      *
      * @param Location $other
-     *
-     * @return bool
      */
     public function isEqual(self $other): bool
     {
@@ -66,10 +55,6 @@ class Location
 
     /**
      * Used for ordering Locations, first by FileName then by line number.
-     *
-     * @param self $other
-     *
-     * @return int
      */
     public function compareTo(self $other): int
     {

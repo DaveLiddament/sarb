@@ -19,20 +19,11 @@ interface GitWrapper
 {
     /**
      * Returns a GitCommit representing the git HEAD or the project being analysed.
-     *
-     * @param ProjectRoot $projectRoot
-     *
-     * @return GitCommit
      */
     public function getCurrentSha(ProjectRoot $projectRoot): GitCommit;
 
     /**
      * Returns a diff (as a string) between the 2 commits.
-     *
-     * @param ProjectRoot $projectRoot
-     * @param GitCommit $originalCommit
-     *
-     * @return string
      */
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string;
 }

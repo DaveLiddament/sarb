@@ -32,8 +32,6 @@ class BaseLineResultsComparator
 
     /**
      * BaseLineResultsComparator constructor.
-     *
-     * @param AnalysisResults $baseLineAnalysisResults
      */
     public function __construct(AnalysisResults $baseLineAnalysisResults)
     {
@@ -51,11 +49,6 @@ class BaseLineResultsComparator
 
     /**
      * Returns true if an AnalysisResult of the same Type and Location exists in the BaseLine.
-     *
-     * @param Location $location
-     * @param Type $type
-     *
-     * @return bool
      */
     public function isInBaseLine(Location $location, Type $type): bool
     {

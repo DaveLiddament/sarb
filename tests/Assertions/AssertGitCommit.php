@@ -12,9 +12,6 @@ trait AssertGitCommit
 {
     /**
      * Asserts HistoryMarker is of type GitCommit with the $expectedSha.
-     *
-     * @param string $expectedSha
-     * @param HistoryMarker $actual
      */
     private function assertGitCommit(string $expectedSha, HistoryMarker $actual): void
     {

@@ -31,8 +31,6 @@ class Importer
 
     /**
      * Importer constructor.
-     *
-     * @param FileReader $fileReader
      */
     public function __construct(FileReader $fileReader)
     {
@@ -42,13 +40,7 @@ class Importer
     /**
      * Imports AnalysisResults from $fileName.
      *
-     * @param ResultsParser $resultsParser
-     * @param FileName $fileName
-     * @param ProjectRoot $projectRoot
-     *
      * @throws FileImportException
-     *
-     * @return AnalysisResults
      */
     public function importFromFile(
         ResultsParser $resultsParser,

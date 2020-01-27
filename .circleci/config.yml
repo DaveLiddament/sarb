@@ -1,7 +1,3 @@
-image71: &image-71
-  docker:
-  - image: circleci/php:7.1-apache-stretch-node-browsers
-
 image72: &image-72
   docker:
   - image: circleci/php:7.2-apache-stretch-node-browsers
@@ -10,12 +6,6 @@ image72: &image-72
 image73: &image-73
   docker:
     - image: circleci/php:7.3-apache-stretch-node-browsers
-
-restore-71-cache: &restore-71-cache
-  restore_cache:
-      keys:
-      - v1-71-dependencies-{{ checksum "composer.lock" }}
-      - v1-71-dependencies-
 
 restore-72-cache: &restore-72-cache
   restore_cache:
@@ -28,12 +18,6 @@ restore-73-cache: &restore-73-cache
     keys:
       - v1-73-dependencies-{{ checksum "composer.lock" }}
       - v1-73-dependencies-
-
-save-71-cache: &save-71-cache
-  save_cache:
-    key: v1-71-dependencies-{{ checksum "composer.lock" }}
-    paths:
-    - vendor
 
 save-72-cache: &save-72-cache
   save_cache:
@@ -60,7 +44,7 @@ composer-update-lowest: &composer-update-lowest
 composer-update: &composer-update
   run:
     name: Updrade to highest packages
-    command: composer update --prefer-lowest
+    command: composer update
 
 ci: &ci
   run:
@@ -81,44 +65,6 @@ store-artifacts: &store-artifacts
 version: 2
 
 jobs:
-
-  build-71-lowest:
-    <<: *image-71
-
-    steps:
-      - checkout
-      - *restore-71-cache
-      - *composer-install
-      - *save-71-cache
-      - *composer-update-lowest
-      - *ci
-      - *store-test-results
-      - *store-artifacts
-
-  build-71-current:
-    <<: *image-71
-
-    steps:
-      - checkout
-      - *restore-71-cache
-      - *composer-install
-      - *save-71-cache
-      - *ci
-      - *store-test-results
-      - *store-artifacts
-
-  build-71-highest:
-    <<: *image-71
-
-    steps:
-      - checkout
-      - *restore-71-cache
-      - *composer-install
-      - *save-71-cache
-      - *composer-update
-      - *ci
-      - *store-test-results
-      - *store-artifacts
 
 
   build-72-lowest:
@@ -216,9 +162,6 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build-71-lowest
-      - build-71-current
-      - build-71-highest
       - build-72-lowest
       - build-72-current
       - build-72-highest
