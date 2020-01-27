@@ -44,7 +44,7 @@ composer-update-lowest: &composer-update-lowest
 composer-update: &composer-update
   run:
     name: Updrade to highest packages
-    command: composer update --prefer-lowest
+    command: composer update
 
 ci: &ci
   run:
