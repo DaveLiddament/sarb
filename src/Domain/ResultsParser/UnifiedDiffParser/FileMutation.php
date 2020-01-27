@@ -34,8 +34,6 @@ class FileMutation
     /**
      * FileMutation constructor.
      *
-     * @param OriginalFileName|null $originalFileName
-     * @param NewFileName|null $newFileName
      * @param LineMutation[] $lineMutations
      */
     public function __construct(?OriginalFileName $originalFileName, ?NewFileName $newFileName, array $lineMutations)
@@ -48,9 +46,6 @@ class FileMutation
         $this->lineMutations = $lineMutations;
     }
 
-    /**
-     * @return OriginalFileName
-     */
     public function getOriginalFileName(): OriginalFileName
     {
         Assert::notNull($this->originalFileName);
@@ -58,9 +53,6 @@ class FileMutation
         return $this->originalFileName;
     }
 
-    /**
-     * @return NewFileName
-     */
     public function getNewFileName(): NewFileName
     {
         Assert::notNull($this->newFileName);

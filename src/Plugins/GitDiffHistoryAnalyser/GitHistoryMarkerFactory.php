@@ -26,8 +26,6 @@ class GitHistoryMarkerFactory implements HistoryMarkerFactory
 
     /**
      * GitHistoryMarkerFactory constructor.
-     *
-     * @param GitWrapper $gitCliWrapper
      */
     public function __construct(GitWrapper $gitCliWrapper)
     {

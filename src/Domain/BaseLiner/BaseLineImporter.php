@@ -48,10 +48,6 @@ class BaseLineImporter
 
     /**
      * BaseLineImporter constructor.
-     *
-     * @param FileReader $fileReader
-     * @param ResultsParserLookupService $resultsParserLookupService
-     * @param HistoryFactoryLookupService $historyFactoryLookupService
      */
     public function __construct(
         FileReader $fileReader,
@@ -66,11 +62,7 @@ class BaseLineImporter
     /**
      * Imports baseline results.
      *
-     * @param FileName $fileName
-     *
      * @throws FileImportException
-     *
-     * @return BaseLine
      */
     public function import(FileName $fileName): BaseLine
     {

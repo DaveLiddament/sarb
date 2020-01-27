@@ -22,10 +22,6 @@ interface HistoryAnalyser
 {
     /**
      * Return PreviousLocation (e.g. where it was in the baseline) for the current Location.
-     *
-     * @param Location $location
-     *
-     * @return PreviousLocation
      */
     public function getPreviousLocation(Location $location): PreviousLocation;
 }

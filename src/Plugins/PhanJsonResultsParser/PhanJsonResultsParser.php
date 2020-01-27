@@ -87,11 +87,7 @@ class PhanJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
-     * @param array $analysisResultsAsArray
-     *
      * @throws ParseAtLocationException
-     *
-     * @return AnalysisResults
      */
     private function convertFromArray(array $analysisResultsAsArray): AnalysisResults
     {
@@ -115,12 +111,8 @@ class PhanJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @param array $analysisResultAsArray
-     *
      * @throws ArrayParseException
      * @throws JsonParseException
-     *
-     * @return AnalysisResult
      */
     private function convertAnalysisResultFromArray(array $analysisResultAsArray): AnalysisResult
     {

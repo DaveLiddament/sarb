@@ -94,11 +94,6 @@ class BaseLineResultsComparatorTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param bool $expected
-     * @param string $fileName
-     * @param int $lineNumber
-     * @param string $type
      */
     public function testInBaseLine(bool $expected, string $fileName, int $lineNumber, string $type): void
     {

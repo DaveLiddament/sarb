@@ -30,9 +30,6 @@ class AnalysisResults
         $this->analysisResults = [];
     }
 
-    /**
-     * @param AnalysisResult $analysisResult
-     */
     public function addAnalysisResult(AnalysisResult $analysisResult): void
     {
         $this->analysisResults[] = $analysisResult;
@@ -62,8 +59,6 @@ class AnalysisResults
 
     /**
      * Return as an array of arrays (ready for storing in a file).
-     *
-     * @return array
      */
     public function asArray(): array
     {
@@ -77,8 +72,6 @@ class AnalysisResults
 
     /**
      * Deserialises array representation to AnalysisResults.
-     *
-     * @param array $array
      *
      * @throws ArrayParseException
      *

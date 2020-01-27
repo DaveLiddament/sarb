@@ -23,8 +23,6 @@ class ExpectedDiff
 
     /**
      * ExpectedDiff constructor.
-     *
-     * @param string $diffFileName
      */
     private function __construct(string $diffFileName)
     {
@@ -39,9 +37,6 @@ class ExpectedDiff
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDiffFileName(): string
     {
         return $this->diffFileName;

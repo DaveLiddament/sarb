@@ -17,11 +17,7 @@ class JsonUtils
     /**
      * Returns JSON string as an associative array representation.
      *
-     * @param string $jsonAsString
-     *
      * @throws JsonParseException
-     *
-     * @return array
      */
     public static function toArray(string $jsonAsString): array
     {
@@ -37,11 +33,7 @@ class JsonUtils
     /**
      * Converts array to a JSON representation in a string.
      *
-     * @param array $data
-     *
      * @throws JsonParseException
-     *
-     * @return string
      */
     public static function toString(array $data): string
     {

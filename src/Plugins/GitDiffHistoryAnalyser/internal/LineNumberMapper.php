@@ -49,17 +49,11 @@ class LineNumberMapper
         ++$this->newLineNumber;
     }
 
-    /**
-     * @return int
-     */
     public function getOriginalLineNumber(): int
     {
         return $this->originalLineNumber;
     }
 
-    /**
-     * @return int
-     */
     public function getNewLineNumber(): int
     {
         return $this->newLineNumber;

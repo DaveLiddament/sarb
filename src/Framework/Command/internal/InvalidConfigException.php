@@ -31,9 +31,6 @@ class InvalidConfigException extends Exception
 
     /**
      * InvalidConfigException constructor.
-     *
-     * @param string $option
-     * @param string $error
      */
     public function __construct(string $option, string $error)
     {
@@ -44,8 +41,6 @@ class InvalidConfigException extends Exception
 
     /**
      * Return problem with configuration.
-     *
-     * @return string
      */
     public function getProblem(): string
     {

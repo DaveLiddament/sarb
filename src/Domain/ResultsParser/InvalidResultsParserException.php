@@ -27,7 +27,6 @@ class InvalidResultsParserException extends SarbException
     /**
      * InvalidResultsParserException constructor.
      *
-     * @param string $invalidOption
      * @param Identifier[] $possibleValues
      */
     public function __construct(string $invalidOption, array $possibleValues)

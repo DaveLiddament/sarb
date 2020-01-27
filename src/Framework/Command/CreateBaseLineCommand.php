@@ -63,11 +63,6 @@ class CreateBaseLineCommand extends AbstractCommand
 
     /**
      * CreateBaseLineCommand constructor.
-     *
-     * @param ResultsParsersRegistry $resultsParsersRegistry
-     * @param HistoryFactoryLookupService $historyFactoryLookupService
-     * @param BaseLineExporter $exporter
-     * @param Importer $resultsImporter
      */
     public function __construct(
         ResultsParsersRegistry $resultsParsersRegistry,
@@ -129,11 +124,7 @@ class CreateBaseLineCommand extends AbstractCommand
     }
 
     /**
-     * @param InputInterface $input
-     *
      * @throws InvalidConfigException
-     *
-     * @return ResultsParser
      */
     private function getResultsParser(InputInterface $input, OutputInterface $output): ResultsParser
     {

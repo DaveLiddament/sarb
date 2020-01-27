@@ -23,8 +23,6 @@ class StubHistoryFactory implements HistoryFactory
 
     /**
      * StubHistoryFactory constructor.
-     *
-     * @param FileMutations $fileMutations
      */
     public function __construct(FileMutations $fileMutations)
     {

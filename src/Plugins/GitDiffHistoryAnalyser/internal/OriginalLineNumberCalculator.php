@@ -19,11 +19,6 @@ class OriginalLineNumberCalculator
 {
     /**
      * Returns original line number or null if the line was added in the mutation given the file mutations.
-     *
-     * @param FileMutation $fileMutation
-     * @param int $newLineNumber
-     *
-     * @return int|null
      */
     public static function calculateOriginalLineNumber(FileMutation $fileMutation, int $newLineNumber): ?int
     {

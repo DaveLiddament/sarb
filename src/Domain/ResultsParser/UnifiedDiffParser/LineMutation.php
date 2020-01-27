@@ -42,17 +42,11 @@ class LineMutation
         $this->originalLine = $originalLine;
     }
 
-    /**
-     * @return LineNumber|null
-     */
     public function getNewLine(): ?LineNumber
     {
         return $this->newLine;
     }
 
-    /**
-     * @return LineNumber|null
-     */
     public function getOriginalLine(): ?LineNumber
     {
         return $this->originalLine;
@@ -67,8 +61,6 @@ class LineMutation
      * Returns true if other LineMutation is the same.
      *
      * @param LineMutation|null $other
-     *
-     * @return bool
      */
     public function isEqual(?self $other): bool
     {

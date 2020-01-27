@@ -21,11 +21,7 @@ class FileReader
     /**
      * Returns string containing contents of the file.
      *
-     * @param FileName $fileName
-     *
      * @throws FileAccessException
-     *
-     * @return string
      */
     public function readFile(FileName $fileName): string
     {
@@ -45,12 +41,8 @@ class FileReader
     /**
      * Returns array representing the contents of the file. Assumes the file must be JSON.
      *
-     * @param FileName $fileName
-     *
      * @throws JsonParseException
      * @throws FileAccessException
-     *
-     * @return array
      */
     public function readJsonFile(FileName $fileName): array
     {

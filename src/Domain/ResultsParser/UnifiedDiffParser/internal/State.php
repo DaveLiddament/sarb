@@ -13,8 +13,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Unif
 interface State
 {
     /**
-     * @param string $line
-     *
      * @throws DiffParseException
      *
      * @return State

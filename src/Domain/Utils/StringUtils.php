@@ -18,11 +18,6 @@ class StringUtils
 {
     /**
      * Returns true if $haystack starts with $needle.
-     *
-     * @param string $needle
-     * @param string $haystack
-     *
-     * @return bool
      */
     public static function startsWith(string $needle, string $haystack): bool
     {
@@ -31,11 +26,6 @@ class StringUtils
 
     /**
      * Remove $needle from start of $haystack.
-     *
-     * @param string $needle
-     * @param string $haystack
-     *
-     * @return string
      */
     public static function removeFromStart(string $needle, string $haystack): string
     {
@@ -47,11 +37,6 @@ class StringUtils
 
     /**
      * Returns true if $haystack ends with $needle.
-     *
-     * @param string $needle
-     * @param string $haystack
-     *
-     * @return bool
      */
     public static function endsWith(string $needle, string $haystack): bool
     {
@@ -62,10 +47,6 @@ class StringUtils
 
     /**
      * Returns true if line is empty (or contains only white space).
-     *
-     * @param string $line
-     *
-     * @return bool
      */
     public static function isEmptyLine(string $line): bool
     {

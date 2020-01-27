@@ -26,8 +26,6 @@ class LineNumber
 
     /**
      * LineNumber constructor.
-     *
-     * @param int $lineNumber
      */
     public function __construct(int $lineNumber)
     {
@@ -35,9 +33,6 @@ class LineNumber
         $this->lineNumber = $lineNumber;
     }
 
-    /**
-     * @return int
-     */
     public function getLineNumber(): int
     {
         return $this->lineNumber;

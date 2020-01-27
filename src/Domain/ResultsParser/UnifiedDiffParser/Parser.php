@@ -22,11 +22,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDif
 class Parser
 {
     /**
-     * @param string $diffAsString
-     *
      * @throws ParseException
-     *
-     * @return FileMutations
      */
     public function parseDiff(string $diffAsString): FileMutations
     {
@@ -54,8 +50,6 @@ class Parser
     }
 
     /**
-     * @param string $diffAsString
-     *
      * @return array<int,string>
      */
     private function getLines(string $diffAsString): array

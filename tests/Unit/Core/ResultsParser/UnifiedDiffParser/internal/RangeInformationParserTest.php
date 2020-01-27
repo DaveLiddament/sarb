@@ -26,12 +26,6 @@ class RangeInformationParserTest extends TestCase
     /**
      * @dataProvider dataProvider
      *
-     * @param string $rangeInformationAsString
-     * @param int $originalStartLine
-     * @param int $originalHunkSize
-     * @param int $newStartLine
-     * @param int $newHunkSize
-     *
      * @throws DiffParseException
      */
     public function testHappyPath(
@@ -58,8 +52,6 @@ class RangeInformationParserTest extends TestCase
 
     /**
      * @dataProvider invalidDataProvider
-     *
-     * @param string $rangeInformationString
      */
     public function testInvalidData(string $rangeInformationString): void
     {

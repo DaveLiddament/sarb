@@ -82,12 +82,7 @@ class SarbJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
-     * @param array $analysisResultsAsArray
-     * @param ProjectRoot $projectRoot
-     *
      * @throws ParseAtLocationException
-     *
-     * @return AnalysisResults
      */
     private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -111,13 +106,9 @@ class SarbJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @param array $analysisResultAsArray
-     *
      * @throws JsonParseException
      * @throws InvalidPathException
      * @throws ArrayParseException
-     *
-     * @return AnalysisResult
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,

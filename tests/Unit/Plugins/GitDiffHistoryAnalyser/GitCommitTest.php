@@ -27,7 +27,6 @@ class GitCommitTest extends TestCase
     }
 
     /**
-     * @param string $invalidCommit
      * @dataProvider invalidGitCommitDataProvider
      */
     public function testValidateInvalidGitCommit(string $invalidCommit): void
@@ -36,7 +35,6 @@ class GitCommitTest extends TestCase
     }
 
     /**
-     * @param string $invalidCommit
      * @dataProvider invalidGitCommitDataProvider
      */
     public function testInvalidGitCommit(string $invalidCommit): void
@@ -58,7 +56,6 @@ class GitCommitTest extends TestCase
     }
 
     /**
-     * @param string $commit
      * @dataProvider validGitCommitDataProvider
      */
     public function testValidateValidGitCommit(string $commit): void
@@ -67,7 +64,6 @@ class GitCommitTest extends TestCase
     }
 
     /**
-     * @param string $commit
      * @dataProvider validGitCommitDataProvider
      */
     public function testValidGitCommit(string $commit): void

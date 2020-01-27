@@ -47,11 +47,6 @@ class BaseLine
 
     /**
      * BaseLine constructor.
-     *
-     * @param HistoryFactory $historyFactory
-     * @param AnalysisResults $analysisResults
-     * @param ResultsParser $resultsParser
-     * @param HistoryMarker $historyMarker
      */
     public function __construct(
         HistoryFactory $historyFactory,
@@ -65,33 +60,21 @@ class BaseLine
         $this->historyMarker = $historyMarker;
     }
 
-    /**
-     * @return HistoryFactory
-     */
     public function getHistoryFactory(): HistoryFactory
     {
         return $this->historyFactory;
     }
 
-    /**
-     * @return AnalysisResults
-     */
     public function getAnalysisResults(): AnalysisResults
     {
         return $this->analysisResults;
     }
 
-    /**
-     * @return ResultsParser
-     */
     public function getResultsParser(): ResultsParser
     {
         return $this->resultsParser;
     }
 
-    /**
-     * @return HistoryMarker
-     */
     public function getHistoryMarker(): HistoryMarker
     {
         return $this->historyMarker;

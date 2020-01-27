@@ -61,11 +61,6 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
 
     /**
      * CreateBaseLineCommand constructor.
-     *
-     * @param BaseLineResultsRemover $baseLineResultsRemover
-     * @param BaseLineImporter $baseLineImporter
-     * @param Importer $resultsImporter
-     * @param Exporter $resultsExporter
      */
     public function __construct(
         BaseLineResultsRemover $baseLineResultsRemover,
@@ -156,7 +151,6 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
     }
 
     /**
-     * @param OutputInterface $output
      * @param AnalysisResult[] $analysisResults
      */
     private function displayErrorsSinceBaseLine(OutputInterface $output, array $analysisResults): void

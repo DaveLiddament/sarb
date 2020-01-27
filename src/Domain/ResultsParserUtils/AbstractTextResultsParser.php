@@ -49,12 +49,6 @@ abstract class AbstractTextResultsParser implements ResultsParser
 
     /**
      * AbstractTextResultsParser constructor.
-     *
-     * @param string $regEx
-     * @param string $fileNamePosition
-     * @param string $lineNumberPosition
-     * @param string $typePosition
-     * @param string $messagePosition
      */
     protected function __construct(
         string $regEx,
@@ -111,12 +105,7 @@ abstract class AbstractTextResultsParser implements ResultsParser
     }
 
     /**
-     * @param ProjectRoot $projectRoot
-     * @param string $line
-     *
      * @throws SarbException
-     *
-     * @return AnalysisResult|null
      */
     private function processLine(ProjectRoot $projectRoot, string $line): ?AnalysisResult
     {
@@ -157,8 +146,6 @@ abstract class AbstractTextResultsParser implements ResultsParser
      * Override if it is possible that you might not want to include this line in the results.
      *
      * @param string[] $matches
-     *
-     * @return bool
      */
     protected function includeLine(array $matches): bool
     {

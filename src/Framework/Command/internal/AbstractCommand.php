@@ -106,17 +106,9 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param FileName $resultsFileName
-     * @param FileName $baseLineFileName
-     * @param ProjectRoot $projectRoot
-     *
      * @throws SarbException
      * @throws InvalidConfigException
      * @throws FileImportException
-     *
-     * @return int
      */
     abstract protected function executeHook(
         InputInterface $input,
@@ -127,12 +119,7 @@ abstract class AbstractCommand extends Command
     ): int;
 
     /**
-     * @param InputInterface $input
-     * @param string $argumentName
-     *
      * @throws InvalidConfigException
-     *
-     * @return FileName
      */
     protected function getFileName(InputInterface $input, string $argumentName): FileName
     {
@@ -140,12 +127,7 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param string $argumentName
-     *
      * @throws InvalidConfigException
-     *
-     * @return string
      */
     protected function getArgument(InputInterface $input, string $argumentName): string
     {
@@ -153,12 +135,7 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param string $optionName
-     *
      * @throws InvalidConfigException
-     *
-     * @return string|null
      */
     protected function getOption(InputInterface $input, string $optionName): ?string
     {
@@ -171,11 +148,8 @@ abstract class AbstractCommand extends Command
 
     /**
      * @param mixed $value
-     * @param string $errorMessageContext
      *
      * @throws InvalidConfigException
-     *
-     * @return string
      */
     private function asString($value, string $errorMessageContext): string
     {

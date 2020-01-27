@@ -22,31 +22,20 @@ interface ResultsParser
     /**
      * Takes a string representation of the static analysis results and converts to AnalysisResults.
      *
-     * @param string $resultsAsString
-     * @param ProjectRoot $projectRoot
-     *
      * @throws ParseAtLocationException
      * @throws InvalidFileFormatException
-     *
-     * @return AnalysisResults
      */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults;
 
     /**
      * Create a string representation of the Analysis results (for persisting to a file).
      *
-     * @param AnalysisResults $analysisResults
-     *
      * @throws JsonParseException
-     *
-     * @return string
      */
     public function convertToString(AnalysisResults $analysisResults): string;
 
     /**
      * Returns the identifier of the Results Parser.
-     *
-     * @return Identifier
      */
     public function getIdentifier(): Identifier;
 
@@ -54,8 +43,6 @@ interface ResultsParser
      * Returns true if the ResultsParser has to guess the violation type.
      *
      * See docs/ViolationTypeClassificationGuessing.md
-     *
-     * @return bool
      */
     public function showTypeGuessingWarning(): bool;
 }

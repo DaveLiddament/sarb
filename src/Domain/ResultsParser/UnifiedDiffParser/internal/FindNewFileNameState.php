@@ -31,8 +31,6 @@ class FindNewFileNameState implements State
 
     /**
      * FindNewFileNameState constructor.
-     *
-     * @param FileMutationBuilder $fileMutationBuilder
      */
     public function __construct(FileMutationBuilder $fileMutationBuilder)
     {

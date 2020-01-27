@@ -73,26 +73,17 @@ class LineMutationTest extends TestCase
 
     /**
      * @dataProvider equalDataProvider
-     *
-     * @param LineMutation $a
-     * @param LineMutation $b
      */
     public function testEqual(LineMutation $a, LineMutation $b): void
     {
         $this->assertTrue($a->isEqual($b));
     }
 
-    /**
-     * @return LineNumber
-     */
     private function getLineNumber1(): LineNumber
     {
         return new LineNumber(self::LINE_NUMBER_1);
     }
 
-    /**
-     * @return LineNumber
-     */
     private function getLineNumber2(): LineNumber
     {
         return new LineNumber(self::LINE_NUMBER_2);

@@ -55,11 +55,6 @@ class AnalysisResult
      *
      * NOTE: $fullDetails should be a serialised version of the violation containing all the details that the
      * static analysis tool provided. It must be possible to reproduce the original violation from this string
-     *
-     * @param Location $location
-     * @param Type $type
-     * @param string $message
-     * @param string $fullDetails
      */
     public function __construct(Location $location, Type $type, string $message, string $fullDetails)
     {
@@ -69,25 +64,16 @@ class AnalysisResult
         $this->fullDetails = $fullDetails;
     }
 
-    /**
-     * @return Location
-     */
     public function getLocation(): Location
     {
         return $this->location;
     }
 
-    /**
-     * @return Type
-     */
     public function getType(): Type
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getFullDetails(): string
     {
         return $this->fullDetails;
@@ -100,11 +86,6 @@ class AnalysisResult
 
     /**
      * Return true if AnalysisResult matches given FileName, LineNumber and type.
-     *
-     * @param Location $location
-     * @param Type $type
-     *
-     * @return bool
      */
     public function isMatch(Location $location, Type $type): bool
     {
@@ -123,8 +104,6 @@ class AnalysisResult
     }
 
     /**
-     * @param array $array
-     *
      * @throws ArrayParseException
      *
      * @return AnalysisResult

@@ -41,13 +41,8 @@ class PhpCodeSnifferFullResultsParser implements ResultsParser
     /**
      * Takes a string representation of the static analysis results and converts to AnalysisResults.
      *
-     * @param string $resultsAsString
-     * @param ProjectRoot $projectRoot
-     *
      * @throws ParseAtLocationException
      * @throws InvalidFileFormatException
-     *
-     * @return AnalysisResults
      */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -64,11 +59,7 @@ class PhpCodeSnifferFullResultsParser implements ResultsParser
     /**
      * Create a string representation of the Analysis results (for persisting to a file).
      *
-     * @param AnalysisResults $analysisResults
-     *
      * @throws JsonParseException
-     *
-     * @return string
      */
     public function convertToString(AnalysisResults $analysisResults): string
     {

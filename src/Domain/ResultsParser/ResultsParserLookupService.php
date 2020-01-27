@@ -17,11 +17,7 @@ interface ResultsParserLookupService
     /**
      * Returns ResultsParser of the given name.
      *
-     * @param string $name
-     *
      * @throws InvalidResultsParserException
-     *
-     * @return ResultsParser
      */
     public function getResultsParser(string $name): ResultsParser;
 }

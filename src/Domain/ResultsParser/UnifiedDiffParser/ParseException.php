@@ -41,9 +41,6 @@ class ParseException extends HistoryAnalyserException
     /**
      * Create from DiffParseException.
      *
-     * @param string $location
-     * @param DiffParseException $e
-     *
      * @return ParseException
      */
     public static function fromDiffParseException(string $location, DiffParseException $e): self
@@ -53,10 +50,6 @@ class ParseException extends HistoryAnalyserException
 
     /**
      * ParseException constructor.
-     *
-     * @param string $location
-     * @param string $reason
-     * @param string $details
      */
     public function __construct(string $location, string $reason, string $details, ?Throwable $previous)
     {
@@ -67,25 +60,16 @@ class ParseException extends HistoryAnalyserException
         $this->details = $details;
     }
 
-    /**
-     * @return string
-     */
     public function getLocation(): string
     {
         return $this->location;
     }
 
-    /**
-     * @return string
-     */
     public function getReason(): string
     {
         return $this->reason;
     }
 
-    /**
-     * @return string
-     */
     public function getDetails(): string
     {
         return $this->details;

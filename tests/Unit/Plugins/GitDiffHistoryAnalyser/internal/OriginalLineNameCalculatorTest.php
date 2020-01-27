@@ -72,9 +72,6 @@ class OriginalLineNameCalculatorTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     *
-     * @param int $newLineNumber
-     * @param int|null $expectedOriginalLineNumber
      */
     public function testCalculateOriginalLine(int $newLineNumber, ?int $expectedOriginalLineNumber): void
     {

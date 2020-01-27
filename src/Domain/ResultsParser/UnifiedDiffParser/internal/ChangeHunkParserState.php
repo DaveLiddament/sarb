@@ -39,9 +39,6 @@ class ChangeHunkParserState implements State
     /**
      * ChangeHunkParserState constructor.
      *
-     * @param FileMutationBuilder $fileMutationBuilder
-     * @param string $rangeInformationAsString
-     *
      * @throws DiffParseException
      */
     public function __construct(FileMutationBuilder $fileMutationBuilder, string $rangeInformationAsString)
