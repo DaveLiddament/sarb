@@ -63,7 +63,7 @@
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
     "cs" : "php-cs-fixer fix -v --dry-run",
     "cs-fix" : "php-cs-fixer fix -v",
-    "psalm" : "psalm",
+    "psalm" : "psalm --shepherd",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
     "test" : "phpunit --log-junit reports/phpunit.xml",
