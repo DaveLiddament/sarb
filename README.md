@@ -4,6 +4,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb)
+[![Type coverage](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)
 [![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://packagist.org/packages/dave-liddament/sarb)
 
 **This is still in beta.**
