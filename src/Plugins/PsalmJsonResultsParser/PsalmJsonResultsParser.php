@@ -84,6 +84,8 @@ class PsalmJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
+     * @phpstan-param array<mixed> $analysisResultsAsArray
+     *
      * @throws ParseAtLocationException
      */
     private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
@@ -111,6 +113,8 @@ class PsalmJsonResultsParser implements ResultsParser
     }
 
     /**
+     * @phpstan-param array<mixed> $analysisResultAsArray
+     *
      * @throws ArrayParseException
      * @throws JsonParseException
      * @throws InvalidPathException

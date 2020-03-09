@@ -92,6 +92,9 @@ class AnalysisResult
         return $this->location->isEqual($location) && $this->type->isEqual($type);
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function asArray(): array
     {
         return [
@@ -104,6 +107,8 @@ class AnalysisResult
     }
 
     /**
+     * @phpstan-param array<mixed> $array
+     *
      * @throws ArrayParseException
      *
      * @return AnalysisResult
