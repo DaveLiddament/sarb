@@ -138,6 +138,9 @@ class FileAnalysisResultsHolder
         );
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function asStrings(): array
     {
         $maxWidth = 8 + $this->maxMessageWidth + $this->maxSeverityColumnWidth + $this->maxLineNumberColumnWidth;

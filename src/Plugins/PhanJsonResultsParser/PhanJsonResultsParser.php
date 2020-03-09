@@ -87,6 +87,8 @@ class PhanJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
+     * @phpstan-param array<mixed> $analysisResultsAsArray
+     *
      * @throws ParseAtLocationException
      */
     private function convertFromArray(array $analysisResultsAsArray): AnalysisResults
@@ -111,6 +113,8 @@ class PhanJsonResultsParser implements ResultsParser
     }
 
     /**
+     * @phpstan-param array<mixed> $analysisResultAsArray
+     *
      * @throws ArrayParseException
      * @throws JsonParseException
      */

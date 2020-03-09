@@ -128,6 +128,8 @@ class PhpstanJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
+     * @phpstan-param array<mixed> $analysisResultsAsArray
+     *
      * @throws ParseAtLocationException
      */
     private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
@@ -168,6 +170,8 @@ class PhpstanJsonResultsParser implements ResultsParser
     }
 
     /**
+     * @phpstan-param array<mixed> $analysisResultAsArray
+     *
      * @throws ArrayParseException
      * @throws JsonParseException
      */
