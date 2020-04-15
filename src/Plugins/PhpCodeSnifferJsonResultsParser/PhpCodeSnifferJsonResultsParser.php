@@ -25,21 +25,16 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
 /**
- * Handles PHPStan's JSON output.
- *
- * NOTE: SARB only deals with errors that are attached to a particular line in a file.
- * PHPStan can report general errors (not specific to file). These are ignored by SARB.
+ * Handles PHP Code Sniffers's JSON output.
  */
 class PhpCodeSnifferJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
-    private const TYPE = 'type';
     private const SOURCE = 'source';
     private const FILES = 'files';
     private const MESSAGES = 'messages';
@@ -47,19 +42,6 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
     private const ABSOLUTE_FILE_PATH = 'absoluteFilePath';
     private const ERRORS = 'errors';
     private const WARNINGS = 'warnings';
-
-    /**
-     * @var FqcnRemover
-     */
-    private $fqcnRemover;
-
-    /**
-     * PhpstanJsonResultsParser constructor.
-     */
-    public function __construct(FqcnRemover $fqcnRemover)
-    {
-        $this->fqcnRemover = $fqcnRemover;
-    }
 
     /**
      * {@inheritdoc}
@@ -236,7 +218,6 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
     ): AnalysisResult {
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $rawMessage = ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE);
-        $rawType = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
         $rawSource = ArrayUtils::getStringValue($analysisResultAsArray, self::SOURCE);
 
         $location = new Location(
