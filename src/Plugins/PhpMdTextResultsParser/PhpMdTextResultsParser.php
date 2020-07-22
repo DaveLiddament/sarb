@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PhpMdTextResultsParser;
@@ -9,10 +10,10 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 
 class PhpMdTextResultsParser extends AbstractTextResultsParser
 {
-    private const LINE    = '2';
+    private const LINE = '2';
     private const MESSAGE = '4';
-    private const FILE    = '1';
-    private const REGEX   = '/(.*):(\d+)(\s+)(.*)/';
+    private const FILE = '1';
+    private const REGEX = '/(.*):(\d+)(\s+)(.*)/';
 
     /** @var FqcnRemover */
     private $fqcnRemover;
@@ -22,7 +23,6 @@ class PhpMdTextResultsParser extends AbstractTextResultsParser
         parent::__construct(self::REGEX, self::FILE, self::LINE, self::MESSAGE, self::MESSAGE);
         $this->fqcnRemover = $fqcnRemover;
     }
-
 
     public function getIdentifier(): Identifier
     {
@@ -38,5 +38,4 @@ class PhpMdTextResultsParser extends AbstractTextResultsParser
     {
         return $this->fqcnRemover->removeRqcn($rawType);
     }
-
 }

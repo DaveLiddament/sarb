@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\PhpMdTextResultsParser;
@@ -70,10 +71,10 @@ class PhpMdTextResultsParserTest extends TestCase
         ];
 
         foreach ($analysisResults->getAnalysisResults() as $key => $analysisResult) {
-            [$filePath, $lineNumber, $message]  = $expectedResult[$key];
+            [$filePath, $lineNumber, $message] = $expectedResult[$key];
 
             $location = new Location(new FileName($filePath), new LineNumber($lineNumber));
-            $type     = new Type($message);
+            $type = new Type($message);
 
             static::assertTrue($analysisResult->isMatch($location, $type));
             static::assertSame($message, $analysisResult->getMessage());
