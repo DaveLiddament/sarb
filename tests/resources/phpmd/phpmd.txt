@@ -1,0 +1,7 @@
+/vagrant/static-analysis-baseliner/Lib/Referrer/ReferrerOwnMapper.php:18        Avoid excessively long variable names like $allowedColumnNamesUser. Keep variable name length under 20.
+/vagrant/static-analysis-baseliner/Lib/Returns/Product/ReturnProductRepository.php:26   Avoid excessively long variable names like $productCombinationRepo. Keep variable name length under 20.
+/vagrant/static-analysis-baseliner/Lib/Returns/ReturnsRepository.php:37 Avoid excessively long variable names like $productCombinationRepo. Keep variable name length under 20.
+/vagrant/static-analysis-baseliner/Lib/Search/Elastic/Content/ContentSearchPersistence.php:60   Missing class import via use statement (line '60', column '44').
+/vagrant/static-analysis-baseliner/Lib/Search/Elastic/ElasticSearchBase.php:18  The class ElasticSearchBase has an overall complexity of 52 which is very high. The configured complexity threshold is 50.
+/vagrant/static-analysis-baseliner/Lib/Search/Elastic/Event/SearchEventManager.php:26   Avoid excessively long variable names like $searchEventSubscribers. Keep variable name length under 20.
+/vagrant/static-analysis-baseliner/Lib/Search/Elastic/Monitor/SearchMonitor.php:44      Avoid excessively long variable names like $suggestionResultCount. Keep variable name length under 20.
