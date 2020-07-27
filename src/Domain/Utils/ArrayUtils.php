@@ -45,6 +45,28 @@ class ArrayUtils
     }
 
     /**
+     * Gets int value for given key in the array.
+     *
+     * @param array $array
+     * @param string $key
+     *
+     * @throws ArrayParseException
+     *
+     * @return int
+     */
+    public static function getIntOrNullValue(array $array, string $key): ?int
+    {
+        self::assertArrayKeyExists($array, $key);
+        if (null === $array[$key]) {
+            return null;
+        }
+        if (is_int($array[$key])) {
+            return $array[$key];
+        }
+        throw ArrayParseException::invalidType($key, 'int');
+    }
+
+    /**
      * Gets array value for given key in the array.
      *
      * @throws ArrayParseException
