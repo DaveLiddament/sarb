@@ -47,12 +47,9 @@ class ArrayUtils
     /**
      * Gets int value for given key in the array.
      *
-     * @param array $array
-     * @param string $key
-     *
      * @throws ArrayParseException
      *
-     * @return int
+     * @phpstan-param array<mixed> $array
      */
     public static function getIntOrNullValue(array $array, string $key): ?int
     {
