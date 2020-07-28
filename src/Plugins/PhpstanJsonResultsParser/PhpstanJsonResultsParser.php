@@ -180,7 +180,13 @@ class PhpstanJsonResultsParser implements ResultsParser
         FileName $fileName,
         string $absoluteFilePath
     ): AnalysisResult {
-        $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
+        $lineAsInt = ArrayUtils::getIntOrNullValue($analysisResultAsArray, self::LINE);
+
+        // PHPStan sometimes reports errors not assigned to any line number. In this case give the line number as 0
+        if (null === $lineAsInt) {
+            $lineAsInt = 0;
+        }
+
         $rawType = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
         $type = $this->fqcnRemover->removeRqcn($rawType);
 

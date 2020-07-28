@@ -75,7 +75,7 @@ class PhpstanJsonResultsParserTest extends TestCase
         $this->assertTrue($result3->isMatch(
             new Location(
                 new FileName('src/Domain/ResultsParser/AnalysisResults.php'),
-                new LineNumber(78)
+                new LineNumber(0)
             ),
             new Type('Argument of an invalid type int supplied for foreach, only iterables are supported.')
         ));
