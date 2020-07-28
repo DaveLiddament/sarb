@@ -116,6 +116,7 @@ class PhpmdJsonResultsParser implements ResultsParser
         }
 
         try {
+            /** @psalm-suppress MixedAssignment */
             foreach ($filesWithProblems as $fileWithProblems) {
                 ArrayUtils::assertArray($fileWithProblems);
                 $absoluteFileName = ArrayUtils::getStringValue($fileWithProblems, 'file');
@@ -145,6 +146,7 @@ class PhpmdJsonResultsParser implements ResultsParser
         array $violations
     ): void {
         $violationCount = 1;
+        /** @psalm-suppress MixedAssignment */
         foreach ($violations as $violation) {
             try {
                 ArrayUtils::assertArray($violation);
