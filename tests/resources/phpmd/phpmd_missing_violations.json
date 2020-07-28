@@ -1,0 +1,41 @@
+{
+  "version": "@project.version@",
+  "package": "phpmd",
+  "timestamp": "2020-07-27T22:11:44+00:00",
+  "files": [
+    {
+      "file": "\/vagrant\/static-analysis-baseliner\/src\/Domain\/Analyser\/BaseLineResultsRemover.php",
+      "violations": [
+        {
+          "beginLine": 28,
+          "endLine": 28,
+          "package": null,
+          "function": null,
+          "class": null,
+          "method": null,
+          "description": "Avoid excessively long variable names like $latestAnalysisResults. Keep variable name length under 20.",
+          "rule": "LongVariable",
+          "ruleSet": "Naming Rules",
+          "externalInfoUrl": "https:\/\/phpmd.org\/rules\/naming.html#longvariable",
+          "priority": 3
+        },
+        {
+          "beginLine": 30,
+          "endLine": 30,
+          "package": null,
+          "function": null,
+          "class": null,
+          "method": null,
+          "description": "Avoid excessively long variable names like $baseLineAnalysisResults. Keep variable name length under 20.",
+          "rule": "LongVariable",
+          "ruleSet": "Naming Rules",
+          "externalInfoUrl": "https:\/\/phpmd.org\/rules\/naming.html#longvariable",
+          "priority": 3
+        }
+      ]
+    },
+    {
+      "file": "\/vagrant\/static-analysis-baseliner\/src\/Domain\/Analyser\/internal\/BaseLineResultsComparator.php"
+    }
+  ]
+}
