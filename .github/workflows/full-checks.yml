@@ -2,6 +2,9 @@ name: "Full checks"
 
 on:
   pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   full-checks:
