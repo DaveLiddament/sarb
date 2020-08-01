@@ -5,8 +5,8 @@ on:
   push:
 
 jobs:
-  coding-standards:
-    name: "Check Coding Standards"
+  full-checks:
+    name: "Full CI checks"
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -26,7 +26,7 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          coverage: none
+          coverage: Xdebug
           php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
           tools: composer
@@ -54,3 +54,14 @@ jobs:
 
       - name: "Full CI"
         run: "composer ci"
+
+      - name: "Upload code coverage"
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: reports/phpunit.xml
+          flags: tests
+          name: codecov-umbrella
+          yml: ./codecov.yml
+          fail_ci_if_error: true
+

@@ -5,7 +5,7 @@ on:
   push:
 
 jobs:
-  coding-standards:
+  run-tests:
     name: "Run tests"
 
     runs-on: ${{ matrix.operating-system }}
@@ -30,7 +30,7 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          coverage:
+          coverage: none
           php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
           tools: composer

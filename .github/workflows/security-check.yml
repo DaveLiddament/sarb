@@ -1,13 +1,13 @@
-name: "Run tests on full range of supported PHP versions"
+name: "Run security checks on composer.json"
 
 on:
-  pull_request:
-  push:
   schedule:
     - cron: '0 10 * * * *'
+  pull_request:
+  push:
 
 jobs:
-  coding-standards:
+  security-checks:
     name: "Run security checks"
 
     runs-on: ${{ matrix.operating-system }}
