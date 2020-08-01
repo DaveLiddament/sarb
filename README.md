@@ -1,10 +1,13 @@
 # Static Analysis Results Baseliner (SARB)
 
-[![CircleCI](https://circleci.com/gh/DaveLiddament/sarb.svg?style=svg)](https://circleci.com/gh/DaveLiddament/sarb) 
+[![Code quality](https://github.com/DaveLiddament/sarb/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/sarb) 
+[![Tests](https://github.com/DaveLiddament/sarb/workflows/Tests/badge.svg)](https://github.com/DaveLiddament/sarb) 
+[![Security](https://github.com/DaveLiddament/sarb/workflows/Security/badge.svg)](https://github.com/DaveLiddament/sarb) 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb)
 [![Type coverage](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)
+[![Code Coverage](https://codecov.io/gh/DaveLiddament/sarb/branch/master/graph/badge.svg)](https://codecov.io/gh/DaveLiddament/sarb)
 [![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://packagist.org/packages/dave-liddament/sarb)
 
 **This is still in beta.**
