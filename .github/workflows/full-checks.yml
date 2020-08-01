@@ -2,7 +2,6 @@ name: "Full checks"
 
 on:
   pull_request:
-  push:
 
 jobs:
   full-checks:

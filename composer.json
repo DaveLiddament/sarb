@@ -66,7 +66,7 @@
     "psalm" : "psalm --shepherd",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
-    "test" : "phpunit --log-junit reports/phpunit.xml",
+    "test" : "phpunit --coverage-clover=reports/phpunit.xml",
     "security" : "security-checker security:check"
   }
 }
