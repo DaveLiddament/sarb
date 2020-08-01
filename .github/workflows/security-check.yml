@@ -2,7 +2,7 @@ name: "Run security checks on composer.json"
 
 on:
   schedule:
-    - cron: '0 10 * * * *'
+    - cron: '0 10 * * *'
   pull_request:
 
 jobs:
