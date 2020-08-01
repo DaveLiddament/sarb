@@ -1,4 +1,4 @@
-name: "Run security checks on composer.json"
+name: "Security"
 
 on:
   schedule:

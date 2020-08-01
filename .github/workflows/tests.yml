@@ -1,4 +1,4 @@
-name: "Run tests on full range of supported PHP versions"
+name: "Tests"
 
 on:
   pull_request:
