@@ -14,7 +14,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
 interface ResultsParser
@@ -26,14 +25,6 @@ interface ResultsParser
      * @throws InvalidFileFormatException
      */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults;
-
-    /**
-     * Create a string representation of the Analysis results (for persisting to a file).
-     *
-     * @throws JsonParseException
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function convertToString(AnalysisResults $analysisResults): string;
 
     /**
      * Returns the identifier of the Results Parser.

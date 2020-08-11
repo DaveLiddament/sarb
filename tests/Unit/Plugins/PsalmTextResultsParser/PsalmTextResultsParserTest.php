@@ -79,17 +79,6 @@ class PsalmTextResultsParserTest extends TestCase
         ));
     }
 
-    /**
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function testConvertToString(): void
-    {
-        $analysisResults = $this->psalmTextResultsParser->convertFromString($this->fileContents, $this->projectRoot);
-        $asString = $this->psalmTextResultsParser->convertToString($analysisResults);
-
-        $this->assertFileContentsSame($this->getResource('psalm/psalm-only-errors.txt'), $asString);
-    }
-
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->psalmTextResultsParser->showTypeGuessingWarning());

@@ -81,17 +81,6 @@ class PhpstanJsonResultsParserTest extends TestCase
         ));
     }
 
-    /**
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function testConvertToString(): void
-    {
-        $analysisResults = $this->phpstanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
-        $asString = $this->phpstanJsonResultsParser->convertToString($analysisResults);
-
-        $this->assertFileContentsSame($this->fileContents, $asString);
-    }
-
     public function testTypeGuesser(): void
     {
         $this->assertTrue($this->phpstanJsonResultsParser->showTypeGuessingWarning());

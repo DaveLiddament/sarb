@@ -74,44 +74,6 @@ class PhpstanJsonResultsParser implements ResultsParser
 
     /**
      * {@inheritdoc}
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function convertToString(AnalysisResults $analysisResults): string
-    {
-        $files = [];
-        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $fullDetails = JsonUtils::toArray($analysisResult->getFullDetails());
-            $message = ArrayUtils::getArrayValue($fullDetails, self::MESSAGE);
-            $absoluteFilePath = ArrayUtils::getStringValue($fullDetails, self::ABSOLUTE_FILE_PATH);
-
-            if (!array_key_exists($absoluteFilePath, $files)) {
-                $files[$absoluteFilePath] = [];
-            }
-
-            $files[$absoluteFilePath][] = $message;
-        }
-
-        $asArray = [
-            'totals' => [
-                'errors' => 0,
-                'file_errors' => count($analysisResults->getAnalysisResults()),
-            ],
-            self::FILES => [],
-            'errors' => [],
-        ];
-
-        foreach ($files as $fileName => $messages) {
-            $asArray[self::FILES][$fileName] = [
-                'errors' => count($messages),
-                self::MESSAGES => $messages,
-            ];
-        }
-
-        return JsonUtils::toString($asArray);
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function getIdentifier(): Identifier
     {

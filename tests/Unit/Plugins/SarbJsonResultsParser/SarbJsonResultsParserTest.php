@@ -78,16 +78,6 @@ class SarbJsonResultsParserTest extends TestCase
         ));
     }
 
-    /**
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function testConvertToString(): void
-    {
-        $asString = $this->sarbJsonResultsParser->convertToString($this->analysisResults);
-
-        $this->assertFileContentsSame($this->getResource('sarb/sarb.json'), $asString);
-    }
-
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->sarbJsonResultsParser->showTypeGuessingWarning());

@@ -78,16 +78,6 @@ class PsalmJsonResultsParserTest extends TestCase
         ));
     }
 
-    /**
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function testConvertToString(): void
-    {
-        $asString = $this->psalmResultsParser->convertToString($this->analysisResults);
-
-        $this->assertFileContentsSame($this->getResource('psalm/psalm-only-errors.json'), $asString);
-    }
-
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->psalmResultsParser->showTypeGuessingWarning());

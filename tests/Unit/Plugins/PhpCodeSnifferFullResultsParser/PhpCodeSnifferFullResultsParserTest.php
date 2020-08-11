@@ -107,17 +107,6 @@ class PhpCodeSnifferFullResultsParserTest extends TestCase
         ));
     }
 
-    /**
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function testConvertToString(): void
-    {
-        $analysisResults = $this->phpCodeSnifferFullResultsParser->convertFromString($this->fileContents, $this->projectRoot);
-        $asString = $this->phpCodeSnifferFullResultsParser->convertToString($analysisResults);
-
-        $this->assertFileContentsSame($this->fileContents, $asString);
-    }
-
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phpCodeSnifferFullResultsParser->showTypeGuessingWarning());

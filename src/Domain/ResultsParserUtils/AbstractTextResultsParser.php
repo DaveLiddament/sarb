@@ -92,20 +92,6 @@ abstract class AbstractTextResultsParser implements ResultsParser
     }
 
     /**
-     * {@inheritdoc}
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    final public function convertToString(AnalysisResults $analysisResults): string
-    {
-        $lines = [];
-        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $lines[] = $analysisResult->getFullDetails();
-        }
-
-        return implode(PHP_EOL, $lines);
-    }
-
-    /**
      * @throws SarbException
      */
     private function processLine(ProjectRoot $projectRoot, string $line): ?AnalysisResult

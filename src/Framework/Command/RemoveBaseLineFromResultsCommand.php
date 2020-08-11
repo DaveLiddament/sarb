@@ -17,7 +17,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImport
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Exporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
 use Symfony\Component\Console\Helper\Table;
@@ -50,11 +49,6 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
     private $resultsImporter;
 
     /**
-     * @var Exporter
-     */
-    private $resultsExporter;
-
-    /**
      * @var BaseLineImporter
      */
     private $baseLineImporter;
@@ -65,13 +59,11 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
     public function __construct(
         BaseLineResultsRemover $baseLineResultsRemover,
         BaseLineImporter $baseLineImporter,
-        Importer $resultsImporter,
-        Exporter $resultsExporter
+        Importer $resultsImporter
     ) {
         parent::__construct(self::COMMAND_NAME);
         $this->baseLineResultsRemover = $baseLineResultsRemover;
         $this->baseLineImporter = $baseLineImporter;
-        $this->resultsExporter = $resultsExporter;
         $this->resultsImporter = $resultsImporter;
     }
 
@@ -103,8 +95,6 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
         FileName $baseLineFileName,
         ProjectRoot $projectRoot
     ): int {
-        $outputResultsFile = $this->getFileName($input, self::OUTPUT_RESULTS_FILE);
-
         $baseLine = $this->baseLineImporter->import($baseLineFileName);
         $resultsParser = $baseLine->getResultsParser();
         $historyFactory = $baseLine->getHistoryFactory();
@@ -123,13 +113,6 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
             $inputAnalysisResults,
             $historyAnalyser,
             $baseLineAnalysisResults
-        );
-
-        // TODO https://trello.com/c/Lj8VCsbY remove exporter
-        $this->resultsExporter->exportAnalysisResults(
-            $outputAnalysisResults,
-            $resultsParser,
-            $outputResultsFile
         );
 
         $errorsAfterBaseLine = count($outputAnalysisResults->getAnalysisResults());

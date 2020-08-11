@@ -57,20 +57,6 @@ class PhanJsonResultsParser implements ResultsParser
 
     /**
      * {@inheritdoc}
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function convertToString(AnalysisResults $analysisResults): string
-    {
-        $asArray = [];
-        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $asArray[] = JsonUtils::toArray($analysisResult->getFullDetails());
-        }
-
-        return JsonUtils::toString($asArray);
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function getIdentifier(): Identifier
     {

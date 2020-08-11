@@ -108,17 +108,6 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         ));
     }
 
-    /**
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function testConvertToString(): void
-    {
-        $analysisResults = $this->phpCodeSnifferJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
-        $asString = $this->phpCodeSnifferJsonResultsParser->convertToString($analysisResults);
-
-        $this->assertJsonStringEqualsJsonString($this->fileContents, $asString);
-    }
-
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phpCodeSnifferJsonResultsParser->showTypeGuessingWarning());

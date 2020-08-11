@@ -48,43 +48,6 @@ class PhpmdJsonResultsParser implements ResultsParser
 
     /**
      * {@inheritdoc}
-     * @deprecated https://trello.com/c/Lj8VCsbYyy
-     */
-    public function convertToString(AnalysisResults $analysisResults): string
-    {
-        /** @var array<string, array<mixed>> $files */
-        $files = [];
-
-        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $fullDetails = JsonUtils::toArray($analysisResult->getFullDetails());
-            $violation = ArrayUtils::getArrayValue($fullDetails, 'violation');
-            $absoluteFileName = ArrayUtils::getStringValue($fullDetails, 'fileName');
-
-            if (!array_key_exists($absoluteFileName, $files)) {
-                $files[$absoluteFileName] = [];
-            }
-            $files[$absoluteFileName][] = $violation;
-        }
-
-        $asArray = [
-            'version' => '@project.version@',
-            'package' => 'phpmd',
-            'timestamp' => (new \DateTimeImmutable())->format('c'),
-            'files' => [],
-        ];
-
-        foreach ($files as $fileName => $violations) {
-            $asArray['files'][] = [
-                'file' => $fileName,
-                'violations' => $violations,
-            ];
-        }
-
-        return JsonUtils::toString($asArray);
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function getIdentifier(): Identifier
     {

@@ -79,28 +79,6 @@ class PhpmdJsonResultsParserTest extends TestCase
         ));
     }
 
-    /**
-     * @deprecated https://trello.com/c/Lj8VCsbY
-     */
-    public function testConvertToString(): void
-    {
-        $dirtyActual = $this->phpmdResultsParser->convertToString($this->analysisResults);
-
-        // Update timestamp to known value
-        $actualAsString = preg_replace('/"timestamp":".{25}"/', '"timestamp":"2020-07-27T22:11:44+00:00"', $dirtyActual);
-
-        $actualAsPrettyString = $this->convertToPrettyJson($actualAsString);
-
-        $expected = $this->convertToPrettyJson($this->getResource('phpmd/phpmd.json'));
-
-        $this->assertFileContentsSame($expected, $actualAsPrettyString);
-    }
-
-    private function convertToPrettyJson(string $dirtyJson): string
-    {
-        return json_encode(json_decode($dirtyJson, true), JSON_PRETTY_PRINT);
-    }
-
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phpmdResultsParser->showTypeGuessingWarning());
