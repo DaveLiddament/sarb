@@ -1,4 +1,0 @@
-
-
-/vagrant/static-analysis-baseliner/src/Employee.php:0:Class Demo\Foo not found and could not be autoloaded.
-/vagrant/static-analysis-baseliner/src/Plugins/PsalmTextResultsParser/PsalmTextResultsParser.php:50:Call to an undefined method DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmTextResultsParser\PsalmTextResultsParser::processLine().
