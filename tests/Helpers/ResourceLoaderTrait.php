@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+
 trait ResourceLoaderTrait
 {
     /**
@@ -24,5 +26,10 @@ trait ResourceLoaderTrait
     private function getPath(string $resourceName): string
     {
         return __DIR__.'/../resources/'.$resourceName;
+    }
+
+    private function getFileName(string $resourceName): FileName
+    {
+        return new FileName($this->getPath($resourceName));
     }
 }
