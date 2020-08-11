@@ -24,7 +24,6 @@
           "severity": 5,
           "fixable": false,
           "type": "ERROR",
-          "line": 7,
           "column": 1
         },
         {

@@ -9,7 +9,9 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PhpCodeSnifferJsonResultsParser\PhpCodeSnifferJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
@@ -111,5 +113,50 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phpCodeSnifferJsonResultsParser->showTypeGuessingWarning());
+    }
+
+    public function testInvalidJsonInput(): void
+    {
+        $fileContents = $this->getResource('invalid-json.json');
+        $this->expectException(InvalidFileFormatException::class);
+        $this->phpCodeSnifferJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+    }
+
+    public function invalidFileProvider(): array
+    {
+        return [
+            ['phpCodeSniffer/invalid-filename.json'],
+            ['phpCodeSniffer/invalid-missing-files.json'],
+            ['phpCodeSniffer/invalid-missing-line.json'],
+            ['phpCodeSniffer/invalid-missing-message.json'],
+            ['phpCodeSniffer/invalid-missing-type.json'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidFileProvider
+     */
+    public function testInvalidFileFormat(string $fileName): void
+    {
+        $fileContents = $this->getResource($fileName);
+        $this->expectException(ParseAtLocationException::class);
+        $this->phpCodeSnifferJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+    }
+
+    public function validFileProvider(): array
+    {
+        return [
+            ['phpCodeSniffer/valid-no-errors-or-warnings-for-file.json'],
+        ];
+    }
+
+    /**
+     * @dataProvider validFileProvider
+     * @doesNotPerformAssertions
+     */
+    public function testValidFileFormat(string $fileName): void
+    {
+        $fileContents = $this->getResource($fileName);
+        $this->phpCodeSnifferJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 }

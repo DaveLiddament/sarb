@@ -1,0 +1,37 @@
+{
+  "totals": {
+    "errors": 4,
+    "warnings": 2,
+    "fixable": 1
+  },
+  "files": {
+    "/vagrant/src/Domain/Common/InvalidPathException.php": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "/vagrant/src/Domain/BaseLiner/BaseLineImporter.php": {
+      "errors": 1,
+      "warnings": 1,
+      "messages": [
+        {
+          "message": "Line exceeds 85 characters; contains 113 characters",
+          "source": "Generic.Files.LineLength.TooLong",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "message": "Expected 18 spaces after parameter type; 1 found",
+          "source": "Squiz.WhiteSpace.FunctionSpacing.Before",
+          "severity": 5,
+          "fixable": true,
+          "type": "ERROR",
+          "line": 52,
+          "column": 1
+        }
+      ]
+    }
+  }
+}

@@ -29,7 +29,6 @@
         },
         {
           "message": "Missing doc comment for function __construct()",
-          "source": "Squiz.Commenting.FunctionComment.Missing",
           "severity": 5,
           "fixable": false,
           "type": "ERROR",

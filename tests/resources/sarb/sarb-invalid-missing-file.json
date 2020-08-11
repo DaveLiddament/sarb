@@ -8,8 +8,7 @@
   {
     "line": 29,
     "type": "MixedAssignment",
-    "message": "Cannot assign $asArray to a mixed type",
-    "file": "\/vagrant\/static-analysis-baseliner\/src\/Domain\/Utils\/JsonUtils.php"
+    "message": "Cannot assign $asArray to a mixed type"
   },
   {
     "line": 90,

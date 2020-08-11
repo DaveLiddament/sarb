@@ -9,7 +9,9 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PhpstanJsonResultsParser\PhpstanJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
@@ -84,5 +86,32 @@ class PhpstanJsonResultsParserTest extends TestCase
     public function testTypeGuesser(): void
     {
         $this->assertTrue($this->phpstanJsonResultsParser->showTypeGuessingWarning());
+    }
+
+    public function testInvalidJsonInput(): void
+    {
+        $fileContents = $this->getResource('invalid-json.json');
+        $this->expectException(InvalidFileFormatException::class);
+        $this->phpstanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+    }
+
+    public function invalidFileProvider(): array
+    {
+        return [
+            ['phpstan/phpstan-invalid-missing-description.json'],
+            ['phpstan/phpstan-invalid-missing-file.json'],
+            ['phpstan/phpstan-invalid-missing-files.json'],
+            ['phpstan/phpstan-invalid-missing-line.json'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidFileProvider
+     */
+    public function testInvalidFileFormat(string $fileName): void
+    {
+        $fileContents = $this->getResource($fileName);
+        $this->expectException(ParseAtLocationException::class);
+        $this->phpstanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 }

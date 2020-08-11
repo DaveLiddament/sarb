@@ -17,8 +17,24 @@
     "column_to": 20
   },
   {
+    "severity": "info",
+    "line_from": 71,
+    "line_to": 71,
+    "type": "MixedInferredReturnType",
+    "message": "Could not verify return type 'DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults' for DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray",
+    "file_name": "src\/Domain\/ResultsParser\/AnalysisResults.php",
+    "file_path": "\/vagrant\/static-analysis-baseliner\/src\/Domain\/ResultsParser\/AnalysisResults.php",
+    "snippet": "    \/**\n     * Deserialises array representation to AnalysisResults.\n     *\n     * @param array $array\n     *\n     * @throws ArrayParseException\n     *\n     * @return AnalysisResults\n     *\/\n    public static function fromArray(int $array): self\n    {\n        $analysisResults = new self();\n\n        \/** @pslam-suppress MixedAssignment *\/\n        foreach ($array as $entry) {",
+    "selected_text": "@return AnalysisResults",
+    "from": 1564,
+    "to": 1587,
+    "snippet_from": 1405,
+    "snippet_to": 1780,
+    "column_from": 8,
+    "column_to": 31
+  },
+  {
     "severity": "error",
-    "line_from": 29,
     "line_to": 29,
     "type": "MixedAssignment",
     "message": "Cannot assign $asArray to a mixed type",

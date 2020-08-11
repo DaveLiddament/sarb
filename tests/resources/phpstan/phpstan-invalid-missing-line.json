@@ -20,7 +20,6 @@
       "messages": [
         {
           "message": "PHPDoc tag @param for parameter $array with type array is incompatible with native type int",
-          "line": 73,
           "ignorable": true,
           "relativePath": "Domain/ResultsParser/AnalysisResults.php"
         },

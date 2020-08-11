@@ -3,7 +3,7 @@
     "type": "issue",
     "type_id": 6022,
     "check_name": "PhanUnreferencedUseNormal",
-    "description": "NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\\DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\Common\\BaseLine)",
+    "de": "NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\\DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\Common\\BaseLine)",
     "severity": 5,
     "location": {
       "path": "src/Domain/Analyser/BaseLineResultsRemover.php",

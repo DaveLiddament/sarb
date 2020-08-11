@@ -9,7 +9,9 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\SarbJsonResultsParser\SarbJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
@@ -29,20 +31,22 @@ class SarbJsonResultsParserTest extends TestCase
      * @var SarbJsonResultsParser
      */
     private $sarbJsonResultsParser;
+    /**
+     * @var ProjectRoot
+     */
+    private $projectRoot;
 
     protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
     {
-        $projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
+        $this->projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
 
         $this->sarbJsonResultsParser = new SarbJsonResultsParser();
-        $original = $this->getResource('sarb/sarb.json');
-
-        // Convert both ways
-        $this->analysisResults = $this->sarbJsonResultsParser->convertFromString($original, $projectRoot);
     }
 
     public function testConversion(): void
     {
+        $fileContents = $this->getResource('sarb/sarb.json');
+        $this->analysisResults = $this->sarbJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
         $this->assertCount(3, $this->analysisResults->getAnalysisResults());
 
         $result1 = $this->analysisResults->getAnalysisResults()[0];
@@ -81,5 +85,31 @@ class SarbJsonResultsParserTest extends TestCase
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->sarbJsonResultsParser->showTypeGuessingWarning());
+    }
+
+    public function invalidFileProvider(): array
+    {
+        return [
+            ['sarb/sarb-invalid-missing-description.json'],
+            ['sarb/sarb-invalid-missing-file.json'],
+            ['sarb/sarb-invalid-missing-line.json'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidFileProvider
+     */
+    public function testInvalidFileFormat(string $fileName): void
+    {
+        $fileContents = $this->getResource($fileName);
+        $this->expectException(ParseAtLocationException::class);
+        $this->sarbJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+    }
+
+    public function testInvalidJsonInput(): void
+    {
+        $fileContents = $this->getResource('invalid-json.json');
+        $this->expectException(InvalidFileFormatException::class);
+        $this->sarbJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 }

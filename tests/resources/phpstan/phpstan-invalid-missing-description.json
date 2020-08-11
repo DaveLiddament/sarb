@@ -8,7 +8,6 @@
       "errors": 1,
       "messages": [
         {
-          "message": "Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.",
           "line": 89,
           "ignorable": true,
           "relativePath": "Domain/BaseLiner/BaseLineImporter.php"

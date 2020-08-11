@@ -9,6 +9,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PhanJsonResultsParser\PhanJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
@@ -29,21 +31,16 @@ class PhanJsonResultsParserTest extends TestCase
      */
     private $phanJsonResultsParser;
 
-    /**
-     * @var string
-     */
-    private $fileContents;
-
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
         $this->phanJsonResultsParser = new PhanJsonResultsParser();
-        $this->fileContents = $this->getResource('phan/phan.json');
     }
 
     public function testConversionFromString(): void
     {
-        $analysisResults = $this->phanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
+        $fileContents = $this->getResource('phan/phan.json');
+        $analysisResults = $this->phanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
 
         $this->assertCount(2, $analysisResults->getAnalysisResults());
 
@@ -74,5 +71,32 @@ class PhanJsonResultsParserTest extends TestCase
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phanJsonResultsParser->showTypeGuessingWarning());
+    }
+
+    public function invalidFileProvider(): array
+    {
+        return [
+            ['phan/phan-invalid-missing-check_name.json'],
+            ['phan/phan-invalid-missing-description.json'],
+            ['phan/phan-invalid-missing-file.json'],
+            ['phan/phan-invalid-missing-line.json'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidFileProvider
+     */
+    public function testInvalidFileFormat(string $fileName): void
+    {
+        $fileContents = $this->getResource($fileName);
+        $this->expectException(ParseAtLocationException::class);
+        $this->phanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+    }
+
+    public function testInvalidJsonInput(): void
+    {
+        $fileContents = $this->getResource('invalid-json.json');
+        $this->expectException(InvalidFileFormatException::class);
+        $this->phanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 }

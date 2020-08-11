@@ -8,7 +8,6 @@
     "location": {
       "path": "src/Domain/Analyser/BaseLineResultsRemover.php",
       "lines": {
-        "begin": 16,
         "end": 16
       }
     }

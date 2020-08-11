@@ -52,7 +52,6 @@
       "warnings": 1,
       "messages": [
         {
-          "message": "Line exceeds 85 characters; contains 113 characters",
           "source": "Generic.Files.LineLength.TooLong",
           "severity": 5,
           "fixable": false,

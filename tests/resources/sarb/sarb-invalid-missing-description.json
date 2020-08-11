@@ -2,7 +2,6 @@
   {
     "line": 67,
     "type": "MismatchingDocblockParamType",
-    "message": "Parameter $array has wrong type 'array<mixed, mixed>', should be 'int'",
     "file": "\/vagrant\/static-analysis-baseliner\/src\/Domain\/ResultsParser\/AnalysisResults.php"
   },
   {
