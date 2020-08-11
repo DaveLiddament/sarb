@@ -108,6 +108,9 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         ));
     }
 
+    /**
+     * @deprecated https://trello.com/c/Lj8VCsbY
+     */
     public function testConvertToString(): void
     {
         $analysisResults = $this->phpCodeSnifferJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);

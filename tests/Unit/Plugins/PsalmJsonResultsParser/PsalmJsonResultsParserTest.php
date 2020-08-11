@@ -78,6 +78,9 @@ class PsalmJsonResultsParserTest extends TestCase
         ));
     }
 
+    /**
+     * @deprecated https://trello.com/c/Lj8VCsbY
+     */
     public function testConvertToString(): void
     {
         $asString = $this->psalmResultsParser->convertToString($this->analysisResults);

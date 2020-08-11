@@ -48,6 +48,7 @@ class PhpmdJsonResultsParser implements ResultsParser
 
     /**
      * {@inheritdoc}
+     * @deprecated https://trello.com/c/Lj8VCsbYyy
      */
     public function convertToString(AnalysisResults $analysisResults): string
     {

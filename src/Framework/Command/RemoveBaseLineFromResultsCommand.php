@@ -125,6 +125,7 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
             $baseLineAnalysisResults
         );
 
+        // TODO https://trello.com/c/Lj8VCsbY remove exporter
         $this->resultsExporter->exportAnalysisResults(
             $outputAnalysisResults,
             $resultsParser,

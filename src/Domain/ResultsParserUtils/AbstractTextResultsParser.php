@@ -93,6 +93,7 @@ abstract class AbstractTextResultsParser implements ResultsParser
 
     /**
      * {@inheritdoc}
+     * @deprecated https://trello.com/c/Lj8VCsbY
      */
     final public function convertToString(AnalysisResults $analysisResults): string
     {

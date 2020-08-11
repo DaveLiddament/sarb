@@ -31,6 +31,7 @@ interface ResultsParser
      * Create a string representation of the Analysis results (for persisting to a file).
      *
      * @throws JsonParseException
+     * @deprecated https://trello.com/c/Lj8VCsbY
      */
     public function convertToString(AnalysisResults $analysisResults): string;
 

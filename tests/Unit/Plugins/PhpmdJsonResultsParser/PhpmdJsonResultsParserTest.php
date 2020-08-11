@@ -79,6 +79,9 @@ class PhpmdJsonResultsParserTest extends TestCase
         ));
     }
 
+    /**
+     * @deprecated https://trello.com/c/Lj8VCsbY
+     */
     public function testConvertToString(): void
     {
         $dirtyActual = $this->phpmdResultsParser->convertToString($this->analysisResults);

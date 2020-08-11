@@ -51,6 +51,7 @@ class ExakatJsonResultsParser implements ResultsParser
 
     /**
      * {@inheritdoc}
+     * @deprecated https://trello.com/c/Lj8VCsbY
      */
     public function convertToString(AnalysisResults $analysisResults): string
     {

@@ -107,6 +107,9 @@ class PhpCodeSnifferFullResultsParserTest extends TestCase
         ));
     }
 
+    /**
+     * @deprecated https://trello.com/c/Lj8VCsbY
+     */
     public function testConvertToString(): void
     {
         $analysisResults = $this->phpCodeSnifferFullResultsParser->convertFromString($this->fileContents, $this->projectRoot);

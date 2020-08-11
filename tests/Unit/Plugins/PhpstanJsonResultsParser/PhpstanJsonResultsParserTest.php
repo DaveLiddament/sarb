@@ -81,6 +81,9 @@ class PhpstanJsonResultsParserTest extends TestCase
         ));
     }
 
+    /**
+     * @deprecated https://trello.com/c/Lj8VCsbY
+     */
     public function testConvertToString(): void
     {
         $analysisResults = $this->phpstanJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);

@@ -79,6 +79,9 @@ class PsalmTextResultsParserTest extends TestCase
         ));
     }
 
+    /**
+     * @deprecated https://trello.com/c/Lj8VCsbY
+     */
     public function testConvertToString(): void
     {
         $analysisResults = $this->psalmTextResultsParser->convertFromString($this->fileContents, $this->projectRoot);

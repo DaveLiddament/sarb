@@ -78,6 +78,9 @@ class SarbJsonResultsParserTest extends TestCase
         ));
     }
 
+    /**
+     * @deprecated https://trello.com/c/Lj8VCsbY
+     */
     public function testConvertToString(): void
     {
         $asString = $this->sarbJsonResultsParser->convertToString($this->analysisResults);

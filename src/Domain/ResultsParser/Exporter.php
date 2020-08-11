@@ -19,6 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException
 
 /**
  * Writes AnalysisResults to disk (via the FileWriter).
+ * @deprecated https://trello.com/c/Lj8VCsbY
  */
 class Exporter
 {
