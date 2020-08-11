@@ -17,7 +17,7 @@
     </issueHandlers>
 
     <stubs>
-	    <file name="stubs/Symfony/Component/DependencyInjection/ContainerBuilder.php" />	    
-	    <file name="stubs/Webmozart/Assert/Assert.php" />	    
+	    <file name="stubs/Symfony/Component/DependencyInjection/ContainerBuilder.stub" />
+	    <file name="stubs/Webmozart/Assert/Assert.stub" />
     </stubs>
 </psalm>
