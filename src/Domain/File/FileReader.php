@@ -26,11 +26,8 @@ class FileReader
     public function readFile(FileName $fileName): string
     {
         $fileNameAsString = $fileName->getFileName();
-        if (!file_exists($fileNameAsString)) {
-            throw FileAccessException::readFileException();
-        }
 
-        $fileContents = file_get_contents($fileNameAsString);
+        $fileContents = @file_get_contents($fileNameAsString);
         if (false === $fileContents) {
             throw FileAccessException::readFileException();
         }
