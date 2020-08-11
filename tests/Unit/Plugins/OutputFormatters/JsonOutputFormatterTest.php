@@ -4,34 +4,19 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\OutputFormatters;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\SummaryStats;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\JsonOutputFormatter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonIdentifier;
-use PHPUnit\Framework\TestCase;
 
-class JsonOutputFormatterTest extends TestCase
+class JsonOutputFormatterTest extends AbstractOutputFormatterTest
 {
     public function testName(): void
     {
-        $jsonFormatter = new JsonOutputFormatter();
-        $this->assertSame('json', $jsonFormatter->getName());
+        $this->assertName('json');
     }
 
     public function testNoIssues(): void
     {
-        $summaryStats = new SummaryStats(2, 4, new SarbJsonIdentifier(), 'git');
-        $analysisResults = new AnalysisResults();
-
-        $jsonOutputFormatter = new JsonOutputFormatter();
-        $output = $jsonOutputFormatter->outputResults($summaryStats, $analysisResults);
-
-        $expectedOuput = <<<EOF
+        $expectedOutput = <<<EOF
 {
     "summary": {
         "latestAnalysisCount": 2,
@@ -43,35 +28,11 @@ class JsonOutputFormatterTest extends TestCase
 }
 EOF;
 
-        $this->assertSame($expectedOuput, $output);
+        $this->assertNoIssuesOutput($expectedOutput);
     }
 
     public function testWithIssues(): void
     {
-        $summaryStats = new SummaryStats(2, 4, new SarbJsonIdentifier(), 'git');
-        $analysisResults = new AnalysisResults();
-        $analysisResults->addAnalysisResult(new AnalysisResult(
-            new Location(new FileName('FILE_1'), new LineNumber(10)),
-            new Type('TYPE_1'),
-            'MESSAGE_1',
-            ''
-        ));
-        $analysisResults->addAnalysisResult(new AnalysisResult(
-            new Location(new FileName('FILE_1'), new LineNumber(12)),
-            new Type('TYPE_2'),
-            'MESSAGE_2',
-            ''
-        ));
-        $analysisResults->addAnalysisResult(new AnalysisResult(
-            new Location(new FileName('FILE_2'), new LineNumber(0)),
-            new Type('TYPE_1'),
-            'MESSAGE_3',
-            ''
-        ));
-
-        $jsonOutputFormatter = new JsonOutputFormatter();
-        $output = $jsonOutputFormatter->outputResults($summaryStats, $analysisResults);
-
         $expectedOuput = <<<EOF
 {
     "summary": {
@@ -103,6 +64,11 @@ EOF;
 }
 EOF;
 
-        $this->assertSame($expectedOuput, $output);
+        $this->assertIssuesOutput($expectedOuput);
+    }
+
+    protected function getOutputFormatter(): OutputFormatter
+    {
+        return new JsonOutputFormatter();
     }
 }
