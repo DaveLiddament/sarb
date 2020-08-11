@@ -15,7 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsPars
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitDiffHistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitCliWrapper;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\SarbJsonResultsParser\SarbJsonResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
