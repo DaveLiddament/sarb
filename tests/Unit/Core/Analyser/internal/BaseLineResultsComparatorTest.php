@@ -19,6 +19,7 @@ class BaseLineResultsComparatorTest extends TestCase
 
     private const FILE_1 = 'one.txt';
     private const FILE_2 = 'two.txt';
+    private const FILE_3 = 'three.txt';
     private const LINE_1 = 1;
     private const LINE_2 = 2;
     private const TYPE_1 = 'TYPE1';
@@ -41,6 +42,12 @@ class BaseLineResultsComparatorTest extends TestCase
     {
         return [
             // [<expected result>, <file>, <line>, <type>]
+            [
+                false,
+                self::FILE_3,
+                self::LINE_1,
+                self::TYPE_1,
+            ],
             [
                 true,
                 self::FILE_1,

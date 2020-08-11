@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +40,7 @@ class GitCommitTest extends TestCase
      */
     public function testInvalidGitCommit(string $invalidCommit): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidHistoryMarkerException::class);
         new GitCommit($invalidCommit);
     }
 

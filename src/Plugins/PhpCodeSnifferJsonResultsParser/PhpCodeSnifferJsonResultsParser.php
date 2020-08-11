@@ -99,12 +99,6 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
 
                 ArrayUtils::assertArray($fileErrors);
 
-                $errorsCount = ArrayUtils::getIntValue($fileErrors, self::ERRORS);
-                $warningsCount = ArrayUtils::getIntValue($fileErrors, self::WARNINGS);
-                if (0 === $errorsCount && 0 === $warningsCount) {
-                    continue;
-                }
-
                 $fileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFilePath);
                 $fileName = new FileName($fileNameAsString);
 

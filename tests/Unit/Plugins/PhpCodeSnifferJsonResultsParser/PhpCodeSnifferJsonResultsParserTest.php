@@ -142,21 +142,4 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         $this->expectException(ParseAtLocationException::class);
         $this->phpCodeSnifferJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
-
-    public function validFileProvider(): array
-    {
-        return [
-            ['phpCodeSniffer/valid-no-errors-or-warnings-for-file.json'],
-        ];
-    }
-
-    /**
-     * @dataProvider validFileProvider
-     * @doesNotPerformAssertions
-     */
-    public function testValidFileFormat(string $fileName): void
-    {
-        $fileContents = $this->getResource($fileName);
-        $this->phpCodeSnifferJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
-    }
 }

@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarker;
-use Webmozart\Assert\Assert;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 
 class GitCommit implements HistoryMarker
 {
@@ -27,7 +27,9 @@ class GitCommit implements HistoryMarker
      */
     public function __construct(string $gitSha)
     {
-        Assert::true(self::validateGitSha($gitSha), "Invalid git SHA [$gitSha]");
+        if (!self::validateGitSha($gitSha)) {
+            throw new InvalidHistoryMarkerException("Invalid git SHA [$gitSha]");
+        }
         $this->gitSha = $gitSha;
     }
 

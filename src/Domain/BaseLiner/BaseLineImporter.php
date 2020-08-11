@@ -19,6 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileImportException
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactoryLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryFactoryException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\InvalidResultsParserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParserLookupService;
@@ -81,7 +82,7 @@ class BaseLineImporter
             $analysisResults = AnalysisResults::fromArray($analysisResultsAsArray);
 
             return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
-        } catch (ArrayParseException | FileAccessException | InvalidResultsParserException | InvalidHistoryFactoryException $e) {
+        } catch (ArrayParseException | FileAccessException | InvalidResultsParserException | InvalidHistoryFactoryException | InvalidHistoryMarkerException $e) {
             throw new FileImportException(BaseLine::BASE_LINE, $fileName, $e->getMessage());
         } catch (JsonParseException $e) {
             throw new FileImportException(BaseLine::BASE_LINE, $fileName, 'File not in JSON format');
