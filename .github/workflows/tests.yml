@@ -37,14 +37,18 @@ jobs:
           ini-values: memory_limit=-1
           tools: composer
 
-      - name: "Cache dependencies"
-        uses: "actions/cache@v2"
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
-          path: |
-            ~/.composer/cache
-            vendor
-          key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
-          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
+          path: ${{ steps.composercache.outputs.dir }}
+          key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.lock') }}"
+
 
       - name: "Install lowest dependencies"
         if: ${{ matrix.dependencies == 'lowest' }}
