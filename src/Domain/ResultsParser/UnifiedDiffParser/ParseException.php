@@ -34,11 +34,6 @@ class ParseException extends HistoryAnalyserException
     private $reason;
 
     /**
-     * @var string
-     */
-    private $details;
-
-    /**
      * Create from DiffParseException.
      *
      * @return ParseException
@@ -57,7 +52,6 @@ class ParseException extends HistoryAnalyserException
         parent::__construct($message, 0, $previous);
         $this->location = $location;
         $this->reason = $reason;
-        $this->details = $details;
     }
 
     public function getLocation(): string
@@ -68,10 +62,5 @@ class ParseException extends HistoryAnalyserException
     public function getReason(): string
     {
         return $this->reason;
-    }
-
-    public function getDetails(): string
-    {
-        return $this->details;
     }
 }
