@@ -93,4 +93,14 @@ class AnalysisResults
 
         return $analysisResults;
     }
+
+    public function getCount(): int
+    {
+        return count($this->analysisResults);
+    }
+
+    public function hasNoIssues(): bool
+    {
+        return 0 === $this->getCount();
+    }
 }
