@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\InvalidResultsParserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParserLookupService;
@@ -39,38 +38,20 @@ class ResultsParsersRegistry implements ResultsParserLookupService
         }
     }
 
-    /**
-     * Returns a list of all ResultsParser codes.
-     *
-     * These are used to identify which Static Analysis tool is being used for generating a baseline or comparing
-     * baseline results to.
-     *
-     * @return string[]
-     */
     public function getIdentifiers(): array
     {
         return array_keys($this->resultsParsers);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getResultsParser(string $identifier): ResultsParser
     {
         if (array_key_exists($identifier, $this->resultsParsers)) {
             return $this->resultsParsers[$identifier];
         }
 
-        $identifiers = array_map(function (ResultsParser $staticAnalysisResultsParser): Identifier {
-            return $staticAnalysisResultsParser->getIdentifier();
-        }, $this->resultsParsers);
-
-        throw new InvalidResultsParserException($identifier, $identifiers);
+        throw new InvalidResultsParserException();
     }
 
-    /**
-     * @return ResultsParser[]
-     */
     public function getAll(): array
     {
         return $this->resultsParsers;
