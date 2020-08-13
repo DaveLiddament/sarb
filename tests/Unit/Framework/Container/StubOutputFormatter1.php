@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Container;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Container;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\SummaryStats;
