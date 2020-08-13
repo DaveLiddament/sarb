@@ -38,21 +38,11 @@ class HistoryFactoryRegistry implements HistoryFactoryLookupService
         }
     }
 
-    /**
-     * Returns a list of all HistoryFactory identifiers.
-     *
-     * These are used to identify which HistoryFactory to use.
-     *
-     * @return string[]
-     */
     public function getIdentifiers(): array
     {
         return array_keys($this->historyFactories);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHistoryFactory(string $identifier): HistoryFactory
     {
         if (!array_key_exists($identifier, $this->historyFactories)) {
