@@ -38,7 +38,7 @@ class JsonOutputFormatter implements OutputFormatter
         return JsonUtils::toString($results);
     }
 
-    public function getName(): string
+    public function getIdentifier(): string
     {
         return 'json';
     }

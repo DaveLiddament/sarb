@@ -22,7 +22,7 @@ abstract class AbstractOutputFormatterTest extends TestCase
     protected function assertName(string $expectedName): void
     {
         $outputFormatter = $this->getOutputFormatter();
-        $this->assertSame($expectedName, $outputFormatter->getName());
+        $this->assertSame($expectedName, $outputFormatter->getIdentifier());
     }
 
     protected function assertNoIssuesOutput(string $expectedOutput): void

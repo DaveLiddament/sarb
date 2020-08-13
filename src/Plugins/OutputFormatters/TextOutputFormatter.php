@@ -44,7 +44,7 @@ EOF;
         return $output;
     }
 
-    public function getName(): string
+    public function getIdentifier(): string
     {
         return 'text';
     }

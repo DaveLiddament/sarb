@@ -16,5 +16,5 @@ interface OutputFormatter
         AnalysisResults $analysisResults
     ): string;
 
-    public function getName(): string;
+    public function getIdentifier(): string;
 }
