@@ -16,17 +16,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 
 class SarbJsonIdentifier implements Identifier
 {
-    /**
-     * {@inheritdoc}
-     */
+    public const CODE = 'sarb-json';
+
     public function getCode(): string
     {
-        return 'sarb-json';
+        return self::CODE;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return 'SARB format';
