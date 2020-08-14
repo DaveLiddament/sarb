@@ -13,14 +13,15 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddCommandCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddHistoryFactoryCompilerPass;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddOutputFormatterFactoryCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddStaticAnalysisResultsParserCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -49,6 +50,7 @@ class Container
         $containerBuilder->addCompilerPass(new AddCommandCompilerPass());
         $containerBuilder->addCompilerPass(new AddStaticAnalysisResultsParserCompilerPass());
         $containerBuilder->addCompilerPass(new AddHistoryFactoryCompilerPass());
+        $containerBuilder->addCompilerPass(new AddOutputFormatterFactoryCompilerPass());
 
         $containerBuilder->compile();
         $this->containerBuilder = $containerBuilder;

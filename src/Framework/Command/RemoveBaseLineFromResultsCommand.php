@@ -29,6 +29,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\TableO
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RemoveBaseLineFromResultsCommand extends Command
@@ -83,9 +84,10 @@ class RemoveBaseLineFromResultsCommand extends Command
         $this->setDescription('Shows issues created since the baseline');
 
         $outputFormatters = $this->outputFormatterLookupService->getIdentifiers();
-        $this->addArgument(
+        $this->addOption(
             self::OUTPUT_FORMAT,
-            InputArgument::REQUIRED,
+            null,
+            InputOption::VALUE_REQUIRED,
             'Output format. One of: '.implode('|', $outputFormatters),
             TableOutputFormatter::CODE
         );

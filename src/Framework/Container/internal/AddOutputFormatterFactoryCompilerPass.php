@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\Container;
-use Symfony\Component\Console\Formatter\OutputFormatter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\OutputFormatterRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -22,7 +23,7 @@ class AddOutputFormatterFactoryCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $definition = $container->getDefinition(OutputFormatter::class);
+        $definition = $container->getDefinition(OutputFormatterRegistry::class);
         $taggedServices = $container->findTaggedServiceIds(Container::OUTPUT_FORMATTER_TAG);
         $services = [];
         foreach ($taggedServices as $id => $tags) {
