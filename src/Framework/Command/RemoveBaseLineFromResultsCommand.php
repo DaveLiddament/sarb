@@ -14,24 +14,28 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImporter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidOutputFormatterException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatterLookupService;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\SummaryStats;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
-use Symfony\Component\Console\Helper\Table;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\BaseLineFileHelper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ProjectRootHelper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\StdinReader;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\TableOutputFormatter;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Webmozart\Assert\Assert;
 
-class RemoveBaseLineFromResultsCommand extends AbstractCommand
+class RemoveBaseLineFromResultsCommand extends Command
 {
-    const COMMAND_NAME = 'remove-baseline-results';
+    public const COMMAND_NAME = 'remove-baseline-results';
 
-    const OUTPUT_RESULTS_FILE = 'output-results-file';
-    const FAILURE_ON_ANALYSIS_RESULT = 'failure-on-analysis-result';
+    private const OUTPUT_FORMAT = 'output-format';
 
     /**
      * @var string
@@ -52,129 +56,96 @@ class RemoveBaseLineFromResultsCommand extends AbstractCommand
      * @var BaseLineImporter
      */
     private $baseLineImporter;
-
     /**
-     * CreateBaseLineCommand constructor.
+     * @var OutputFormatterLookupService
      */
+    private $outputFormatterLookupService;
+    /**
+     * @var StdinReader
+     */
+    private $stdinReader;
+
     public function __construct(
+        StdinReader $stdinReader,
         BaseLineResultsRemover $baseLineResultsRemover,
         BaseLineImporter $baseLineImporter,
-        Importer $resultsImporter
+        OutputFormatterLookupService $outputFormatterLookupService
     ) {
-        parent::__construct(self::COMMAND_NAME);
         $this->baseLineResultsRemover = $baseLineResultsRemover;
         $this->baseLineImporter = $baseLineImporter;
-        $this->resultsImporter = $resultsImporter;
+        $this->outputFormatterLookupService = $outputFormatterLookupService;
+        $this->stdinReader = $stdinReader;
+        parent::__construct(self::COMMAND_NAME);
     }
 
-    protected function configureHook(): void
+    protected function configure(): void
     {
-        $this->setDescription('Creates a baseline of the static analysis results for the specified static analysis tool');
+        $this->setDescription('Shows issues created since the baseline');
 
+        $outputFormatters = $this->outputFormatterLookupService->getIdentifiers();
         $this->addArgument(
-            self::OUTPUT_RESULTS_FILE,
+            self::OUTPUT_FORMAT,
             InputArgument::REQUIRED,
-            'Output file (with baseline results removed)'
+            'Output format. One of: '.implode('|', $outputFormatters),
+            TableOutputFormatter::CODE
         );
 
-        $this->addOption(
-            self::FAILURE_ON_ANALYSIS_RESULT,
-            'f',
-            InputOption::VALUE_NONE,
-            'Return error code if there any static analysis results after base line removed (useful for CI)'
-        );
+        ProjectRootHelper::configureProjectRootOption($this);
+
+        BaseLineFileHelper::configureBaseLineFileArgument($this);
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        try {
+            $projectRoot = ProjectRootHelper::getProjectRoot($input);
+            $outputFormatter = $this->getOutputFormatter($input);
+            $baseLineFileName = BaseLineFileHelper::getBaselineFile($input);
+            $input = $this->stdinReader->getStdin();
+
+            $baseLine = $this->baseLineImporter->import($baseLineFileName);
+            $resultsParser = $baseLine->getResultsParser();
+            $historyFactory = $baseLine->getHistoryFactory();
+
+            $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
+            $inputAnalysisResults = $resultsParser->convertFromString($input, $projectRoot);
+
+            $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
+                $inputAnalysisResults,
+                $historyAnalyser,
+                $baseLine->getAnalysisResults()
+            );
+
+            $summaryStats = new SummaryStats(
+                $inputAnalysisResults->getCount(),
+                $baseLine->getAnalysisResults()->getCount(),
+                $resultsParser->getIdentifier(),
+                $historyFactory->getIdentifier()
+            );
+
+            $outputAsString = $outputFormatter->outputResults($summaryStats, $outputAnalysisResults);
+
+            $output->writeln($outputAsString);
+
+            return $outputAnalysisResults->hasNoIssues() ? 0 : 1;
+        } catch (\Throwable $throwable) {
+            $returnCode = ErrorReporter::reportError($output, $throwable);
+
+            return $returnCode;
+        }
     }
 
     /**
-     * {@inheritdoc}
+     * @throws InvalidConfigException
      */
-    protected function executeHook(
-        InputInterface $input,
-        OutputInterface $output,
-        FileName $resultsFileName,
-        FileName $baseLineFileName,
-        ProjectRoot $projectRoot
-    ): int {
-        $baseLine = $this->baseLineImporter->import($baseLineFileName);
-        $resultsParser = $baseLine->getResultsParser();
-        $historyFactory = $baseLine->getHistoryFactory();
-
-        $output->writeln(
-            sprintf('<info>Baseline uses ResultsParser [%s] and HistoryAnalyser [%s]</info>',
-                $resultsParser->getIdentifier()->getCode(),
-                $historyFactory->getIdentifier())
-        );
-
-        $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
-        $baseLineAnalysisResults = $baseLine->getAnalysisResults();
-
-        $inputAnalysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName, $projectRoot);
-        $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
-            $inputAnalysisResults,
-            $historyAnalyser,
-            $baseLineAnalysisResults
-        );
-
-        $errorsAfterBaseLine = count($outputAnalysisResults->getAnalysisResults());
-        $errorsBeforeBaseLine = count($inputAnalysisResults->getAnalysisResults());
-        $errorsInBaseLine = count($baseLine->getAnalysisResults()->getAnalysisResults());
-
-        $output->writeln("<info>Errors before baseline $errorsBeforeBaseLine</info>");
-        $output->writeln("<info>Errors in baseline $errorsInBaseLine</info>");
-        $output->writeln("<info>Errors introduced since baseline $errorsAfterBaseLine</info>");
-
-        if ($errorsAfterBaseLine > 0) {
-            $this->displayErrorsSinceBaseLine($output, $outputAnalysisResults->getOrderedAnalysisResults());
-
-            if (true === $input->getOption(self::FAILURE_ON_ANALYSIS_RESULT)) {
-                return 1;
-            }
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param AnalysisResult[] $analysisResults
-     */
-    private function displayErrorsSinceBaseLine(OutputInterface $output, array $analysisResults): void
+    private function getOutputFormatter(InputInterface $input): OutputFormatter
     {
-        /** @var string[] $headings */
-        $headings = [
-            'Line',
-            'Description',
-        ];
+        $identifier = CliConfigReader::getOptionWithDefaultValue($input, self::OUTPUT_FORMAT);
 
-        /** @var FileName $currentFileName */
-        $currentFileName = null;
-        /** @var Table|null $currentTable */
-        $currentTable = null;
-        foreach ($analysisResults as $analysisResult) {
-            $fileName = $analysisResult->getLocation()->getFileName();
-
-            if (!$fileName->isEqual($currentFileName)) {
-                $this->renderTable($currentTable);
-
-                $output->writeln("\nFILE: {$fileName->getFileName()}");
-                $currentFileName = $fileName;
-                $currentTable = new Table($output);
-                $currentTable->setHeaders($headings);
-            }
-
-            Assert::notNull($currentTable);
-            $currentTable->addRow([
-                $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
-                $analysisResult->getMessage(),
-            ]);
-        }
-
-        $this->renderTable($currentTable);
-    }
-
-    private function renderTable(?Table $table): void
-    {
-        if (null !== $table) {
-            $table->render();
+        try {
+            return $this->outputFormatterLookupService->getOutputFormatter($identifier);
+        } catch (InvalidOutputFormatterException $e) {
+            throw InvalidConfigException::invalidOptionValue(self::OUTPUT_FORMAT, $identifier, $this->outputFormatterLookupService->getIdentifiers());
         }
     }
 }

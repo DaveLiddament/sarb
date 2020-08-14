@@ -14,6 +14,8 @@ use Webmozart\Assert\Assert;
 
 class TableOutputFormatter implements OutputFormatter
 {
+    public const CODE = 'table';
+
     public function outputResults(SummaryStats $summaryStats, AnalysisResults $analysisResults): string
     {
         $output = <<<EOF
@@ -37,7 +39,7 @@ EOF;
 
     public function getIdentifier(): string
     {
-        return 'table';
+        return self::CODE;
     }
 
     private function addIssuesInTable(BufferedOutput $output, AnalysisResults $analysisResults): void
