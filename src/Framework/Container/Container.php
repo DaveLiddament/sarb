@@ -20,14 +20,16 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\Ad
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Container
 {
-    const COMMAND_TAG = 'console.command';
-    const RESULTS_PARSER_TAG = 'resultsParser';
-    const HISTORY_FACTORY_TAG = 'historyFactory';
+    public const COMMAND_TAG = 'console.command';
+    public const RESULTS_PARSER_TAG = 'resultsParser';
+    public const HISTORY_FACTORY_TAG = 'historyFactory';
+    public const OUTPUT_FORMATTER_TAG = 'outputFormatter';
 
     /**
      * @var ContainerBuilder
@@ -43,6 +45,7 @@ class Container
         $containerBuilder->registerForAutoconfiguration(Command::class)->addTag(self::COMMAND_TAG);
         $containerBuilder->registerForAutoconfiguration(ResultsParser::class)->addTag(self::RESULTS_PARSER_TAG);
         $containerBuilder->registerForAutoconfiguration(HistoryFactory::class)->addTag(self::HISTORY_FACTORY_TAG);
+        $containerBuilder->registerForAutoconfiguration(OutputFormatter::class)->addTag(self::OUTPUT_FORMATTER_TAG);
         $containerBuilder->addCompilerPass(new AddCommandCompilerPass());
         $containerBuilder->addCompilerPass(new AddStaticAnalysisResultsParserCompilerPass());
         $containerBuilder->addCompilerPass(new AddHistoryFactoryCompilerPass());

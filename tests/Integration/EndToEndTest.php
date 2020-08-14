@@ -166,7 +166,7 @@ class EndToEndTest extends TestCase
     private function runCreateBaseLineCommand(): void
     {
         $arguments = [
-            'static-analysis-tool' => 'psalm-json',
+            '--static-analysis-tool' => 'psalm-json',
             'baseline-file' => $this->getBaselineFilePath(),
             'static-analysis-output-file' => $this->getProjectRootFilename(self::COMMIT_1_PSALM_RESULTS),
             '--project-root' => (string) $this->projectRoot,
