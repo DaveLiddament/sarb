@@ -12,27 +12,34 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineExporter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Creator\BaseLineCreatorInterface;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactoryLookupService;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryFactoryException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\InvalidResultsParserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\AbstractCommand;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParserLookupService;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\BaseLineFileHelper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsParsersRegistry;
-use Symfony\Component\Console\Input\InputArgument;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ProjectRootHelper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\StdinReader;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonIdentifier;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
-class CreateBaseLineCommand extends AbstractCommand
+class CreateBaseLineCommand extends Command
 {
-    public const COMMAND_NAME = 'create-baseline';
+    public const COMMAND_NAME = 'create';
 
-    private const STATIC_ANALYSIS_TOOL = 'static-analysis-tool';
+    public const INPUT_FORMAT = 'input-format';
+    private const DEFAULT_STATIC_ANALYSIS_FORMAT = SarbJsonIdentifier::CODE;
+
+    private const HISTORY_ANALYSER = 'history-analyser';
     private const DEFAULT_HISTORY_FACTORY_NAME = 'git';
     private const DOC_URL = 'https://github.com/DaveLiddament/sarb/blob/master/docs/ViolationTypeClassificationGuessing.md';
 
@@ -42,85 +49,88 @@ class CreateBaseLineCommand extends AbstractCommand
     protected static $defaultName = self::COMMAND_NAME;
 
     /**
-     * @var BaseLineExporter
+     * @var ResultsParserLookupService
      */
-    private $baseLineExporter;
-
-    /**
-     * @var Importer
-     */
-    private $resultsImporter;
-
-    /**
-     * @var ResultsParsersRegistry
-     */
-    private $resultsParsersRegistry;
+    private $resultsParserLookupService;
 
     /**
      * @var HistoryFactoryLookupService
      */
     private $historyFactoryLookupService;
-
     /**
-     * CreateBaseLineCommand constructor.
+     * @var BaseLineCreatorInterface
      */
+    private $baseLineCreator;
+    /**
+     * @var StdinReader
+     */
+    private $stdinReader;
+
     public function __construct(
-        ResultsParsersRegistry $resultsParsersRegistry,
+        StdinReader $stdinReader,
+        ResultsParserLookupService $resultsParsersLookupService,
         HistoryFactoryLookupService $historyFactoryLookupService,
-        BaseLineExporter $exporter,
-        Importer $resultsImporter
+        BaseLineCreatorInterface $baseLineCreator
     ) {
-        $this->resultsParsersRegistry = $resultsParsersRegistry;
+        $this->resultsParserLookupService = $resultsParsersLookupService;
         $this->historyFactoryLookupService = $historyFactoryLookupService;
-        $this->baseLineExporter = $exporter;
-        $this->resultsImporter = $resultsImporter;
         parent::__construct(self::COMMAND_NAME);
+        $this->baseLineCreator = $baseLineCreator;
+        $this->stdinReader = $stdinReader;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureHook(): void
+    protected function configure(): void
     {
-        $this->setDescription('Creates a baseline of the static analysis results for the specified static analysis tool');
+        $this->setDescription('Creates a baseline of the static analysis results for the specified static analysis format');
 
-        $staticAnalysisParserIdentifiers = implode('|', $this->resultsParsersRegistry->getIdentifiers());
-
-        $this->addArgument(
-            self::STATIC_ANALYSIS_TOOL,
-            InputArgument::REQUIRED,
-            sprintf('Static analysis tool one of: %s', $staticAnalysisParserIdentifiers)
+        $staticAnalysisParserIdentifiers = implode('|', $this->resultsParserLookupService->getIdentifiers());
+        $this->addOption(
+            self::INPUT_FORMAT,
+            null,
+            InputOption::VALUE_REQUIRED,
+            sprintf('Static analysis tool. One of: %s', $staticAnalysisParserIdentifiers),
+            self::DEFAULT_STATIC_ANALYSIS_FORMAT
         );
+
+        $historyAnalyserIdentifiers = implode('|', $this->historyFactoryLookupService->getIdentifiers());
+        $this->addOption(
+            self::HISTORY_ANALYSER,
+            null,
+            InputOption::VALUE_REQUIRED,
+            sprintf('History analyser. One of: %s', $historyAnalyserIdentifiers),
+            self::DEFAULT_HISTORY_FACTORY_NAME
+        );
+
+        ProjectRootHelper::configureProjectRootOption($this);
+
+        BaseLineFileHelper::configureBaseLineFileArgument($this);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function executeHook(
-        InputInterface $input,
-        OutputInterface $output,
-        FileName $resultsFileName,
-        FileName $baseLineFileName,
-        ProjectRoot $projectRoot
-    ): int {
-        $historyFactory = $this->historyFactoryLookupService->getHistoryFactory(self::DEFAULT_HISTORY_FACTORY_NAME);
-        $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker($projectRoot);
-        $resultsParser = $this->getResultsParser($input, $output);
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        try {
+            $projectRoot = ProjectRootHelper::getProjectRoot($input);
+            $historyFactory = $this->getHistoryFactory($input, $output);
+            $resultsParser = $this->getResultsParser($input, $output);
+            $baselineFile = BaseLineFileHelper::getBaselineFile($input);
+            $analysisResultsAsString = $this->stdinReader->getStdin();
 
-        $analysisResults = $this->resultsImporter->importFromFile($resultsParser, $resultsFileName, $projectRoot);
-        $baseLine = new BaseLine(
-            $historyFactory,
-            $analysisResults,
-            $resultsParser,
-            $historyMarker
-        );
-        $this->baseLineExporter->export($baseLine, $baseLineFileName);
+            $baseLine = $this->baseLineCreator->createBaseLine(
+                $historyFactory,
+                $resultsParser,
+                $baselineFile,
+                $projectRoot,
+                $analysisResultsAsString
+            );
 
-        $errorsInBaseLine = count($baseLine->getAnalysisResults()->getAnalysisResults());
-        $output->writeln('<info>Baseline created</info>');
-        $output->writeln("<info>Errors in baseline $errorsInBaseLine</info>");
+            $errorsInBaseLine = $baseLine->getAnalysisResults()->getCount();
+            $output->writeln('<info>Baseline created</info>');
+            $output->writeln("<info>Errors in baseline $errorsInBaseLine</info>");
 
-        return 0;
+            return 0;
+        } catch (Throwable $throwable) {
+            return ErrorReporter::reportError($output, $throwable);
+        }
     }
 
     /**
@@ -128,25 +138,33 @@ class CreateBaseLineCommand extends AbstractCommand
      */
     private function getResultsParser(InputInterface $input, OutputInterface $output): ResultsParser
     {
-        $identifier = $this->getArgument($input, self::STATIC_ANALYSIS_TOOL);
+        $identifier = CliConfigReader::getOptionWithDefaultValue($input, self::INPUT_FORMAT);
 
         try {
-            $resultsParser = $this->resultsParsersRegistry->getResultsParser($identifier);
+            $resultsParser = $this->resultsParserLookupService->getResultsParser($identifier);
         } catch (InvalidResultsParserException $e) {
-            $validIdentifiers = array_map(function (Identifier $identifier): string {
-                return $identifier->getCode();
-            }, $e->getPossibleOptions());
-
-            $message = 'Pick static analysis tool from one of: '.implode('|', $validIdentifiers);
-            throw new InvalidConfigException(self::STATIC_ANALYSIS_TOOL, $message);
+            throw InvalidConfigException::invalidOptionValue(self::INPUT_FORMAT, $identifier, $this->resultsParserLookupService->getIdentifiers());
         }
 
         if ($resultsParser->showTypeGuessingWarning()) {
-            $warning = '[%s] guesses the classification of violations.';
-            $warning .= 'This means results might not be 100%% accurate. ';
-            $warning .= 'See %s for more details.';
-
+            $warning = '[%s] guesses the classification of violations. This means results might not be 100%% accurate. See %s for more details.';
             $output->writeln(sprintf($warning, $identifier, self::DOC_URL));
+        }
+
+        return $resultsParser;
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    private function getHistoryFactory(InputInterface $input, OutputInterface $output): HistoryFactory
+    {
+        $identifier = CliConfigReader::getOptionWithDefaultValue($input, self::HISTORY_ANALYSER);
+
+        try {
+            $resultsParser = $this->historyFactoryLookupService->getHistoryFactory($identifier);
+        } catch (InvalidHistoryFactoryException $e) {
+            throw InvalidConfigException::invalidOptionValue(self::HISTORY_ANALYSER, $identifier, $this->historyFactoryLookupService->getIdentifiers());
         }
 
         return $resultsParser;

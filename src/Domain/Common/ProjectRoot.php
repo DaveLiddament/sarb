@@ -22,11 +22,6 @@ class ProjectRoot
      */
     private $rootDirectory;
 
-    /**
-     * ProjectRoot constructor.
-     *
-     * If
-     */
     public function __construct(string $rootDirectory, string $currentWorkingDirectory)
     {
         if (Path::isAbsolute($rootDirectory)) {

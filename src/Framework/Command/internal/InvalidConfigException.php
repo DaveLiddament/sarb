@@ -19,31 +19,15 @@ use Exception;
  */
 class InvalidConfigException extends Exception
 {
-    /**
-     * @var string
-     */
-    private $option;
-
-    /**
-     * @var string
-     */
-    private $error;
-
-    /**
-     * InvalidConfigException constructor.
-     */
-    public function __construct(string $option, string $error)
+    public static function invalidOptionValue(string $option, string $value, array $validOptions): self
     {
-        $this->option = $option;
-        $this->error = $error;
-        parent::__construct($this->getProblem());
-    }
+        $message = sprintf(
+            'Invalid value [%s] for option [%s]. Pick one of: %s',
+            $value,
+            $option,
+            implode('|', $validOptions)
+        );
 
-    /**
-     * Return problem with configuration.
-     */
-    public function getProblem(): string
-    {
-        return sprintf('Invalid argument %s. %s', $this->option, $this->error);
+        return new self($message);
     }
 }
