@@ -18,7 +18,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidO
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatterLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\SummaryStats;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Importer;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\BaseLineFileHelper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
@@ -46,11 +45,6 @@ class RemoveBaseLineFromResultsCommand extends Command
      * @var BaseLineResultsRemover
      */
     private $baseLineResultsRemover;
-
-    /**
-     * @var Importer
-     */
-    private $resultsImporter;
 
     /**
      * @var BaseLineImporter

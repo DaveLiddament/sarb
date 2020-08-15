@@ -19,6 +19,9 @@ use Exception;
  */
 class InvalidConfigException extends Exception
 {
+    /**
+     * @param string[] $validOptions
+     */
     public static function invalidOptionValue(string $option, string $value, array $validOptions): self
     {
         $message = sprintf(
