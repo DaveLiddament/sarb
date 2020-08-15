@@ -18,7 +18,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJson
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\HistoryFactoryStub;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub2;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub2Identifier;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\StdinReaderStub;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -261,18 +260,20 @@ EOF;
             $expectedResultsParser,
             new FileName($baselineFileName),
             $projectRoot,
-            self::INPUT_STRING_1,
+            self::INPUT_STRING_1.PHP_EOL, // CommandTest adds line end
             $exception
         );
 
         $command = new CreateBaseLineCommand(
-            new StdinReaderStub(self::INPUT_STRING_1),
             $this->resultsParserRegistry,
             $this->historyFactoryRegistry,
             $mockBaseLineCreator
         );
 
-        return new CommandTester($command);
+        $commandTester = new CommandTester($command);
+        $commandTester->setInputs([self::INPUT_STRING_1]);
+
+        return $commandTester;
     }
 
     private function assertReturnCode(int $expectedReturnCode, CommandTester $commandTester): void

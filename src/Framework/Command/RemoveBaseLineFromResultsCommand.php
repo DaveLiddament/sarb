@@ -23,12 +23,12 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliC
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ProjectRootHelper;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\StdinReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\TableOutputFormatter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 class RemoveBaseLineFromResultsCommand extends Command
 {
@@ -54,13 +54,8 @@ class RemoveBaseLineFromResultsCommand extends Command
      * @var OutputFormatterLookupService
      */
     private $outputFormatterLookupService;
-    /**
-     * @var StdinReader
-     */
-    private $stdinReader;
 
     public function __construct(
-        StdinReader $stdinReader,
         BaseLineResultsRemover $baseLineResultsRemover,
         BaseLineImporter $baseLineImporter,
         OutputFormatterLookupService $outputFormatterLookupService
@@ -68,7 +63,6 @@ class RemoveBaseLineFromResultsCommand extends Command
         $this->baseLineResultsRemover = $baseLineResultsRemover;
         $this->baseLineImporter = $baseLineImporter;
         $this->outputFormatterLookupService = $outputFormatterLookupService;
-        $this->stdinReader = $stdinReader;
         parent::__construct(self::COMMAND_NAME);
     }
 
@@ -96,14 +90,14 @@ class RemoveBaseLineFromResultsCommand extends Command
             $projectRoot = ProjectRootHelper::getProjectRoot($input);
             $outputFormatter = $this->getOutputFormatter($input);
             $baseLineFileName = BaseLineFileHelper::getBaselineFile($input);
-            $input = $this->stdinReader->getStdin();
+            $inputAnalysisResultsAsString = CliConfigReader::getStdin($input);
 
             $baseLine = $this->baseLineImporter->import($baseLineFileName);
             $resultsParser = $baseLine->getResultsParser();
             $historyFactory = $baseLine->getHistoryFactory();
 
             $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
-            $inputAnalysisResults = $resultsParser->convertFromString($input, $projectRoot);
+            $inputAnalysisResults = $resultsParser->convertFromString($inputAnalysisResultsAsString, $projectRoot);
 
             $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
                 $inputAnalysisResults,
@@ -123,7 +117,7 @@ class RemoveBaseLineFromResultsCommand extends Command
             $output->writeln($outputAsString);
 
             return $outputAnalysisResults->hasNoIssues() ? 0 : 1;
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             $returnCode = ErrorReporter::reportError($output, $throwable);
 
             return $returnCode;

@@ -24,7 +24,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliC
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ProjectRootHelper;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\StdinReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonIdentifier;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -61,22 +60,16 @@ class CreateBaseLineCommand extends Command
      * @var BaseLineCreatorInterface
      */
     private $baseLineCreator;
-    /**
-     * @var StdinReader
-     */
-    private $stdinReader;
 
     public function __construct(
-        StdinReader $stdinReader,
         ResultsParserLookupService $resultsParsersLookupService,
         HistoryFactoryLookupService $historyFactoryLookupService,
         BaseLineCreatorInterface $baseLineCreator
     ) {
         $this->resultsParserLookupService = $resultsParsersLookupService;
         $this->historyFactoryLookupService = $historyFactoryLookupService;
-        parent::__construct(self::COMMAND_NAME);
         $this->baseLineCreator = $baseLineCreator;
-        $this->stdinReader = $stdinReader;
+        parent::__construct(self::COMMAND_NAME);
     }
 
     protected function configure(): void
@@ -113,7 +106,7 @@ class CreateBaseLineCommand extends Command
             $historyFactory = $this->getHistoryFactory($input, $output);
             $resultsParser = $this->getResultsParser($input, $output);
             $baselineFile = BaseLineFileHelper::getBaselineFile($input);
-            $analysisResultsAsString = $this->stdinReader->getStdin();
+            $analysisResultsAsString = CliConfigReader::getStdin($input);
 
             $baseLine = $this->baseLineCreator->createBaseLine(
                 $historyFactory,
@@ -124,8 +117,8 @@ class CreateBaseLineCommand extends Command
             );
 
             $errorsInBaseLine = $baseLine->getAnalysisResults()->getCount();
-            $output->writeln('<info>Baseline created</info>');
-            $output->writeln("<info>Errors in baseline $errorsInBaseLine</info>");
+            ErrorReporter::writeToStdError($output, '<info>Baseline created</info>');
+            ErrorReporter::writeToStdError($output, "<info>Errors in baseline $errorsInBaseLine</info>");
 
             return 0;
         } catch (Throwable $throwable) {

@@ -36,7 +36,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
     /**
      * @var string
      */
-    private $expectedAnaylsisResutlsAsString;
+    private $expectedAnaylsisResultsAsString;
     /**
      * @var Throwable|null
      */
@@ -54,7 +54,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
         $this->expectedResultsParser = $expectedResultsParser;
         $this->expectedFileName = $expectedFileName;
         $this->expectedProjectRoot = $expectedProjectRoot;
-        $this->expectedAnaylsisResutlsAsString = $expectedAnaylsisResutlsAsString;
+        $this->expectedAnaylsisResultsAsString = $expectedAnaylsisResutlsAsString;
         $this->throwable = $throwable;
     }
 
@@ -71,7 +71,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
         if ($this->expectedProjectRoot) {
             Assert::assertEquals($this->expectedProjectRoot->__toString(), $projectRoot->__toString());
         }
-        Assert::assertSame($this->expectedAnaylsisResutlsAsString, $analysisResultsAsString);
+        Assert::assertSame($this->expectedAnaylsisResultsAsString, $analysisResultsAsString);
 
         if ($this->throwable) {
             throw $this->throwable;

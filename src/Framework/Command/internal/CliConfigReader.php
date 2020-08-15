@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
 use _HumbugBoxa35debbd0202\Symfony\Component\Console\Exception\LogicException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\StreamableInputInterface;
 
 class CliConfigReader
 {
@@ -55,5 +57,28 @@ class CliConfigReader
         }
 
         return $value;
+    }
+
+    /**
+     * Returns STDIN as a string.
+     *
+     * @throws SarbException
+     */
+    public static function getStdin(InputInterface $input): string
+    {
+        // If testing this will get input added by `CommandTester::setInputs` method.
+        $inputSteam = ($input instanceof StreamableInputInterface) ? $input->getStream() : null;
+
+        // If nothing from input stream use STDIN instead.
+        $inputSteam = $inputSteam ?? STDIN;
+
+        $input = stream_get_contents($inputSteam);
+
+        if (false === $input) {
+            // No way of easily testing this
+            throw new SarbException('Can not read input stream'); // @codeCoverageIgnore
+        }
+
+        return $input;
     }
 }
