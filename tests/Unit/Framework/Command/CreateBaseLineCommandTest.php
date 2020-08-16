@@ -36,10 +36,6 @@ EOF;
     public const PROJECT_ROOT = '--project-root';
 
     /**
-     * @var CreateBaseLineCommand
-     */
-    private $command;
-    /**
      * @var ResultsParser
      */
     private $defaultResultsParser;
