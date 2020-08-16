@@ -6,7 +6,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\SummaryStats;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -16,25 +15,16 @@ class TableOutputFormatter implements OutputFormatter
 {
     public const CODE = 'table';
 
-    public function outputResults(SummaryStats $summaryStats, AnalysisResults $analysisResults): string
+    public function outputResults(AnalysisResults $analysisResults): string
     {
-        $output = <<<EOF
-Latest issue count: {$summaryStats->getLatestAnalysisResultsCount()}
-Baseline issue count: {$summaryStats->getBaseLineCount()}
-Issues count with baseline removed: {$analysisResults->getCount()}
-EOF;
-
         if ($analysisResults->hasNoIssues()) {
-            return $output;
+            return 'No issues';
         }
 
         $bufferedOutput = new BufferedOutput();
         $this->addIssuesInTable($bufferedOutput, $analysisResults);
 
-        $output .= PHP_EOL;
-        $output .= $bufferedOutput->fetch();
-
-        return $output;
+        return $bufferedOutput->fetch();
     }
 
     public function getIdentifier(): string

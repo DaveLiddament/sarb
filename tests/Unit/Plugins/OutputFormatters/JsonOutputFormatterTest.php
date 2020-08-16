@@ -17,15 +17,7 @@ class JsonOutputFormatterTest extends AbstractOutputFormatterTest
     public function testNoIssues(): void
     {
         $expectedOutput = <<<EOF
-{
-    "summary": {
-        "latestAnalysisCount": 2,
-        "baseLineCount": 4,
-        "baseLineRemovedCount": 0
-    },
-    "issues": [],
-    "success": true
-}
+[]
 EOF;
 
         $this->assertNoIssuesOutput($expectedOutput);
@@ -34,34 +26,26 @@ EOF;
     public function testWithIssues(): void
     {
         $expectedOuput = <<<EOF
-{
-    "summary": {
-        "latestAnalysisCount": 2,
-        "baseLineCount": 4,
-        "baseLineRemovedCount": 3
+[
+    {
+        "file": "FILE_1",
+        "line": 10,
+        "type": "TYPE_1",
+        "message": "MESSAGE_1"
     },
-    "issues": [
-        {
-            "file": "FILE_1",
-            "line": 10,
-            "type": "TYPE_1",
-            "message": "MESSAGE_1"
-        },
-        {
-            "file": "FILE_1",
-            "line": 12,
-            "type": "TYPE_2",
-            "message": "MESSAGE_2"
-        },
-        {
-            "file": "FILE_2",
-            "line": 0,
-            "type": "TYPE_1",
-            "message": "MESSAGE_3"
-        }
-    ],
-    "success": false
-}
+    {
+        "file": "FILE_1",
+        "line": 12,
+        "type": "TYPE_2",
+        "message": "MESSAGE_2"
+    },
+    {
+        "file": "FILE_2",
+        "line": 0,
+        "type": "TYPE_1",
+        "message": "MESSAGE_3"
+    }
+]
 EOF;
 
         $this->assertIssuesOutput($expectedOuput);

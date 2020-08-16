@@ -9,10 +9,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\SummaryStats;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonIdentifier;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractOutputFormatterTest extends TestCase
@@ -59,9 +57,8 @@ abstract class AbstractOutputFormatterTest extends TestCase
 
     private function assertOutput(string $expectedOutput, AnalysisResults $analysisResults): void
     {
-        $summaryStats = new SummaryStats(2, 4, new SarbJsonIdentifier(), 'git');
         $outputFormatter = $this->getOutputFormatter();
-        $output = $outputFormatter->outputResults($summaryStats, $analysisResults);
+        $output = $outputFormatter->outputResults($analysisResults);
         $this->assertSame($expectedOutput, $output);
     }
 }

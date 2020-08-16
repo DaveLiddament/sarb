@@ -11,10 +11,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
  */
 interface OutputFormatter
 {
-    public function outputResults(
-        SummaryStats $summaryStats,
-        AnalysisResults $analysisResults
-    ): string;
+    public function outputResults(AnalysisResults $analysisResults): string;
 
     public function getIdentifier(): string;
 }

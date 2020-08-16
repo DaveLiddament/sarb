@@ -17,9 +17,7 @@ class TextOutputFormatterTest extends AbstractOutputFormatterTest
     public function testNoIssues(): void
     {
         $expectedOutput = <<<EOF
-Latest issue count: 2
-Baseline issue count: 4
-Issues count with baseline removed: 0
+No issues
 EOF;
 
         $this->assertNoIssuesOutput($expectedOutput);
@@ -28,12 +26,6 @@ EOF;
     public function testWithIssues(): void
     {
         $expectedOuput = <<<EOF
-Latest issue count: 2
-Baseline issue count: 4
-Issues count with baseline removed: 3
-
---------
-
 FILE_1:10 - TYPE_1
 MESSAGE_1
 
