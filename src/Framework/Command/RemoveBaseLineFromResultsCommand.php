@@ -12,12 +12,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidOutputFormatterException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatterLookupService;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\SummaryStats;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\ResultsPrunerInterface;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\BaseLineFileHelper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
@@ -42,28 +40,21 @@ class RemoveBaseLineFromResultsCommand extends Command
     protected static $defaultName = self::COMMAND_NAME;
 
     /**
-     * @var BaseLineResultsRemover
-     */
-    private $baseLineResultsRemover;
-
-    /**
-     * @var BaseLineImporter
-     */
-    private $baseLineImporter;
-    /**
      * @var OutputFormatterLookupService
      */
     private $outputFormatterLookupService;
+    /**
+     * @var ResultsPrunerInterface
+     */
+    private $resultsPruner;
 
     public function __construct(
-        BaseLineResultsRemover $baseLineResultsRemover,
-        BaseLineImporter $baseLineImporter,
+        ResultsPrunerInterface $resultsPruner,
         OutputFormatterLookupService $outputFormatterLookupService
     ) {
-        $this->baseLineResultsRemover = $baseLineResultsRemover;
-        $this->baseLineImporter = $baseLineImporter;
         $this->outputFormatterLookupService = $outputFormatterLookupService;
         parent::__construct(self::COMMAND_NAME);
+        $this->resultsPruner = $resultsPruner;
     }
 
     protected function configure(): void
@@ -92,28 +83,30 @@ class RemoveBaseLineFromResultsCommand extends Command
             $baseLineFileName = BaseLineFileHelper::getBaselineFile($input);
             $inputAnalysisResultsAsString = CliConfigReader::getStdin($input);
 
-            $baseLine = $this->baseLineImporter->import($baseLineFileName);
-            $resultsParser = $baseLine->getResultsParser();
-            $historyFactory = $baseLine->getHistoryFactory();
-
-            $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
-            $inputAnalysisResults = $resultsParser->convertFromString($inputAnalysisResultsAsString, $projectRoot);
-
-            $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
-                $inputAnalysisResults,
-                $historyAnalyser,
-                $baseLine->getAnalysisResults()
+            $prunedResults = $this->resultsPruner->getPrunedResults(
+                $baseLineFileName,
+                $inputAnalysisResultsAsString,
+                $projectRoot
             );
 
-            $summaryStats = new SummaryStats(
-                $inputAnalysisResults->getCount(),
-                $baseLine->getAnalysisResults()->getCount(),
-                $resultsParser->getIdentifier(),
-                $historyFactory->getIdentifier()
+            $outputAnalysisResults = $prunedResults->getPrunedResults();
+
+            ErrorReporter::writeToStdError(
+                $output,
+                "Latest analysis issue count: {$prunedResults->getInputAnalysisResultsCount()}"
             );
 
-            $outputAsString = $outputFormatter->outputResults($summaryStats, $outputAnalysisResults);
+            ErrorReporter::writeToStdError(
+                $output,
+                "Baseline issue count: {$prunedResults->getBaseLine()->getAnalysisResults()->getCount()}"
+            );
 
+            ErrorReporter::writeToStdError(
+                $output,
+                "Issues count with baseline removed: {$outputAnalysisResults->getCount()}"
+            );
+
+            $outputAsString = $outputFormatter->outputResults($outputAnalysisResults);
             $output->writeln($outputAsString);
 
             return $outputAnalysisResults->hasNoIssues() ? 0 : 1;

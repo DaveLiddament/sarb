@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Command;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\Parser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\RemoveBaseLineFromResultsCommand;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\HistoryFactoryRegistry;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\OutputFormatterRegistry;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsParsersRegistry;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitDiffHistoryFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\TableOutputFormatter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\HistoryFactoryStub;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub2;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub2Identifier;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\MockResultsPruner;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\OutputFormatterStub;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Throwable;
 
 class RemoveBaseLineCommandTest extends TestCase
 {
@@ -32,13 +37,8 @@ string
 EOF;
     public const BASELINE_FILENAME = 'baseline1.sarb';
     public const BASELINE_FILE_ARGUMENT = 'baseline-file';
-    public const INPUT_FORMAT_OPTION = '--output-format';
+    public const OUTPUT_FORMAT_OPTION = '--output-format';
     public const PROJECT_ROOT = '--project-root';
-
-    /**
-     * @var RemoveBaseLineFromResultsCommand
-     */
-    private $command;
 
     /**
      * @var ProjectRoot
@@ -49,33 +49,33 @@ EOF;
      * @var OutputFormatterRegistry
      */
     private $outputFormatterRegistry;
+    /**
+     * @var OutputFormatter
+     */
+    private $defaultOutputFormater;
+    /**
+     * @var OutputFormatter
+     */
+    private $stubOutputFormatter;
 
     protected function setUp(): void
     {
-        $this->defaultResultsParser = new Sa();
-        $this->resultsParser2 = new ResultsParserStub2();
+        $this->defaultOutputFormater = new TableOutputFormatter();
+        $this->stubOutputFormatter = new OutputFormatterStub();
 
-        $this->resultsParserRegistry = new ResultsParsersRegistry([
-            $this->defaultResultsParser,
-            $this->resultsParser2,
-        ]);
-
-        $this->defaultHistoryFactory = new GitDiffHistoryFactory(new StubGitWrapper('123', ''), new Parser());
-        $this->historyFactoryStub = new HistoryFactoryStub();
-
-        $this->historyFactoryRegistry = new HistoryFactoryRegistry([
-            $this->defaultHistoryFactory,
-            $this->historyFactoryStub,
+        $this->outputFormatterRegistry = new OutputFormatterRegistry([
+            $this->defaultOutputFormater,
+            $this->stubOutputFormatter,
         ]);
 
         $this->projectRoot = new ProjectRoot('/tmp', '/tmp/foo/bar');
     }
 
-    public function testHappyPath(): void
+    public function testNoNewIssues(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultHistoryFactory,
-            $this->defaultResultsParser,
+            $this->defaultOutputFormater,
+            $this->getAnalysisResultsWithXResults(0),
             self::BASELINE_FILENAME,
             null,
             null
@@ -86,89 +86,91 @@ EOF;
         ]);
 
         $this->assertReturnCode(0, $commandTester);
-        $this->assertResponseContains('Baseline created', $commandTester);
+        $this->assertResponseContains('Latest analysis issue count: 2', $commandTester);
+        $this->assertResponseContains('Baseline issue count: 4', $commandTester);
+        $this->assertResponseContains('Issues count with baseline removed: 0', $commandTester);
     }
 
-    public function testPickNonDefaultResultsParserWithGuessTypesSet(): void
+    public function test1NewIssues(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultHistoryFactory,
-            $this->resultsParser2,
+            $this->defaultOutputFormater,
+            $this->getAnalysisResultsWithXResults(1),
             self::BASELINE_FILENAME,
             null,
             null
         );
 
         $commandTester->execute([
-            self::INPUT_FORMAT_OPTION => ResultsParserStub2Identifier::CODE,
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+        ]);
+
+        $this->assertReturnCode(1, $commandTester);
+        $this->assertResponseContains('Issues count with baseline removed: 1', $commandTester);
+    }
+
+    public function testPickNonDefaultOutputFormatter(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->stubOutputFormatter,
+            $this->getAnalysisResultsWithXResults(0),
+            self::BASELINE_FILENAME,
+            null,
+            null
+        );
+
+        $commandTester->execute([
+            self::OUTPUT_FORMAT_OPTION => OutputFormatterStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
         ]);
 
         $this->assertReturnCode(0, $commandTester);
         $this->assertResponseContains(
-            '[stub_2] guesses the classification of violations. This means results might not be 100% accurate.',
+            '[stub output formatter: Issues since baseline 0]',
             $commandTester
         );
     }
 
-    public function testPickNonDefaultHistoryAnalyser(): void
+    public function testPickNonDefaultOutputFormatterWithIssues(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->historyFactoryStub,
-            $this->defaultResultsParser,
+            $this->stubOutputFormatter,
+            $this->getAnalysisResultsWithXResults(8),
             self::BASELINE_FILENAME,
             null,
             null
         );
 
         $commandTester->execute([
+            self::OUTPUT_FORMAT_OPTION => OutputFormatterStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-            self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
         ]);
 
-        $this->assertReturnCode(0, $commandTester);
+        $this->assertReturnCode(1, $commandTester);
+        $this->assertResponseContains(
+            '[stub output formatter: Issues since baseline 8]',
+            $commandTester
+        );
     }
 
     public function testInvalidResultsParser(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultHistoryFactory,
-            $this->defaultResultsParser,
+            $this->defaultOutputFormater,
+            $this->getAnalysisResultsWithXResults(0),
             self::BASELINE_FILENAME,
             null,
             null
         );
 
         $commandTester->execute([
-            self::INPUT_FORMAT_OPTION => 'rubbish',
+            self::OUTPUT_FORMAT_OPTION => 'rubbish',
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
         ]);
 
         $this->assertReturnCode(2, $commandTester);
         $this->assertResponseContains(
-            'Invalid value [rubbish] for option [input-format]. Pick one of: sarb-json|stub_2',
-            $commandTester
-        );
-    }
-
-    public function testInvalidHistoryAnalyser(): void
-    {
-        $commandTester = $this->createCommandTester(
-            $this->defaultHistoryFactory,
-            $this->defaultResultsParser,
-            self::BASELINE_FILENAME,
-            null,
-            null
-        );
-
-        $commandTester->execute([
-            self::HISTORY_ANALYSER => 'rubbish',
-            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
-
-        $this->assertReturnCode(2, $commandTester);
-        $this->assertResponseContains(
-            'Invalid value [rubbish] for option [history-analyser]. Pick one of: git|history-factory-stub',
+            'Invalid value [rubbish] for option [output-format]. Pick one of: table|stub',
             $commandTester
         );
     }
@@ -176,15 +178,14 @@ EOF;
     public function testSpecifyProjectRoot(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->historyFactoryStub,
-            $this->defaultResultsParser,
+            $this->defaultOutputFormater,
+            $this->getAnalysisResultsWithXResults(0),
             self::BASELINE_FILENAME,
             $this->projectRoot,
             null
         );
 
         $commandTester->execute([
-            self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
             self::PROJECT_ROOT => '/tmp',
         ]);
@@ -192,64 +193,65 @@ EOF;
         $this->assertReturnCode(0, $commandTester);
     }
 
-    public function testSimulateSarbException(): void
+    public function exceptionDataProvider(): array
     {
-        $commandTester = $this->createCommandTester(
-            $this->historyFactoryStub,
-            $this->defaultResultsParser,
-            self::BASELINE_FILENAME,
-            null,
-            new SarbException()
-        );
-
-        $commandTester->execute([
-            self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
-            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-            self::PROJECT_ROOT => '/tmp',
-        ]);
-
-        $this->assertReturnCode(4, $commandTester);
+        return [
+            [4, new SarbException()],
+            [5, new Exception()],
+        ];
     }
 
-    public function testSimulateThrowable(): void
+    /**
+     * @dataProvider exceptionDataProvider
+     */
+    public function testException(int $expectedCode, Throwable $exception): void
     {
         $commandTester = $this->createCommandTester(
-            $this->historyFactoryStub,
-            $this->defaultResultsParser,
+            $this->defaultOutputFormater,
+            $this->getAnalysisResultsWithXResults(1),
             self::BASELINE_FILENAME,
             null,
-            new \Exception()
-        );
-
-        $commandTester->execute([
-            self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
-            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-            self::PROJECT_ROOT => '/tmp',
-        ]);
-
-        $this->assertReturnCode(5, $commandTester);
-    }
-
-    private function createCommandTester(
-        HistoryFactory $expectedHistoryFactory,
-        ResultsParser $expectedResultsParser,
-        string $baselineFileName,
-        ?ProjectRoot $projectRoot,
-        ?\Throwable $exception
-    ): CommandTester {
-        $mockBaseLineCreator = new MockBaseLineCreator(
-            $expectedHistoryFactory,
-            $expectedResultsParser,
-            new FileName($baselineFileName),
-            $projectRoot,
-            self::INPUT_STRING_1.PHP_EOL, // CommandTest adds line end
             $exception
         );
 
-        $command = new CreateBaseLineCommand(
-            $this->resultsParserRegistry,
-            $this->historyFactoryRegistry,
-            $mockBaseLineCreator
+        $commandTester->execute([
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+        ]);
+
+        $this->assertReturnCode($expectedCode, $commandTester);
+    }
+
+    private function createCommandTester(
+        OutputFormatter $expectedOutputFormatter,
+        AnalysisResults $expectedAnalysisResults,
+        string $baselineFileName,
+        ?ProjectRoot $projectRoot,
+        ?Throwable $exception
+    ): CommandTester {
+        $baseLine = new BaseLine(
+            new HistoryFactoryStub(),
+            $this->getAnalysisResultsWithXResults(4),
+            new SarbJsonResultsParser(),
+            new GitCommit('fae40b3d596780ffd746dbd2300d05dcfbd09033')
+        );
+
+        $prunedResults = new PrunedResults(
+            $baseLine,
+            $expectedAnalysisResults,
+            2
+        );
+
+        $mockResultsPruner = new MockResultsPruner(
+            new FileName($baselineFileName),
+            self::INPUT_STRING_1.PHP_EOL,
+            $prunedResults,
+            $projectRoot,
+            $exception
+        );
+
+        $command = new RemoveBaseLineFromResultsCommand(
+            $mockResultsPruner,
+            $this->outputFormatterRegistry
         );
 
         $commandTester = new CommandTester($command);
@@ -268,5 +270,24 @@ EOF;
         $output = $commandTester->getDisplay();
         $position = strpos($output, $expectedMessage);
         $this->assertNotFalse($position, "Can't find message [$expectedMessage] in [$output]");
+    }
+
+    private function getAnalysisResultsWithXResults(int $count): AnalysisResults
+    {
+        $analysisResults = new AnalysisResults();
+        for ($i = 0; $i < $count; ++$i) {
+            $analysisResult = new AnalysisResult(
+                new Location(
+                    new FileName("FILE_$count"),
+                    new LineNumber($count)
+                ),
+                new Type("TYPE_$i"),
+                "MESSAGE_$i",
+                'FULL_MESSAGE'
+            );
+            $analysisResults->addAnalysisResult($analysisResult);
+        }
+
+        return $analysisResults;
     }
 }
