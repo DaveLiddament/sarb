@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "824de6facce5af7da8fca0631715d22e",
+    "content-hash": "787d079ea9a6bcba3aa75a88920455f8",
     "packages": [
         {
             "name": "psr/container",
@@ -1460,6 +1460,7 @@
             ],
             "description": "This tool check syntax of PHP files about 20x faster than serial check.",
             "homepage": "https://github.com/JakubOnderka/PHP-Parallel-Lint",
+            "abandoned": "php-parallel-lint/php-parallel-lint",
             "time": "2015-12-15T10:42:16+00:00"
         },
         {
@@ -1506,6 +1507,7 @@
                 }
             ],
             "description": "Find forgotten variables dump in PHP source code.",
+            "abandoned": "php-parallel-lint/php-var-dump-check",
             "time": "2018-09-29T19:22:45+00:00"
         },
         {
@@ -3185,6 +3187,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {

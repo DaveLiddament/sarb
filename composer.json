@@ -30,7 +30,7 @@
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-strict-rules": "^0.12",
     "phpstan/phpstan-webmozart-assert": "^0.12",
-    "phpunit/phpunit": "^7.0",
+    "phpunit/phpunit": "^7.5",
     "sensiolabs-de/deptrac-shim": "^0.5.0",
     "sensiolabs/security-checker": "^5.0",
     "symfony/filesystem": "^3.4 || ^4.0 || ^5.0",
