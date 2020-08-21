@@ -24,16 +24,15 @@ class EndToEndTest extends TestCase
 {
     use ResourceLoaderTrait;
 
-    const COMMIT_1_DIRECTORY = 'integration/commit1';
-    const COMMIT_1_PSALM_RESULTS = 'commit1.json';
+    private const COMMIT_1_DIRECTORY = 'integration/commit1';
+    private const COMMIT_1_RESULTS = 'commit1.json';
 
-    const COMMIT_2_DIRECTORY = 'integration/commit2';
-    const COMMIT_2_PSALM_RESULTS = 'commit2.json';
-    const COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS = 'expected-commit2-baseline-removed.json';
+    private const COMMIT_2_DIRECTORY = 'integration/commit2';
+    private const COMMIT_2_RESULTS = 'commit2.json';
+    private const COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS = 'baseline-removed.json';
 
-    const COMMIT_3_DIRECTORY = 'integration/commit3';
-    const COMMIT_3_PSALM_RESULTS = 'commit3.json';
-    const COMMIT_3_BASELINE_REMOVED_EXPECTED_RESULTS = 'expected-commit3-baseline-removed.json';
+    private const COMMIT_3_DIRECTORY = 'integration/commit3';
+    private const COMMIT_3_RESULTS = 'commit3.json';
 
     /**
      * @var Filesystem
@@ -55,7 +54,7 @@ class EndToEndTest extends TestCase
      */
     private $application;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->fileSystem = new Filesystem();
         $this->gitWrapper = new GitCliWrapper();
@@ -67,12 +66,15 @@ class EndToEndTest extends TestCase
     {
         $this->createTestDirectory();
         $arguments = [
-            'static-analysis-tool' => 'rubbish',
+            '--input-format' => 'rubbish',
             'baseline-file' => $this->getBaselineFilePath(),
-            'static-analysis-output-file' => $this->getProjectRootFilename(self::COMMIT_1_PSALM_RESULTS),
         ];
 
-        $this->runCommand(CreateBaseLineCommand::COMMAND_NAME, $arguments, 2);
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME, $arguments,
+            2,
+            self::COMMIT_1_RESULTS
+        );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
         $this->removeTestDirectory();
@@ -82,18 +84,20 @@ class EndToEndTest extends TestCase
     {
         $this->createTestDirectory();
         $arguments = [
-            'baseline-file' => $this->getProjectRootFilename(self::COMMIT_2_PSALM_RESULTS),
-            'static-analysis-output-file' => $this->getProjectRootFilename(self::COMMIT_1_PSALM_RESULTS),
-            'output-results-file' => $this->getProjectRootFilename('dummy.json'),
+            'baseline-file' => $this->getProjectRootFilename(self::COMMIT_2_RESULTS),
         ];
 
-        $this->runCommand(RemoveBaseLineFromResultsCommand::COMMAND_NAME, $arguments, 3);
+        $this->runCommand(
+            RemoveBaseLineFromResultsCommand::COMMAND_NAME,
+            $arguments,
+            3,
+            self::COMMIT_1_RESULTS);
 
         // Only delete test directory if tests passed. Keep to investigate test failures
         $this->removeTestDirectory();
     }
 
-    public function testHappyPath()
+    public function testHappyPath(): void
     {
         $this->createTestDirectory();
         $this->gitWrapper->init($this->projectRoot);
@@ -104,27 +108,17 @@ class EndToEndTest extends TestCase
         // Now create commit 2. THis introduces some new errors
         $this->commit(self::COMMIT_2_DIRECTORY);
         $this->runStripBaseLineFromResultsCommand(
-            self::COMMIT_2_PSALM_RESULTS,
-            0,
-            self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS,
-            false
-        );
-
-        // Check exit code is correct when we set fail-on-analysis-results
-        $this->runStripBaseLineFromResultsCommand(
-            self::COMMIT_2_PSALM_RESULTS,
+            self::COMMIT_2_RESULTS,
             1,
-            self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS,
-            true
+            $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS)
         );
 
         // Now create commit 3. This has errors that were only in the baseline.
         $this->commit(self::COMMIT_3_DIRECTORY);
         $this->runStripBaseLineFromResultsCommand(
-            self::COMMIT_3_PSALM_RESULTS,
+            self::COMMIT_3_RESULTS,
             0,
-            self::COMMIT_3_BASELINE_REMOVED_EXPECTED_RESULTS,
-            true
+        ''
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -136,7 +130,7 @@ class EndToEndTest extends TestCase
      */
     public function testListSupportedStaticAnalysisTools(): void
     {
-        $this->runCommand(ListResultsParsesCommand::COMMAND_NAME, [], 0);
+        $this->runCommand(ListResultsParsesCommand::COMMAND_NAME, [], 0, null);
     }
 
     /**
@@ -144,7 +138,7 @@ class EndToEndTest extends TestCase
      */
     public function testListSupportedHistoryAnalysers(): void
     {
-        $this->runCommand(ListHistoryAnalysersCommand::COMMAND_NAME, [], 0);
+        $this->runCommand(ListHistoryAnalysersCommand::COMMAND_NAME, [], 0, null);
     }
 
     private function createTestDirectory(): void
@@ -166,48 +160,61 @@ class EndToEndTest extends TestCase
     private function runCreateBaseLineCommand(): void
     {
         $arguments = [
-            '--static-analysis-tool' => 'psalm-json',
             'baseline-file' => $this->getBaselineFilePath(),
-            'static-analysis-output-file' => $this->getProjectRootFilename(self::COMMIT_1_PSALM_RESULTS),
             '--project-root' => (string) $this->projectRoot,
         ];
 
-        $this->runCommand(CreateBaseLineCommand::COMMAND_NAME, $arguments, 0);
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
+            0,
+            self::COMMIT_1_RESULTS
+        );
     }
 
     private function runStripBaseLineFromResultsCommand(
         string $psalmResults,
         int $expectedExitCode,
-        string $expectedResultsJson,
-        bool $failureOnResultsAfterBaseline
+        string $expectedResultsJson
     ): void {
-        $outputResults = $this->getProjectRootFilename('output-after-baseline-removed.json');
-
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
-            'static-analysis-output-file' => $this->getProjectRootFilename($psalmResults),
-            'output-results-file' => $outputResults,
+            '--output-format' => 'json',
             '--project-root' => (string) $this->projectRoot,
         ];
 
-        if ($failureOnResultsAfterBaseline) {
-            $arguments['--failure-on-analysis-result'] = true;
-        }
+        $output = $this->runCommand(
+            RemoveBaseLineFromResultsCommand::COMMAND_NAME,
+            $arguments,
+            $expectedExitCode,
+            $psalmResults
+        );
 
-        $this->runCommand(RemoveBaseLineFromResultsCommand::COMMAND_NAME, $arguments, $expectedExitCode);
+        $output = str_replace('\n', '', $output);
 
-        // Now check both JSON are equal
-        // TODO https://trello.com/c/zJRpi9rz
+        $this->assertStringContainsString($expectedResultsJson, $output);
     }
 
-    private function runCommand(string $commandName, array $arguments, int $expectedExitCode): void
-    {
+    private function runCommand(
+        string $commandName,
+        array $arguments,
+        int $expectedExitCode,
+        ?string $resourceContainStdinContents
+    ): string {
         $command = $this->application->find($commandName);
         $commandTester = new CommandTester($command);
         $arguments['command'] = $command->getName();
 
+        if ($resourceContainStdinContents) {
+            $stdin = $this->getStaticAnalysisResultsAsString($resourceContainStdinContents);
+            $commandTester->setInputs([$stdin]);
+        }
+
         $actualExitCode = $commandTester->execute($arguments);
-        $this->assertEquals($expectedExitCode, $actualExitCode, $commandTester->getDisplay());
+        $output = $commandTester->getDisplay();
+        $this->assertEquals($expectedExitCode, $actualExitCode, $output);
+
+        return $output;
     }
 
     private function getBaselineFilePath(): string
@@ -220,9 +227,19 @@ class EndToEndTest extends TestCase
         $this->fileSystem->remove((string) $this->projectRoot);
     }
 
-    private function getProjectRootFilename(string $filename): string
+    private function getStaticAnalysisResultsAsString(string $resourceName): string
     {
-        return Path::makeAbsolute($filename, (string) $this->projectRoot);
+        $fileName = __DIR__.'/../resources/integration/staticAnalysisOutput/'.$resourceName;
+        $rawResults = file_get_contents($fileName);
+        $projectRootDirectory = (string) $this->projectRoot;
+        $resultsWithPathsCorrected = str_replace('__SCRATCH_PAD_PATH__', $projectRootDirectory, $rawResults);
+
+        return $resultsWithPathsCorrected;
+    }
+
+    private function getProjectRootFilename(string $resourceName): string
+    {
+        return Path::makeAbsolute($resourceName, (string) $this->projectRoot);
     }
 
     private function updatePathsInJsonFiles(string $directory): void
