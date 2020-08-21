@@ -52,4 +52,11 @@ class ProjectRootTest extends TestCase
         $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
         $projectRoot->getPathRelativeToRootDirectory('bar/baz.php');
     }
+
+    public function testGetFullPath(): void
+    {
+        $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
+        $fullPath = $projectRoot->getFullPath('fruit/apple.php');
+        $this->assertSame('/foo/bar/fruit/apple.php', $fullPath);
+    }
 }

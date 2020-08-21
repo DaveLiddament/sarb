@@ -49,4 +49,9 @@ class ProjectRoot
     {
         return $this->rootDirectory;
     }
+
+    public function getFullPath(string $relativePath): string
+    {
+        return Path::join([$this->rootDirectory, $relativePath]);
+    }
 }

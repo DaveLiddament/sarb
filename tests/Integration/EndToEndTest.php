@@ -190,7 +190,8 @@ class EndToEndTest extends TestCase
             $psalmResults
         );
 
-        $output = str_replace('\n', '', $output);
+        $output = str_replace('\/', '/', $output);
+        //$output = str_replace(PHP, '', $output);
 
         $this->assertStringContainsString($expectedResultsJson, $output);
     }

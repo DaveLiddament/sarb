@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
@@ -24,7 +25,9 @@ class BaseLineResultsRemoveTest extends TestCase
 {
     use AnalysisResultsAdderTrait;
 
+    private const PROJECT_ROOT_PATH = '/home/sarb';
     private const FILE_1 = 'foo/file1.txt';
+    private const FILE_1_FULL_PATH = self::PROJECT_ROOT_PATH.'/'.self::FILE_1;
     private const FILE_2 = 'foo/file2.txt';
     private const LINE_9 = 9;
     private const LINE_10 = 10;
@@ -59,7 +62,8 @@ class BaseLineResultsRemoveTest extends TestCase
         // Prune baseline results from latest results
         $historyAnalyser = new DiffHistoryAnalyser($fileMutations);
         $baseLineResultsRemover = new BaseLineResultsRemover();
-        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine($latestAnalysisResults, $historyAnalyser, $baselineAnalysisResults);
+        $projectRoot = new ProjectRoot('/home/sarb', '/home/sarb');
+        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine($latestAnalysisResults, $historyAnalyser, $baselineAnalysisResults, $projectRoot);
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();
 
@@ -71,7 +75,7 @@ class BaseLineResultsRemoveTest extends TestCase
         $this->assertCount(1, $actualResults);
 
         $actualAnalysisResult = $actualResults[0];
-        $expectedLocation = new Location(new FileName(self::FILE_1), new LineNumber(self::LINE_9));
+        $expectedLocation = new Location(new FileName(self::FILE_1_FULL_PATH), new LineNumber(self::LINE_9));
         $expectedType = new Type(self::TYPE_2);
 
         $this->assertTrue($expectedLocation->isEqual($actualAnalysisResult->getLocation()));

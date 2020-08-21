@@ -14,7 +14,9 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
@@ -27,14 +29,26 @@ class BaseLineResultsRemover
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
         HistoryAnalyser $historyAnalyser,
-        AnalysisResults $baseLineAnalysisResults
+        AnalysisResults $baseLineAnalysisResults,
+        ProjectRoot $projectRoot
     ): AnalysisResults {
         $prunedAnalysisResults = new AnalysisResults();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);
 
         foreach ($latestAnalysisResults->getAnalysisResults() as $analysisResult) {
             if (!$this->isInHistoricResults($analysisResult, $baseLineResultsComparator, $historyAnalyser)) {
-                $prunedAnalysisResults->addAnalysisResult($analysisResult);
+                $location = new Location(
+                    new FileName($projectRoot->getFullPath($analysisResult->getLocation()->getFileName()->getFileName())),
+                    $analysisResult->getLocation()->getLineNumber()
+                );
+
+                $issueSinceBaseLine = new AnalysisResult(
+                  $location,
+                  $analysisResult->getType(),
+                  $analysisResult->getMessage(),
+                  $analysisResult->getFullDetails()
+                );
+                $prunedAnalysisResults->addAnalysisResult($issueSinceBaseLine);
             }
         }
 
