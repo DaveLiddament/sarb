@@ -8,10 +8,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\ResultsPrunerInterface;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\StringAssertionsTrait;
 use PHPUnit\Framework\Assert;
 
 class MockResultsPruner implements ResultsPrunerInterface
 {
+    use StringAssertionsTrait;
+
     /**
      * @var FileName
      */
@@ -49,14 +52,13 @@ class MockResultsPruner implements ResultsPrunerInterface
 
     public function getPrunedResults(
         FileName $baseLineFileName,
-        string $analaysisResults,
+        string $analysisResults,
         ProjectRoot $projectRoot
     ): PrunedResults {
         if ($this->throwable) {
             throw $this->throwable;
         }
-
-        Assert::assertSame($this->expectedAnalysisResults, $analaysisResults);
+        $this->assertSameAllowingExtraNewLine($this->expectedAnalysisResults, $analysisResults);
 
         if ($this->projectRoot) {
             Assert::assertSame($this->projectRoot->__toString(), $projectRoot->__toString());

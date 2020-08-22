@@ -256,7 +256,7 @@ EOF;
             $expectedResultsParser,
             new FileName($baselineFileName),
             $projectRoot,
-            self::INPUT_STRING_1.PHP_EOL, // CommandTest adds line end
+            self::INPUT_STRING_1, // CommandTest adds line end
             $exception
         );
 

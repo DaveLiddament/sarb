@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
-use _HumbugBoxa35debbd0202\Symfony\Component\Console\Exception\LogicException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
+use LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 
@@ -53,7 +53,7 @@ class CliConfigReader
         $value = self::getOption($input, $optionName);
         if (null === $value) {
             // Should never happen. Configured option should always have a default value.
-            throw new LogicException("Incorreclty configured option. No default value set for option {$optionName}"); // @codeCoverageIgnore
+            throw new LogicException("Incorrectly configured option. No default value set for option {$optionName}"); // @codeCoverageIgnore
         }
 
         return $value;

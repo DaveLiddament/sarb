@@ -243,7 +243,7 @@ EOF;
 
         $mockResultsPruner = new MockResultsPruner(
             new FileName($baselineFileName),
-            self::INPUT_STRING_1.PHP_EOL,
+            self::INPUT_STRING_1,
             $prunedResults,
             $projectRoot,
             $exception

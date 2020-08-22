@@ -12,11 +12,14 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryF
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\StringAssertionsTrait;
 use PHPUnit\Framework\Assert;
 use Throwable;
 
 class MockBaseLineCreator implements BaseLineCreatorInterface
 {
+    use StringAssertionsTrait;
+
     /**
      * @var HistoryFactory
      */
@@ -71,7 +74,8 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
         if ($this->expectedProjectRoot) {
             Assert::assertEquals($this->expectedProjectRoot->__toString(), $projectRoot->__toString());
         }
-        Assert::assertSame($this->expectedAnaylsisResultsAsString, $analysisResultsAsString);
+
+        $this->assertSameAllowingExtraNewLine($this->expectedAnaylsisResultsAsString, $analysisResultsAsString);
 
         if ($this->throwable) {
             throw $this->throwable;

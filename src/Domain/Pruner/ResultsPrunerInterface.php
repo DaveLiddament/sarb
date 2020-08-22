@@ -14,7 +14,7 @@ interface ResultsPrunerInterface
      */
     public function getPrunedResults(
         FileName $baseLineFileName,
-        string $analaysisResults,
+        string $analysisResults,
         ProjectRoot $projectRoot
     ): PrunedResults;
 }
