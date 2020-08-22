@@ -11,9 +11,6 @@ use Symfony\Component\Console\Input\StreamableInputInterface;
 
 class CliConfigReader
 {
-    /**
-     * @throws InvalidConfigException
-     */
     public static function getArgument(InputInterface $input, string $argumentName): string
     {
         $value = $input->getArgument($argumentName);
@@ -26,9 +23,6 @@ class CliConfigReader
         throw new LogicException("Incorrectly configured option [$argumentName]"); // @codeCoverageIgnore
     }
 
-    /**
-     * @throws InvalidConfigException
-     */
     public static function getOption(InputInterface $input, string $optionName): ?string
     {
         $value = $input->getOption($optionName);
@@ -45,9 +39,6 @@ class CliConfigReader
         throw new LogicException("Incorrectly configured option [$optionName]"); // @codeCoverageIgnore
     }
 
-    /**
-     * @throws InvalidConfigException
-     */
     public static function getOptionWithDefaultValue(InputInterface $input, string $optionName): string
     {
         $value = self::getOption($input, $optionName);
