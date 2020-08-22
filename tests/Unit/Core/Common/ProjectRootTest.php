@@ -49,6 +49,8 @@ class ProjectRootTest extends TestCase
     public function testPathNotInProjectRoot(): void
     {
         $this->expectException(InvalidPathException::class);
+        $expectedMessage = 'Path [bar/baz.php] not in the project root [/foo/bar]. Is project root configured correctly?';
+        $this->expectExceptionMessage($expectedMessage);
         $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
         $projectRoot->getPathRelativeToRootDirectory('bar/baz.php');
     }

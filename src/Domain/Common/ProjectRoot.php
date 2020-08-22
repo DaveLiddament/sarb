@@ -39,7 +39,7 @@ class ProjectRoot
     public function getPathRelativeToRootDirectory(string $fullPath): string
     {
         if (!Path::isBasePath($this->rootDirectory, $fullPath)) {
-            throw new InvalidPathException($fullPath, $this->rootDirectory);
+            throw InvalidPathException::newInstance($fullPath, $this->rootDirectory);
         }
 
         return Path::makeRelative($fullPath, $this->rootDirectory);
