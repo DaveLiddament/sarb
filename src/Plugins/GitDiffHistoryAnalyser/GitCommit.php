@@ -23,19 +23,16 @@ class GitCommit implements HistoryMarker
     private $gitSha;
 
     /**
-     * GitCommit constructor.
+     * @throws InvalidHistoryMarkerException
      */
     public function __construct(string $gitSha)
     {
         if (!self::validateGitSha($gitSha)) {
-            throw new InvalidHistoryMarkerException("Invalid git SHA [$gitSha]");
+            throw InvalidHistoryMarkerException::invalidHistoryMarker("Invalid git SHA [$gitSha]");
         }
         $this->gitSha = $gitSha;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function asString(): string
     {
         return $this->gitSha;

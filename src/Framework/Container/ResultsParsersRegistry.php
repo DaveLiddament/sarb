@@ -49,7 +49,7 @@ class ResultsParsersRegistry implements ResultsParserLookupService
             return $this->resultsParsers[$identifier];
         }
 
-        throw new InvalidResultsParserException();
+        throw InvalidResultsParserException::invalidIdentifier($identifier);
     }
 
     public function getAll(): array

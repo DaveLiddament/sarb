@@ -46,7 +46,7 @@ class HistoryFactoryRegistry implements HistoryFactoryLookupService
     public function getHistoryFactory(string $identifier): HistoryFactory
     {
         if (!array_key_exists($identifier, $this->historyFactories)) {
-            throw new InvalidHistoryFactoryException($identifier);
+            throw InvalidHistoryFactoryException::invalidIdentifier($identifier);
         }
 
         return $this->historyFactories[$identifier];

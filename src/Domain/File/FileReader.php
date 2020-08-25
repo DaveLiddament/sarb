@@ -47,6 +47,10 @@ class FileReader
     {
         $fileContents = $this->readFile($fileName);
 
-        return JsonUtils::toArray($fileContents);
+        try {
+            return JsonUtils::toArray($fileContents);
+        } catch (JsonParseException $e) {
+            throw JsonParseException::invalidJsonFile($fileName);
+        }
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImportException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileImportException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
@@ -20,7 +20,7 @@ class ErrorReporter
             self::writeToStdError($output, "<error>{$e->getMessage()}</error>");
 
             return 2;
-        } catch (FileImportException $e) {
+        } catch (BaseLineImportException $e) {
             self::writeToStdError($output, "<error>{$e->getMessage()}</error>");
 
             return 3;

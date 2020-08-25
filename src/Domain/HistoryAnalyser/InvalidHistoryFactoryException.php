@@ -19,8 +19,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
  */
 class InvalidHistoryFactoryException extends SarbException
 {
-    public function __construct(string $name)
+    public static function invalidIdentifier(string $name): self
     {
-        parent::__construct("Invalid HistoryAnalyser [$name]");
+        return new self("Invalid identifier [$name]");
     }
 }

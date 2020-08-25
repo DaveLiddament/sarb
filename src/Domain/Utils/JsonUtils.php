@@ -25,7 +25,7 @@ class JsonUtils
         /** @psalm-suppress MixedAssignment */
         $asArray = json_decode($jsonAsString, true);
         if (!is_array($asArray)) {
-            throw new JsonParseException();
+            throw JsonParseException::invalidJsonString($jsonAsString);
         }
 
         return $asArray;
@@ -41,7 +41,7 @@ class JsonUtils
     {
         $asString = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         if (false === $asString) {
-            throw new JsonParseException();
+            throw JsonParseException::invalidDataToConvertToJsonString();
         }
 
         return $asString;

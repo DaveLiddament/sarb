@@ -19,4 +19,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
  */
 class InvalidResultsParserException extends SarbException
 {
+    public static function invalidIdentifier(string $identifier): self
+    {
+        return new self("Invalid ResultsParser [$identifier]");
+    }
 }
