@@ -92,7 +92,7 @@ class PsalmJsonResultsParser implements ResultsParser
                     $analysisResults->addAnalysisResult($analysisResult);
                 }
             } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
-                throw new ParseAtLocationException("Result [$resultsCount]", $e);
+                throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
         }
 

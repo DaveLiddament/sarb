@@ -87,7 +87,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
         try {
             $filesErrors = ArrayUtils::getArrayValue($analysisResultsAsArray, self::FILES);
         } catch (ArrayParseException $e) {
-            throw new ParseAtLocationException('Root node', $e);
+            throw ParseAtLocationException::issueParsing($e, 'Root node');
         }
 
         /** @psalm-suppress MixedAssignment */
@@ -110,7 +110,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
                     $analysisResults->addAnalysisResult($analysisResult);
                 }
             } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
-                throw new ParseAtLocationException("Result [$absoluteFilePath]", $e);
+                throw ParseAtLocationException::issueParsing($e, "Result [$absoluteFilePath]");
             }
         }
 

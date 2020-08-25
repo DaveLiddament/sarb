@@ -19,9 +19,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
  */
 class ParseAtLocationException extends SarbException
 {
-    public function __construct(string $location, SarbException $locationException)
+    public static function issueAtPosition(SarbException $e, int $position): self
     {
-        $message = "$location [{$locationException->getMessage()}]";
-        parent::__construct($message);
+        return new self("Issue with result [$position]. {$e->getMessage()}", 0, $e);
+    }
+
+    public static function issueParsing(SarbException $e, string $location): self
+    {
+        return new self("Issue parsing [$location], {$e->getMessage()}", 0, $e);
     }
 }
