@@ -37,7 +37,7 @@ class GitDiffHistoryFactoryTest extends TestCase
      */
     private $projectRoot;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->gitWrapper = new StubGitWrapper(StubGitWrapper::GIT_SHA_1, '');
         $parser = new Parser();

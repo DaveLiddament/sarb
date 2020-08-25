@@ -16,7 +16,7 @@ class FindFileDiffStartStateTest extends TestCase
      */
     private $findFileDiffStartState;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $fileMutationsBuilder = new FileMutationsBuilder();
         $this->findFileDiffStartState = new FindFileDiffStartState($fileMutationsBuilder);

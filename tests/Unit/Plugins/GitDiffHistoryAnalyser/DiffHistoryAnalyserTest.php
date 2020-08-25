@@ -27,7 +27,7 @@ class DiffHistoryAnalyserTest extends TestCase
      */
     private $fileMutationsBuilder;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->fileMutationsBuilder = new FileMutationsBuilder();
     }
