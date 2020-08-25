@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhanJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser\PhanJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PhanJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
+    use AssertResultMatch;
     use ResourceLoaderTrait;
 
     /**
@@ -47,25 +45,21 @@ class PhanJsonResultsParserTest extends TestCase
         $result1 = $analysisResults->getAnalysisResults()[0];
         $result2 = $analysisResults->getAnalysisResults()[1];
 
-        $this->assertTrue($result1->isMatch(
-            new Location(
-                new FileName('src/Domain/Analyser/BaseLineResultsRemover.php'),
-                new LineNumber(16)
-            ),
-            new Type('PhanUnreferencedUseNormal')
-        ));
+        $this->assertMatch($result1,
+            'src/Domain/Analyser/BaseLineResultsRemover.php',
+            16,
+            'PhanUnreferencedUseNormal'
+        );
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
             $result1->getMessage()
         );
 
-        $this->assertTrue($result2->isMatch(
-            new Location(
-                new FileName('src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php'),
-                new LineNumber(107)
-            ),
-            new Type('PhanPossiblyNullTypeArgument')
-        ));
+        $this->assertMatch($result2,
+            'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
+            107,
+            'PhanPossiblyNullTypeArgument'
+        );
     }
 
     public function testTypeGuesser(): void

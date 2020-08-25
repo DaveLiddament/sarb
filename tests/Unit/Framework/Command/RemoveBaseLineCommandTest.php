@@ -20,6 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\OutputForma
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\TableOutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\HistoryFactoryStub;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\MockResultsPruner;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\OutputFormatterStub;
@@ -228,9 +229,15 @@ EOF;
         ?ProjectRoot $projectRoot,
         ?Throwable $exception
     ): CommandTester {
+        $baseLineResultsBuilder = new BaseLineResultsBuilder();
+        $baseLineResultsBuilder->add('file1', 1, 'type1');
+        $baseLineResultsBuilder->add('file2', 2, 'type2');
+        $baseLineResultsBuilder->add('file3', 3, 'type3');
+        $baseLineResultsBuilder->add('file4', 4, 'type4');
+
         $baseLine = new BaseLine(
             new HistoryFactoryStub(),
-            $this->getAnalysisResultsWithXResults(4),
+            $baseLineResultsBuilder->build(),
             new SarbJsonResultsParser(),
             new GitCommit('fae40b3d596780ffd746dbd2300d05dcfbd09033')
         );

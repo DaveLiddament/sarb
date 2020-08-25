@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
@@ -85,14 +86,6 @@ class AnalysisResult
     }
 
     /**
-     * Return true if AnalysisResult matches given FileName, LineNumber and type.
-     */
-    public function isMatch(Location $location, Type $type): bool
-    {
-        return $this->location->isEqual($location) && $this->type->isEqual($type);
-    }
-
-    /**
      * @return array<string,mixed>
      */
     public function asArray(): array
@@ -123,5 +116,15 @@ class AnalysisResult
         $fullDetails = ArrayUtils::getStringValue($array, self::FULL_DETAILS);
 
         return new self($location, $type, $message, $fullDetails);
+    }
+
+    public function asBaseLineAnaylsisResult(): BaseLineAnalysisResult
+    {
+        return BaseLineAnalysisResult::make(
+            $this->location->getFileName(),
+            $this->location->getLineNumber(),
+            $this->type,
+            $this->message
+        );
     }
 }

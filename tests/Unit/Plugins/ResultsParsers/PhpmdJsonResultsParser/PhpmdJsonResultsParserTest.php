@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpmdJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PhpmdJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
+    use AssertResultMatch;
     use ResourceLoaderTrait;
 
     /**
@@ -50,33 +48,27 @@ class PhpmdJsonResultsParserTest extends TestCase
         $result2 = $this->analysisResults->getAnalysisResults()[1];
         $result3 = $this->analysisResults->getAnalysisResults()[2];
 
-        $this->assertTrue($result1->isMatch(
-            new Location(
-                new FileName('src/Domain/Analyser/BaseLineResultsRemover.php'),
-                new LineNumber(28)
-            ),
-            new Type('LongVariable')
-        ));
+        $this->assertMatch($result1,
+            'src/Domain/Analyser/BaseLineResultsRemover.php',
+            28,
+            'LongVariable'
+        );
         $this->assertSame(
             'Avoid excessively long variable names like $latestAnalysisResults. Keep variable name length under 20.',
             $result1->getMessage()
         );
 
-        $this->assertTrue($result2->isMatch(
-            new Location(
-                new FileName('src/Domain/Analyser/BaseLineResultsRemover.php'),
-                new LineNumber(30)
-            ),
-            new Type('LongVariable')
-        ));
+        $this->assertMatch($result2,
+            'src/Domain/Analyser/BaseLineResultsRemover.php',
+            30,
+            'LongVariable'
+        );
 
-        $this->assertTrue($result3->isMatch(
-            new Location(
-                new FileName('src/Domain/Analyser/internal/BaseLineResultsComparator.php'),
-                new LineNumber(36)
-            ),
-            new Type('LongVariable')
-        ));
+        $this->assertMatch($result3,
+            'src/Domain/Analyser/internal/BaseLineResultsComparator.php',
+            36,
+            'LongVariable'
+        );
     }
 
     public function testTypeGuesser(): void

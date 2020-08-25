@@ -19,12 +19,12 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactoryLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryFactoryException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\InvalidResultsParserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParserLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
 /**
  * Imports a baseline from the file.
@@ -78,7 +78,7 @@ class BaseLineImporter
             $historyFactory = $this->historyFactoryLookupService->getHistoryFactory($historyAnalyserName);
 
             $historyMarker = $historyFactory->newHistoryMarkerFactory()->newHistoryMarker($historyMarkerAsString);
-            $analysisResults = AnalysisResults::fromArray($analysisResultsAsArray);
+            $analysisResults = BaseLineAnalysisResults::fromArray($analysisResultsAsArray);
 
             return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
         } catch (
@@ -87,7 +87,8 @@ class BaseLineImporter
             InvalidResultsParserException |
             InvalidHistoryFactoryException |
             InvalidHistoryMarkerException |
-            JsonParseException $e) {
+            JsonParseException |
+            ParseAtLocationException $e) {
             throw BaseLineImportException::fromException($fileName, $e);
         }
     }

@@ -9,8 +9,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
 class BaseLineResultsComparatorTest extends TestCase
@@ -30,12 +30,12 @@ class BaseLineResultsComparatorTest extends TestCase
      */
     private $baseLineResultsComparator;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
-        $analysisResults = new AnalysisResults();
-        $this->addAnalysisResult($analysisResults, self::FILE_1, self::LINE_1, self::TYPE_1);
-        $this->addAnalysisResult($analysisResults, self::FILE_2, self::LINE_2, self::TYPE_2);
-        $this->baseLineResultsComparator = new BaseLineResultsComparator($analysisResults);
+        $baseLineResultsBuilder = new BaseLineResultsBuilder();
+        $baseLineResultsBuilder->add(self::FILE_1, self::LINE_1, self::TYPE_1);
+        $baseLineResultsBuilder->add(self::FILE_2, self::LINE_2, self::TYPE_2);
+        $this->baseLineResultsComparator = new BaseLineResultsComparator($baseLineResultsBuilder->build());
     }
 
     public function dataProvider(): array

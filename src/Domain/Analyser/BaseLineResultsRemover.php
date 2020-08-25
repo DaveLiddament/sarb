@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
@@ -29,7 +30,7 @@ class BaseLineResultsRemover
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
         HistoryAnalyser $historyAnalyser,
-        AnalysisResults $baseLineAnalysisResults,
+        BaseLineAnalysisResults $baseLineAnalysisResults,
         ProjectRoot $projectRoot
     ): AnalysisResults {
         $prunedAnalysisResults = new AnalysisResults();

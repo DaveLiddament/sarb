@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\SarbJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
@@ -14,12 +11,14 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class SarbJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
+    use AssertResultMatch;
     use ResourceLoaderTrait;
 
     /**
@@ -53,33 +52,27 @@ class SarbJsonResultsParserTest extends TestCase
         $result2 = $this->analysisResults->getAnalysisResults()[1];
         $result3 = $this->analysisResults->getAnalysisResults()[2];
 
-        $this->assertTrue($result1->isMatch(
-            new Location(
-                new FileName('src/Domain/ResultsParser/AnalysisResults.php'),
-                new LineNumber(67)
-            ),
-            new Type('MismatchingDocblockParamType')
-        ));
+        $this->assertMatch($result1,
+            'src/Domain/ResultsParser/AnalysisResults.php',
+            67,
+            'MismatchingDocblockParamType'
+        );
         $this->assertSame(
             "Parameter \$array has wrong type 'array<mixed, mixed>', should be 'int'",
             $result1->getMessage()
         );
 
-        $this->assertTrue($result2->isMatch(
-            new Location(
-                new FileName('src/Domain/Utils/JsonUtils.php'),
-                new LineNumber(29)
-            ),
-            new Type('MixedAssignment')
-        ));
+        $this->assertMatch($result2,
+            'src/Domain/Utils/JsonUtils.php',
+            29,
+            'MixedAssignment'
+        );
 
-        $this->assertTrue($result3->isMatch(
-            new Location(
-                new FileName('src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php'),
-                new LineNumber(90)
-            ),
-            new Type('MixedAssignment')
-        ));
+        $this->assertMatch($result3,
+            'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
+            90,
+            'MixedAssignment'
+        );
     }
 
     public function testTypeGuesser(): void

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
@@ -14,12 +11,14 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser\PhpCodeSnifferJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PhpCodeSnifferJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
+    use AssertResultMatch;
     use ResourceLoaderTrait;
 
     /**
@@ -46,7 +45,8 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
 
     public function testConversionFromString(): void
     {
-        $analysisResults = $this->phpCodeSnifferJsonResultsParser->convertFromString($this->fileContents, $this->projectRoot);
+        $analysisResults = $this->phpCodeSnifferJsonResultsParser->convertFromString($this->fileContents,
+            $this->projectRoot);
 
         $this->assertCount(6, $analysisResults->getAnalysisResults());
 
@@ -57,57 +57,45 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         $result5 = $analysisResults->getAnalysisResults()[4];
         $result6 = $analysisResults->getAnalysisResults()[5];
 
-        $this->assertTrue($result1->isMatch(
-            new Location(
-                new FileName('src/Domain/Common/InvalidPathException.php'),
-                new LineNumber(2)
-            ),
-            new Type('Squiz.Commenting.FileComment.Missing')
-        ));
+        $this->assertMatch($result1,
+            'src/Domain/Common/InvalidPathException.php',
+            2,
+            'Squiz.Commenting.FileComment.Missing'
+        );
         $this->assertSame(
             'Missing file doc comment',
             $result1->getMessage()
         );
 
-        $this->assertTrue($result2->isMatch(
-            new Location(
-                new FileName('src/Domain/Common/InvalidPathException.php'),
-                new LineNumber(7)
-            ),
-            new Type('Squiz.Commenting.ClassComment.Missing')
-        ));
+        $this->assertMatch($result2,
+            'src/Domain/Common/InvalidPathException.php',
+            7,
+            'Squiz.Commenting.ClassComment.Missing'
+        );
 
-        $this->assertTrue($result3->isMatch(
-            new Location(
-                new FileName('src/Domain/Common/InvalidPathException.php'),
-                new LineNumber(9)
-            ),
-            new Type('Squiz.Commenting.FunctionComment.Missing')
-        ));
+        $this->assertMatch($result3,
+            'src/Domain/Common/InvalidPathException.php',
+            9,
+            'Squiz.Commenting.FunctionComment.Missing'
+        );
 
-        $this->assertTrue($result4->isMatch(
-            new Location(
-                new FileName('src/Domain/Common/InvalidPathException.php'),
-                new LineNumber(11)
-            ),
-            new Type('Generic.Files.LineLength.TooLong')
-        ));
+        $this->assertMatch($result4,
+            'src/Domain/Common/InvalidPathException.php',
+            11,
+            'Generic.Files.LineLength.TooLong'
+        );
 
-        $this->assertTrue($result5->isMatch(
-            new Location(
-                new FileName('src/Domain/BaseLiner/BaseLineImporter.php'),
-                new LineNumber(8)
-            ),
-            new Type('Generic.Files.LineLength.TooLong')
-        ));
+        $this->assertMatch($result5,
+            'src/Domain/BaseLiner/BaseLineImporter.php',
+            8,
+            'Generic.Files.LineLength.TooLong'
+        );
 
-        $this->assertTrue($result6->isMatch(
-            new Location(
-                new FileName('src/Domain/BaseLiner/BaseLineImporter.php'),
-                new LineNumber(52)
-            ),
-            new Type('Squiz.WhiteSpace.FunctionSpacing.Before')
-        ));
+        $this->assertMatch($result6,
+            'src/Domain/BaseLiner/BaseLineImporter.php',
+            52,
+            'Squiz.WhiteSpace.FunctionSpacing.Before'
+        );
     }
 
     public function testTypeGuesser(): void

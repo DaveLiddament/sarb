@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Command;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Creator\BaseLineCreatorInterface;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\StringAssertionsTrait;
@@ -81,7 +81,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
             throw $this->throwable;
         }
 
-        $analysisResults = new AnalysisResults();
+        $analysisResults = BaseLineAnalysisResults::fromArray([]);
         $historyMarker = new GitCommit('9cf13d75cdf3addb82f507b68f4990725748d7af');
 
         return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);

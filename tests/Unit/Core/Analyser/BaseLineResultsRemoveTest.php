@@ -19,6 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDif
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\OriginalFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
 class BaseLineResultsRemoveTest extends TestCase
@@ -39,9 +40,9 @@ class BaseLineResultsRemoveTest extends TestCase
     public function testRemoveBaseLineResults(): void
     {
         // Create baseline
-        $baselineAnalysisResults = new AnalysisResults();
-        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_1, self::LINE_10, self::TYPE_1);
-        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_2, self::LINE_15, self::TYPE_2);
+        $baselineAnalysisResultsBuilder = new BaseLineResultsBuilder();
+        $baselineAnalysisResultsBuilder->add(self::FILE_1, self::LINE_10, self::TYPE_1);
+        $baselineAnalysisResultsBuilder->add(self::FILE_2, self::LINE_15, self::TYPE_2);
 
         // Create file mutations
         $fileMutationsBuilder = new FileMutationsBuilder();
@@ -63,7 +64,12 @@ class BaseLineResultsRemoveTest extends TestCase
         $historyAnalyser = new DiffHistoryAnalyser($fileMutations);
         $baseLineResultsRemover = new BaseLineResultsRemover();
         $projectRoot = new ProjectRoot('/home/sarb', '/home/sarb');
-        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine($latestAnalysisResults, $historyAnalyser, $baselineAnalysisResults, $projectRoot);
+        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine(
+            $latestAnalysisResults,
+            $historyAnalyser,
+            $baselineAnalysisResultsBuilder->build(),
+            $projectRoot
+        );
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();
 

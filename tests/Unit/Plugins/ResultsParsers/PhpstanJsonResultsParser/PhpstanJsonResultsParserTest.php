@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpstanJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
@@ -14,12 +11,14 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpstanJsonResultsParser\PhpstanJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
 class PhpstanJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
+    use AssertResultMatch;
     use ResourceLoaderTrait;
 
     /**
@@ -54,33 +53,27 @@ class PhpstanJsonResultsParserTest extends TestCase
         $result2 = $analysisResults->getAnalysisResults()[1];
         $result3 = $analysisResults->getAnalysisResults()[2];
 
-        $this->assertTrue($result1->isMatch(
-            new Location(
-                new FileName('src/Domain/BaseLiner/BaseLineImporter.php'),
-                new LineNumber(89)
-            ),
-            new Type('Parameter #1 $array of static method expects int, array given.')
-        ));
+        $this->assertMatch($result1,
+            'src/Domain/BaseLiner/BaseLineImporter.php',
+            89,
+            'Parameter #1 $array of static method expects int, array given.'
+        );
         $this->assertSame(
             'Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.',
             $result1->getMessage()
         );
 
-        $this->assertTrue($result2->isMatch(
-            new Location(
-                new FileName('src/Domain/ResultsParser/AnalysisResults.php'),
-                new LineNumber(73)
-            ),
-            new Type('PHPDoc tag @param for parameter $array with type array is incompatible with native type int')
-        ));
+        $this->assertMatch($result2,
+            'src/Domain/ResultsParser/AnalysisResults.php',
+            73,
+            'PHPDoc tag @param for parameter $array with type array is incompatible with native type int'
+        );
 
-        $this->assertTrue($result3->isMatch(
-            new Location(
-                new FileName('src/Domain/ResultsParser/AnalysisResults.php'),
-                new LineNumber(0)
-            ),
-            new Type('Argument of an invalid type int supplied for foreach, only iterables are supported.')
-        ));
+        $this->assertMatch($result3,
+            'src/Domain/ResultsParser/AnalysisResults.php',
+            0,
+            'Argument of an invalid type int supplied for foreach, only iterables are supported.'
+        );
     }
 
     public function testTypeGuesser(): void
