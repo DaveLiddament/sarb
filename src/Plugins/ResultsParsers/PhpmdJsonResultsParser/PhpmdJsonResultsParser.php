@@ -20,6 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
@@ -71,7 +72,7 @@ class PhpmdJsonResultsParser implements ResultsParser
      */
     private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
     {
-        $analysisResults = new AnalysisResults();
+        $analysisResultsBuilder = new AnalysisResultsBuilder();
 
         try {
             $filesWithProblems = ArrayUtils::getArrayValue($analysisResultsAsArray, 'files');
@@ -89,13 +90,13 @@ class PhpmdJsonResultsParser implements ResultsParser
 
                 $violations = ArrayUtils::getArrayValue($fileWithProblems, 'violations');
 
-                $this->processViolationsInFile($analysisResults, $absoluteFileName, $fileName, $violations);
+                $this->processViolationsInFile($analysisResultsBuilder, $absoluteFileName, $fileName, $violations);
             }
         } catch (ArrayParseException $e) {
             throw new InvalidFileFormatException("Invalid file format: {$e->getMessage()}");
         }
 
-        return $analysisResults;
+        return $analysisResultsBuilder->build();
     }
 
     /**
@@ -104,7 +105,7 @@ class PhpmdJsonResultsParser implements ResultsParser
      * @throws InvalidFileFormatException
      */
     private function processViolationsInFile(
-        AnalysisResults $analysisResults,
+        AnalysisResultsBuilder $analysisResultsBuilder,
         string $absoulteFileName,
         FileName $fileName,
         array $violations
@@ -115,7 +116,7 @@ class PhpmdJsonResultsParser implements ResultsParser
             try {
                 ArrayUtils::assertArray($violation);
                 $analysisResult = $this->processViolation($absoulteFileName, $fileName, $violation);
-                $analysisResults->addAnalysisResult($analysisResult);
+                $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 ++$violationCount;
             } catch (ArrayParseException | JsonParseException $e) {
                 throw new InvalidFileFormatException("Can not process violation {$violationCount} for file {$fileName->getFileName()}");

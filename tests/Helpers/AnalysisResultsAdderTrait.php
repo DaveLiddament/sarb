@@ -10,6 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 
 trait AnalysisResultsAdderTrait
 {
@@ -17,7 +18,7 @@ trait AnalysisResultsAdderTrait
      * Adds an AnalysisResult (combination of fileName, lineNumber and type) to AnalysisResults.
      */
     private function addAnalysisResult(
-        AnalysisResults $analysisResults,
+        AnalysisResultsBuilder $analysisResultsBuilder,
         string $fileName,
         int $lineNumber,
         string $type
@@ -26,6 +27,6 @@ trait AnalysisResultsAdderTrait
         $details = "$fileName-$lineNumber-$type-$message";
         $location = new Location(new FileName($fileName), new LineNumber($lineNumber));
         $analysisResult = new AnalysisResult($location, new Type($type), $message, $details);
-        $analysisResults->addAnalysisResult($analysisResult);
+        $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }
 }

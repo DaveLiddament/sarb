@@ -13,7 +13,7 @@ class ResultsParserStub1 implements ResultsParser
 {
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
-        return new AnalysisResults();
+        return new AnalysisResults([]);
     }
 
     public function getIdentifier(): Identifier

@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use PHPUnit\Framework\TestCase;
 
@@ -88,15 +88,15 @@ class BaseLineAnalysisResultsTest extends TestCase
         $fileName = new FileName(self::FILE_NAME_1);
         $lineNumber = new LineNumber(self::LINE_NUMBER_1);
         $type = new Type(self::TYPE_1);
-        $analysisResults = new AnalysisResults();
-        $analysisResults->addAnalysisResult(new AnalysisResult(
+        $analysisResultsBuilder = new AnalysisResultsBuilder();
+        $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
             new Location($fileName, $lineNumber),
             $type,
             self::MESSAGE_1,
             'FULL_DETAILS'
         ));
 
-        $baseLineResults = BaseLineAnalysisResults::fromAnalysisResults($analysisResults);
+        $baseLineResults = BaseLineAnalysisResults::fromAnalysisResults($analysisResultsBuilder->build());
         $this->assertCount(1, $baseLineResults->getBaseLineAnalysisResults());
         $baseLineResult = $baseLineResults->getBaseLineAnalysisResults()[0];
 

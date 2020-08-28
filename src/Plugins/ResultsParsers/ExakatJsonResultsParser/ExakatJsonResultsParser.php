@@ -21,6 +21,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
@@ -74,7 +75,7 @@ class ExakatJsonResultsParser implements ResultsParser
      */
     private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
     {
-        $analysisResults = new AnalysisResults();
+        $analysisResultsBuilder = new AnalysisResultsBuilder();
 
         $resultsCount = 0;
 
@@ -84,13 +85,13 @@ class ExakatJsonResultsParser implements ResultsParser
             try {
                 ArrayUtils::assertArray($analysisResultAsArray);
                 $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
-                $analysisResults->addAnalysisResult($analysisResult);
+                $analysisResultsBuilder->addAnalysisResult($analysisResult);
             } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
         }
 
-        return $analysisResults;
+        return $analysisResultsBuilder->build();
     }
 
     /**

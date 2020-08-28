@@ -22,9 +22,12 @@ class AnalysisResults
      */
     private $analysisResults;
 
-    public function __construct()
+    /**
+     * @param AnalysisResult[] $analysisResults
+     */
+    public function __construct(array $analysisResults)
     {
-        $this->analysisResults = [];
+        $this->analysisResults = $analysisResults;
     }
 
     /**

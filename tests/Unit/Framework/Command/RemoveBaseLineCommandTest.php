@@ -15,6 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFo
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\RemoveBaseLineFromResultsCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\OutputFormatterRegistry;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
@@ -281,7 +282,7 @@ EOF;
 
     private function getAnalysisResultsWithXResults(int $count): AnalysisResults
     {
-        $analysisResults = new AnalysisResults();
+        $analysisResultsBuilder = new AnalysisResultsBuilder();
         for ($i = 0; $i < $count; ++$i) {
             $analysisResult = new AnalysisResult(
                 new Location(
@@ -292,9 +293,9 @@ EOF;
                 "MESSAGE_$i",
                 'FULL_MESSAGE'
             );
-            $analysisResults->addAnalysisResult($analysisResult);
+            $analysisResultsBuilder->addAnalysisResult($analysisResult);
         }
 
-        return $analysisResults;
+        return $analysisResultsBuilder->build();
     }
 }

@@ -11,6 +11,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractOutputFormatterTest extends TestCase
@@ -25,34 +26,34 @@ abstract class AbstractOutputFormatterTest extends TestCase
 
     protected function assertNoIssuesOutput(string $expectedOutput): void
     {
-        $analysisResults = new AnalysisResults();
+        $analysisResults = new AnalysisResults([]);
 
         $this->assertOutput($expectedOutput, $analysisResults);
     }
 
     protected function assertIssuesOutput(string $expectedOutput): void
     {
-        $analysisResults = new AnalysisResults();
-        $analysisResults->addAnalysisResult(new AnalysisResult(
+        $analysisResultsBuilder = new AnalysisResultsBuilder();
+        $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
             new Location(new FileName('FILE_1'), new LineNumber(10)),
             new Type('TYPE_1'),
             'MESSAGE_1',
             ''
         ));
-        $analysisResults->addAnalysisResult(new AnalysisResult(
+        $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
             new Location(new FileName('FILE_1'), new LineNumber(12)),
             new Type('TYPE_2'),
             'MESSAGE_2',
             ''
         ));
-        $analysisResults->addAnalysisResult(new AnalysisResult(
+        $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
             new Location(new FileName('FILE_2'), new LineNumber(0)),
             new Type('TYPE_1'),
             'MESSAGE_3',
             ''
         ));
 
-        $this->assertOutput($expectedOutput, $analysisResults);
+        $this->assertOutput($expectedOutput, $analysisResultsBuilder->build());
     }
 
     private function assertOutput(string $expectedOutput, AnalysisResults $analysisResults): void

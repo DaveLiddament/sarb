@@ -21,6 +21,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 
 class BaseLineResultsRemover
 {
@@ -33,7 +34,7 @@ class BaseLineResultsRemover
         BaseLineAnalysisResults $baseLineAnalysisResults,
         ProjectRoot $projectRoot
     ): AnalysisResults {
-        $prunedAnalysisResults = new AnalysisResults();
+        $prunedAnalysisResultsBuilder = new AnalysisResultsBuilder();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);
 
         foreach ($latestAnalysisResults->getAnalysisResults() as $analysisResult) {
@@ -49,11 +50,11 @@ class BaseLineResultsRemover
                   $analysisResult->getMessage(),
                   $analysisResult->getFullDetails()
                 );
-                $prunedAnalysisResults->addAnalysisResult($issueSinceBaseLine);
+                $prunedAnalysisResultsBuilder->addAnalysisResult($issueSinceBaseLine);
             }
         }
 
-        return $prunedAnalysisResults;
+        return $prunedAnalysisResultsBuilder->build();
     }
 
     private function isInHistoricResults(

@@ -11,7 +11,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\LineMutation;
@@ -54,18 +54,18 @@ class BaseLineResultsRemoveTest extends TestCase
         $fileMutations = $fileMutationsBuilder->build();
 
         // Create latest results
-        $latestAnalysisResults = new AnalysisResults();
+        $latestAnalysisResultsBuilder = new AnalysisResultsBuilder();
         // This is in the baseline (it was line 10 in baseline)
-        $this->addAnalysisResult($latestAnalysisResults, self::FILE_1, self::LINE_11, self::TYPE_1);
+        $this->addAnalysisResult($latestAnalysisResultsBuilder, self::FILE_1, self::LINE_11, self::TYPE_1);
         // Added since baseline
-        $this->addAnalysisResult($latestAnalysisResults, self::FILE_1, self::LINE_9, self::TYPE_2);
+        $this->addAnalysisResult($latestAnalysisResultsBuilder, self::FILE_1, self::LINE_9, self::TYPE_2);
 
         // Prune baseline results from latest results
         $historyAnalyser = new DiffHistoryAnalyser($fileMutations);
         $baseLineResultsRemover = new BaseLineResultsRemover();
         $projectRoot = new ProjectRoot('/home/sarb', '/home/sarb');
         $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine(
-            $latestAnalysisResults,
+            $latestAnalysisResultsBuilder->build(),
             $historyAnalyser,
             $baselineAnalysisResultsBuilder->build(),
             $projectRoot
