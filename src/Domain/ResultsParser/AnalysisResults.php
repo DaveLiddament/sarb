@@ -31,14 +31,8 @@ class AnalysisResults
     }
 
     /**
-     * @deprecated
-     */
-    public function addAnalysisResult(AnalysisResult $analysisResult): void
-    {
-        $this->analysisResults[] = $analysisResult;
-    }
-
-    /**
+     * Returns array of AnalysisResult objects, ordered by file name and then line number.
+     *
      * @return AnalysisResult[]
      */
     public function getAnalysisResults(): array
