@@ -45,7 +45,7 @@ class BaseLineAnalysisResults
     {
         $baseLineAnalysisResults = [];
         foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $baseLineAnalysisResults[] = $analysisResult->asBaseLineAnaylsisResult();
+            $baseLineAnalysisResults[] = $analysisResult->asBaseLineAnalysisResult();
         }
 
         return new self($baseLineAnalysisResults);

@@ -75,7 +75,7 @@ class AnalysisResult
         return $this->message;
     }
 
-    public function asBaseLineAnaylsisResult(): BaseLineAnalysisResult
+    public function asBaseLineAnalysisResult(): BaseLineAnalysisResult
     {
         return BaseLineAnalysisResult::make(
             $this->location->getFileName(),
