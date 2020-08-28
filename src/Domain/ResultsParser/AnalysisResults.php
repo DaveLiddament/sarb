@@ -30,6 +30,9 @@ class AnalysisResults
         $this->analysisResults = [];
     }
 
+    /**
+     * @deprecated
+     */
     public function addAnalysisResult(AnalysisResult $analysisResult): void
     {
         $this->analysisResults[] = $analysisResult;
@@ -61,6 +64,8 @@ class AnalysisResults
      * Return as an array of arrays (ready for storing in a file).
      *
      * @phpstan-return array<mixed>
+     *
+     * @deprecated
      */
     public function asArray(): array
     {
@@ -79,6 +84,8 @@ class AnalysisResults
      * @phpstan-param array<mixed> $array
      *
      * @return AnalysisResults
+     *
+     * @deprecated
      */
     public static function fromArray(array $array): self
     {
