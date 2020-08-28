@@ -23,10 +23,19 @@ trait AnalysisResultsAdderTrait
         int $lineNumber,
         string $type
     ): void {
+        $analysisResult = $this->buildAnalysisResult($fileName, $lineNumber, $type);
+        $analysisResultsBuilder->addAnalysisResult($analysisResult);
+    }
+
+    private function buildAnalysisResult(
+        string $fileName,
+        int $lineNumber,
+        string $type
+    ): AnalysisResult {
         $message = "message-$type";
         $details = "$fileName-$lineNumber-$type-$message";
         $location = new Location(new FileName($fileName), new LineNumber($lineNumber));
-        $analysisResult = new AnalysisResult($location, new Type($type), $message, $details);
-        $analysisResultsBuilder->addAnalysisResult($analysisResult);
+
+        return new AnalysisResult($location, new Type($type), $message, $details);
     }
 }
