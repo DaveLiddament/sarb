@@ -9,7 +9,7 @@ class AnalysisResultsBuilder
     /**
      * @var AnalysisResult[]
      */
-    private $analysisResults  = [];
+    private $analysisResults = [];
 
     public function addAnalysisResult(AnalysisResult $analysisResult): void
     {

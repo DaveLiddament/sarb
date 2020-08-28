@@ -44,7 +44,7 @@ class BaseLineAnalysisResults
     public static function fromAnalysisResults(AnalysisResults $analysisResults): self
     {
         $baseLineAnalysisResults = [];
-        foreach ($analysisResults->getOrderedAnalysisResults() as $analysisResult) {
+        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
             $baseLineAnalysisResults[] = $analysisResult->asBaseLineAnaylsisResult();
         }
 

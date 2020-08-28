@@ -27,6 +27,10 @@ class AnalysisResults
      */
     public function __construct(array $analysisResults)
     {
+        usort($analysisResults, function (AnalysisResult $a, AnalysisResult $b): int {
+            return $a->getLocation()->compareTo($b->getLocation());
+        });
+
         $this->analysisResults = $analysisResults;
     }
 
@@ -37,20 +41,6 @@ class AnalysisResults
      */
     public function getAnalysisResults(): array
     {
-        return $this->analysisResults;
-    }
-
-    /**
-     * Ordered by Location.
-     *
-     * @return AnalysisResult[]
-     */
-    public function getOrderedAnalysisResults(): array
-    {
-        usort($this->analysisResults, function (AnalysisResult $a, AnalysisResult $b): int {
-            return $a->getLocation()->compareTo($b->getLocation());
-        });
-
         return $this->analysisResults;
     }
 
