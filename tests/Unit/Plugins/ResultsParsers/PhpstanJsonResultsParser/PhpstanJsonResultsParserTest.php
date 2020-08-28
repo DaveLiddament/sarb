@@ -64,14 +64,14 @@ class PhpstanJsonResultsParserTest extends TestCase
 
         $this->assertMatch($result2,
             'src/Domain/ResultsParser/AnalysisResults.php',
-            73,
-            'PHPDoc tag @param for parameter $array with type array is incompatible with native type int'
+            0,
+            'Argument of an invalid type int supplied for foreach, only iterables are supported.'
         );
 
         $this->assertMatch($result3,
             'src/Domain/ResultsParser/AnalysisResults.php',
-            0,
-            'Argument of an invalid type int supplied for foreach, only iterables are supported.'
+            73,
+            'PHPDoc tag @param for parameter $array with type array is incompatible with native type int'
         );
     }
 

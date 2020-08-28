@@ -57,43 +57,43 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         $result6 = $analysisResults->getAnalysisResults()[5];
 
         $this->assertMatch($result1,
+            'src/Domain/BaseLiner/BaseLineImporter.php',
+            8,
+            'Generic.Files.LineLength.TooLong'
+        );
+
+        $this->assertMatch($result2,
+            'src/Domain/BaseLiner/BaseLineImporter.php',
+            52,
+            'Squiz.WhiteSpace.FunctionSpacing.Before'
+        );
+
+        $this->assertMatch($result3,
             'src/Domain/Common/InvalidPathException.php',
             2,
             'Squiz.Commenting.FileComment.Missing'
         );
         $this->assertSame(
             'Missing file doc comment',
-            $result1->getMessage()
+            $result3->getMessage()
         );
 
-        $this->assertMatch($result2,
+        $this->assertMatch($result4,
             'src/Domain/Common/InvalidPathException.php',
             7,
             'Squiz.Commenting.ClassComment.Missing'
         );
 
-        $this->assertMatch($result3,
+        $this->assertMatch($result5,
             'src/Domain/Common/InvalidPathException.php',
             9,
             'Squiz.Commenting.FunctionComment.Missing'
         );
 
-        $this->assertMatch($result4,
+        $this->assertMatch($result6,
             'src/Domain/Common/InvalidPathException.php',
             11,
             'Generic.Files.LineLength.TooLong'
-        );
-
-        $this->assertMatch($result5,
-            'src/Domain/BaseLiner/BaseLineImporter.php',
-            8,
-            'Generic.Files.LineLength.TooLong'
-        );
-
-        $this->assertMatch($result6,
-            'src/Domain/BaseLiner/BaseLineImporter.php',
-            52,
-            'Squiz.WhiteSpace.FunctionSpacing.Before'
         );
     }
 
