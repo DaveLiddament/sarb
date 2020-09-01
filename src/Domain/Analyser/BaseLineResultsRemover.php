@@ -62,14 +62,9 @@ class BaseLineResultsRemover
         BaseLineResultsComparator $baseLineResultsComparator,
         HistoryAnalyser $historyAnalyser
     ): bool {
-        $previousLocation = $historyAnalyser->getPreviousLocation($analysisResult->getLocation());
+        $location = $analysisResult->getLocation();
+        $previousLocation = $historyAnalyser->getPreviousLocation($location->getFileName(), $location->getLineNumber());
 
-        // Analysis result refers to a Location not in the BaseLine, then this is not an historic analysis result.
-        if ($previousLocation->isNoPreviousLocation()) {
-            return false;
-        }
-
-        // Now check through to history AnalysisResults to see if there is an exact match.
-        return $baseLineResultsComparator->isInBaseLine($previousLocation->getLocation(), $analysisResult->getType());
+        return $baseLineResultsComparator->isInBaseLine($previousLocation, $analysisResult->getType());
     }
 }

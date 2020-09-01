@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\BaseLiner
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use PHPUnit\Framework\TestCase;
@@ -76,29 +76,35 @@ class BaseLineAnalysisResultTest extends TestCase
     public function testIsActualMatch(): void
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
-        $location = new Location($this->fileName, $this->lineNumber);
+        $location = PreviousLocation::fromFileNameAndLineNumber($this->fileName, $this->lineNumber);
         $this->assertTrue($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_1)));
     }
 
     public function testIsMatchDifferentType(): void
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
-        $location = new Location($this->fileName, $this->lineNumber);
+        $location = PreviousLocation::fromFileNameAndLineNumber($this->fileName, $this->lineNumber);
         $this->assertFalse($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_2)));
     }
 
     public function testIsMatchDifferentFileName(): void
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
-        $location = new Location(new FileName(self::FILE_NAME_2), $this->lineNumber);
-        $this->assertFalse($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_1)));
+        $previousLocation = PreviousLocation::fromFileNameAndLineNumber(
+            new FileName(self::FILE_NAME_2),
+            $this->lineNumber
+        );
+        $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
     }
 
     public function testIsMatchDifferentLineNumber(): void
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
-        $location = new Location($this->fileName, new LineNumber(self::LINE_NUMBER_2));
-        $this->assertFalse($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_1)));
+        $previousLocation = PreviousLocation::fromFileNameAndLineNumber(
+            $this->fileName,
+            new LineNumber(self::LINE_NUMBER_2)
+        );
+        $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
     }
 
     public function invalidArrayDataProvider(): array

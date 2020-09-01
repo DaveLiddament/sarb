@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
@@ -38,15 +39,15 @@ class DiffHistoryAnalyser implements HistoryAnalyser
     /**
      * Returns the location of the line number in the baseline (if it exists).
      */
-    public function getPreviousLocation(Location $location): PreviousLocation
+    public function getPreviousLocation(FileName $fileName, LineNumber $lineNumber): PreviousLocation
     {
-        $newFileName = new NewFileName($location->getFileName()->getFileName());
+        $newFileName = new NewFileName($fileName->getFileName());
 
         $fileMutation = $this->fileMutations->getFileMutation($newFileName);
 
         // If not in file mutations then no change to code
         if (null === $fileMutation) {
-            return PreviousLocation::fromLocation($location);
+            return PreviousLocation::fromFileNameAndLineNumber($fileName, $lineNumber);
         }
 
         // If file added then this is not in the baseline.
@@ -54,15 +55,18 @@ class DiffHistoryAnalyser implements HistoryAnalyser
             return PreviousLocation::noPreviousLocation();
         }
 
-        $originalLineNumber = OriginalLineNumberCalculator::calculateOriginalLineNumber($fileMutation,
-            $location->getLineNumber()->getLineNumber());
+        $originalLineNumber = OriginalLineNumberCalculator::calculateOriginalLineNumber(
+            $fileMutation,
+            $lineNumber->getLineNumber()
+        );
 
         if (null === $originalLineNumber) {
             return PreviousLocation::noPreviousLocation();
         }
 
-        $previousLocation = new Location($fileMutation->getOriginalFileName(), new LineNumber($originalLineNumber));
-
-        return PreviousLocation::fromLocation($previousLocation);
+        return PreviousLocation::fromFileNameAndLineNumber(
+            $fileMutation->getOriginalFileName(),
+            new LineNumber($originalLineNumber)
+        );
     }
 }

@@ -15,6 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 
@@ -48,16 +49,22 @@ class BaseLineResultsComparator
     /**
      * Returns true if an AnalysisResult of the same Type and Location exists in the BaseLine.
      */
-    public function isInBaseLine(Location $location, Type $type): bool
+    public function isInBaseLine(PreviousLocation $previousLocation, Type $type): bool
     {
+        // Analysis result refers to a Location not in the BaseLine, then this is not an historic analysis result.
+        if ($previousLocation->isNoPreviousLocation()) {
+            return false;
+        }
+
+        // Now check through to history AnalysisResults to see if there is an exact match.
         // Check if file is in baseline
-        $fileNameAsString = $location->getFileName()->getFileName();
+        $fileNameAsString = $previousLocation->getFileName()->getFileName();
         if (!array_key_exists($fileNameAsString, $this->baseLine)) {
             return false;
         }
 
         foreach ($this->baseLine[$fileNameAsString] as $baseLineResult) {
-            if ($baseLineResult->isMatch($location, $type)) {
+            if ($baseLineResult->isMatch($previousLocation, $type)) {
                 return true;
             }
         }
