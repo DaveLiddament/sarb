@@ -2,9 +2,14 @@ parameters:
     level: 8
     paths:
     - src
+    - tests
     excludes_analyse:
     - tests/resources
     - tests/scratchpad
+    ignoreErrors:
+    - '#Dynamic call to static method PHPUnit\\Framework\\.*#'
 includes:
 - vendor/phpstan/phpstan-webmozart-assert/extension.neon
 - vendor/phpstan/phpstan-strict-rules/rules.neon
+- vendor/phpstan/phpstan-phpunit/extension.neon
+- vendor/phpstan/phpstan-phpunit/rules.neon
