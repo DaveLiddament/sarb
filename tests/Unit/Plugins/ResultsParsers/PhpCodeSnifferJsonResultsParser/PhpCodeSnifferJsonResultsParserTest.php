@@ -6,7 +6,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\Result
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser\PhpCodeSnifferJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
@@ -38,7 +37,7 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
     protected function setUp(): void
     {
         $this->projectRoot = new ProjectRoot('/vagrant', '/home');
-        $this->phpCodeSnifferJsonResultsParser = new PhpCodeSnifferJsonResultsParser(new FqcnRemover());
+        $this->phpCodeSnifferJsonResultsParser = new PhpCodeSnifferJsonResultsParser();
         $this->fileContents = $this->getResource('phpCodeSniffer/full.json');
     }
 
@@ -109,6 +108,9 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         $this->phpCodeSnifferJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidFileProvider(): array
     {
         return [

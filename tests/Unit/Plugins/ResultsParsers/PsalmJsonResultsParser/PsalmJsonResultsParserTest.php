@@ -88,6 +88,9 @@ class PsalmJsonResultsParserTest extends TestCase
         $this->psalmResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidFileProvider(): array
     {
         return [

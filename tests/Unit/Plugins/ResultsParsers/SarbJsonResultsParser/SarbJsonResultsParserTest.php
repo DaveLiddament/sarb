@@ -79,6 +79,9 @@ class SarbJsonResultsParserTest extends TestCase
         $this->assertFalse($this->sarbJsonResultsParser->showTypeGuessingWarning());
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidFileProvider(): array
     {
         return [

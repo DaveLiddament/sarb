@@ -41,7 +41,7 @@ class FileWriterTest extends TestCase
         $this->fileWriter->writeArrayToFile($fileName, self::DATA);
     }
 
-    private function getFileName($file): FileName
+    private function getFileName(string $file): FileName
     {
         $fullUrl = __DIR__.'/../../../scratchpad/'.$file;
 

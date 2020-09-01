@@ -16,6 +16,9 @@ class DiffParserTest extends TestCase
 {
     use ResourceLoaderTrait;
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function dataProvider()
     {
         return [
@@ -231,6 +234,7 @@ class DiffParserTest extends TestCase
 
     /**
      * @dataProvider dataProvider
+     * @phpstan-param array<int,array{0: OriginalFileName, 1: NewFileName, bool, bool, LineMutation[]}> $expectedFileMutations
      */
     public function testDiffParser(string $inputFile, array $expectedFileMutations): void
     {
@@ -245,11 +249,6 @@ class DiffParserTest extends TestCase
 
         $this->assertSame($expectedFileMutationsCount, $actualFileMutationsCount);
 
-        /**
-         * @var OriginalFileName
-         * @var NewFileName $newFileName
-         * @var array $lineMutations
-         */
         foreach ($expectedFileMutations as list($originalFileName, $newFileName, $isAdded, $isDeleted, $lineMutations)) {
             $actualFileMutation = $fileMutations->getFileMutation($newFileName);
             $this->assertNotNull($actualFileMutation, "No FileMutation for [{$newFileName->getFileName()}]");
@@ -267,16 +266,18 @@ class DiffParserTest extends TestCase
 
     private function assertOriginalFileNameSame(?OriginalFileName $a, ?OriginalFileName $b): void
     {
-        if (null === $a) {
-            $this->assertNull($b);
-        }
-
+        $this->assertNotNull($a);
+        $this->assertNotNull($b);
         $this->assertSame($a->getFileName(), $b->getFileName());
     }
 
+    /**
+     * @param array<int,LineMutation> $expectedLineMutations
+     * @param array<int,LineMutation> $actualLineMutations
+     */
     private function assertLineMutations(array $expectedLineMutations, array $actualLineMutations): void
     {
-        $this->assertSame(count($expectedLineMutations), count($actualLineMutations));
+        $this->assertCount(count($expectedLineMutations), $actualLineMutations);
         foreach ($expectedLineMutations as $i => $expectedLineMutation) {
             $actualLineMutation = $actualLineMutations[$i];
             $this->assertLineMutation($expectedLineMutation, $actualLineMutation, $i);

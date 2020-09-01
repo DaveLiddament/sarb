@@ -56,6 +56,9 @@ class OriginalLineNameCalculatorTest extends TestCase
         $this->fileMutation = new FileMutation($originalFileName, $newFileName, $lineMutations);
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function dataProvider(): array
     {
         return [

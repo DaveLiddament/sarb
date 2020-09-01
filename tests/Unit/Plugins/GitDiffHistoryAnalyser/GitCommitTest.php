@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 class GitCommitTest extends TestCase
 {
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidGitCommitDataProvider(): array
     {
         return [
@@ -44,6 +47,9 @@ class GitCommitTest extends TestCase
         new GitCommit($invalidCommit);
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function validGitCommitDataProvider(): array
     {
         return [

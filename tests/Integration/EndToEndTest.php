@@ -146,7 +146,9 @@ class EndToEndTest extends TestCase
         $dateTimeFolderName = date('Ymd_His');
         $testDirectory = __DIR__."/../scratchpad/{$dateTimeFolderName}";
         $this->fileSystem->mkdir($testDirectory);
-        $this->projectRoot = new ProjectRoot($testDirectory, getcwd());
+        $cwd = getcwd();
+        $this->assertNotFalse($cwd);
+        $this->projectRoot = new ProjectRoot($testDirectory, $cwd);
     }
 
     private function commit(string $directory): void
@@ -191,11 +193,13 @@ class EndToEndTest extends TestCase
         );
 
         $output = str_replace('\/', '/', $output);
-        //$output = str_replace(PHP, '', $output);
 
         $this->assertStringContainsString($expectedResultsJson, $output);
     }
 
+    /**
+     * @param string[] $arguments
+     */
     private function runCommand(
         string $commandName,
         array $arguments,
@@ -206,7 +210,7 @@ class EndToEndTest extends TestCase
         $commandTester = new CommandTester($command);
         $arguments['command'] = $command->getName();
 
-        if ($resourceContainStdinContents) {
+        if (null !== $resourceContainStdinContents) {
             $stdin = $this->getStaticAnalysisResultsAsString($resourceContainStdinContents);
             $commandTester->setInputs([$stdin]);
         }
@@ -232,6 +236,7 @@ class EndToEndTest extends TestCase
     {
         $fileName = __DIR__.'/../resources/integration/staticAnalysisOutput/'.$resourceName;
         $rawResults = file_get_contents($fileName);
+        $this->assertNotFalse($rawResults);
         $projectRootDirectory = (string) $this->projectRoot;
         $resultsWithPathsCorrected = str_replace('__SCRATCH_PAD_PATH__', $projectRootDirectory, $rawResults);
 
@@ -246,10 +251,12 @@ class EndToEndTest extends TestCase
     private function updatePathsInJsonFiles(string $directory): void
     {
         $files = scandir($directory);
+        $this->assertNotFalse($files);
         foreach ($files as $file) {
             if (StringUtils::endsWith('.json', $file)) {
                 $fullPath = Path::makeAbsolute($file, $directory);
                 $contents = file_get_contents($fullPath);
+                $this->assertNotFalse($contents);
                 $newContents = str_replace('__SCRATCH_PAD_PATH__', $directory, $contents);
                 file_put_contents($fullPath, $newContents);
             }

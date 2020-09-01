@@ -195,6 +195,9 @@ EOF;
         $this->assertReturnCode(0, $commandTester);
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function exceptionDataProvider(): array
     {
         return [

@@ -13,6 +13,9 @@ class InvalidDiffParserTest extends TestCase
 {
     use ResourceLoaderTrait;
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function dataProvider()
     {
         return [

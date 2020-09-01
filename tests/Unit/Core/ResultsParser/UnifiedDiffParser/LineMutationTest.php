@@ -17,6 +17,7 @@ class LineMutationTest extends TestCase
     {
         $lineMutation = LineMutation::newLineNumber($this->getLineNumber1());
         $this->assertNull($lineMutation->getOriginalLine());
+        $this->assertNotNull($lineMutation->getNewLine());
         $this->assertLineNumber($this->getLineNumber1(), $lineMutation->getNewLine());
     }
 
@@ -24,10 +25,14 @@ class LineMutationTest extends TestCase
     {
         $lineMutation = LineMutation::originalLineNumber($this->getLineNumber1());
         $this->assertNull($lineMutation->getNewLine());
+        $this->assertNotNull($lineMutation->getOriginalLine());
         $this->assertLineNumber($this->getLineNumber1(), $lineMutation->getOriginalLine());
     }
 
-    public function notEqualDataProvider()
+    /**
+     * @phpstan-return array<mixed>
+     */
+    public function notEqualDataProvider(): array
     {
         return [
             'compareWithNull' => [
@@ -57,7 +62,10 @@ class LineMutationTest extends TestCase
         $this->assertFalse($a->isEqual($b));
     }
 
-    public function equalDataProvider()
+    /**
+     * @phpstan-return array<mixed>
+     */
+    public function equalDataProvider(): array
     {
         return [
             'sameOriginalLineNumber' => [
@@ -89,7 +97,7 @@ class LineMutationTest extends TestCase
         return new LineNumber(self::LINE_NUMBER_2);
     }
 
-    private function assertLineNumber(LineNumber $expected, LineNumber $actual)
+    private function assertLineNumber(LineNumber $expected, LineNumber $actual): void
     {
         $this->assertSame($expected->getLineNumber(), $actual->getLineNumber());
     }

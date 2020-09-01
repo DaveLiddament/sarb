@@ -38,6 +38,9 @@ class BaseLineResultsComparatorTest extends TestCase
         $this->baseLineResultsComparator = new BaseLineResultsComparator($baseLineResultsBuilder->build());
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function dataProvider(): array
     {
         return [

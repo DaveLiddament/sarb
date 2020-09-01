@@ -107,6 +107,9 @@ class BaseLineAnalysisResultTest extends TestCase
         $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidArrayDataProvider(): array
     {
         return [
@@ -143,6 +146,7 @@ class BaseLineAnalysisResultTest extends TestCase
 
     /**
      * @dataProvider invalidArrayDataProvider
+     * @phpstan-param array<mixed> $asArray
      */
     public function testInvalidArray(array $asArray): void
     {

@@ -67,6 +67,9 @@ class PhanJsonResultsParserTest extends TestCase
         $this->assertFalse($this->phanJsonResultsParser->showTypeGuessingWarning());
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidFileProvider(): array
     {
         return [

@@ -76,6 +76,9 @@ class ExakatJsonResultsParserTest extends TestCase
         $this->assertFalse($this->exakatJsonResultsParser->showTypeGuessingWarning());
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidFileProvider(): array
     {
         return [

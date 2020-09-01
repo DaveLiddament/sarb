@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 class RangeInformationParserTest extends TestCase
 {
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function dataProvider(): array
     {
         return [
@@ -42,6 +45,9 @@ class RangeInformationParserTest extends TestCase
         $this->assertEquals($newHunkSize, $rangeInformation->getNewFileHunkSize());
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidDataProvider(): array
     {
         return [

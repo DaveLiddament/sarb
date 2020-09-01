@@ -53,6 +53,9 @@ class BaseLineImporterTest extends TestCase
         $this->baseLineImporter = new BaseLineImporter($fileReader, $resultsLookupService, $historyLookupService);
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidFileDataProvider(): array
     {
         return [

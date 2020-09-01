@@ -44,6 +44,7 @@ class BuilderTest extends TestCase
         $fileMutations = $fileMutationsBuilder->build();
 
         $fileMutation1 = $fileMutations->getFileMutation($file1NewName);
+        $this->assertNotNull($fileMutation1);
         $this->assertSame($file1OriginalName, $fileMutation1->getOriginalFileName());
         $this->assertSame($file1NewName, $fileMutation1->getNewFileName());
 
@@ -53,6 +54,7 @@ class BuilderTest extends TestCase
         $this->assertTrue($expectedLineMutation1->isEqual($lineMutations[0]));
 
         $fileMutation2 = $fileMutations->getFileMutation($file2NewName);
+        $this->assertNotNull($fileMutation2);
         $this->assertSame($file2OriginalName, $fileMutation2->getOriginalFileName());
         $this->assertSame($file2NewName, $fileMutation2->getNewFileName());
         $this->assertCount(0, $fileMutation2->getLineMutations());

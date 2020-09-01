@@ -56,12 +56,12 @@ class MockResultsPruner implements ResultsPrunerInterface
         string $analysisResults,
         ProjectRoot $projectRoot
     ): PrunedResults {
-        if ($this->throwable) {
+        if (null !== $this->throwable) {
             throw $this->throwable;
         }
         $this->assertSameAllowingExtraNewLine($this->expectedAnalysisResults, $analysisResults);
 
-        if ($this->projectRoot) {
+        if (null !== $this->projectRoot) {
             Assert::assertSame($this->projectRoot->__toString(), $projectRoot->__toString());
         }
 

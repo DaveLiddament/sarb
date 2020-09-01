@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use PHPUnit\Framework\Assert;
 
 trait ResourceLoaderTrait
 {
@@ -15,7 +16,10 @@ trait ResourceLoaderTrait
      */
     private function getResource(string $resourceName): string
     {
-        return file_get_contents($this->getPath($resourceName));
+        $contents = file_get_contents($this->getPath($resourceName));
+        Assert::assertNotFalse($contents);
+
+        return $contents;
     }
 
     /**

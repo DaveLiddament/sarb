@@ -51,6 +51,9 @@ class BaseLineAnalysisResultsTest extends TestCase
         $this->assertSame(self::MESSAGE_1, $baseLineResult->getMessage());
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidDataProvider(): array
     {
         return [
@@ -75,6 +78,7 @@ class BaseLineAnalysisResultsTest extends TestCase
 
     /**
      * @dataProvider invalidDataProvider
+     * @phpstan-param array<mixed> $array
      */
     public function testInvalidArrayData(string $exceptionMessage, array $array): void
     {

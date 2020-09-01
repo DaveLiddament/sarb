@@ -87,6 +87,9 @@ class PhpstanJsonResultsParserTest extends TestCase
         $this->phpstanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 
+    /**
+     * @phpstan-return array<mixed>
+     */
     public function invalidFileProvider(): array
     {
         return [

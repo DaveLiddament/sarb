@@ -71,13 +71,13 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
         Assert::assertSame($this->expectedHistoryFactory, $historyFactory);
         Assert::assertSame($this->expectedResultsParser, $resultsParser);
         Assert::assertTrue($this->expectedFileName->isEqual($baselineFile));
-        if ($this->expectedProjectRoot) {
+        if (null !== $this->expectedProjectRoot) {
             Assert::assertEquals($this->expectedProjectRoot->__toString(), $projectRoot->__toString());
         }
 
         $this->assertSameAllowingExtraNewLine($this->expectedAnaylsisResultsAsString, $analysisResultsAsString);
 
-        if ($this->throwable) {
+        if (null !== $this->throwable) {
             throw $this->throwable;
         }
 
