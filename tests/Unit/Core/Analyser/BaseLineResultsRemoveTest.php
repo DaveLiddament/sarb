@@ -8,7 +8,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResults
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
@@ -81,10 +80,12 @@ class BaseLineResultsRemoveTest extends TestCase
         $this->assertCount(1, $actualResults);
 
         $actualAnalysisResult = $actualResults[0];
-        $expectedLocation = new Location(new FileName(self::FILE_1_FULL_PATH), new LineNumber(self::LINE_9));
+        $expectedFileName = new FileName(self::FILE_1_FULL_PATH);
+        $expectedLineNumber = new LineNumber(self::LINE_9);
         $expectedType = new Type(self::TYPE_2);
 
-        $this->assertTrue($expectedLocation->isEqual($actualAnalysisResult->getLocation()));
+        $this->assertTrue($expectedFileName->isEqual($actualAnalysisResult->getLocation()->getFileName()));
+        $this->assertTrue($expectedLineNumber->isEqual($actualAnalysisResult->getLocation()->getLineNumber()));
         $this->assertTrue($expectedType->isEqual($actualAnalysisResult->getType()));
     }
 }

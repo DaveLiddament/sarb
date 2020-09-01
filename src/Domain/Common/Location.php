@@ -44,16 +44,6 @@ class Location
     }
 
     /**
-     * Returns true if $other refers to same location as this Location object.
-     *
-     * @param Location $other
-     */
-    public function isEqual(self $other): bool
-    {
-        return $this->fileName->isEqual($other->getFileName()) && $this->lineNumber->isEqual($other->getLineNumber());
-    }
-
-    /**
      * Used for ordering Locations, first by FileName then by line number.
      */
     public function compareTo(self $other): int
