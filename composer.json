@@ -28,7 +28,7 @@
     "jakub-onderka/php-parallel-lint": "~0.9",
     "jakub-onderka/php-var-dump-check": "~0.2",
     "phpstan/phpstan": "^0.12",
-    "phpstan/phpstan-phpunit": "^0.12.40",
+    "phpstan/phpstan-phpunit": "^0.12",
     "phpstan/phpstan-strict-rules": "^0.12",
     "phpstan/phpstan-webmozart-assert": "^0.12",
     "phpunit/phpunit": "^7.5",
