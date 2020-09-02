@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 class GitCommitTest extends TestCase
 {
     /**
-     * @phpstan-return array<string,array{string}>
+     * @psalm-return array<string,array{string}>
      */
     public function invalidGitCommitDataProvider(): array
     {
@@ -48,7 +48,7 @@ class GitCommitTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<int,array{string}>
+     * @psalm-return array<int,array{string}>
      */
     public function validGitCommitDataProvider(): array
     {

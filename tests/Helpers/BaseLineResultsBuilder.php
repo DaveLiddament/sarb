@@ -10,7 +10,7 @@ class BaseLineResultsBuilder
 {
     /**
      * @var array
-     * @phpstan-var array<mixed>
+     * @psalm-var array<mixed>
      */
     private $results;
 

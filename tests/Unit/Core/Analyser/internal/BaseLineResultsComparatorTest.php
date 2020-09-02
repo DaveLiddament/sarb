@@ -39,7 +39,7 @@ class BaseLineResultsComparatorTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<int,array{bool,string,int,string}>
+     * @psalm-return array<int,array{bool,string,int,string}>
      */
     public function dataProvider(): array
     {

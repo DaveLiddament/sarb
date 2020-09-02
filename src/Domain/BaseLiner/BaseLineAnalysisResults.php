@@ -17,7 +17,7 @@ class BaseLineAnalysisResults
     private $baseLineAnalysisResults;
 
     /**
-     * @phpstan-param array<mixed> $array
+     * @psalm-param array<mixed> $array
      *
      * @throws ParseAtLocationException
      */
@@ -75,7 +75,7 @@ class BaseLineAnalysisResults
     /**
      * Return as an array of arrays (ready for storing in a file).
      *
-     * @phpstan-return array<int, array<string,int|string>>
+     * @psalm-return array<int, array<string,int|string>>
      */
     public function asArray(): array
     {

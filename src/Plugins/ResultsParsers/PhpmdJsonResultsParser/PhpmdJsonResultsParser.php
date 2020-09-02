@@ -66,7 +66,7 @@ class PhpmdJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
-     * @phpstan-param array<mixed> $analysisResultsAsArray
+     * @psalm-param array<mixed> $analysisResultsAsArray
      *
      * @throws InvalidFileFormatException
      */
@@ -100,7 +100,7 @@ class PhpmdJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @phpstan-param array<mixed> $violations
+     * @psalm-param array<mixed> $violations
      *
      * @throws InvalidFileFormatException
      */
@@ -125,7 +125,7 @@ class PhpmdJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @phpstan-param array<mixed> $violation
+     * @psalm-param array<mixed> $violation
      *
      * @throws ArrayParseException
      * @throws JsonParseException

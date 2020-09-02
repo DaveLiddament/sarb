@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class FqcnRemoverTest extends TestCase
 {
     /**
-     * @phpstan-return array<string,array{string,string}>
+     * @psalm-return array<string,array{string,string}>
      */
     public function dataProvider(): array
     {

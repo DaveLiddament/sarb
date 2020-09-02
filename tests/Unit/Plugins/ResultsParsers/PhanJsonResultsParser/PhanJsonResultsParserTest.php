@@ -68,7 +68,7 @@ class PhanJsonResultsParserTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<int,array{string}>
+     * @psalm-return array<int,array{string}>
      */
     public function invalidFileProvider(): array
     {

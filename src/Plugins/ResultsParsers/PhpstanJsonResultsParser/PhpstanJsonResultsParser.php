@@ -92,7 +92,7 @@ class PhpstanJsonResultsParser implements ResultsParser
     /**
      * Converts from an array.
      *
-     * @phpstan-param array<mixed> $analysisResultsAsArray
+     * @psalm-param array<mixed> $analysisResultsAsArray
      *
      * @throws ParseAtLocationException
      */
@@ -134,7 +134,7 @@ class PhpstanJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @phpstan-param array<mixed> $analysisResultAsArray
+     * @psalm-param array<mixed> $analysisResultAsArray
      *
      * @throws ArrayParseException
      * @throws JsonParseException

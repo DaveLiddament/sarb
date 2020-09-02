@@ -108,7 +108,7 @@ class BaseLineAnalysisResultTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<string,array{array<mixed>}>
+     * @psalm-return array<string,array{array<mixed>}>
      */
     public function invalidArrayDataProvider(): array
     {
@@ -146,7 +146,7 @@ class BaseLineAnalysisResultTest extends TestCase
 
     /**
      * @dataProvider invalidArrayDataProvider
-     * @phpstan-param array<mixed> $asArray
+     * @psalm-param array<mixed> $asArray
      */
     public function testInvalidArray(array $asArray): void
     {

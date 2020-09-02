@@ -21,7 +21,7 @@ class FileWriter
     /**
      * Write $contents to the file.
      *
-     * @phpstan-param array<mixed> $contents
+     * @psalm-param array<mixed> $contents
      *
      * @throws JsonParseException
      * @throws FileAccessException

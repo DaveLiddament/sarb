@@ -17,7 +17,7 @@ class DiffParserTest extends TestCase
     use ResourceLoaderTrait;
 
     /**
-     * @phpstan-return array<string,array{string, array<int,array{0: OriginalFileName|null, 1: NewFileName, bool, bool, list<LineMutation>}>  }>
+     * @psalm-return array<string,array{string, array<int,array{0: OriginalFileName|null, 1: NewFileName, bool, bool, list<LineMutation>}>  }>
      */
     public function dataProvider()
     {
@@ -234,7 +234,7 @@ class DiffParserTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     * @phpstan-param array<int,array{0: OriginalFileName|null, 1: NewFileName, bool, bool, list<LineMutation>}> $expectedFileMutations
+     * @psalm-param array<int,array{0: OriginalFileName|null, 1: NewFileName, bool, bool, list<LineMutation>}> $expectedFileMutations
      */
     public function testDiffParser(string $inputFile, array $expectedFileMutations): void
     {
@@ -272,8 +272,8 @@ class DiffParserTest extends TestCase
     }
 
     /**
-     * @phpstan-param list<LineMutation> $expectedLineMutations
-     * @phpstan-param list<LineMutation> $actualLineMutations
+     * @psalm-param list<LineMutation> $expectedLineMutations
+     * @psalm-param list<LineMutation> $actualLineMutations
      */
     private function assertLineMutations(array $expectedLineMutations, array $actualLineMutations): void
     {

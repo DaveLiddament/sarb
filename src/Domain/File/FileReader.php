@@ -38,7 +38,7 @@ class FileReader
     /**
      * Returns array representing the contents of the file. Assumes the file must be JSON.
      *
-     * @phpstan-return array<mixed>
+     * @psalm-return array<mixed>
      *
      * @throws JsonParseException
      * @throws FileAccessException

@@ -18,7 +18,7 @@ class JsonUtils
      * Returns JSON string as an associative array representation.
      *
      * @throws JsonParseException
-     * @phpstan-return array<mixed>
+     * @psalm-return array<mixed>
      */
     public static function toArray(string $jsonAsString): array
     {
@@ -35,7 +35,7 @@ class JsonUtils
      * Converts array to a JSON representation in a string.
      *
      * @throws JsonParseException
-     * @phpstan-param array<mixed> $data
+     * @psalm-param array<mixed> $data
      */
     public static function toString(array $data): string
     {

@@ -32,7 +32,7 @@ class LineMutationTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<string,array{LineMutation,LineMutation|null}>
+     * @psalm-return array<string,array{LineMutation,LineMutation|null}>
      */
     public function notEqualDataProvider(): array
     {
@@ -65,7 +65,7 @@ class LineMutationTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<string,array{LineMutation,LineMutation}>
+     * @psalm-return array<string,array{LineMutation,LineMutation}>
      */
     public function equalDataProvider(): array
     {

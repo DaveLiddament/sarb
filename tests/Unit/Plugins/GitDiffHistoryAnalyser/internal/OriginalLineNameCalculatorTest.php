@@ -57,7 +57,7 @@ class OriginalLineNameCalculatorTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<string,array{int,int|null}>
+     * @psalm-return array<string,array{int,int|null}>
      */
     public function dataProvider(): array
     {

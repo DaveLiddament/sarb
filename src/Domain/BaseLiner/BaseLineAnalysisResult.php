@@ -36,7 +36,7 @@ class BaseLineAnalysisResult
     private $message;
 
     /**
-     * @phpstan-param array<mixed> $array
+     * @psalm-param array<mixed> $array
      *
      * @throws ArrayParseException
      */
@@ -88,7 +88,7 @@ class BaseLineAnalysisResult
     }
 
     /**
-     * @phpstan-return array<string,string|int>
+     * @psalm-return array<string,string|int>
      */
     public function asArray(): array
     {
