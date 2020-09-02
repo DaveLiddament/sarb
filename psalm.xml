@@ -6,18 +6,21 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config file:///vagrant/skeleton-project/vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="src" />
+        <directory name="src"/>
+        <directory name="tests"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
+            <directory name="tests/scratchpad"/>
+            <directory name="tests/resources"/>
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <LessSpecificReturnType errorLevel="info" />
+        <LessSpecificReturnType errorLevel="info"/>
     </issueHandlers>
 
     <stubs>
-	    <file name="stubs/Symfony/Component/DependencyInjection/ContainerBuilder.stub" />
-	    <file name="stubs/Webmozart/Assert/Assert.stub" />
+	    <file name="stubs/Symfony/Component/DependencyInjection/ContainerBuilder.stub"/>
+	    <file name="stubs/Webmozart/Assert/Assert.stub"/>
     </stubs>
-</psalm>
+<plugins><pluginClass class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>
