@@ -27,12 +27,16 @@ class FileMutation
     private $newFileName;
 
     /**
+     * @psalm-var list<LineMutation>
+     *
      * @var LineMutation[]
      */
     private $lineMutations;
 
     /**
      * FileMutation constructor.
+     *
+     * @psalm-param list<LineMutation> $lineMutations
      *
      * @param LineMutation[] $lineMutations
      */
@@ -61,6 +65,8 @@ class FileMutation
     }
 
     /**
+     * @psalm-return list<LineMutation>
+     *
      * @return LineMutation[]
      */
     public function getLineMutations(): array

@@ -36,6 +36,8 @@ class FileMutationBuilder
     private $newFileName;
 
     /**
+     * @psalm-var list<LineMutation>
+     *
      * @var LineMutation[]
      */
     private $lineMutations;
