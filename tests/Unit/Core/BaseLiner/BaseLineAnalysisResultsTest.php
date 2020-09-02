@@ -52,7 +52,7 @@ class BaseLineAnalysisResultsTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string,array{string,array<mixed>}>
      */
     public function invalidDataProvider(): array
     {

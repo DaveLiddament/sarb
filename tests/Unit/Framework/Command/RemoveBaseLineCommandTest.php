@@ -196,7 +196,7 @@ EOF;
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<int,array{int,Throwable}>
      */
     public function exceptionDataProvider(): array
     {

@@ -54,7 +54,7 @@ class BaseLineImporterTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<int,array{string}>
      */
     public function invalidFileDataProvider(): array
     {

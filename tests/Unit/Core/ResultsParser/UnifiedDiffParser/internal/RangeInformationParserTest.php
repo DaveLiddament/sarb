@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 class RangeInformationParserTest extends TestCase
 {
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<int,array{string,int,int,int,int}>
      */
     public function dataProvider(): array
     {
@@ -46,7 +46,7 @@ class RangeInformationParserTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<int,array{string}>
      */
     public function invalidDataProvider(): array
     {

@@ -108,7 +108,7 @@ class BaseLineAnalysisResultTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string,array{array<mixed>}>
      */
     public function invalidArrayDataProvider(): array
     {
@@ -134,8 +134,8 @@ class BaseLineAnalysisResultTest extends TestCase
                     'message' => self::MESSAGE_1,
                 ],
             ],
-            [
-                'missingMessage' => [
+            'missingMessage' => [
+                [
                     'lineNumber' => self::LINE_NUMBER_1,
                     'fileName' => self::FILE_NAME_1,
                     'type' => self::TYPE_1,

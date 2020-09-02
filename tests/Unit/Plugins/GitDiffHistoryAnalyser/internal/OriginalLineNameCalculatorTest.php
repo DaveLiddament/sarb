@@ -57,7 +57,7 @@ class OriginalLineNameCalculatorTest extends TestCase
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string,array{int,int|null}>
      */
     public function dataProvider(): array
     {

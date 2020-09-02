@@ -15,7 +15,7 @@ class InvalidPhpmdFileFormatTest extends TestCase
     use ResourceLoaderTrait;
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<int,array{string}>
      */
     public function filenameDataProvider(): array
     {
