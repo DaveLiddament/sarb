@@ -29,7 +29,7 @@ class ResultsPruner implements ResultsPrunerInterface
 
     public function getPrunedResults(
         FileName $baseLineFileName,
-        string $inputAnalysisResultsAsString,
+        string $expectedAnalysisResults,
         ProjectRoot $projectRoot
     ): PrunedResults {
         $baseLine = $this->baseLineImporter->import($baseLineFileName);
@@ -37,7 +37,7 @@ class ResultsPruner implements ResultsPrunerInterface
         $historyFactory = $baseLine->getHistoryFactory();
 
         $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
-        $inputAnalysisResults = $resultsParser->convertFromString($inputAnalysisResultsAsString, $projectRoot);
+        $inputAnalysisResults = $resultsParser->convertFromString($expectedAnalysisResults, $projectRoot);
 
         $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
             $inputAnalysisResults,
