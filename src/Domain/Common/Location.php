@@ -24,8 +24,18 @@ class Location
      */
     private $lineNumber;
 
+    public static function fromAbsoluteFileName(
+        AbsoluteFileName $absoluteFileName,
+        ProjectRoot $projectRoot,
+        LineNumber $lineNumber
+    ): self {
+        $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName->getFileName());
+
+        return new self(new FileName($relativeFileName), $lineNumber);
+    }
+
     /**
-     * Location constructor.
+     * @deprecated use named constructor
      */
     public function __construct(FileName $fileName, LineNumber $lineNumber)
     {
