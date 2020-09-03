@@ -23,6 +23,10 @@ class Location
      * @var LineNumber
      */
     private $lineNumber;
+    /**
+     * @var AbsoluteFileName
+     */
+    private $absoluteFileName;
 
     public static function fromAbsoluteFileName(
         AbsoluteFileName $absoluteFileName,
@@ -31,16 +35,14 @@ class Location
     ): self {
         $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName->getFileName());
 
-        return new self(new FileName($relativeFileName), $lineNumber);
+        return new self($absoluteFileName, new FileName($relativeFileName), $lineNumber);
     }
 
-    /**
-     * @deprecated use named constructor
-     */
-    public function __construct(FileName $fileName, LineNumber $lineNumber)
+    private function __construct(AbsoluteFileName $absoluteFileName, FileName $fileName, LineNumber $lineNumber)
     {
         $this->fileName = $fileName;
         $this->lineNumber = $lineNumber;
+        $this->absoluteFileName = $absoluteFileName;
     }
 
     public function getFileName(): FileName
@@ -51,6 +53,11 @@ class Location
     public function getLineNumber(): LineNumber
     {
         return $this->lineNumber;
+    }
+
+    public function getAbsoluteFileName(): AbsoluteFileName
+    {
+        return $this->absoluteFileName;
     }
 
     /**

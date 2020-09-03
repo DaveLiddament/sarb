@@ -27,7 +27,7 @@ EOF;
     {
         $expectedOuput = <<<EOF
 
-FILE: FILE_1
+FILE: /FILE_1
 +------+-------------+
 | Line | Description |
 +------+-------------+
@@ -35,7 +35,7 @@ FILE: FILE_1
 | 12   | MESSAGE_2   |
 +------+-------------+
 
-FILE: FILE_2
+FILE: /FILE_2
 +------+-------------+
 | Line | Description |
 +------+-------------+

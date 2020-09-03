@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Analyser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
@@ -38,6 +37,8 @@ class BaseLineResultsRemoveTest extends TestCase
 
     public function testRemoveBaseLineResults(): void
     {
+        $projectRoot = new ProjectRoot('/home/sarb', '/home/sarb');
+
         // Create baseline
         $baselineAnalysisResultsBuilder = new BaseLineResultsBuilder();
         $baselineAnalysisResultsBuilder->add(self::FILE_1, self::LINE_10, self::TYPE_1);
@@ -55,14 +56,13 @@ class BaseLineResultsRemoveTest extends TestCase
         // Create latest results
         $latestAnalysisResultsBuilder = new AnalysisResultsBuilder();
         // This is in the baseline (it was line 10 in baseline)
-        $this->addAnalysisResult($latestAnalysisResultsBuilder, self::FILE_1, self::LINE_11, self::TYPE_1);
+        $this->addAnalysisResult($latestAnalysisResultsBuilder, $projectRoot, self::FILE_1_FULL_PATH, self::LINE_11, self::TYPE_1);
         // Added since baseline
-        $this->addAnalysisResult($latestAnalysisResultsBuilder, self::FILE_1, self::LINE_9, self::TYPE_2);
+        $this->addAnalysisResult($latestAnalysisResultsBuilder, $projectRoot, self::FILE_1_FULL_PATH, self::LINE_9, self::TYPE_2);
 
         // Prune baseline results from latest results
         $historyAnalyser = new DiffHistoryAnalyser($fileMutations);
         $baseLineResultsRemover = new BaseLineResultsRemover();
-        $projectRoot = new ProjectRoot('/home/sarb', '/home/sarb');
         $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine(
             $latestAnalysisResultsBuilder->build(),
             $historyAnalyser,
@@ -80,11 +80,11 @@ class BaseLineResultsRemoveTest extends TestCase
         $this->assertCount(1, $actualResults);
 
         $actualAnalysisResult = $actualResults[0];
-        $expectedFileName = new FileName(self::FILE_1_FULL_PATH);
+        $expectedFileName = new AbsoluteFileName(self::FILE_1_FULL_PATH);
         $expectedLineNumber = new LineNumber(self::LINE_9);
         $expectedType = new Type(self::TYPE_2);
 
-        $this->assertTrue($expectedFileName->isEqual($actualAnalysisResult->getLocation()->getFileName()));
+        $this->assertTrue($expectedFileName->isEqual($actualAnalysisResult->getLocation()->getAbsoluteFileName()));
         $this->assertTrue($expectedLineNumber->isEqual($actualAnalysisResult->getLocation()->getLineNumber()));
         $this->assertTrue($expectedType->isEqual($actualAnalysisResult->getType()));
     }

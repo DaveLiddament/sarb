@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\ResultsParser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use PHPUnit\Framework\TestCase;
@@ -11,8 +12,8 @@ use PHPUnit\Framework\TestCase;
 class AnalysisResultsTest extends TestCase
 {
     use AnalysisResultsAdderTrait;
-    private const FILE_A = 'FILE_A';
-    private const FILE_B = 'FILE_B';
+    private const FILE_A = '/FILE_A';
+    private const FILE_B = '/FILE_B';
     private const LINE_1 = 1;
     private const LINE_2 = 2;
     private const TYPE = 'TYPE_A';
@@ -22,9 +23,15 @@ class AnalysisResultsTest extends TestCase
      */
     private $analysisResultsBuilder;
 
+    /**
+     * @var ProjectRoot
+     */
+    private $projectRoot;
+
     protected function setUp(): void
     {
         $this->analysisResultsBuilder = new AnalysisResultsBuilder();
+        $this->projectRoot = new ProjectRoot('/', '/');
     }
 
     public function testNoResults(): void
@@ -37,7 +44,7 @@ class AnalysisResultsTest extends TestCase
 
     public function test1AnalysisResult(): void
     {
-        $analysisResult = $this->buildAnalysisResult(self::FILE_A, self::LINE_1, self::TYPE);
+        $analysisResult = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE);
         $this->analysisResultsBuilder->addAnalysisResult($analysisResult);
         $analysisResults = $this->analysisResultsBuilder->build();
         $this->assertFalse($analysisResults->hasNoIssues());
@@ -47,9 +54,9 @@ class AnalysisResultsTest extends TestCase
 
     public function test3AnalysisResultsAreOrderedCorrectly(): void
     {
-        $analysisResult1 = $this->buildAnalysisResult(self::FILE_A, self::LINE_1, self::TYPE);
-        $analysisResult2 = $this->buildAnalysisResult(self::FILE_A, self::LINE_2, self::TYPE);
-        $analysisResult3 = $this->buildAnalysisResult(self::FILE_B, self::LINE_1, self::TYPE);
+        $analysisResult1 = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE);
+        $analysisResult2 = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_2, self::TYPE);
+        $analysisResult3 = $this->buildAnalysisResult($this->projectRoot, self::FILE_B, self::LINE_1, self::TYPE);
 
         // Add results in none expected order
         $this->analysisResultsBuilder->addAnalysisResult($analysisResult2);

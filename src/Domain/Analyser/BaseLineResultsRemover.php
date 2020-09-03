@@ -15,8 +15,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
@@ -39,18 +37,7 @@ class BaseLineResultsRemover
 
         foreach ($latestAnalysisResults->getAnalysisResults() as $analysisResult) {
             if (!$this->isInHistoricResults($analysisResult, $baseLineResultsComparator, $historyAnalyser)) {
-                $location = new Location(
-                    new FileName($projectRoot->getFullPath($analysisResult->getLocation()->getFileName()->getFileName())),
-                    $analysisResult->getLocation()->getLineNumber()
-                );
-
-                $issueSinceBaseLine = new AnalysisResult(
-                  $location,
-                  $analysisResult->getType(),
-                  $analysisResult->getMessage(),
-                  $analysisResult->getFullDetails()
-                );
-                $prunedAnalysisResultsBuilder->addAnalysisResult($issueSinceBaseLine);
+                $prunedAnalysisResultsBuilder->addAnalysisResult($analysisResult);
             }
         }
 

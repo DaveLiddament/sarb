@@ -21,26 +21,26 @@ trait AnalysisResultsAdderTrait
      */
     private function addAnalysisResult(
         AnalysisResultsBuilder $analysisResultsBuilder,
-        string $fileName,
+        ProjectRoot $projectRoot,
+        string $absoluteFileName,
         int $lineNumber,
         string $type
     ): void {
-        $analysisResult = $this->buildAnalysisResult($fileName, $lineNumber, $type);
+        $analysisResult = $this->buildAnalysisResult($projectRoot, $absoluteFileName, $lineNumber, $type);
         $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }
 
     private function buildAnalysisResult(
-        string $fileName,
+        ProjectRoot $projectRoot,
+        string $absoluteFileName,
         int $lineNumber,
         string $type
     ): AnalysisResult {
         $message = "message-$type";
-        $details = "$fileName-$lineNumber-$type-$message";
-
-        $projectRoot = new ProjectRoot('/', '/');
+        $details = "$absoluteFileName-$lineNumber-$type-$message";
 
         $location = Location::fromAbsoluteFileName(
-            new AbsoluteFileName("/$fileName"),
+            new AbsoluteFileName($absoluteFileName),
             $projectRoot,
             new LineNumber($lineNumber)
         );

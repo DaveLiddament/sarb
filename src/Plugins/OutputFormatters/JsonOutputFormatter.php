@@ -18,7 +18,7 @@ class JsonOutputFormatter implements OutputFormatter
         foreach ($baseLineRemovedResults->getAnalysisResults() as $analysisResult) {
             $location = $analysisResult->getLocation();
             $results[] = [
-                'file' => $location->getFileName()->getFileName(),
+                'file' => $location->getAbsoluteFileName()->getFileName(),
                 'line' => $location->getLineNumber()->getLineNumber(),
                 'type' => $analysisResult->getType()->getType(),
                 'message' => $analysisResult->getMessage(),

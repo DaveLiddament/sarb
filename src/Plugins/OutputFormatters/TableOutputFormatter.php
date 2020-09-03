@@ -45,7 +45,7 @@ class TableOutputFormatter implements OutputFormatter
         /** @var Table|null $currentTable */
         $currentTable = null;
         foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $fileName = $analysisResult->getLocation()->getFileName();
+            $fileName = $analysisResult->getLocation()->getAbsoluteFileName();
 
             if (!$fileName->isEqual($currentFileName)) {
                 $this->renderTable($currentTable);

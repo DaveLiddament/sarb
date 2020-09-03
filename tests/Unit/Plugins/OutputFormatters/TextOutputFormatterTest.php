@@ -26,13 +26,13 @@ EOF;
     public function testWithIssues(): void
     {
         $expectedOuput = <<<EOF
-FILE_1:10 - TYPE_1
+/FILE_1:10 - TYPE_1
 MESSAGE_1
 
-FILE_1:12 - TYPE_2
+/FILE_1:12 - TYPE_2
 MESSAGE_2
 
-FILE_2:0 - TYPE_1
+/FILE_2:0 - TYPE_1
 MESSAGE_3
 
 

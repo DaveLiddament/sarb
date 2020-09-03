@@ -21,7 +21,7 @@ class TextOutputFormatter implements OutputFormatter
             $location = $analysisResult->getLocation();
 
             $output .= <<<EOF
-{$location->getFileName()->getFileName()}:{$location->getLineNumber()->getLineNumber()} - {$analysisResult->getType()->getType()}
+{$location->getAbsoluteFileName()->getFileName()}:{$location->getLineNumber()->getLineNumber()} - {$analysisResult->getType()->getType()}
 {$analysisResult->getMessage()}
 
 
