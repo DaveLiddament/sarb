@@ -15,9 +15,9 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 class Location
 {
     /**
-     * @var FileName
+     * @var RelativeFileName
      */
-    private $fileName;
+    private $relativeFileName;
 
     /**
      * @var LineNumber
@@ -35,19 +35,22 @@ class Location
     ): self {
         $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName->getFileName());
 
-        return new self($absoluteFileName, new FileName($relativeFileName), $lineNumber);
+        return new self($absoluteFileName, new RelativeFileName($relativeFileName), $lineNumber);
     }
 
-    private function __construct(AbsoluteFileName $absoluteFileName, FileName $fileName, LineNumber $lineNumber)
-    {
-        $this->fileName = $fileName;
+    private function __construct(
+        AbsoluteFileName $absoluteFileName,
+        RelativeFileName $relativeFileName,
+        LineNumber $lineNumber
+    ) {
+        $this->relativeFileName = $relativeFileName;
         $this->lineNumber = $lineNumber;
         $this->absoluteFileName = $absoluteFileName;
     }
 
-    public function getFileName(): FileName
+    public function getRelativeFileName(): RelativeFileName
     {
-        return $this->fileName;
+        return $this->relativeFileName;
     }
 
     public function getLineNumber(): LineNumber
@@ -65,8 +68,8 @@ class Location
      */
     public function compareTo(self $other): int
     {
-        if ($this->fileName->getFileName() !== $other->fileName->getFileName()) {
-            return $this->fileName->getFileName() <=> $other->fileName->getFileName();
+        if ($this->relativeFileName->getFileName() !== $other->relativeFileName->getFileName()) {
+            return $this->relativeFileName->getFileName() <=> $other->relativeFileName->getFileName();
         }
 
         return $this->lineNumber->getLineNumber() <=> $other->lineNumber->getLineNumber();

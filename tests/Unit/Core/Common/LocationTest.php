@@ -21,6 +21,6 @@ class LocationTest extends TestCase
         $location = Location::fromAbsoluteFileName($absoluteFileName, $projectRoot, $lineNumber);
 
         $this->assertSame($lineNumber, $location->getLineNumber());
-        $this->assertSame('src/File.php', $location->getFileName()->getFileName());
+        $this->assertSame('src/File.php', $location->getRelativeFileName()->getFileName());
     }
 }

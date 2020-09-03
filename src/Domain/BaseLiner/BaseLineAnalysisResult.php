@@ -7,6 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
@@ -19,7 +20,7 @@ class BaseLineAnalysisResult
     private const MESSAGE = 'message';
 
     /**
-     * @var FileName
+     * @var RelativeFileName
      */
     private $fileName;
     /**
@@ -43,7 +44,7 @@ class BaseLineAnalysisResult
     public static function fromArray(array $array): self
     {
         $lineNumber = new LineNumber(ArrayUtils::getIntValue($array, self::LINE_NUMBER));
-        $fileName = new FileName(ArrayUtils::getStringValue($array, self::FILE_NAME));
+        $fileName = new RelativeFileName(ArrayUtils::getStringValue($array, self::FILE_NAME));
         $type = new Type(ArrayUtils::getStringValue($array, self::TYPE));
         $message = ArrayUtils::getStringValue($array, self::MESSAGE);
 
@@ -51,7 +52,7 @@ class BaseLineAnalysisResult
     }
 
     public static function make(
-        FileName $fileName,
+        RelativeFileName $fileName,
         LineNumber $lineNumber,
         Type $type,
         string $message
@@ -59,7 +60,7 @@ class BaseLineAnalysisResult
         return new self($fileName, $lineNumber, $type, $message);
     }
 
-    private function __construct(FileName $fileName, LineNumber $lineNumber, Type $type, string $message)
+    private function __construct(RelativeFileName $fileName, LineNumber $lineNumber, Type $type, string $message)
     {
         $this->fileName = $fileName;
         $this->lineNumber = $lineNumber;
@@ -67,7 +68,7 @@ class BaseLineAnalysisResult
         $this->message = $message;
     }
 
-    public function getFileName(): FileName
+    public function getFileName(): RelativeFileName
     {
         return $this->fileName;
     }
@@ -106,7 +107,7 @@ class BaseLineAnalysisResult
     public function isMatch(PreviousLocation $location, Type $type): bool
     {
         return
-            $this->fileName->isEqual($location->getFileName()) &&
+            $this->fileName->isEqual($location->getRelativeFileName()) &&
             $this->lineNumber->isEqual($location->getLineNumber()) &&
             $this->type->isEqual($type);
     }

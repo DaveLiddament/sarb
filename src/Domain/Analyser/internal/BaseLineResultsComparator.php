@@ -58,7 +58,7 @@ class BaseLineResultsComparator
 
         // Now check through to history AnalysisResults to see if there is an exact match.
         // Check if file is in baseline
-        $fileNameAsString = $previousLocation->getFileName()->getFileName();
+        $fileNameAsString = $previousLocation->getRelativeFileName()->getFileName();
         if (!array_key_exists($fileNameAsString, $this->baseLine)) {
             return false;
         }

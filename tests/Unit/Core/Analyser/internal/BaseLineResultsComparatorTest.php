@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Analyser\internal;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
@@ -107,7 +107,11 @@ class BaseLineResultsComparatorTest extends TestCase
      */
     public function testInBaseLine(bool $expected, string $fileName, int $lineNumber, string $type): void
     {
-        $location = PreviousLocation::fromFileNameAndLineNumber(new FileName($fileName), new LineNumber($lineNumber));
+        $location = PreviousLocation::fromFileNameAndLineNumber(
+            new RelativeFileName($fileName),
+            new LineNumber($lineNumber)
+        );
+
         $actual = $this->baseLineResultsComparator->isInBaseLine($location, new Type($type));
         $this->assertSame($expected, $actual);
     }

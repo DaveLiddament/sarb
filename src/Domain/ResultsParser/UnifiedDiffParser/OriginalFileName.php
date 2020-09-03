@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 
 /**
  * Wrapper class to reduce the chance of mixing Original and New FileNames.
  */
-class OriginalFileName extends FileName
+class OriginalFileName extends RelativeFileName
 {
 }

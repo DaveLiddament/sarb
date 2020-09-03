@@ -50,7 +50,7 @@ class BaseLineResultsRemover
         HistoryAnalyser $historyAnalyser
     ): bool {
         $location = $analysisResult->getLocation();
-        $previousLocation = $historyAnalyser->getPreviousLocation($location->getFileName(), $location->getLineNumber());
+        $previousLocation = $historyAnalyser->getPreviousLocation($location->getRelativeFileName(), $location->getLineNumber());
 
         return $baseLineResultsComparator->isInBaseLine($previousLocation, $analysisResult->getType());
     }

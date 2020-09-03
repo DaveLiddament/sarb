@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\BaseLiner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResult;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use PHPUnit\Framework\TestCase;
@@ -23,9 +23,9 @@ class BaseLineAnalysisResultTest extends TestCase
     private const MESSAGE_1 = 'MESSAGE_1';
 
     /**
-     * @var FileName
+     * @var RelativeFileName
      */
-    private $fileName;
+    private $relativeFileName;
 
     /**
      * @var LineNumber
@@ -39,7 +39,7 @@ class BaseLineAnalysisResultTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fileName = new FileName(self::FILE_NAME_1);
+        $this->relativeFileName = new RelativeFileName(self::FILE_NAME_1);
         $this->lineNumber = new LineNumber(self::LINE_NUMBER_1);
         $this->type = new Type(self::TYPE_1);
     }
@@ -48,7 +48,7 @@ class BaseLineAnalysisResultTest extends TestCase
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
 
-        $this->assertSame($this->fileName, $baseLineAnalysisResult->getFileName());
+        $this->assertSame($this->relativeFileName, $baseLineAnalysisResult->getFileName());
         $this->assertSame($this->lineNumber, $baseLineAnalysisResult->getLineNumber());
         $this->assertSame($this->type, $baseLineAnalysisResult->getType());
         $this->assertSame(self::MESSAGE_1, $baseLineAnalysisResult->getMessage());
@@ -62,12 +62,12 @@ class BaseLineAnalysisResultTest extends TestCase
         $unserialisedBaseLineAnalysisResult = BaseLineAnalysisResult::fromArray($asArray);
 
         // Should not be identical objects
-        $this->assertNotSame($this->fileName, $unserialisedBaseLineAnalysisResult->getFileName());
+        $this->assertNotSame($this->relativeFileName, $unserialisedBaseLineAnalysisResult->getFileName());
         $this->assertNotSame($this->lineNumber, $unserialisedBaseLineAnalysisResult->getLineNumber());
         $this->assertNotSame($this->type, $unserialisedBaseLineAnalysisResult->getType());
 
         // Values should be the same though
-        $this->assertTrue($this->fileName->isEqual($unserialisedBaseLineAnalysisResult->getFileName()));
+        $this->assertTrue($this->relativeFileName->isEqual($unserialisedBaseLineAnalysisResult->getFileName()));
         $this->assertTrue($this->lineNumber->isEqual($unserialisedBaseLineAnalysisResult->getLineNumber()));
         $this->assertTrue($this->type->isEqual($unserialisedBaseLineAnalysisResult->getType()));
         $this->assertSame(self::MESSAGE_1, $unserialisedBaseLineAnalysisResult->getMessage());
@@ -76,14 +76,14 @@ class BaseLineAnalysisResultTest extends TestCase
     public function testIsActualMatch(): void
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
-        $location = PreviousLocation::fromFileNameAndLineNumber($this->fileName, $this->lineNumber);
+        $location = PreviousLocation::fromFileNameAndLineNumber($this->relativeFileName, $this->lineNumber);
         $this->assertTrue($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_1)));
     }
 
     public function testIsMatchDifferentType(): void
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
-        $location = PreviousLocation::fromFileNameAndLineNumber($this->fileName, $this->lineNumber);
+        $location = PreviousLocation::fromFileNameAndLineNumber($this->relativeFileName, $this->lineNumber);
         $this->assertFalse($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_2)));
     }
 
@@ -91,7 +91,7 @@ class BaseLineAnalysisResultTest extends TestCase
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
         $previousLocation = PreviousLocation::fromFileNameAndLineNumber(
-            new FileName(self::FILE_NAME_2),
+            new RelativeFileName(self::FILE_NAME_2),
             $this->lineNumber
         );
         $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
@@ -101,7 +101,7 @@ class BaseLineAnalysisResultTest extends TestCase
     {
         $baseLineAnalysisResult = $this->createBaseLineResult();
         $previousLocation = PreviousLocation::fromFileNameAndLineNumber(
-            $this->fileName,
+            $this->relativeFileName,
             new LineNumber(self::LINE_NUMBER_2)
         );
         $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
@@ -157,7 +157,7 @@ class BaseLineAnalysisResultTest extends TestCase
     private function createBaseLineResult(): BaseLineAnalysisResult
     {
         $baseLineAnalysisResult = BaseLineAnalysisResult::make(
-            $this->fileName,
+            $this->relativeFileName,
             $this->lineNumber,
             $this->type,
             self::MESSAGE_1

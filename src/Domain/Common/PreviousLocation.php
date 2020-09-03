@@ -17,9 +17,9 @@ use Webmozart\Assert\Assert;
 class PreviousLocation
 {
     /**
-     * @var FileName|null
+     * @var RelativeFileName|null
      */
-    private $fileName;
+    private $relativeFileName;
     /**
      * @var LineNumber|null
      */
@@ -30,27 +30,27 @@ class PreviousLocation
         return new self(null, null);
     }
 
-    public static function fromFileNameAndLineNumber(FileName $fileName, LineNumber $lineNumber): self
+    public static function fromFileNameAndLineNumber(RelativeFileName $relativeFileName, LineNumber $lineNumber): self
     {
-        return new self($fileName, $lineNumber);
+        return new self($relativeFileName, $lineNumber);
     }
 
-    private function __construct(?FileName $fileName, ?LineNumber $lineNumber)
+    private function __construct(?RelativeFileName $relativeFileName, ?LineNumber $lineNumber)
     {
-        $this->fileName = $fileName;
+        $this->relativeFileName = $relativeFileName;
         $this->lineNumber = $lineNumber;
     }
 
     public function isNoPreviousLocation(): bool
     {
-        return null === $this->fileName;
+        return null === $this->relativeFileName;
     }
 
-    public function getFileName(): FileName
+    public function getRelativeFileName(): RelativeFileName
     {
-        Assert::notNull($this->fileName, 'Trying to get FileName when PreviousLocation is not set');
+        Assert::notNull($this->relativeFileName, 'Trying to get FileName when PreviousLocation is not set');
 
-        return $this->fileName;
+        return $this->relativeFileName;
     }
 
     public function getLineNumber(): LineNumber

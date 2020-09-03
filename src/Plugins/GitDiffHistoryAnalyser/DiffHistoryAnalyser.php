@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\FileMutations;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\NewFileName;
@@ -39,7 +39,7 @@ class DiffHistoryAnalyser implements HistoryAnalyser
     /**
      * Returns the location of the line number in the baseline (if it exists).
      */
-    public function getPreviousLocation(FileName $fileName, LineNumber $lineNumber): PreviousLocation
+    public function getPreviousLocation(RelativeFileName $fileName, LineNumber $lineNumber): PreviousLocation
     {
         $newFileName = new NewFileName($fileName->getFileName());
 

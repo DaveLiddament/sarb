@@ -15,7 +15,7 @@ trait AssertResultMatch
         int $lineNumber,
         string $type
     ): void {
-        Assert::assertSame($fileName, $analysisResult->getLocation()->getFileName()->getFileName());
+        Assert::assertSame($fileName, $analysisResult->getLocation()->getRelativeFileName()->getFileName());
         Assert::assertSame($lineNumber, $analysisResult->getLocation()->getLineNumber()->getLineNumber());
         Assert::assertSame($type, $analysisResult->getType()->getType());
     }

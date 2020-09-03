@@ -78,7 +78,7 @@ class AnalysisResult
     public function asBaseLineAnalysisResult(): BaseLineAnalysisResult
     {
         return BaseLineAnalysisResult::make(
-            $this->location->getFileName(),
+            $this->location->getRelativeFileName(),
             $this->location->getLineNumber(),
             $this->type,
             $this->message

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\LineMutation;
@@ -126,7 +126,7 @@ class DiffHistoryAnalyserTest extends TestCase
         $diffHistoryAnalyser = new DiffHistoryAnalyser($fileMutations);
 
         return $diffHistoryAnalyser->getPreviousLocation(
-            new FileName($fileName),
+            new RelativeFileName($fileName),
             new LineNumber($lineNumber)
         );
     }
@@ -134,7 +134,7 @@ class DiffHistoryAnalyserTest extends TestCase
     private function assertPreviousLocation(string $fileName, int $lineNumber, PreviousLocation $previousLocation): void
     {
         $this->assertFalse($previousLocation->isNoPreviousLocation());
-        $this->assertSame($fileName, $previousLocation->getFileName()->getFileName());
+        $this->assertSame($fileName, $previousLocation->getRelativeFileName()->getFileName());
         $this->assertSame($lineNumber, $previousLocation->getLineNumber()->getLineNumber());
     }
 
