@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Command;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
@@ -254,7 +254,7 @@ EOF;
         $mockBaseLineCreator = new MockBaseLineCreator(
             $expectedHistoryFactory,
             $expectedResultsParser,
-            new FileName($baselineFileName),
+            new BaseLineFileName($baselineFileName),
             $projectRoot,
             self::INPUT_STRING_1, // CommandTest adds line end
             $exception

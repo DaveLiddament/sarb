@@ -6,7 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImporter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 
 class ResultsPruner implements ResultsPrunerInterface
@@ -28,7 +28,7 @@ class ResultsPruner implements ResultsPrunerInterface
     }
 
     public function getPrunedResults(
-        FileName $baseLineFileName,
+        BaseLineFileName $baseLineFileName,
         string $analysisResults,
         ProjectRoot $projectRoot
     ): PrunedResults {

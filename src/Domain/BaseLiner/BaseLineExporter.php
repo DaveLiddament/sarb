@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
@@ -42,7 +43,7 @@ class BaseLineExporter
      * @throws FileAccessException
      * @throws JsonParseException
      */
-    public function export(BaseLine $baseLine, FileName $fileName): void
+    public function export(BaseLine $baseLine, BaseLineFileName $fileName): void
     {
         $asArray = [
             BaseLine::HISTORY_ANALYSER => $baseLine->getHistoryFactory()->getIdentifier(),

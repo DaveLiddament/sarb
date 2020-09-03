@@ -6,7 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Comm
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
@@ -254,7 +254,7 @@ EOF;
         );
 
         $mockResultsPruner = new MockResultsPruner(
-            new FileName($baselineFileName),
+            new BaseLineFileName($baselineFileName),
             self::INPUT_STRING_1,
             $prunedResults,
             $projectRoot,

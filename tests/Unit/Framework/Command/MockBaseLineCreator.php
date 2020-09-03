@@ -6,6 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Comm
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Creator\BaseLineCreatorInterface;
@@ -64,7 +65,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
     public function createBaseLine(
         HistoryFactory $historyFactory,
         ResultsParser $resultsParser,
-        FileName $baselineFile,
+        BaseLineFileName $baselineFile,
         ProjectRoot $projectRoot,
         string $analysisResultsAsString
     ): BaseLine {

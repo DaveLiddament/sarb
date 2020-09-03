@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactoryLookupService;
@@ -64,7 +64,7 @@ class BaseLineImporter
      *
      * @throws BaseLineImportException
      */
-    public function import(FileName $fileName): BaseLine
+    public function import(BaseLineFileName $fileName): BaseLine
     {
         try {
             $baseLineData = $this->fileReader->readJsonFile($fileName);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use PHPUnit\Framework\Assert;
 
 trait ResourceLoaderTrait
@@ -32,8 +32,8 @@ trait ResourceLoaderTrait
         return __DIR__.'/../resources/'.$resourceName;
     }
 
-    private function getFileName(string $resourceName): FileName
+    private function getFileName(string $resourceName): BaseLineFileName
     {
-        return new FileName($this->getPath($resourceName));
+        return new BaseLineFileName($this->getPath($resourceName));
     }
 }

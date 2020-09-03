@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,8 +31,8 @@ class BaseLineFileHelper
     /**
      * @throws InvalidConfigException
      */
-    public static function getBaselineFile(InputInterface $input): FileName
+    public static function getBaselineFile(InputInterface $input): BaseLineFileName
     {
-        return new FileName(CliConfigReader::getArgument($input, self::BASELINE_FILE));
+        return new BaseLineFileName(CliConfigReader::getArgument($input, self::BASELINE_FILE));
     }
 }

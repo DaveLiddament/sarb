@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
@@ -52,7 +53,7 @@ class MockResultsPruner implements ResultsPrunerInterface
     }
 
     public function getPrunedResults(
-        FileName $baseLineFileName,
+        BaseLineFileName $baseLineFileName,
         string $analysisResults,
         ProjectRoot $projectRoot
     ): PrunedResults {
