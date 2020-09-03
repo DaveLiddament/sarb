@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
@@ -40,13 +40,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
     private const FILES = 'files';
     private const MESSAGES = 'messages';
     private const MESSAGE = 'message';
-    private const ABSOLUTE_FILE_PATH = 'absoluteFilePath';
-    private const ERRORS = 'errors';
-    private const WARNINGS = 'warnings';
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         try {
@@ -58,17 +52,11 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
         return $this->convertFromArray($asArray, $projectRoot);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): Identifier
     {
         return new PhpCodeSnifferJsonIdentifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function showTypeGuessingWarning(): bool
     {
         return false;
@@ -92,26 +80,25 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
         }
 
         /** @psalm-suppress MixedAssignment */
-        foreach ($filesErrors as $absoluteFilePath => $fileErrors) {
+        foreach ($filesErrors as $absoluteFileNameAsString => $fileErrors) {
             try {
-                if (!is_string($absoluteFilePath)) {
+                if (!is_string($absoluteFileNameAsString)) {
                     throw new ArrayParseException('Expected filename to be of type string');
                 }
 
                 ArrayUtils::assertArray($fileErrors);
 
-                $fileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFilePath);
-                $fileName = new FileName($fileNameAsString);
+                $absoluteFileName = new AbsoluteFileName($absoluteFileNameAsString);
 
                 $messages = ArrayUtils::getArrayValue($fileErrors, self::MESSAGES);
 
                 foreach ($messages as $message) {
                     ArrayUtils::assertArray($message);
-                    $analysisResult = $this->convertAnalysisResultFromArray($message, $fileName, $absoluteFilePath);
+                    $analysisResult = $this->convertAnalysisResultFromArray($message, $absoluteFileName, $projectRoot);
                     $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 }
             } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
-                throw ParseAtLocationException::issueParsing($e, "Result [$absoluteFilePath]");
+                throw ParseAtLocationException::issueParsing($e, "Result [$absoluteFileNameAsString]");
             }
         }
 
@@ -126,15 +113,16 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
-        FileName $fileName,
-        string $absoluteFilePath
+        AbsoluteFileName $absoluteFileName,
+        ProjectRoot $projectRoot
     ): AnalysisResult {
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $rawMessage = ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE);
         $rawSource = ArrayUtils::getStringValue($analysisResultAsArray, self::SOURCE);
 
-        $location = new Location(
-            $fileName,
+        $location = Location::fromAbsoluteFileName(
+            $absoluteFileName,
+            $projectRoot,
             new LineNumber($lineAsInt)
         );
 
@@ -142,10 +130,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
             $location,
             new Type($rawSource),
             $rawMessage,
-            JsonUtils::toString([
-                self::ABSOLUTE_FILE_PATH => $absoluteFilePath,
-                self::MESSAGE => $analysisResultAsArray,
-            ])
+            JsonUtils::toString($analysisResultAsArray)
         );
     }
 }

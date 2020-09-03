@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
@@ -84,13 +84,12 @@ class PhpmdJsonResultsParser implements ResultsParser
             /** @psalm-suppress MixedAssignment */
             foreach ($filesWithProblems as $fileWithProblems) {
                 ArrayUtils::assertArray($fileWithProblems);
-                $absoluteFileName = ArrayUtils::getStringValue($fileWithProblems, 'file');
-                $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName);
-                $fileName = new FileName($relativeFileName);
+                $absoluteFileNameAsString = ArrayUtils::getStringValue($fileWithProblems, 'file');
+                $absoluteFileName = new AbsoluteFileName($absoluteFileNameAsString);
 
                 $violations = ArrayUtils::getArrayValue($fileWithProblems, 'violations');
 
-                $this->processViolationsInFile($analysisResultsBuilder, $absoluteFileName, $fileName, $violations);
+                $this->processViolationsInFile($analysisResultsBuilder, $absoluteFileName, $projectRoot, $violations);
             }
         } catch (ArrayParseException $e) {
             throw new InvalidFileFormatException("Invalid file format: {$e->getMessage()}");
@@ -106,8 +105,8 @@ class PhpmdJsonResultsParser implements ResultsParser
      */
     private function processViolationsInFile(
         AnalysisResultsBuilder $analysisResultsBuilder,
-        string $absoulteFileName,
-        FileName $fileName,
+        AbsoluteFileName $absoluteFileName,
+        ProjectRoot $projectRoot,
         array $violations
     ): void {
         $violationCount = 1;
@@ -115,11 +114,11 @@ class PhpmdJsonResultsParser implements ResultsParser
         foreach ($violations as $violation) {
             try {
                 ArrayUtils::assertArray($violation);
-                $analysisResult = $this->processViolation($absoulteFileName, $fileName, $violation);
+                $analysisResult = $this->processViolation($absoluteFileName, $projectRoot, $violation);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 ++$violationCount;
             } catch (ArrayParseException | JsonParseException $e) {
-                throw new InvalidFileFormatException("Can not process violation {$violationCount} for file {$fileName->getFileName()}");
+                throw new InvalidFileFormatException("Can not process violation {$violationCount} for file {$absoluteFileName->getFileName()}");
             }
         }
     }
@@ -130,7 +129,7 @@ class PhpmdJsonResultsParser implements ResultsParser
      * @throws ArrayParseException
      * @throws JsonParseException
      */
-    private function processViolation(string $aboluteFileName, FileName $fileName, array $violation): AnalysisResult
+    private function processViolation(AbsoluteFileName $aboluteFileName, ProjectRoot $projectRoot, array $violation): AnalysisResult
     {
         $typeAsString = ArrayUtils::getStringValue($violation, 'rule');
         $type = new Type($typeAsString);
@@ -139,21 +138,17 @@ class PhpmdJsonResultsParser implements ResultsParser
 
         $lineAsInt = ArrayUtils::getIntValue($violation, 'beginLine');
 
-        $location = new Location(
-            $fileName,
+        $location = Location::fromAbsoluteFileName(
+            $aboluteFileName,
+            $projectRoot,
             new LineNumber($lineAsInt)
         );
-
-        $detials = [
-            'fileName' => $aboluteFileName,
-            'violation' => $violation,
-        ];
 
         return new AnalysisResult(
             $location,
             $type,
             $message,
-            JsonUtils::toString($detials)
+            JsonUtils::toString($violation)
         );
     }
 }

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
@@ -109,10 +109,10 @@ class SarbJsonResultsParser implements ResultsParser
         $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
-        $relativeFileNameAsString = $projectRoot->getPathRelativeToRootDirectory($absoluteFileNameAsString);
 
-        $location = new Location(
-            new FileName($relativeFileNameAsString),
+        $location = Location::fromAbsoluteFileName(
+            new AbsoluteFileName($absoluteFileNameAsString),
+            $projectRoot,
             new LineNumber($lineAsInt)
         );
 

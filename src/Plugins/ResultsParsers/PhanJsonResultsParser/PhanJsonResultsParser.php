@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
@@ -53,7 +53,7 @@ class PhanJsonResultsParser implements ResultsParser
             throw new InvalidFileFormatException('Not a valid JSON format');
         }
 
-        return $this->convertFromArray($asArray);
+        return $this->convertFromArray($asArray, $projectRoot);
     }
 
     /**
@@ -79,7 +79,7 @@ class PhanJsonResultsParser implements ResultsParser
      *
      * @throws ParseAtLocationException
      */
-    private function convertFromArray(array $analysisResultsAsArray): AnalysisResults
+    private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
     {
         $analysisResultsBuilder = new AnalysisResultsBuilder();
 
@@ -90,7 +90,7 @@ class PhanJsonResultsParser implements ResultsParser
             ++$resultsCount;
             try {
                 ArrayUtils::assertArray($analysisResultAsArray);
-                $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray);
+                $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
             } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
@@ -106,7 +106,7 @@ class PhanJsonResultsParser implements ResultsParser
      * @throws ArrayParseException
      * @throws JsonParseException
      */
-    private function convertAnalysisResultFromArray(array $analysisResultAsArray): AnalysisResult
+    private function convertAnalysisResultFromArray(array $analysisResultAsArray, ProjectRoot $projectRoot): AnalysisResult
     {
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
         $type = new Type($typeAsString);
@@ -115,13 +115,14 @@ class PhanJsonResultsParser implements ResultsParser
 
         $locationArray = ArrayUtils::getArrayValue($analysisResultAsArray, self::LOCATION);
         $fileNameAsString = ArrayUtils::getStringValue($locationArray, self::FILE_PATH);
-        $fileName = new FileName($fileNameAsString);
+        $absoluteFileName = $projectRoot->getFullPath($fileNameAsString);
 
         $linesArray = ArrayUtils::getArrayValue($locationArray, self::LINES);
         $lineAsInt = ArrayUtils::getIntValue($linesArray, self::LINE);
 
-        $location = new Location(
-            $fileName,
+        $location = Location::fromAbsoluteFileName(
+            new AbsoluteFileName($absoluteFileName),
+            $projectRoot,
             new LineNumber($lineAsInt)
         );
 
