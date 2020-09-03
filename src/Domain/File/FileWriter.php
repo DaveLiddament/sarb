@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
@@ -27,7 +26,7 @@ class FileWriter
      * @throws JsonParseException
      * @throws FileAccessException
      */
-    public function writeArrayToFile(BaseLineFileName $fileName, array $contents): void
+    public function writeArrayToFile(FileName $fileName, array $contents): void
     {
         $asString = JsonUtils::toString($contents);
         $this->writeFile($fileName, $asString);

@@ -7,7 +7,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Comm
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Creator\BaseLineCreatorInterface;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
@@ -30,9 +29,9 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
      */
     private $expectedResultsParser;
     /**
-     * @var FileName
+     * @var BaseLineFileName
      */
-    private $expectedFileName;
+    private $expectedBaseLineFileName;
     /**
      * @var ProjectRoot|null
      */
@@ -49,14 +48,14 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
     public function __construct(
         HistoryFactory $expectedHistoryFactory,
         ResultsParser $expectedResultsParser,
-        FileName $expectedFileName,
+        BaseLineFileName $expectedBaseLineFileName,
         ?ProjectRoot $expectedProjectRoot,
         string $expectedAnaylsisResutlsAsString,
         ?Throwable $throwable
     ) {
         $this->expectedHistoryFactory = $expectedHistoryFactory;
         $this->expectedResultsParser = $expectedResultsParser;
-        $this->expectedFileName = $expectedFileName;
+        $this->expectedBaseLineFileName = $expectedBaseLineFileName;
         $this->expectedProjectRoot = $expectedProjectRoot;
         $this->expectedAnaylsisResultsAsString = $expectedAnaylsisResutlsAsString;
         $this->throwable = $throwable;
@@ -71,7 +70,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
     ): BaseLine {
         Assert::assertSame($this->expectedHistoryFactory, $historyFactory);
         Assert::assertSame($this->expectedResultsParser, $resultsParser);
-        Assert::assertTrue($this->expectedFileName->isEqual($baselineFile));
+        Assert::assertTrue($this->expectedBaseLineFileName->isEqual($baselineFile));
         if (null !== $this->expectedProjectRoot) {
             Assert::assertEquals($this->expectedProjectRoot->__toString(), $projectRoot->__toString());
         }

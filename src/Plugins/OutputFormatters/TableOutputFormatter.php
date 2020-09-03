@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use Symfony\Component\Console\Helper\Table;
@@ -40,7 +40,7 @@ class TableOutputFormatter implements OutputFormatter
             'Description',
         ];
 
-        /** @var FileName $currentFileName */
+        /** @var AbsoluteFileName $currentFileName */
         $currentFileName = null;
         /** @var Table|null $currentTable */
         $currentTable = null;

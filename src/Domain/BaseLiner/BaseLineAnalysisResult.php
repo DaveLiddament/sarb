@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;

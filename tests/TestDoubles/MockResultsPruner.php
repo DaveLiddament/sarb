@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\ResultsPrunerInterface;
@@ -18,7 +17,7 @@ class MockResultsPruner implements ResultsPrunerInterface
     use StringAssertionsTrait;
 
     /**
-     * @var FileName
+     * @var BaseLineFileName
      */
     private $expectedBaseLineFileName;
     /**
@@ -39,7 +38,7 @@ class MockResultsPruner implements ResultsPrunerInterface
     private $throwable;
 
     public function __construct(
-        FileName $expectedBaseLineFileName,
+        BaseLineFileName $expectedBaseLineFileName,
         string $expectedAnalysisResults,
         PrunedResults $prunedOutputResults,
         ?ProjectRoot $projectRoot,

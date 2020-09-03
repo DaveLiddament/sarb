@@ -14,7 +14,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
