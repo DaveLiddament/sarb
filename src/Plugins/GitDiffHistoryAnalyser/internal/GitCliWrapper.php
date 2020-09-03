@@ -19,9 +19,6 @@ use Symfony\Component\Process\Process;
 
 class GitCliWrapper implements GitWrapper
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentSha(ProjectRoot $projectRoot): GitCommit
     {
         $gitCommand = $this->getGitCommand(['rev-parse', 'HEAD'], $projectRoot);
@@ -31,9 +28,6 @@ class GitCliWrapper implements GitWrapper
         return new GitCommit($processOutput);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string
     {
         $arguments = [

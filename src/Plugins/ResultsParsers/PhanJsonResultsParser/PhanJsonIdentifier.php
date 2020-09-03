@@ -16,17 +16,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 
 class PhanJsonIdentifier implements Identifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getCode(): string
     {
         return 'phan-json';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return 'Phan results (JSON format). To generate use: phan -m json -o <filename>.json';

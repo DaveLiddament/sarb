@@ -36,9 +36,6 @@ class ExakatJsonResultsParser implements ResultsParser
     const TYPE = 'type';
     const FILE = 'file';
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         try {
@@ -50,17 +47,11 @@ class ExakatJsonResultsParser implements ResultsParser
         return $this->convertFromArray($asArray, $projectRoot);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): Identifier
     {
         return new ExakatJsonIdentifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function showTypeGuessingWarning(): bool
     {
         return false;

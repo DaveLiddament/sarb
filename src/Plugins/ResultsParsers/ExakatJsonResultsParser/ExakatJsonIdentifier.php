@@ -16,17 +16,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 
 class ExakatJsonIdentifier implements Identifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getCode(): string
     {
         return 'exakat-sarb';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return 'Exakat results (JSON format, SARB support). To generate use: php exakat.phar report -p <project> -format Sarb';

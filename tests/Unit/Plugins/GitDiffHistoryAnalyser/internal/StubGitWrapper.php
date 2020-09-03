@@ -29,17 +29,11 @@ class StubGitWrapper implements GitWrapper
         $this->diff = $diff;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentSha(ProjectRoot $projectRoot): GitCommit
     {
         return new GitCommit($this->sha);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string
     {
         return $this->diff;

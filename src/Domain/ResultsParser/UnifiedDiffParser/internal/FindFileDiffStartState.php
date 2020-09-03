@@ -27,9 +27,6 @@ class FindFileDiffStartState implements State
         $this->fileMutationsBuilder = $fileMutationsBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function processLine(string $line): State
     {
         if (LineTypeDetector::isStartOfFileDiff($line)) {
@@ -39,9 +36,6 @@ class FindFileDiffStartState implements State
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finish(): void
     {
         // Nothing to do. Not in the middle of anything.

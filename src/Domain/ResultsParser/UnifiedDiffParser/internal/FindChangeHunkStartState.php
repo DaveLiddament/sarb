@@ -32,9 +32,6 @@ class FindChangeHunkStartState implements State
         $this->fileMutationBuilder = $fileMutationBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function processLine(string $line): State
     {
         if (LineTypeDetector::isStartOfFileDiff($line)) {
@@ -60,9 +57,6 @@ class FindChangeHunkStartState implements State
         return new ChangeHunkParserState($this->fileMutationBuilder, $line);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finish(): void
     {
         $this->fileMutationBuilder->build();

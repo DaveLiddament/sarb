@@ -42,9 +42,6 @@ class GitDiffHistoryFactory implements HistoryFactory
         $this->parser = $parser;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
         Assert::isInstanceOf($baseLineHistoryMarker, GitCommit::class);
@@ -54,17 +51,11 @@ class GitDiffHistoryFactory implements HistoryFactory
         return new DiffHistoryAnalyser($fileMutations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function newHistoryMarkerFactory(): HistoryMarkerFactory
     {
         return new GitHistoryMarkerFactory($this->gitCliWrapper);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'git';

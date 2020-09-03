@@ -40,9 +40,6 @@ class ListResultsParsesCommand extends Command
         $this->staticAnalysisResultsParsersRegistry = $resultsParsersRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->staticAnalysisResultsParsersRegistry->getAll() as $resultsParser) {

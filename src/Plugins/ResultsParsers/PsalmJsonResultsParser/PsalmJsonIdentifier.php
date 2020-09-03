@@ -16,17 +16,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 
 class PsalmJsonIdentifier implements Identifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getCode(): string
     {
         return 'psalm-json';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return 'Psalm results (JSON format). To generate use: psalm --report=<filename>.json';

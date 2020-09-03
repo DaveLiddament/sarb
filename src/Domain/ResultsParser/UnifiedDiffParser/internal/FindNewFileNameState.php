@@ -37,9 +37,6 @@ class FindNewFileNameState implements State
         $this->fileMutationBuilder = $fileMutationBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function processLine(string $line): State
     {
         if (LineTypeDetector::isDeletedFile($line)) {
@@ -60,9 +57,6 @@ class FindNewFileNameState implements State
         return new FindChangeHunkStartState($this->fileMutationBuilder);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finish(): void
     {
         throw DiffParseException::missingNewFileName(DiffParseException::END_OF_FILE);

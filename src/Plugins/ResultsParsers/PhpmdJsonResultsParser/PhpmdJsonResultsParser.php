@@ -33,9 +33,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
  */
 class PhpmdJsonResultsParser implements ResultsParser
 {
-    /**
-     * {@inheritdoc}
-     */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         try {
@@ -47,17 +44,11 @@ class PhpmdJsonResultsParser implements ResultsParser
         return $this->convertFromArray($asArray, $projectRoot);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): Identifier
     {
         return new PhpmdJsonIdentifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function showTypeGuessingWarning(): bool
     {
         return false;

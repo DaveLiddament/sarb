@@ -40,9 +40,6 @@ class ListHistoryAnalysersCommand extends Command
         $this->historyFactoryRegistry = $historyFactoryRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->historyFactoryRegistry->getIdentifiers() as $identifier) {

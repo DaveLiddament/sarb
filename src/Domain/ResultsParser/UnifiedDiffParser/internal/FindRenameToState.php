@@ -35,9 +35,6 @@ class FindRenameToState implements State
         $this->fileMutationBuilder = $fileMutationBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function processLine(string $line): State
     {
         if (!StringUtils::startsWith(self::RENAME_TO, $line)) {
@@ -50,9 +47,6 @@ class FindRenameToState implements State
         return new FindChangeHunkStartState($this->fileMutationBuilder);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finish(): void
     {
         throw DiffParseException::missingRenameTo('<EOF>');

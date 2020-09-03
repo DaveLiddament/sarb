@@ -59,9 +59,6 @@ class PhpstanJsonResultsParser implements ResultsParser
         $this->fqcnRemover = $fqcnRemover;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         try {
@@ -73,17 +70,11 @@ class PhpstanJsonResultsParser implements ResultsParser
         return $this->convertFromArray($asArray, $projectRoot);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): Identifier
     {
         return new PhpstanJsonIdentifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function showTypeGuessingWarning(): bool
     {
         return true;

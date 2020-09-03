@@ -39,9 +39,6 @@ class PsalmJsonResultsParser implements ResultsParser
     const ERROR_SEVERITY_LEVEL = 'error';
     const MESSAGE = 'message';
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         try {
@@ -53,17 +50,11 @@ class PsalmJsonResultsParser implements ResultsParser
         return $this->convertFromArray($asArray, $projectRoot);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): Identifier
     {
         return new PsalmJsonIdentifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function showTypeGuessingWarning(): bool
     {
         return false;

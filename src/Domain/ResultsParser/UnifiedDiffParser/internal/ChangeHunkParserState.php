@@ -49,9 +49,6 @@ class ChangeHunkParserState implements State
         $this->newFileLine = $rangeInformation->getNewFileStartLine();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function processLine(string $line): State
     {
         if (LineTypeDetector::isStartOfFileDiff($line)) {
@@ -111,9 +108,6 @@ class ChangeHunkParserState implements State
         ++$this->newFileLine;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finish(): void
     {
         $this->fileMutationBuilder->build();

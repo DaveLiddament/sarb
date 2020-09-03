@@ -29,25 +29,16 @@ class StubHistoryFactory implements HistoryFactory
         $this->fileMutations = $fileMutations;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
         return new DiffHistoryAnalyser($this->fileMutations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function newHistoryMarkerFactory(): HistoryMarkerFactory
     {
         return new GitHistoryMarkerFactory(new StubGitWrapper(StubGitWrapper::GIT_SHA_1, ''));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'stub';

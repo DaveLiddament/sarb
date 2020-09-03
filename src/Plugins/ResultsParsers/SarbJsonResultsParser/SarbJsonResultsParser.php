@@ -37,9 +37,6 @@ class SarbJsonResultsParser implements ResultsParser
     private const FILE = 'file';
     private const MESSAGE = 'message';
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         try {
@@ -51,17 +48,11 @@ class SarbJsonResultsParser implements ResultsParser
         return $this->convertFromArray($asArray, $projectRoot);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): Identifier
     {
         return new SarbJsonIdentifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function showTypeGuessingWarning(): bool
     {
         return false;
