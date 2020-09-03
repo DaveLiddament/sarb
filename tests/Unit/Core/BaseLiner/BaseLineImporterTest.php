@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImport
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\Parser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\HistoryFactoryRegistry;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsParsersRegistry;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;

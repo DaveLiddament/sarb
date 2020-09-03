@@ -17,8 +17,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\FileMutations;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\NewFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\FileMutations;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\NewFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\OriginalLineNumberCalculator;
 
 class DiffHistoryAnalyser implements HistoryAnalyser
