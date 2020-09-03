@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
@@ -114,14 +114,18 @@ class PhanJsonResultsParser implements ResultsParser
         $message = ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE);
 
         $locationArray = ArrayUtils::getArrayValue($analysisResultAsArray, self::LOCATION);
-        $fileNameAsString = ArrayUtils::getStringValue($locationArray, self::FILE_PATH);
-        $absoluteFileName = $projectRoot->getFullPath($fileNameAsString);
+
+        // Hack. Phan does not return absolute path. We have to hope that code is in project root directory.
+        $relativeFileNameAsString = ArrayUtils::getStringValue($locationArray, self::FILE_PATH);
+        $relativeFileName = new RelativeFileName($relativeFileNameAsString);
+
+        $absoluteFileName = $projectRoot->getAbsoluteFileName($relativeFileName);
 
         $linesArray = ArrayUtils::getArrayValue($locationArray, self::LINES);
         $lineAsInt = ArrayUtils::getIntValue($linesArray, self::LINE);
 
         $location = Location::fromAbsoluteFileName(
-            new AbsoluteFileName($absoluteFileName),
+            $absoluteFileName,
             $projectRoot,
             new LineNumber($lineAsInt)
         );

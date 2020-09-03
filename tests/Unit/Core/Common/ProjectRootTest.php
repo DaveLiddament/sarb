@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Common;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use PHPUnit\Framework\TestCase;
 
 class ProjectRootTest extends TestCase
@@ -35,30 +37,30 @@ class ProjectRootTest extends TestCase
     public function testRemoveProjectRootNoTrailingSlash(): void
     {
         $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
-        $actual = $projectRoot->getPathRelativeToRootDirectory('/foo/bar/baz/hello.php');
-        $this->assertSame('baz/hello.php', $actual);
+        $actual = $projectRoot->getPathRelativeToRootDirectory(new AbsoluteFileName('/foo/bar/baz/hello.php'));
+        $this->assertSame('baz/hello.php', $actual->getFileName());
     }
 
     public function testRemoveProjectRootWithTrailingSlash(): void
     {
         $projectRoot = new ProjectRoot('/foo/bar/', self::CURRENT_WORKING_DIRECTORY);
-        $actual = $projectRoot->getPathRelativeToRootDirectory('/foo/bar/baz/hello.php');
-        $this->assertSame('baz/hello.php', $actual);
+        $actual = $projectRoot->getPathRelativeToRootDirectory(new AbsoluteFileName('/foo/bar/baz/hello.php'));
+        $this->assertSame('baz/hello.php', $actual->getFileName());
     }
 
     public function testPathNotInProjectRoot(): void
     {
         $this->expectException(InvalidPathException::class);
-        $expectedMessage = 'Path [bar/baz.php] not in the project root [/foo/bar]. Is project root configured correctly?';
+        $expectedMessage = 'Path [/bar/baz.php] not in the project root [/foo/bar]. Is project root configured correctly?';
         $this->expectExceptionMessage($expectedMessage);
         $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
-        $projectRoot->getPathRelativeToRootDirectory('bar/baz.php');
+        $projectRoot->getPathRelativeToRootDirectory(new AbsoluteFileName('/bar/baz.php'));
     }
 
     public function testGetFullPath(): void
     {
         $projectRoot = new ProjectRoot('/foo/bar', self::CURRENT_WORKING_DIRECTORY);
-        $fullPath = $projectRoot->getFullPath('fruit/apple.php');
-        $this->assertSame('/foo/bar/fruit/apple.php', $fullPath);
+        $fullPath = $projectRoot->getAbsoluteFileName(new RelativeFileName('fruit/apple.php'));
+        $this->assertSame('/foo/bar/fruit/apple.php', $fullPath->getFileName());
     }
 }

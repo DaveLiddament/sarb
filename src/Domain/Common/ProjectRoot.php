@@ -36,13 +36,16 @@ class ProjectRoot
      *
      * @throws InvalidPathException
      */
-    public function getPathRelativeToRootDirectory(string $fullPath): string
+    public function getPathRelativeToRootDirectory(AbsoluteFileName $absoluteFileName): RelativeFileName
     {
+        $fullPath = $absoluteFileName->getFileName();
         if (!Path::isBasePath($this->rootDirectory, $fullPath)) {
             throw InvalidPathException::newInstance($fullPath, $this->rootDirectory);
         }
 
-        return Path::makeRelative($fullPath, $this->rootDirectory);
+        $relativeFileName = Path::makeRelative($fullPath, $this->rootDirectory);
+
+        return new RelativeFileName($relativeFileName);
     }
 
     public function __toString(): string
@@ -50,8 +53,10 @@ class ProjectRoot
         return $this->rootDirectory;
     }
 
-    public function getFullPath(string $relativePath): string
+    public function getAbsoluteFileName(RelativeFileName $relativeFileName): AbsoluteFileName
     {
-        return Path::join([$this->rootDirectory, $relativePath]);
+        $absoluteFileName = Path::join([$this->rootDirectory, $relativeFileName->getFileName()]);
+
+        return new AbsoluteFileName($absoluteFileName);
     }
 }

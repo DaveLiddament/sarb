@@ -33,9 +33,9 @@ class Location
         ProjectRoot $projectRoot,
         LineNumber $lineNumber
     ): self {
-        $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName->getFileName());
+        $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName);
 
-        return new self($absoluteFileName, new RelativeFileName($relativeFileName), $lineNumber);
+        return new self($absoluteFileName, $relativeFileName, $lineNumber);
     }
 
     private function __construct(
