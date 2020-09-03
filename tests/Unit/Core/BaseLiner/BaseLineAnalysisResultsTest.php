@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\BaseLiner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
@@ -16,6 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 class BaseLineAnalysisResultsTest extends TestCase
 {
+    private const PROJECT_ROOT = '/';
+    private const ABSOLUTE_FILE_NAME_1 = '/fileName1';
     private const FILE_NAME_1 = 'fileName1';
     private const LINE_NUMBER_1 = 1;
     private const TYPE_1 = 'TYPE_1';
@@ -89,12 +92,19 @@ class BaseLineAnalysisResultsTest extends TestCase
 
     public function testCreateFromAnalysisResults(): void
     {
-        $fileName = new FileName(self::FILE_NAME_1);
         $lineNumber = new LineNumber(self::LINE_NUMBER_1);
         $type = new Type(self::TYPE_1);
         $analysisResultsBuilder = new AnalysisResultsBuilder();
+
+        $projectRoot = new ProjectRoot(self::PROJECT_ROOT, self::PROJECT_ROOT);
+        $location = Location::fromAbsoluteFileName(
+            new AbsoluteFileName(self::ABSOLUTE_FILE_NAME_1),
+            $projectRoot,
+            $lineNumber
+        );
+
         $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
-            new Location($fileName, $lineNumber),
+            $location,
             $type,
             self::MESSAGE_1,
             'FULL_DETAILS'
@@ -104,7 +114,7 @@ class BaseLineAnalysisResultsTest extends TestCase
         $this->assertCount(1, $baseLineResults->getBaseLineAnalysisResults());
         $baseLineResult = $baseLineResults->getBaseLineAnalysisResults()[0];
 
-        $this->assertSame($fileName, $baseLineResult->getFileName());
+        $this->assertSame(self::FILE_NAME_1, $baseLineResult->getFileName()->getFileName());
         $this->assertSame($lineNumber, $baseLineResult->getLineNumber());
         $this->assertSame($type, $baseLineResult->getType());
         $this->assertSame(self::MESSAGE_1, $baseLineResult->getMessage());

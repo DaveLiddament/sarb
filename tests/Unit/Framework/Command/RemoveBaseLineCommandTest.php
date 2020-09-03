@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Command;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
@@ -285,11 +286,14 @@ EOF;
 
     private function getAnalysisResultsWithXResults(int $count): AnalysisResults
     {
+        $projectRoot = new ProjectRoot('/', '/');
+
         $analysisResultsBuilder = new AnalysisResultsBuilder();
         for ($i = 0; $i < $count; ++$i) {
             $analysisResult = new AnalysisResult(
-                new Location(
-                    new FileName("FILE_$count"),
+                Location::fromAbsoluteFileName(
+                    new AbsoluteFileName("/FILE_$count"),
+                    $projectRoot,
                     new LineNumber($count)
                 ),
                 new Type("TYPE_$i"),

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\OutputFormatters;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
@@ -16,6 +17,11 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractOutputFormatterTest extends TestCase
 {
+    private const FILE_1 = '/FILE_1';
+    private const FILE_2 = '/FILE_2';
+    private const TYPE_1 = 'TYPE_1';
+    private const TYPE_2 = 'TYPE_2';
+
     abstract protected function getOutputFormatter(): OutputFormatter;
 
     protected function assertName(string $expectedName): void
@@ -34,24 +40,9 @@ abstract class AbstractOutputFormatterTest extends TestCase
     protected function assertIssuesOutput(string $expectedOutput): void
     {
         $analysisResultsBuilder = new AnalysisResultsBuilder();
-        $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
-            new Location(new FileName('FILE_1'), new LineNumber(10)),
-            new Type('TYPE_1'),
-            'MESSAGE_1',
-            ''
-        ));
-        $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
-            new Location(new FileName('FILE_1'), new LineNumber(12)),
-            new Type('TYPE_2'),
-            'MESSAGE_2',
-            ''
-        ));
-        $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
-            new Location(new FileName('FILE_2'), new LineNumber(0)),
-            new Type('TYPE_1'),
-            'MESSAGE_3',
-            ''
-        ));
+        $this->addAnalysisResult($analysisResultsBuilder, self::FILE_1, 10, self::TYPE_1, 'MESSAGE_1');
+        $this->addAnalysisResult($analysisResultsBuilder, self::FILE_1, 12, self::TYPE_2, 'MESSAGE_2');
+        $this->addAnalysisResult($analysisResultsBuilder, self::FILE_2, 0, self::TYPE_1, 'MESSAGE_3');
 
         $this->assertOutput($expectedOutput, $analysisResultsBuilder->build());
     }
@@ -61,5 +52,22 @@ abstract class AbstractOutputFormatterTest extends TestCase
         $outputFormatter = $this->getOutputFormatter();
         $output = $outputFormatter->outputResults($analysisResults);
         $this->assertSame($expectedOutput, $output);
+    }
+
+    private function addAnalysisResult(
+        AnalysisResultsBuilder $analysisResultsBuilder,
+        string $file,
+        int $lineNumberAsInt,
+        string $type,
+        string $message
+    ): void {
+        $projectRoot = new ProjectRoot('/', '/');
+        $absoluteFileName = new AbsoluteFileName($file);
+        $lineNumber = new LineNumber($lineNumberAsInt);
+        $location = Location::fromAbsoluteFileName($absoluteFileName, $projectRoot, $lineNumber);
+
+        $analysisResult = new AnalysisResult($location, new Type($type), $message, '');
+
+        $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }
 }
