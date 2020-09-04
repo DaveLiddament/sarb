@@ -50,7 +50,7 @@ class ProjectRoot
 
     public function __toString(): string
     {
-        return $this->rootDirectory;
+        return $this->getProjectRootDirectory();
     }
 
     public function getAbsoluteFileName(RelativeFileName $relativeFileName): AbsoluteFileName
@@ -58,5 +58,10 @@ class ProjectRoot
         $absoluteFileName = Path::join([$this->rootDirectory, $relativeFileName->getFileName()]);
 
         return new AbsoluteFileName($absoluteFileName);
+    }
+
+    public function getProjectRootDirectory(): string
+    {
+        return $this->rootDirectory;
     }
 }

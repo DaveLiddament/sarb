@@ -62,7 +62,7 @@ class MockResultsPruner implements ResultsPrunerInterface
         $this->assertSameAllowingExtraNewLine($this->expectedAnalysisResults, $analysisResults);
 
         if (null !== $this->projectRoot) {
-            Assert::assertSame($this->projectRoot->__toString(), $projectRoot->__toString());
+            Assert::assertSame($this->projectRoot->getProjectRootDirectory(), $projectRoot->getProjectRootDirectory());
         }
 
         return $this->prunedOutputResults;

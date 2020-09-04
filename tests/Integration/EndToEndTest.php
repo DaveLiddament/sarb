@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Integration;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListHistoryAnalysersCommand;
@@ -155,7 +156,7 @@ class EndToEndTest extends TestCase
     {
         $source = $this->getPath($directory);
         $this->fileSystem->mirror($source, (string) $this->projectRoot, null, ['override' => true]);
-        $this->updatePathsInJsonFiles((string) $this->projectRoot);
+        $this->updatePathsInJsonFiles($this->projectRoot);
         $this->gitWrapper->addAndCommt("Updating code to $directory", $this->projectRoot);
     }
 
@@ -245,11 +246,13 @@ class EndToEndTest extends TestCase
 
     private function getProjectRootFilename(string $resourceName): string
     {
-        return Path::makeAbsolute($resourceName, (string) $this->projectRoot);
+        return $this->projectRoot->getAbsoluteFileName(new RelativeFileName($resourceName))->getFileName();
     }
 
-    private function updatePathsInJsonFiles(string $directory): void
+    private function updatePathsInJsonFiles(ProjectRoot $projectRoot): void
     {
+        $directory = $projectRoot->getProjectRootDirectory();
+
         $files = scandir($directory);
         $this->assertNotFalse($files);
         foreach ($files as $file) {
