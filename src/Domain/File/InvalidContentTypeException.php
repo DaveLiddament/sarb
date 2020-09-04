@@ -15,8 +15,14 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 
 /**
- * Used for when file is in an invalid format (e.g. not a JSON file).
+ * Used for when data supplied is not the correct content type.
+ *
+ * E.g. JSON was expected, but representation of data could not be converted to JSON.
  */
-class InvalidFileFormatException extends SarbException
+class InvalidContentTypeException extends SarbException
 {
+    public static function notJson(): self
+    {
+        return new self('Not valid JSON');
+    }
 }
