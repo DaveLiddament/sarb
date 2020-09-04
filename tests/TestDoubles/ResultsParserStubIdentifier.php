@@ -6,9 +6,9 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 
-class ResultsParserStub1Identifier implements Identifier
+class ResultsParserStubIdentifier implements Identifier
 {
-    const CODE = 'stub_1';
+    const CODE = 'results-parser-stub';
 
     public function getCode(): string
     {

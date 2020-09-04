@@ -16,8 +16,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\ResultsPars
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitDiffHistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\HistoryFactoryStub;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub2;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub2Identifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStubIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -67,7 +67,7 @@ EOF;
     protected function setUp(): void
     {
         $this->defaultResultsParser = new SarbJsonResultsParser();
-        $this->resultsParser2 = new ResultsParserStub2();
+        $this->resultsParser2 = new ResultsParserStub();
 
         $this->resultsParserRegistry = new ResultsParsersRegistry([
             $this->defaultResultsParser,
@@ -114,13 +114,13 @@ EOF;
         );
 
         $commandTester->execute([
-            self::INPUT_FORMAT_OPTION => ResultsParserStub2Identifier::CODE,
+            self::INPUT_FORMAT_OPTION => ResultsParserStubIdentifier::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
         ]);
 
         $this->assertReturnCode(0, $commandTester);
         $this->assertResponseContains(
-            '[stub_2] guesses the classification of violations. This means results might not be 100% accurate.',
+            '[results-parser-stub] guesses the classification of violations. This means results might not be 100% accurate.',
             $commandTester
         );
     }
@@ -160,7 +160,7 @@ EOF;
 
         $this->assertReturnCode(2, $commandTester);
         $this->assertResponseContains(
-            'Invalid value [rubbish] for option [input-format]. Pick one of: sarb-json|stub_2',
+            'Invalid value [rubbish] for option [input-format]. Pick one of: sarb-json|results-parser-stub',
             $commandTester
         );
     }
