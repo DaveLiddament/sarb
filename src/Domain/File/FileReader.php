@@ -28,7 +28,7 @@ class FileReader
 
         $fileContents = @file_get_contents($fileNameAsString);
         if (false === $fileContents) {
-            throw FileAccessException::readFileException();
+            throw FileAccessException::readFileException($fileName);
         }
 
         return $fileContents;

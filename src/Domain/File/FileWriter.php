@@ -39,7 +39,7 @@ class FileWriter
     {
         $result = @file_put_contents($fileName->getFileName(), $contents);
         if (false === $result) {
-            throw FileAccessException::writeFileException();
+            throw FileAccessException::writeFileException($fileName);
         }
     }
 }
