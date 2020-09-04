@@ -26,6 +26,11 @@ class ParseAtLocationException extends SarbException
 
     public static function issueParsing(SarbException $e, string $location): self
     {
-        return new self("Issue parsing [$location], {$e->getMessage()}", 0, $e);
+        return new self("Issue parsing [$location]. {$e->getMessage()}", 0, $e);
+    }
+
+    public static function issueParsingWithMessage(string $message, string $location): self
+    {
+        return new self("Issue parsing [$location]. $message");
     }
 }

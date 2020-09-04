@@ -17,7 +17,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
@@ -25,8 +24,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
 /**
  * Handles PHPMD JSON output.
@@ -35,45 +34,20 @@ class PhpmdJsonResultsParser implements ResultsParser
 {
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
-        try {
-            $asArray = JsonUtils::toArray($resultsAsString);
-        } catch (JsonParseException $e) {
-            throw new InvalidFileFormatException('Not a valid JSON format');
-        }
-
-        return $this->convertFromArray($asArray, $projectRoot);
-    }
-
-    public function getIdentifier(): Identifier
-    {
-        return new PhpmdJsonIdentifier();
-    }
-
-    public function showTypeGuessingWarning(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Converts from an array.
-     *
-     * @psalm-param array<mixed> $analysisResultsAsArray
-     *
-     * @throws InvalidFileFormatException
-     */
-    private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
-    {
+        $analysisResultsAsArray = JsonUtils::toArray($resultsAsString);
         $analysisResultsBuilder = new AnalysisResultsBuilder();
 
         try {
             $filesWithProblems = ArrayUtils::getArrayValue($analysisResultsAsArray, 'files');
         } catch (ArrayParseException $e) {
-            throw new InvalidFileFormatException("Missing 'files' key at root level of JSON structure");
+            throw ParseAtLocationException::issueParsingWithMessage("Missing 'files' key", 'root level of JSON structure');
         }
 
+        $fileNumber = 0;
         try {
             /** @psalm-suppress MixedAssignment */
             foreach ($filesWithProblems as $fileWithProblems) {
+                ++$fileNumber;
                 ArrayUtils::assertArray($fileWithProblems);
                 $absoluteFileNameAsString = ArrayUtils::getStringValue($fileWithProblems, 'file');
                 $absoluteFileName = new AbsoluteFileName($absoluteFileNameAsString);
@@ -83,7 +57,7 @@ class PhpmdJsonResultsParser implements ResultsParser
                 $this->processViolationsInFile($analysisResultsBuilder, $absoluteFileName, $projectRoot, $violations);
             }
         } catch (ArrayParseException $e) {
-            throw new InvalidFileFormatException("Invalid file format: {$e->getMessage()}");
+            throw ParseAtLocationException::issueParsing($e, "Invalid file {$fileNumber}");
         }
 
         return $analysisResultsBuilder->build();
@@ -92,7 +66,7 @@ class PhpmdJsonResultsParser implements ResultsParser
     /**
      * @psalm-param array<mixed> $violations
      *
-     * @throws InvalidFileFormatException
+     * @throws ParseAtLocationException
      */
     private function processViolationsInFile(
         AnalysisResultsBuilder $analysisResultsBuilder,
@@ -108,8 +82,8 @@ class PhpmdJsonResultsParser implements ResultsParser
                 $analysisResult = $this->processViolation($absoluteFileName, $projectRoot, $violation);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 ++$violationCount;
-            } catch (ArrayParseException | JsonParseException $e) {
-                throw new InvalidFileFormatException("Can not process violation {$violationCount} for file {$absoluteFileName->getFileName()}");
+            } catch (ArrayParseException $e) {
+                throw ParseAtLocationException::issueParsing($e, "File {$absoluteFileName->getFileName()}) violation {$violationCount}");
             }
         }
     }
@@ -118,10 +92,12 @@ class PhpmdJsonResultsParser implements ResultsParser
      * @psalm-param array<mixed> $violation
      *
      * @throws ArrayParseException
-     * @throws JsonParseException
      */
-    private function processViolation(AbsoluteFileName $aboluteFileName, ProjectRoot $projectRoot, array $violation): AnalysisResult
-    {
+    private function processViolation(
+        AbsoluteFileName $aboluteFileName,
+        ProjectRoot $projectRoot,
+        array $violation
+    ): AnalysisResult {
         $typeAsString = ArrayUtils::getStringValue($violation, 'rule');
         $type = new Type($typeAsString);
 
@@ -141,5 +117,15 @@ class PhpmdJsonResultsParser implements ResultsParser
             $message,
             JsonUtils::toString($violation)
         );
+    }
+
+    public function getIdentifier(): Identifier
+    {
+        return new PhpmdJsonIdentifier();
+    }
+
+    public function showTypeGuessingWarning(): bool
+    {
+        return false;
     }
 }

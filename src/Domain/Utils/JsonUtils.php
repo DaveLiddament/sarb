@@ -12,12 +12,15 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
+use LogicException;
+
 class JsonUtils
 {
     /**
      * Returns JSON string as an associative array representation.
      *
-     * @throws JsonParseException
+     * @throws InvalidContentTypeException
      * @psalm-return array<mixed>
      */
     public static function toArray(string $jsonAsString): array
@@ -25,7 +28,7 @@ class JsonUtils
         /** @psalm-suppress MixedAssignment */
         $asArray = json_decode($jsonAsString, true);
         if (!is_array($asArray)) {
-            throw JsonParseException::invalidJsonString($jsonAsString);
+            throw InvalidContentTypeException::notJson();
         }
 
         return $asArray;
@@ -34,14 +37,13 @@ class JsonUtils
     /**
      * Converts array to a JSON representation in a string.
      *
-     * @throws JsonParseException
      * @psalm-param array<mixed> $data
      */
     public static function toString(array $data): string
     {
         $asString = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         if (false === $asString) {
-            throw JsonParseException::invalidDataToConvertToJsonString();
+            throw new LogicException('Can not convert data to JSON string');
         }
 
         return $asString;

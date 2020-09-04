@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
 interface ResultsParser
@@ -22,7 +22,7 @@ interface ResultsParser
      * Takes a string representation of the static analysis results and converts to AnalysisResults.
      *
      * @throws ParseAtLocationException
-     * @throws InvalidFileFormatException
+     * @throws InvalidContentTypeException
      */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults;
 

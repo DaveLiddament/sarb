@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PsalmJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PsalmJsonResultsParser\PsalmJsonResultsParser;
@@ -84,7 +84,7 @@ class PsalmJsonResultsParserTest extends TestCase
     public function testInvalidJsonInput(): void
     {
         $fileContents = $this->getResource('invalid-json.json');
-        $this->expectException(InvalidFileFormatException::class);
+        $this->expectException(InvalidContentTypeException::class);
         $this->psalmResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 

@@ -18,7 +18,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
@@ -26,7 +25,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
@@ -38,34 +36,8 @@ class ExakatJsonResultsParser implements ResultsParser
 
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
-        try {
-            $asArray = JsonUtils::toArray($resultsAsString);
-        } catch (JsonParseException $e) {
-            throw new InvalidFileFormatException('Not a valid JSON format');
-        }
+        $analysisResultsAsArray = JsonUtils::toArray($resultsAsString);
 
-        return $this->convertFromArray($asArray, $projectRoot);
-    }
-
-    public function getIdentifier(): Identifier
-    {
-        return new ExakatJsonIdentifier();
-    }
-
-    public function showTypeGuessingWarning(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Converts from an array.
-     *
-     * @param array<mixed> $analysisResultsAsArray
-     *
-     * @throws ParseAtLocationException
-     */
-    private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
-    {
         $analysisResultsBuilder = new AnalysisResultsBuilder();
 
         $resultsCount = 0;
@@ -77,7 +49,7 @@ class ExakatJsonResultsParser implements ResultsParser
                 ArrayUtils::assertArray($analysisResultAsArray);
                 $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
-            } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
+            } catch (ArrayParseException | InvalidPathException $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
         }
@@ -89,7 +61,6 @@ class ExakatJsonResultsParser implements ResultsParser
      * @param array<mixed> $analysisResultAsArray
      *
      * @throws ArrayParseException
-     * @throws JsonParseException
      * @throws InvalidPathException
      */
     private function convertAnalysisResultFromArray(
@@ -112,5 +83,15 @@ class ExakatJsonResultsParser implements ResultsParser
             '',
             JsonUtils::toString($analysisResultAsArray)
         );
+    }
+
+    public function getIdentifier(): Identifier
+    {
+        return new ExakatJsonIdentifier();
+    }
+
+    public function showTypeGuessingWarning(): bool
+    {
+        return false;
     }
 }

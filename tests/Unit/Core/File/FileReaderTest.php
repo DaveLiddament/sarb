@@ -6,7 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\File;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +36,7 @@ class FileReaderTest extends TestCase
     public function testReadInvalidJsonFile(): void
     {
         $fileName = $this->getFileName('invalid-json.json');
-        $this->expectException(JsonParseException::class);
+        $this->expectException(InvalidContentTypeException::class);
         $this->fileReader->readJsonFile($fileName);
     }
 

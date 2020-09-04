@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 
 class FileWriter
@@ -23,7 +22,6 @@ class FileWriter
      *
      * @psalm-param array<mixed> $contents
      *
-     * @throws JsonParseException
      * @throws FileAccessException
      */
     public function writeArrayToFile(FileName $fileName, array $contents): void

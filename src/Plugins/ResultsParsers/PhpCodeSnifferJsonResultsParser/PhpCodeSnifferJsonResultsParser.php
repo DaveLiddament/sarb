@@ -13,12 +13,10 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidFileFormatException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
@@ -26,7 +24,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
@@ -43,34 +40,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
 
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
-        try {
-            $asArray = JsonUtils::toArray($resultsAsString);
-        } catch (JsonParseException $e) {
-            throw new InvalidFileFormatException('Not a valid JSON format');
-        }
-
-        return $this->convertFromArray($asArray, $projectRoot);
-    }
-
-    public function getIdentifier(): Identifier
-    {
-        return new PhpCodeSnifferJsonIdentifier();
-    }
-
-    public function showTypeGuessingWarning(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Converts from an array.
-     *
-     * @psalm-param array<mixed> $analysisResultsAsArray
-     *
-     * @throws ParseAtLocationException
-     */
-    private function convertFromArray(array $analysisResultsAsArray, ProjectRoot $projectRoot): AnalysisResults
-    {
+        $analysisResultsAsArray = JsonUtils::toArray($resultsAsString);
         $analysisResultsBuilder = new AnalysisResultsBuilder();
 
         try {
@@ -97,7 +67,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
                     $analysisResult = $this->convertAnalysisResultFromArray($message, $absoluteFileName, $projectRoot);
                     $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 }
-            } catch (ArrayParseException | JsonParseException | InvalidPathException $e) {
+            } catch (ArrayParseException $e) {
                 throw ParseAtLocationException::issueParsing($e, "Result [$absoluteFileNameAsString]");
             }
         }
@@ -109,7 +79,6 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
      * @psalm-param array<mixed> $analysisResultAsArray
      *
      * @throws ArrayParseException
-     * @throws JsonParseException
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
@@ -132,5 +101,15 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
             $rawMessage,
             JsonUtils::toString($analysisResultAsArray)
         );
+    }
+
+    public function getIdentifier(): Identifier
+    {
+        return new PhpCodeSnifferJsonIdentifier();
+    }
+
+    public function showTypeGuessingWarning(): bool
+    {
+        return false;
     }
 }

@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 
 class FileReader
@@ -40,17 +39,13 @@ class FileReader
      *
      * @psalm-return array<mixed>
      *
-     * @throws JsonParseException
      * @throws FileAccessException
+     * @throws InvalidContentTypeException
      */
     public function readJsonFile(FileName $fileName): array
     {
         $fileContents = $this->readFile($fileName);
 
-        try {
-            return JsonUtils::toArray($fileContents);
-        } catch (JsonParseException $e) {
-            throw JsonParseException::invalidJsonFile($fileName);
-        }
+        return JsonUtils::toArray($fileContents);
     }
 }

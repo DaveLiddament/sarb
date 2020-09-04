@@ -16,7 +16,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 
 /**
  * Exports a BaseLine to a file.
@@ -28,9 +27,6 @@ class BaseLineExporter
      */
     private $fileWriter;
 
-    /**
-     * BaseLineExporter constructor.
-     */
     public function __construct(FileWriter $fileWriter)
     {
         $this->fileWriter = $fileWriter;
@@ -40,7 +36,6 @@ class BaseLineExporter
      * Export BaseLine results to the given FileName.
      *
      * @throws FileAccessException
-     * @throws JsonParseException
      */
     public function export(BaseLine $baseLine, BaseLineFileName $fileName): void
     {

@@ -111,7 +111,7 @@ The method that needs implementing looks like this:
      * @param string $resultsAsString
      *
      * @throws ParseAtLocationException
-     * @throws InvalidFileFormatException
+     * @throws InvalidContentTypeException
      *
      * @return AnalysisResults
      */
@@ -159,7 +159,7 @@ A valid implementation to do this would be this...
         try {
             $analysisResultsAsArray = JsonUtils::asArray($resultsAsString);
         } catch (JsonParseException $e) {
-            throw new InvalidFileFormatException('Not a valid JSON format');
+            throw new InvalidContentTypeException('Not a valid JSON format');
         }
 
         $analysisResults = new AnalysisResults();
@@ -208,7 +208,7 @@ Breaking this down...
 
 SARB reads the static analysis results in as a string. The first thing to do is to convert the string to an array.
 We can use SARB's `JsonUtils::toArray` method. This takes a string and returns and `array` representation.
-NOTE: If the file provided is not a JSON representation then `convertFromString` must throw an `InvalidFileFormatException`.
+NOTE: If the file provided is not a JSON representation then `convertFromString` must throw an `InvalidContentTypeException`.
 SARB catches this and asks the user if they submitted the correct file.
 
 The that does this is:
@@ -217,7 +217,7 @@ The that does this is:
     try {
         $asArray = JsonUtils::asArray($resultsAsString);
     } catch (JsonParseException $e) {
-        throw new InvalidFileFormatException('Not a valid JSON format');
+        throw new InvalidContentTypeException('Not a valid JSON format');
     }
 ```
 

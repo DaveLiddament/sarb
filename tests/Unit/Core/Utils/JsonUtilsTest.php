@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 
 class JsonUtilsTest extends TestCase
@@ -23,7 +24,7 @@ class JsonUtilsTest extends TestCase
     public function testToArrayInvalidData(): void
     {
         $string = '{';
-        $this->expectException(JsonParseException::class);
+        $this->expectException(InvalidContentTypeException::class);
         JsonUtils::toArray($string);
     }
 
@@ -43,7 +44,7 @@ EOF;
 
     public function testToStringInvalidData(): void
     {
-        $this->expectException(JsonParseException::class);
+        $this->expectException(LogicException::class);
         JsonUtils::toString([
             INF,
         ]);
