@@ -40,7 +40,7 @@ class ProjectRoot
     {
         $fullPath = $absoluteFileName->getFileName();
         if (!Path::isBasePath($this->rootDirectory, $fullPath)) {
-            throw InvalidPathException::newInstance($fullPath, $this->rootDirectory);
+            throw InvalidPathException::notInProjectRoot($fullPath, $this->rootDirectory);
         }
 
         $relativeFileName = Path::makeRelative($fullPath, $this->rootDirectory);

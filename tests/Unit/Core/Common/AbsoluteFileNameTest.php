@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Common;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use PHPUnit\Framework\TestCase;
 
 class AbsoluteFileNameTest extends TestCase
@@ -17,9 +18,9 @@ class AbsoluteFileNameTest extends TestCase
         $this->assertSame(self::ABSOLUTE_FILENAME, $absoluteFileName->getFileName());
     }
 
-    public function testRelativetPath(): void
+    public function testRelativePath(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidPathException::class);
         new AbsoluteFileName('foo/bar.php');
     }
 }
