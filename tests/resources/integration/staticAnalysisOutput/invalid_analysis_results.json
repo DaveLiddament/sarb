@@ -1,0 +1,6 @@
+[
+  {
+    "line": 15,
+    "message": "DaveLiddament\\DummyProject\\Person has an uninitialized variable $this->name, but no constructor",
+  }
+]

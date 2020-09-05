@@ -10,7 +10,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
@@ -171,7 +170,7 @@ EOF;
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
         ]);
 
-        $this->assertReturnCode(2, $commandTester);
+        $this->assertReturnCode(11, $commandTester);
         $this->assertResponseContains(
             'Invalid value [rubbish] for option [output-format]. Pick one of: table|stub',
             $commandTester
@@ -196,35 +195,21 @@ EOF;
         $this->assertReturnCode(0, $commandTester);
     }
 
-    /**
-     * @psalm-return array<int,array{int,Throwable}>
-     */
-    public function exceptionDataProvider(): array
-    {
-        return [
-            [4, new SarbException()],
-            [5, new Exception()],
-        ];
-    }
-
-    /**
-     * @dataProvider exceptionDataProvider
-     */
-    public function testException(int $expectedCode, Throwable $exception): void
+    public function testException(): void
     {
         $commandTester = $this->createCommandTester(
             $this->defaultOutputFormater,
             $this->getAnalysisResultsWithXResults(1),
             self::BASELINE_FILENAME,
             null,
-            $exception
+            new Exception()
         );
 
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
         ]);
 
-        $this->assertReturnCode($expectedCode, $commandTester);
+        $this->assertReturnCode(100, $commandTester);
     }
 
     private function createCommandTester(

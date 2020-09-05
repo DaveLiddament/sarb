@@ -66,8 +66,7 @@ class BaseLineResultsRemoveTest extends TestCase
         $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine(
             $latestAnalysisResultsBuilder->build(),
             $historyAnalyser,
-            $baselineAnalysisResultsBuilder->build(),
-            $projectRoot
+            $baselineAnalysisResultsBuilder->build()
         );
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();

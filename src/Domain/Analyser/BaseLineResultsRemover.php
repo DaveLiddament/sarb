@@ -15,7 +15,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
@@ -29,8 +28,7 @@ class BaseLineResultsRemover
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
         HistoryAnalyser $historyAnalyser,
-        BaseLineAnalysisResults $baseLineAnalysisResults,
-        ProjectRoot $projectRoot
+        BaseLineAnalysisResults $baseLineAnalysisResults
     ): AnalysisResults {
         $prunedAnalysisResultsBuilder = new AnalysisResultsBuilder();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);

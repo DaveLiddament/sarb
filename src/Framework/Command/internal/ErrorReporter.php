@@ -6,6 +6,9 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\interna
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImportException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
@@ -17,28 +20,36 @@ class ErrorReporter
         try {
             throw $throwable;
         } catch (InvalidConfigException $e) {
-            self::writeToStdError($output, "<error>{$e->getMessage()}</error>");
+            self::writeToStdError($output, $e->getMessage());
 
-            return 2;
+            return 11;
         } catch (BaseLineImportException $e) {
-            self::writeToStdError($output, "<error>{$e->getMessage()}</error>");
+            self::writeToStdError($output, $e->getMessage());
 
-            return 3;
-        } catch (SarbException $e) {
-            self::writeToStdError($output, "<error>Something went wrong: {$e->getMessage()}");
+            return 12;
+        } catch (AnalysisResultsImportException $e) {
+            self::writeToStdError($output, $e->getMessage());
 
-            return 4;
+            return 13;
+        } catch (FileAccessException $e) {
+            self::writeToStdError($output, $e->getMessage());
+
+            return 14;
+        } catch (HistoryAnalyserException $e) {
+            self::writeToStdError($output, $e->getMessage());
+
+            return 6;
         } catch (Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
-            self::writeToStdError($output, "<error>Unexpected critical error: {$e->getMessage()}</error>");
+            self::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}");
 
-            return 5;
+            return 100;
         }
     }
 
     public static function writeToStdError(OutputInterface $output, string $message): void
     {
         $errorOutput = $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
-        $errorOutput->writeln($message);
+        $errorOutput->writeln("<error>$message</error>");
     }
 }

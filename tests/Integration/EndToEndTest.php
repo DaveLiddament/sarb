@@ -35,6 +35,8 @@ class EndToEndTest extends TestCase
     private const COMMIT_3_DIRECTORY = 'integration/commit3';
     private const COMMIT_3_RESULTS = 'commit3.json';
 
+    private const INVALID_RESULTS = 'invalid_analysis_results.json';
+
     /**
      * @var Filesystem
      */
@@ -73,7 +75,7 @@ class EndToEndTest extends TestCase
 
         $this->runCommand(
             CreateBaseLineCommand::COMMAND_NAME, $arguments,
-            2,
+            11,
             self::COMMIT_1_RESULTS
         );
 
@@ -81,17 +83,53 @@ class EndToEndTest extends TestCase
         $this->removeTestDirectory();
     }
 
-    public function testInvalidBaselineSupplied(): void
+    public function testInvalidAnalysisResults(): void
     {
         $this->createTestDirectory();
         $arguments = [
-            'baseline-file' => $this->getProjectRootFilename(self::COMMIT_2_RESULTS),
+            'baseline-file' => $this->getBaselineFilePath(),
+        ];
+
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME, $arguments,
+            13,
+            self::INVALID_RESULTS
+        );
+
+        // Only delete test directory if tests passed. Keep to investigate test failures
+        $this->removeTestDirectory();
+    }
+
+    public function testInvalidBaselineFileNameSupplied(): void
+    {
+        $this->createTestDirectory();
+        $arguments = [
+            'baseline-file' => $this->getProjectRootFilename('InvalidFileName.json'),
         ];
 
         $this->runCommand(
             RemoveBaseLineFromResultsCommand::COMMAND_NAME,
             $arguments,
-            3,
+            14,
+            self::COMMIT_1_RESULTS);
+
+        // Only delete test directory if tests passed. Keep to investigate test failures
+        $this->removeTestDirectory();
+    }
+
+    public function testInvalidBaselineContents(): void
+    {
+        $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+        $arguments = [
+            'baseline-file' => $this->getProjectRootFilename('src/Person.php'),
+        ];
+
+        $this->runCommand(
+            RemoveBaseLineFromResultsCommand::COMMAND_NAME,
+            $arguments,
+            12,
             self::COMMIT_1_RESULTS);
 
         // Only delete test directory if tests passed. Keep to investigate test failures

@@ -6,7 +6,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Comm
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
@@ -158,7 +157,7 @@ EOF;
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
         ]);
 
-        $this->assertReturnCode(2, $commandTester);
+        $this->assertReturnCode(11, $commandTester);
         $this->assertResponseContains(
             'Invalid value [rubbish] for option [input-format]. Pick one of: sarb-json|results-parser-stub',
             $commandTester
@@ -180,7 +179,7 @@ EOF;
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
         ]);
 
-        $this->assertReturnCode(2, $commandTester);
+        $this->assertReturnCode(11, $commandTester);
         $this->assertResponseContains(
             'Invalid value [rubbish] for option [history-analyser]. Pick one of: git|history-factory-stub',
             $commandTester
@@ -206,25 +205,6 @@ EOF;
         $this->assertReturnCode(0, $commandTester);
     }
 
-    public function testSimulateSarbException(): void
-    {
-        $commandTester = $this->createCommandTester(
-            $this->historyFactoryStub,
-            $this->defaultResultsParser,
-            self::BASELINE_FILENAME,
-            null,
-            new SarbException()
-        );
-
-        $commandTester->execute([
-            self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
-            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-            self::PROJECT_ROOT => '/tmp',
-        ]);
-
-        $this->assertReturnCode(4, $commandTester);
-    }
-
     public function testSimulateThrowable(): void
     {
         $commandTester = $this->createCommandTester(
@@ -241,7 +221,7 @@ EOF;
             self::PROJECT_ROOT => '/tmp',
         ]);
 
-        $this->assertReturnCode(5, $commandTester);
+        $this->assertReturnCode(100, $commandTester);
     }
 
     private function createCommandTester(

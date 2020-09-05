@@ -46,9 +46,6 @@ class BaseLineImporter
      */
     private $resultsParserLookupService;
 
-    /**
-     * BaseLineImporter constructor.
-     */
     public function __construct(
         FileReader $fileReader,
         ResultsParserLookupService $resultsParserLookupService,
@@ -63,6 +60,7 @@ class BaseLineImporter
      * Imports baseline results.
      *
      * @throws BaseLineImportException
+     * @throws FileAccessException
      */
     public function import(BaseLineFileName $fileName): BaseLine
     {
@@ -83,7 +81,6 @@ class BaseLineImporter
             return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
         } catch (
             ArrayParseException |
-            FileAccessException |
             InvalidResultsParserException |
             InvalidHistoryFactoryException |
             InvalidHistoryMarkerException |
