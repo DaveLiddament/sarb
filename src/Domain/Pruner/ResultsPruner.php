@@ -10,6 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImport
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
 
@@ -43,6 +44,7 @@ class ResultsPruner implements ResultsPrunerInterface
      * @throws BaseLineImportException
      * @throws FileAccessException
      * @throws AnalysisResultsImportException
+     * @throws HistoryAnalyserException
      */
     public function getPrunedResults(
         BaseLineFileName $baseLineFileName,

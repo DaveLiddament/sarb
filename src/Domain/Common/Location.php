@@ -28,6 +28,9 @@ class Location
      */
     private $absoluteFileName;
 
+    /**
+     * @throws InvalidPathException
+     */
     public static function fromAbsoluteFileName(
         AbsoluteFileName $absoluteFileName,
         ProjectRoot $projectRoot,

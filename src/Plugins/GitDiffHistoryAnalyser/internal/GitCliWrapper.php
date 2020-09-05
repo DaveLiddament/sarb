@@ -13,19 +13,29 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
-use RuntimeException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitException;
+use LogicException;
+use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 class GitCliWrapper implements GitWrapper
 {
     public function getCurrentSha(ProjectRoot $projectRoot): GitCommit
     {
-        $gitCommand = $this->getGitCommand(['rev-parse', 'HEAD'], $projectRoot);
-        $rawOutput = $this->runCommand($gitCommand, 'Failed to get SHA');
-        $processOutput = trim($rawOutput);
+        try {
+            $gitCommand = $this->getGitCommand(['rev-parse', 'HEAD'], $projectRoot);
+            $rawOutput = $this->runCommand($gitCommand, 'Failed to get SHA');
+            $processOutput = trim($rawOutput);
 
-        return new GitCommit($processOutput);
+            return new GitCommit($processOutput);
+        } catch (CommandFailedException $e) {
+            throw GitException::failedToGetSha($e);
+        } catch (InvalidHistoryMarkerException $e) { // @codeCoverageIgnore
+            // This should never happen as git SHA got from running git command will always return valid SHA.
+            throw new LogicException('Invalid git SHA '.$e->getMessage()); // @codeCoverageIgnore
+        }
     }
 
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string
@@ -38,17 +48,28 @@ class GitCliWrapper implements GitWrapper
         ];
         $command = $this->getGitCommand($arguments, $projectRoot);
 
-        return $this->runCommand($command, 'Failed to get git-diff');
+        try {
+            return $this->runCommand($command, 'Failed to get git-diff');
+        } catch (CommandFailedException $e) {
+            throw GitException::failedDiff($e);
+        }
     }
 
     /**
      * @param string[] $gitCommand
+     *
+     * @throws CommandFailedException
      */
     private function runCommand(array $gitCommand, string $context): string
     {
         $process = new Process($gitCommand);
 
-        $process->run();
+        try {
+            $process->run();
+        } catch (RuntimeException $e) { // @codeCoverageIgnore
+            // // Impossible to simulate this happening
+            CommandFailedException::newInstance($context, null, $e->getMessage()); // @codeCoverageIgnore
+        }
 
         if ($process->isSuccessful()) {
             return $process->getOutput();
@@ -56,13 +77,7 @@ class GitCliWrapper implements GitWrapper
 
         $exitCode = $process->getExitCode();
 
-        $errorMessage = sprintf(
-            '%s. Return code [%s] Error: %s',
-            $context,
-            null === $exitCode ? 'null' : (string) $exitCode,
-            $process->getErrorOutput()
-        );
-        throw new RuntimeException($errorMessage);
+        throw CommandFailedException::newInstance($context, $exitCode, $process->getErrorOutput());
     }
 
     /**
@@ -81,6 +96,11 @@ class GitCliWrapper implements GitWrapper
         return array_merge($gitCommand, $arguments);
     }
 
+    /**
+     * Only used for testing.
+     *
+     * @throws CommandFailedException
+     */
     public function init(ProjectRoot $projectRoot): void
     {
         $command = [
@@ -91,6 +111,11 @@ class GitCliWrapper implements GitWrapper
         $this->runCommand($command, "git init {$projectRoot}");
     }
 
+    /**
+     * Only used for testing.
+     *
+     * @throws CommandFailedException
+     */
     public function addAndCommt(string $message, ProjectRoot $projectRoot): void
     {
         $addCommand = $this->getGitCommand(['add', '.'], $projectRoot);

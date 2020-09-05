@@ -14,8 +14,6 @@ interface State
 {
     /**
      * @throws DiffParseException
-     *
-     * @return State
      */
     public function processLine(string $line): self;
 

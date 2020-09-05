@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
+use LogicException;
 use Webmozart\PathUtil\Path;
 
 /**
@@ -57,7 +58,12 @@ class ProjectRoot
     {
         $absoluteFileName = Path::join([$this->rootDirectory, $relativeFileName->getFileName()]);
 
-        return new AbsoluteFileName($absoluteFileName);
+        try {
+            return new AbsoluteFileName($absoluteFileName);
+        } catch (InvalidPathException $e) { // @codeCoverageIgnore
+            // This should never happen as Path::join will always return a valid absolute path.
+            throw new LogicException("Invalid $absoluteFileName"); // @codeCoverageIgnore
+        }
     }
 
     public function getProjectRootDirectory(): string

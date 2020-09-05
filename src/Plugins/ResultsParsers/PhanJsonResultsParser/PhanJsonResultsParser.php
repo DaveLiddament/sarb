@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
@@ -53,7 +54,7 @@ class PhanJsonResultsParser implements ResultsParser
                 ArrayUtils::assertArray($analysisResultAsArray);
                 $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
-            } catch (ArrayParseException  $e) {
+            } catch (ArrayParseException | InvalidPathException  $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
         }
@@ -65,6 +66,7 @@ class PhanJsonResultsParser implements ResultsParser
      * @psalm-param array<mixed> $analysisResultAsArray
      *
      * @throws ArrayParseException
+     * @throws InvalidPathException
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,

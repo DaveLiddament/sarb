@@ -100,6 +100,24 @@ class EndToEndTest extends TestCase
         $this->removeTestDirectory();
     }
 
+    public function testInvalidProjectROot(): void
+    {
+        $this->createTestDirectory();
+        $arguments = [
+            'baseline-file' => $this->getProjectRootFilename('InvalidFileName.json'),
+            '--project-root' => '/tmp/foo/bar',
+        ];
+
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
+            15,
+            self::COMMIT_1_RESULTS);
+
+        // Only delete test directory if tests passed. Keep to investigate test failures
+        $this->removeTestDirectory();
+    }
+
     public function testInvalidBaselineFileNameSupplied(): void
     {
         $this->createTestDirectory();

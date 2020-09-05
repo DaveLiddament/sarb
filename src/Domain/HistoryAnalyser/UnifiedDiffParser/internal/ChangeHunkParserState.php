@@ -83,6 +83,9 @@ class ChangeHunkParserState implements State
         return new FindOriginalFileNameState($fileMutationsBuilder);
     }
 
+    /**
+     * @throws DiffParseException
+     */
     private function processNewChangeHunk(string $line): State
     {
         return new self($this->fileMutationBuilder, $line);

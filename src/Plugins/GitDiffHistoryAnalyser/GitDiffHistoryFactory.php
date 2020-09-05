@@ -14,6 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAna
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarkerFactory;
@@ -42,6 +43,9 @@ class GitDiffHistoryFactory implements HistoryFactory
         $this->parser = $parser;
     }
 
+    /**
+     * @throws HistoryAnalyserException
+     */
     public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
         Assert::isInstanceOf($baseLineHistoryMarker, GitCommit::class);

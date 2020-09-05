@@ -14,16 +14,21 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAna
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitException;
 
 interface GitWrapper
 {
     /**
      * Returns a GitCommit representing the git HEAD or the project being analysed.
+     *
+     * @throws GitException
      */
     public function getCurrentSha(ProjectRoot $projectRoot): GitCommit;
 
     /**
      * Returns a diff (as a string) between the 2 commits.
+     *
+     * @throws GitException
      */
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string;
 }

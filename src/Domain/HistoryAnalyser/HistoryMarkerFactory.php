@@ -25,6 +25,8 @@ interface HistoryMarkerFactory
 
     /**
      * Return HistoryMarker representing current state of the code.
+     *
+     * @throws HistoryAnalyserException
      */
     public function newCurrentHistoryMarker(ProjectRoot $projectRoot): HistoryMarker;
 }

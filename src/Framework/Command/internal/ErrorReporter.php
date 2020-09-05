@@ -38,7 +38,7 @@ class ErrorReporter
         } catch (HistoryAnalyserException $e) {
             self::writeToStdError($output, $e->getMessage());
 
-            return 6;
+            return 15;
         } catch (Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
             self::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}");

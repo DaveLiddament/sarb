@@ -94,6 +94,7 @@ class PhpstanJsonResultsParser implements ResultsParser
      * @psalm-param array<mixed> $analysisResultAsArray
      *
      * @throws ArrayParseException
+     * @throws InvalidPathException
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
