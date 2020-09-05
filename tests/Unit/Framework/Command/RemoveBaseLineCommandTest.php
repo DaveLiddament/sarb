@@ -283,7 +283,7 @@ EOF;
                 ),
                 new Type("TYPE_$i"),
                 "MESSAGE_$i",
-                'FULL_MESSAGE'
+                []
             );
             $analysisResultsBuilder->addAnalysisResult($analysisResult);
         }

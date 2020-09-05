@@ -35,7 +35,6 @@ trait AnalysisResultsAdderTrait
         string $type
     ): AnalysisResult {
         $message = "message-$type";
-        $details = "$absoluteFileName-$lineNumber-$type-$message";
 
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName($absoluteFileName),
@@ -43,6 +42,6 @@ trait AnalysisResultsAdderTrait
             new LineNumber($lineNumber)
         );
 
-        return new AnalysisResult($location, new Type($type), $message, $details);
+        return new AnalysisResult($location, new Type($type), $message, []);
     }
 }

@@ -187,7 +187,7 @@ A valid implementation to do this would be this...
                     $location,
                     new Type($typeAsString),
                     $message,
-                    JsonUtils::toString($analysisResultAsArray)
+                    $analysisResultAsArray
                 );
 
                 $analysisResults->addAnalysisResult($analysisResult);
@@ -301,7 +301,7 @@ The easiest way to do this is to take the array that represents the entire viola
                     $location,
                     new Type($typeAsString),
                     $message,
-                    JsonUtils::toString($analysisResultAsArray)
+                    $analysisResultAsArray
                 );
 ```
 

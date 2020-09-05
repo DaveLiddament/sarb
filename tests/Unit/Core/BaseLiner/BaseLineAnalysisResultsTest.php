@@ -107,7 +107,7 @@ class BaseLineAnalysisResultsTest extends TestCase
             $location,
             $type,
             self::MESSAGE_1,
-            'FULL_DETAILS'
+            []
         ));
 
         $baseLineResults = BaseLineAnalysisResults::fromAnalysisResults($analysisResultsBuilder->build());

@@ -117,7 +117,7 @@ class PhpmdJsonResultsParser implements ResultsParser
             $location,
             $type,
             $message,
-            JsonUtils::toString($violation)
+            $violation
         );
     }
 

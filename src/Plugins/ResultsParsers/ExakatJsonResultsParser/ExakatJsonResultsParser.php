@@ -81,7 +81,7 @@ class ExakatJsonResultsParser implements ResultsParser
             $location,
             new Type($typeAsString),
             '',
-            JsonUtils::toString($analysisResultAsArray)
+            $analysisResultAsArray
         );
     }
 

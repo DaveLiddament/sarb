@@ -37,17 +37,22 @@ class AnalysisResult
     private $message;
 
     /**
-     * @var string
+     * @var array
+     * @psalm-var array<mixed>
      */
     private $fullDetails;
 
     /**
      * AnalysisResult constructor.
      *
-     * NOTE: $fullDetails should be a serialised version of the violation containing all the details that the
-     * static analysis tool provided. It must be possible to reproduce the original violation from this string
+     * NOTE: $fullDetails should contain an array with all data from the original tool.
+     * This allows tool specific output formatters to be written to output additional information if needed.
+     * E.g. PHP-CS gives additional fields e.g. is_fixable. If this data needs to be shown to end user then
+     * then a custom output formatter could be written to give all this additional information.
+     *
+     * @psalm-param array<mixed> $fullDetails
      */
-    public function __construct(Location $location, Type $type, string $message, string $fullDetails)
+    public function __construct(Location $location, Type $type, string $message, array $fullDetails)
     {
         $this->location = $location;
         $this->type = $type;
@@ -65,7 +70,10 @@ class AnalysisResult
         return $this->type;
     }
 
-    public function getFullDetails(): string
+    /**
+     * @psalm-return array<mixed>
+     */
+    public function getFullDetails(): array
     {
         return $this->fullDetails;
     }

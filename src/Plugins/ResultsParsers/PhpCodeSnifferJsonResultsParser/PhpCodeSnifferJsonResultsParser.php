@@ -101,7 +101,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
             $location,
             new Type($rawSource),
             $rawMessage,
-            JsonUtils::toString($analysisResultAsArray)
+            $analysisResultAsArray
         );
     }
 

@@ -98,7 +98,7 @@ class PhanJsonResultsParser implements ResultsParser
             $location,
             $type,
             $message,
-            JsonUtils::toString($analysisResultAsArray)
+            $analysisResultAsArray
         );
     }
 

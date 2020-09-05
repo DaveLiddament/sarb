@@ -66,7 +66,7 @@ abstract class AbstractOutputFormatterTest extends TestCase
         $lineNumber = new LineNumber($lineNumberAsInt);
         $location = Location::fromAbsoluteFileName($absoluteFileName, $projectRoot, $lineNumber);
 
-        $analysisResult = new AnalysisResult($location, new Type($type), $message, '');
+        $analysisResult = new AnalysisResult($location, new Type($type), $message, []);
 
         $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }

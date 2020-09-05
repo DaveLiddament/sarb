@@ -86,7 +86,7 @@ class PsalmJsonResultsParser implements ResultsParser
             $location,
             new Type($typeAsString),
             ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
-            JsonUtils::toString($analysisResultAsArray)
+            $analysisResultAsArray
         );
     }
 

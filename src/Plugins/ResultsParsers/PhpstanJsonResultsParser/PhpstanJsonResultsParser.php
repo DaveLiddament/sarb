@@ -121,7 +121,7 @@ class PhpstanJsonResultsParser implements ResultsParser
             $location,
             new Type($type),
             $rawType,
-            JsonUtils::toString($analysisResultAsArray)
+            $analysisResultAsArray
         );
     }
 
