@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
@@ -67,7 +68,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
                     $analysisResult = $this->convertAnalysisResultFromArray($message, $absoluteFileName, $projectRoot);
                     $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 }
-            } catch (ArrayParseException $e) {
+            } catch (ArrayParseException | InvalidPathException $e) {
                 throw ParseAtLocationException::issueParsing($e, "Result [$absoluteFileNameAsString]");
             }
         }

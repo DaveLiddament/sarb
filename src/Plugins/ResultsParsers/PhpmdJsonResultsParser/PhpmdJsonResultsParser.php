@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
@@ -56,7 +57,7 @@ class PhpmdJsonResultsParser implements ResultsParser
 
                 $this->processViolationsInFile($analysisResultsBuilder, $absoluteFileName, $projectRoot, $violations);
             }
-        } catch (ArrayParseException $e) {
+        } catch (ArrayParseException | InvalidPathException $e) {
             throw ParseAtLocationException::issueParsing($e, "Invalid file {$fileNumber}");
         }
 
