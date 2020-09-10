@@ -32,8 +32,7 @@ trait AnalysisResultsAdderTrait
         ProjectRoot $projectRoot,
         string $absoluteFileName,
         int $lineNumber,
-        string $type,
-        array $fullDetails = []
+        string $type
     ): AnalysisResult {
         $message = "message-$type";
 
@@ -43,6 +42,6 @@ trait AnalysisResultsAdderTrait
             new LineNumber($lineNumber)
         );
 
-        return new AnalysisResult($location, new Type($type), $message, $fullDetails);
+        return new AnalysisResult($location, new Type($type), $message, []);
     }
 }

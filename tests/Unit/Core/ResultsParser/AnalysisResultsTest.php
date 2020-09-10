@@ -17,7 +17,6 @@ class AnalysisResultsTest extends TestCase
     private const LINE_1 = 1;
     private const LINE_2 = 2;
     private const TYPE = 'TYPE_A';
-    private const FULL_DETAILS = ['snippet' => 'class Foo'];
 
     /**
      * @var AnalysisResultsBuilder
@@ -49,8 +48,7 @@ class AnalysisResultsTest extends TestCase
             $this->projectRoot,
             self::FILE_A,
             self::LINE_1,
-            self::TYPE,
-            self::FULL_DETAILS
+            self::TYPE
         );
         $this->analysisResultsBuilder->addAnalysisResult($analysisResult);
         $analysisResults = $this->analysisResultsBuilder->build();
