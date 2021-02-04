@@ -17,9 +17,8 @@ class Assert
 
 
     /**
-     * @template T
-     * @template-typeof T $type
-     * @param class-string $type
+     * @template T of object
+     * @param class-string<T> $type
      * @psalm-assert T $value
      */
     public static function isInstanceOf($value, $type, $message = '') {}
