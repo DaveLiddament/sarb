@@ -41,7 +41,7 @@ class JsonUtils
      */
     public static function toString(array $data): string
     {
-        $asString = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        $asString = json_encode($data, \JSON_UNESCAPED_UNICODE | \JSON_PRETTY_PRINT);
         if (false === $asString) {
             throw new LogicException('Can not convert data to JSON string');
         }

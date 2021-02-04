@@ -61,7 +61,7 @@ class CliConfigReader
         $inputSteam = ($input instanceof StreamableInputInterface) ? $input->getStream() : null;
 
         // If nothing from input stream use STDIN instead.
-        $inputSteam = $inputSteam ?? STDIN;
+        $inputSteam = $inputSteam ?? \STDIN;
 
         $input = stream_get_contents($inputSteam);
 

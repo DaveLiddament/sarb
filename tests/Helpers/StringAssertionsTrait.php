@@ -15,7 +15,7 @@ trait StringAssertionsTrait
         // supported versions of Symfony/Command.
         $validResults = [
             $expectedValue,
-            $expectedValue.PHP_EOL,
+            $expectedValue.\PHP_EOL,
         ];
 
         Assert::assertTrue(in_array($actualValue, $validResults, true));

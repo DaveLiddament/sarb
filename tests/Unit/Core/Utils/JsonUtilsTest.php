@@ -46,7 +46,7 @@ EOF;
     {
         $this->expectException(LogicException::class);
         JsonUtils::toString([
-            INF,
+            \INF,
         ]);
     }
 }

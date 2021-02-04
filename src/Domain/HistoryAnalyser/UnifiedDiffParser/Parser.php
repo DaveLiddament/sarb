@@ -54,7 +54,7 @@ class Parser
      */
     private function getLines(string $diffAsString): array
     {
-        $lines = explode(PHP_EOL, $diffAsString);
+        $lines = explode(\PHP_EOL, $diffAsString);
 
         // Strip trailing empty lines from diff
         do {
