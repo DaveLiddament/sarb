@@ -24,7 +24,7 @@
     "webmozart/path-util": "^2.3"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.13.1",
+    "friendsofphp/php-cs-fixer": "^2.15.6",
     "php-parallel-lint/php-parallel-lint": "~1.2.0",
     "php-parallel-lint/php-var-dump-check": "^v0.5",
     "phpstan/phpstan": "^0.12",
