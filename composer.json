@@ -67,6 +67,10 @@
     "psalm" : "psalm --shepherd",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
-    "test" : "phpunit --coverage-clover=reports/phpunit.xml"
+    "test" : [
+      "@putenv XDEBUG_MODE=coverage",
+      "phpunit --coverage-clover=reports/phpunit.xml"
+    ]
+
   }
 }

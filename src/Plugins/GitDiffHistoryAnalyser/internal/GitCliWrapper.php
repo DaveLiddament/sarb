@@ -76,8 +76,9 @@ class GitCliWrapper implements GitWrapper
 
         try {
             $exitCode = $process->getExitCode();
-        } catch (RuntimeException $e) {
-            $exitCode = null;
+        } catch (RuntimeException $e) { // @codeCoverageIgnore
+            // Impossible to simulate this happening
+            $exitCode = null; // @codeCoverageIgnore
         }
 
         throw CommandFailedException::newInstance($context, $exitCode, $process->getErrorOutput());
