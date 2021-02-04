@@ -1,6 +1,8 @@
 name: "Full checks"
 
 on:
+  schedule:
+    - cron: '0 10 * * *'
   pull_request:
   push:
     branches:
@@ -15,11 +17,14 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - "locked"
+          - "lowest"
+          - "highest"
         php-version:
+          - "7.3"
           - "7.4"
+          - "8.0"
         operating-system:
-          - "ubuntu-latest"
+          - "ubuntu-18.04"
 
     steps:
       - name: "Checkout"
@@ -63,4 +68,7 @@ jobs:
         with:
           file: reports/phpunit.xml
           name: Test coverage
+
+      - name: "Security checks"
+        run: "composer security"
 
