@@ -21,9 +21,7 @@ Vagrant.configure(2) do |config|
     wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add -
     echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
     apt-get update
-    apt-get install -y php7.2-cli php7.2-xml php7.2-mbstring  php7.2-dev php-pear
-    pecl install ast-1.0.1
-    echo "extension=ast.so" > /etc/php/7.2/cli/conf.d/30-ast.ini
+    apt-get install -y php7.3-cli php7.3-xml php7.3-mbstring  php7.3-dev php-pear php7.3-curl
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     sudo -iu vagrant /usr/local/bin/composer --working-dir=/vagrant install
   SHELL
