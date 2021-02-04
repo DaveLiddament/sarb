@@ -68,7 +68,3 @@ jobs:
         with:
           file: reports/phpunit.xml
           name: Test coverage
-
-      - name: "Security checks"
-        run: "composer security"
-
