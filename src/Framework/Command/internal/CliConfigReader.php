@@ -5,22 +5,18 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
-use LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StreamableInputInterface;
+use Webmozart\Assert\Assert;
 
 class CliConfigReader
 {
     public static function getArgument(InputInterface $input, string $argumentName): string
     {
         $value = $input->getArgument($argumentName);
+        Assert::string($value);
 
-        if (is_string($value)) {
-            return $value;
-        }
-
-        // Should never happen. Configured option should only return string or null.
-        throw new LogicException("Incorrectly configured option [$argumentName]"); // @codeCoverageIgnore
+        return $value;
     }
 
     public static function getOption(InputInterface $input, string $optionName): ?string
@@ -31,21 +27,15 @@ class CliConfigReader
             return null;
         }
 
-        if (is_string($value)) {
-            return $value;
-        }
+        Assert::string($value);
 
-        // Should never happen. Configured option should only return string or null.
-        throw new LogicException("Incorrectly configured option [$optionName]"); // @codeCoverageIgnore
+        return $value;
     }
 
     public static function getOptionWithDefaultValue(InputInterface $input, string $optionName): string
     {
         $value = self::getOption($input, $optionName);
-        if (null === $value) {
-            // Should never happen. Configured option should always have a default value.
-            throw new LogicException("Incorrectly configured option. No default value set for option {$optionName}"); // @codeCoverageIgnore
-        }
+        Assert::notNull($value);
 
         return $value;
     }

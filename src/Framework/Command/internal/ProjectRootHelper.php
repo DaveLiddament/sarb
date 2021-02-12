@@ -25,23 +25,32 @@ class ProjectRootHelper
     }
 
     /**
-     * @throws InvalidConfigException
      * @throws SarbException
      */
     public static function getProjectRoot(InputInterface $input): ProjectRoot
     {
         $projectRootAsString = CliConfigReader::getOption($input, self::PROJECT_ROOT);
-
-        $cwd = getcwd();
-        if (false === $cwd) {
-            // Impossible to easily test `cwd` failing, to exclude from tests.
-            throw new SarbException('Can not get current working directory. Specify project root with options: '.self::PROJECT_ROOT); // @codeCoverageIgnore
-        }
+        $cwd = self::getCwd();
 
         if (null === $projectRootAsString) {
             $projectRootAsString = $cwd;
         }
 
         return new ProjectRoot($projectRootAsString, $cwd);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     *
+     * @throws SarbException
+     */
+    private static function getCwd(): string
+    {
+        $cwd = getcwd();
+        if (false === $cwd) {
+            throw new SarbException('Can not get current working directory. Specify project root with option: '.self::PROJECT_ROOT);
+        }
+
+        return $cwd;
     }
 }

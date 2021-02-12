@@ -54,15 +54,17 @@ class ProjectRoot
         return $this->getProjectRootDirectory();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getAbsoluteFileName(RelativeFileName $relativeFileName): AbsoluteFileName
     {
         $absoluteFileName = Path::join([$this->rootDirectory, $relativeFileName->getFileName()]);
 
         try {
             return new AbsoluteFileName($absoluteFileName);
-        } catch (InvalidPathException $e) { // @codeCoverageIgnore
-            // This should never happen as Path::join will always return a valid absolute path.
-            throw new LogicException("Invalid $absoluteFileName"); // @codeCoverageIgnore
+        } catch (InvalidPathException $e) {
+            throw new LogicException("Invalid $absoluteFileName");
         }
     }
 
