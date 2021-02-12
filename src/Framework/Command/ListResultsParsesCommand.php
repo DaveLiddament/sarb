@@ -22,7 +22,7 @@ class ListResultsParsesCommand extends Command
     public const COMMAND_NAME = 'list-static-analysis-tools';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $defaultName = self::COMMAND_NAME;
 

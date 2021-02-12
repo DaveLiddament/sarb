@@ -43,7 +43,7 @@ class CreateBaseLineCommand extends Command
     private const DOC_URL = 'https://github.com/DaveLiddament/sarb/blob/master/docs/ViolationTypeClassificationGuessing.md';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $defaultName = self::COMMAND_NAME;
 

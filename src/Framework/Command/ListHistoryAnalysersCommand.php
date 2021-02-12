@@ -22,7 +22,7 @@ class ListHistoryAnalysersCommand extends Command
     public const COMMAND_NAME = 'list-history-analysers';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $defaultName = self::COMMAND_NAME;
 

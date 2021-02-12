@@ -35,7 +35,7 @@ class RemoveBaseLineFromResultsCommand extends Command
     private const OUTPUT_FORMAT = 'output-format';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $defaultName = self::COMMAND_NAME;
 
