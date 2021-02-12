@@ -10,7 +10,7 @@ on:
 
 jobs:
   full-checks:
-    name: "Full CI checks"
+    name: "Full CI checks for all PHP versions and composer highest and lowest"
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -56,15 +56,59 @@ jobs:
         if: ${{ matrix.dependencies == 'highest' }}
         run: "composer update --no-interaction --no-progress"
 
-      - name: "Install locked dependencies"
-        if: ${{ matrix.dependencies == 'locked' }}
-        run: "composer install --no-interaction --no-progress"
-
       - name: "Full CI"
         run: "composer ci"
+
+
+  one-version-only:
+    name: "Runs code coverage and infection of 8.0 highest"
+
+    runs-on: ${{ matrix.operating-system }}
+
+    strategy:
+      matrix:
+        dependencies:
+          - "highest"
+        php-version:
+          - "8.0"
+        operating-system:
+          - "ubuntu-18.04"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: Xdebug
+          php-version: "${{ matrix.php-version }}"
+          tools: composer, infection
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.lock') }}"
+
+      - name: "Install highest dependencies"
+        if: ${{ matrix.dependencies == 'highest' }}
+        run: "composer update --no-interaction --no-progress"
+
+      - name: "Run tests"
+        run: "composer test"
 
       - name: "Upload code coverage"
         uses: codecov/codecov-action@v1
         with:
           file: reports/phpunit.xml
           name: Test coverage
+
+      - name: "Run mutation tests with Xdebug and infection/infection"
+        run: "infection --configuration=infection.json.dist"
+

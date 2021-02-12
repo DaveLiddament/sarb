@@ -1,0 +1,17 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "mutators": {
+        "@default": true
+    },
+    "logs" : {
+        "text": "reports/infection.log",
+        "json": "reports/infection.json",
+	"badge" : {
+	 	"branch": "master"
+	}
+    }
+}
