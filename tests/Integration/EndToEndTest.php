@@ -213,7 +213,7 @@ class EndToEndTest extends TestCase
         $source = $this->getPath($directory);
         $this->fileSystem->mirror($source, (string) $this->projectRoot, null, ['override' => true]);
         $this->updatePathsInJsonFiles($this->projectRoot);
-        $this->gitWrapper->addAndCommt("Updating code to $directory", $this->projectRoot);
+        $this->gitWrapper->addAndCommit("Updating code to $directory", $this->projectRoot);
     }
 
     private function runCreateBaseLineCommand(): void

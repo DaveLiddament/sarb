@@ -120,7 +120,7 @@ class GitCliWrapper implements GitWrapper
      *
      * @throws CommandFailedException
      */
-    public function addAndCommt(string $message, ProjectRoot $projectRoot): void
+    public function addAndCommit(string $message, ProjectRoot $projectRoot): void
     {
         $addCommand = $this->getGitCommand(['add', '.'], $projectRoot);
         $this->runCommand($addCommand, 'Git add .');
