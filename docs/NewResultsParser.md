@@ -87,9 +87,9 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsPar
 class PsalmJsonResultsParser implements ResultsParser
 {
 
-    public function getIdentifer(): Identifer
+    public function getIdentifier(): Identifier
     {
-        return new PsalmJsonIdetifier;
+        return new PsalmJsonIdetifier();
     }
 
 }
@@ -273,9 +273,12 @@ SARB needs to pull out:
  - type (`type` in Psalm's JSON output)
  - message (`message` in Psalm's JSON output)
 
-**NOTE:** The file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path.
+**NOTES:** 
 
-It does this like so:
+1. `Type` must refer to the type of violation (e.g. `MissingConstructor`). See more about this at [How SARB works](HowSarbWorks.md)
+1. The file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path.
+
+Here is a the code to pull the information from the array:
 
 ```php
                 $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'file_path');
@@ -284,13 +287,12 @@ It does this like so:
                 $message = ArrayUtils::getStringValue($analysisResultAsArray, 'message');
 ```
 
+The final piece of information that SARB takes is an array containing all the data from the tool about the particular violation. 
+This allows tool specific output formatters to be written to output additional information if needed.
+E.g. PHP-CS gives additional fields e.g. is_fixable. If this data needs to be shown to end user then a custom output formatter could be written to give all this additional information.
+
 
 SARB needs to capture all ths information and create an `AnalysisResult`.
-As well as the information above SARB also needs a serialised version (as a string) of all the information.
-This is needed to recreate a file that looks like Psalm's JSON output with the baseline results removed.
-
-The easiest way to do this is to take the array that represents the entire violation and serialise it as a string:
-
 ```php
                 $location = new Location(
                     new FileName($fileNameAsString),
@@ -315,33 +317,6 @@ Finally each individual `AnalysisResult` should be added to the `AnalysisResults
 
 And that's it!
 
-#### Method: convertToString
-
-The next method to implement needs to convert `AnalysisResults` into a string that is in the same format of the static analysis tool's output.
-`AnalysisResults` will hold only the violations that were not in the baseline.
-
-In the case of Psalm JSON format this is simple.
-
-```php
-    /**
-     * Create a string representation of the Analysis results (for persisting to a file).
-     *
-     * @param AnalysisResults $analysisResults
-     *
-     * @throws JsonParseException
-     *
-     * @return string
-     */
-    public function convertToString(AnalysisResults $analysisResults): string
-    {
-        $asArray = [];
-        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
-            $asArray[] = JsonUtils::toArray($analysisResult->getFullDetails());
-        }
-
-        return JsonUtils::toString($asArray);
-    }
-```
 
 #### Method: showTypeGuessingWarning
 
@@ -362,5 +337,5 @@ The final method to implement just returns true or false.
 ```
 
 Read more about [guessing violation type classification](ViolationTypeClassificationGuessing.md).
-In this example the static analysis tool provides a type so we are not guessing the
+In this example the static analysis tool provides a `type` so we are not guessing the
 classification. So this will return false.

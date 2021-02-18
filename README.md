@@ -64,108 +64,100 @@ If you install globally make sure the composer bin directory is in your path.
 
 ## Using SARB
 
+If you're using version 0.x see the [old documentation](docs/version0/README.md) 
+
+
 #### 1. Make sure the current git commit is the one to be used in the baseline
 
-When creating the baseline SARB needs to know the git commit SHA of the baseline.
-So make sure your code is in the state you want it to be in for the baseline and that the current commit represents that state.
+When creating the baseline, SARB needs to know the git commit SHA of the baseline.
+Make sure your code is in the state you want it to be in for the baseline and that the current commit represents that state.
 
 
-#### 2. Run the static analyser
+#### 2. Create the baseline
 
-Run the static analyser and output results to a file.
+Run the static analyser of choice and pipe the results into SARB:
 
-E.g. with using the JSON format for Psalm:
+E.g. using [Psalm's](https://psalm.dev) JSON output:
+
+```shell
+vendor/bin/psalm --output-format=json | vendor/bin/sarb create-baseline --format="psalm-json" psalm.baseline
 ```
-vendor/bin/psalm --report=reports/baseline_psalm_issues.json
+
+This creates a baseline file called `psalm.baseline`. You'll want to check this in to your repository.
+
+
+
+#### 3. Update code and then use SARB to remove baseline results
+
+Continue coding. Then rerun static analyser and pipe results into SARB:
+
+```shell
+vendor/bin/psalm --output-format=json | vendor/bin/sarb remove-baseline psalm.baseline
 ```
 
-It is this output that will be used to create the baseline.
+### Running SARB from a global installation
 
+If you are running SARB from a global installation you will need to specify the root of the project (where the `.git` directory lives).
+The above would become:
 
-**NOTE:** Make sure that both the tool and format are supported. To get a list use:
+```shell
+psalm --output-format=json | sarb create-baseline --project-root=/path/to/project/root --format="psalm-json" psalm.baseline
+```
 
+### Supported tools
+
+To see a list of supported tools and formats use:
 ```
 vendor/bin/sarb list-static-analysis-tools
 ```
 
-If your tool or format is in this list then create your own ResultsParser.
+How to create and remove baseline for each supported tool:
 
-
-#### 3. Create the baseline
-
-If you are running SARB within your project then run this command:
-```
-vendor/bin/sarb create-baseline \
-                reports/baseline_psalm_issues.json \
-                reports/sarb_baseline.json \
-                psalm-json
+#### [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+```shell
+vendor/bin/phpcs src --report=json | vendor/bin/sarb create --input-format="phpcodesniffer-json" phpcs.baseline
+vendor/bin/phpcs src --report=json | vendor/bin/sarb remove phpcs.baseline
 ```
 
-Breaking this down:
-
- * Firstly we are specifying that we wish to create a baseline with `create-baseline`.
- * Now specify the initial baseline results from the static analysis tool. In this example `reports/baseline_psalm_issues.json`
- * Then specify SARB's baseline output. Here `reports/sarb_baseline.json`
- * Finally specify the static analysis tool. This is a combination of both tool and format. Here it is `psalm-json`.
-
-**NOTE: SARB will create the baseline and record the git SHA that the project is currently at. Make sure this is correct.**
-
-If you are running SARB in standalone mode then you need 1 extra option:
-
-```
-./sarb create-baseline \
-       --project-root=path/to/project/root \
-       reports/baseline_psalm_issues.json \
-       reports/sarb_baseline.json \
-       psalm-json
+#### [Phan](https://github.com/phan/phan)
+```shell
+vendor/bin/phan -m json | vendor/bin/sarb create --input-format="phan-json" phan.baseline
+vendor/bin/phan -m json | vendor/bin/sarb remove phan.baseline
 ```
 
-You must specify the option `--project-root`. This must point to the root of the project (where the `.git` directory lives).
-
-#### 4. Continue coding and run the static analysis
-
-Continue coding. When done:
-
- * Commit the code
- * Rerun the static analysis on the latest code. e.g.:
-
-```
-vendor/bin/psalm --report=reports/latest_psalm_issues.json
+### [Exakat](https://www.exakat.io/)
+```shell
+php exakat.phar report -p <project> -format sarb | vendor/bin/sarb create --input-format="exakat-sarb" exakat.baseline
+php exakat.phar report -p <project> -format sarb | vendor/bin/sarb remove phan.baseline
 ```
 
-
-#### 5. Use SARB to remove baseline results
-
-If you are running SARB within your project then run this command:
-```
-vendor/bin/sarb remove-baseline-results \
-                reports/latest_psalm_issues.json \
-                reports/sarb_baseline.json \
-                reports/issues_since_baseline.json
+### [PHPMD](https://github.com/phpmd/phpmd)
+```shell
+vendor/bin/phpmd src json <ruleset> | vendor/bin/sarb create --input-format="phpmd-json" phpmd.baseline
+vendor/bin/phpmd src json <ruleset> | vendor/bin/sarb remove phpmd.baseline
 ```
 
-Breaking this down:
-
- * Firstly we are specifying that we wish to remove issues from the baseline with `remove-baseline-results`.
- * Then specify the latest results from the static analysis tool. In this example `reports/latest_psalm_issues.json`
- * Now specify SARB's baseline output. Here `reports/sarb_baseline.json`
- * Finally we specify the output file. This will be in the same format as the output from the static analysis, but will only contain the issues introduced since the baseline.
-
-
-As before if you are running SARB in standalone mode then you need 1 extra option:
-```
-    --project-root=path/to/project/root
+#### [Psalm](https://psalm.dev)
+```shell
+vendor/bin/psalm --output-format=json | vendor/bin/sarb create --input-format="psalm-json" psalm.baseline
+vendor/bin/psalm --output-format=json | vendor/bin/sarb remove psalm.baseline
 ```
 
-If you are running this in CI then you can add the flag `-f`. This means a none zero return code is returned if any issues have been introduced sinde the baseline.
+#### [PHPStan](https://phpstan.org)
+```shell
+vendor/bin/phpstan --format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
+vendor/bin/phpstan --format=json | vendor/bin/sarb remove phpstan.baseline
+```
 
-## Examples
+## My tool isn't supported...
 
- * [Exakat](https://www.exakat.io/exakat-1-8-3-review/)
- * [Phan](docs/Phan.md)
- * [PHP CodeSniffer](docs/PhpCodeSniffer.md)
- * [PHPStan](docs/PhpStan.md)
- * [Psalm](docs/Psalm.md)
+That's no problem there are 3 methods to [integrate a static analysis tool](docs/CustomInputFormats.md) with SARB.
+
+
+## Output formats 
+
+The format for showing issues after the baseline is removed can be specified using `--output-format` option. 
+Possible values are: `table`, `text` or `json`.
 
 
 ## Further Reading

@@ -17,7 +17,7 @@ First fix all the issues you want to fix before creating the baseline.
 
 Make sure before creating the baseline that:
 
-- all code is committed to git. Running `git status` should return with ` nothing to commit, working tree clean` in the response.
+- all code is committed to git. Running `git status` should return with `nothing to commit, working tree clean` in the response.
 - the current commit is the one you want to use as the baseline.
 
 **This is very important as SARB uses the current git SHA when working out what code has changed from the baseline.** 
