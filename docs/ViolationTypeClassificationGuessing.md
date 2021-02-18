@@ -11,7 +11,7 @@ E.g.
  - Message: `Demo\Employee has an uninitialized variable $this->age, but no constructor`
 
 Sometimes static analysis tools only provide a message and no classification.
-The problem with using the message is that between builds the mesage changes
+The problem with using the message is that between builds the mesage might change
 but the fundamental violation remains the same.
 
 E.g. Assume `Demo\Employee` was renamed to `Demo\Person` between builds.
@@ -23,11 +23,11 @@ to
 
 `Demo\Person has an uninitialized variable $this->age, but no constructor`
 
-However this is still fundamentally the same issue (`MissingConstructor`).
+However, this is still fundamentally the same issue (`MissingConstructor`).
 
 
 In cases where static analysis tools only provide a message,
-SARB will try and remove anything from the message that might change
+SARB will try to remove anything from the message that might change
 but is not fundamental to the issue being reported. In the case of
 PHP static analysers it will remove anything that looks like a
 fully qualified class name (FQCN). So the above example after stripping out the FQCN would go from:
