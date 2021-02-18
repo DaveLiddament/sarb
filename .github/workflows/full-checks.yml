@@ -18,6 +18,7 @@ jobs:
       matrix:
         dependencies:
           - "lowest"
+          - "locked"
           - "highest"
         php-version:
           - "7.3"
@@ -52,6 +53,10 @@ jobs:
         if: ${{ matrix.dependencies == 'lowest' }}
         run: "composer update --prefer-lowest --no-interaction --no-progress"
 
+      - name: "Install locked dependencies"
+        if: ${{ matrix.dependencies == 'locked' }}
+        run: "composer install --no-interaction --no-progress"
+
       - name: "Install highest dependencies"
         if: ${{ matrix.dependencies == 'highest' }}
         run: "composer update --no-interaction --no-progress"
@@ -68,9 +73,9 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - "highest"
+          - "locked"
         php-version:
-          - "8.0"
+          - "7.4"
         operating-system:
           - "ubuntu-18.04"
 
@@ -96,9 +101,9 @@ jobs:
           key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.lock') }}"
           restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.lock') }}"
 
-      - name: "Install highest dependencies"
-        if: ${{ matrix.dependencies == 'highest' }}
-        run: "composer update --no-interaction --no-progress"
+      - name: "Install locked dependencies"
+        if: ${{ matrix.dependencies == 'locked' }}
+        run: "composer install --no-interaction --no-progress"
 
       - name: "Run tests"
         run: "composer test"
