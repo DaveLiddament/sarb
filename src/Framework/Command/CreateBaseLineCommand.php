@@ -23,6 +23,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\Base
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\OutputWriter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ProjectRootHelper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonIdentifier;
 use Symfony\Component\Console\Command\Command;
@@ -117,8 +118,8 @@ class CreateBaseLineCommand extends Command
             );
 
             $errorsInBaseLine = $baseLine->getAnalysisResults()->getCount();
-            ErrorReporter::writeToStdError($output, '<info>Baseline created</info>');
-            ErrorReporter::writeToStdError($output, "<info>Errors in baseline $errorsInBaseLine</info>");
+            OutputWriter::writeToStdError($output, 'Baseline created', false);
+            OutputWriter::writeToStdError($output, "Errors in baseline $errorsInBaseLine", false);
 
             return 0;
         } catch (Throwable $throwable) {

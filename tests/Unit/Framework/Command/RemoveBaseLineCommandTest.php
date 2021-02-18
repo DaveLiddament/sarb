@@ -90,7 +90,7 @@ EOF;
         $this->assertReturnCode(0, $commandTester);
         $this->assertResponseContains('Latest analysis issue count: 2', $commandTester);
         $this->assertResponseContains('Baseline issue count: 4', $commandTester);
-        $this->assertResponseContains('Issues count with baseline removed: 0', $commandTester);
+        $this->assertResponseContains('Issue count with baseline removed: 0', $commandTester);
     }
 
     public function test1NewIssues(): void
@@ -108,7 +108,7 @@ EOF;
         ]);
 
         $this->assertReturnCode(1, $commandTester);
-        $this->assertResponseContains('Issues count with baseline removed: 1', $commandTester);
+        $this->assertResponseContains('Issue count with baseline removed: 1', $commandTester);
     }
 
     public function testPickNonDefaultOutputFormatter(): void

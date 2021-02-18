@@ -20,6 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\Base
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\InvalidConfigException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\OutputWriter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ProjectRootHelper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\TableOutputFormatter;
 use Symfony\Component\Console\Command\Command;
@@ -91,19 +92,22 @@ class RemoveBaseLineFromResultsCommand extends Command
 
             $outputAnalysisResults = $prunedResults->getPrunedResults();
 
-            ErrorReporter::writeToStdError(
+            OutputWriter::writeToStdError(
                 $output,
-                "Latest analysis issue count: {$prunedResults->getInputAnalysisResultsCount()}"
+                "Latest analysis issue count: {$prunedResults->getInputAnalysisResultsCount()}",
+                false
             );
 
-            ErrorReporter::writeToStdError(
+            OutputWriter::writeToStdError(
                 $output,
-                "Baseline issue count: {$prunedResults->getBaseLine()->getAnalysisResults()->getCount()}"
+                "Baseline issue count: {$prunedResults->getBaseLine()->getAnalysisResults()->getCount()}",
+                false
             );
 
-            ErrorReporter::writeToStdError(
+            OutputWriter::writeToStdError(
                 $output,
-                "Issues count with baseline removed: {$outputAnalysisResults->getCount()}"
+                "Issue count with baseline removed: {$outputAnalysisResults->getCount()}",
+                !$outputAnalysisResults->hasNoIssues()
             );
 
             $outputAsString = $outputFormatter->outputResults($outputAnalysisResults);

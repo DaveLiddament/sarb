@@ -8,7 +8,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 class BaseLineFileHelper
 {
@@ -19,12 +18,6 @@ class BaseLineFileHelper
         $command->addArgument(
             self::BASELINE_FILE,
             InputArgument::REQUIRED, 'Baseline file'
-        );
-        $command->addOption(
-            self::BASELINE_FILE,
-            null,
-            InputOption::VALUE_REQUIRED,
-            'Path to the root of the project you are creating baseline for'
         );
     }
 

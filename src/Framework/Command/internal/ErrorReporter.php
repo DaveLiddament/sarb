@@ -20,28 +20,28 @@ class ErrorReporter
         try {
             throw $throwable;
         } catch (InvalidConfigException $e) {
-            self::writeToStdError($output, $e->getMessage());
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 11;
         } catch (BaseLineImportException $e) {
-            self::writeToStdError($output, $e->getMessage());
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 12;
         } catch (AnalysisResultsImportException $e) {
-            self::writeToStdError($output, $e->getMessage());
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 13;
         } catch (FileAccessException $e) {
-            self::writeToStdError($output, $e->getMessage());
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 14;
         } catch (HistoryAnalyserException $e) {
-            self::writeToStdError($output, $e->getMessage());
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 15;
         } catch (Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
-            self::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}");
+            OutputWriter::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}", true);
 
             return 100;
         }
