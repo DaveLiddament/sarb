@@ -9,7 +9,6 @@
         "MethodCallRemoval" : {
           "ignoreSourceCodeByRegex": [
             "Assert::.*",
-            "return new self($message, 0, $e);"
           ]
         }
     },

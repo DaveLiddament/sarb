@@ -10,7 +10,7 @@ on:
 
 jobs:
   full-checks:
-    name: "Full CI checks for all PHP versions and composer highest and lowest"
+    name: "Full CI checks for all PHP versions and composer highest, locked and lowest"
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -66,7 +66,7 @@ jobs:
 
 
   one-version-only:
-    name: "Runs code coverage and infection of 8.0 highest"
+    name: "Runs code coverage and infection"
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -75,7 +75,7 @@ jobs:
         dependencies:
           - "locked"
         php-version:
-          - "7.4"
+          - "8.0"
         operating-system:
           - "ubuntu-18.04"
 
