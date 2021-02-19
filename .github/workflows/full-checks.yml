@@ -115,5 +115,7 @@ jobs:
           name: Test coverage
 
       - name: "Run mutation tests with Xdebug and infection/infection"
+        env:
+          INFECTION_BADGE_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: "infection --configuration=infection.json.dist"
 
