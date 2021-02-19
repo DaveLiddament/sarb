@@ -1,13 +1,17 @@
 # Static Analysis Results Baseliner (SARB)
 
-[![Code quality](https://github.com/DaveLiddament/sarb/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/sarb) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
+[![Minimum PHP version: 7.3.0](https://img.shields.io/badge/php-7.3.0%2B-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
 [![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
+[![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://packagist.org/packages/dave-liddament/sarb)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb)
+
+[![Continuous Integration](https://github.com/DaveLiddament/sarb/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/sarb/actions) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
 [![Type coverage](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)
 [![Code Coverage](https://codecov.io/gh/DaveLiddament/sarb/branch/master/graph/badge.svg)](https://codecov.io/gh/DaveLiddament/sarb)
 [![Infection MSI](https://badge.stryker-mutator.io/github.com/DaveLiddament/sarb/master)](https://infection.github.io)
-[![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://packagist.org/packages/dave-liddament/sarb)
+
+
 
 **This is still in beta.**
 
@@ -42,7 +46,7 @@ SARB should not be used on greenfield projects. If you're lucky enough to work o
 
 Currently SARB only supports projects that use [git](https://git-scm.com/).
 
-SARB requires PHP >= 7.1 to run. The project being analysed does not need to run PHP 7.1 or even be a PHP project at all.
+SARB requires PHP >= 7.3 to run. The project being analysed does not need to run PHP 7.3 or even be a PHP project at all.
 
 ## Installing
 
