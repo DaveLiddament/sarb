@@ -47,9 +47,4 @@ class ErrorReporter
         }
     }
 
-    public static function writeToStdError(OutputInterface $output, string $message): void
-    {
-        $errorOutput = $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
-        $errorOutput->writeln("<error>$message</error>");
-    }
 }
