@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\LineMutation;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\NewFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\OriginalFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\FileMutationBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\FileMutationsBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\LineMutation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\NewFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +26,7 @@ class DiffHistoryAnalyserTest extends TestCase
      */
     private $fileMutationsBuilder;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->fileMutationsBuilder = new FileMutationsBuilder();
     }
@@ -125,21 +124,18 @@ class DiffHistoryAnalyserTest extends TestCase
     {
         $fileMutations = $this->fileMutationsBuilder->build();
         $diffHistoryAnalyser = new DiffHistoryAnalyser($fileMutations);
-        $location = $this->createLocation($fileName, $lineNumber);
 
-        return $diffHistoryAnalyser->getPreviousLocation($location);
-    }
-
-    private function createLocation(string $fileName, int $lineNumber): Location
-    {
-        return new Location(new FileName($fileName), new LineNumber($lineNumber));
+        return $diffHistoryAnalyser->getPreviousLocation(
+            new RelativeFileName($fileName),
+            new LineNumber($lineNumber)
+        );
     }
 
     private function assertPreviousLocation(string $fileName, int $lineNumber, PreviousLocation $previousLocation): void
     {
         $this->assertFalse($previousLocation->isNoPreviousLocation());
-        $expectedLocation = $this->createLocation($fileName, $lineNumber);
-        $this->assertTrue($expectedLocation->isEqual($previousLocation->getLocation()));
+        $this->assertSame($fileName, $previousLocation->getRelativeFileName()->getFileName());
+        $this->assertSame($lineNumber, $previousLocation->getLineNumber()->getLineNumber());
     }
 
     private function assertNoPreviousLocation(PreviousLocation $previousLocation): void

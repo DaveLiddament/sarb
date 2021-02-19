@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 
 class FileWriter
@@ -21,9 +20,8 @@ class FileWriter
     /**
      * Write $contents to the file.
      *
-     * @phpstan-param array<mixed> $contents
+     * @psalm-param array<mixed> $contents
      *
-     * @throws JsonParseException
      * @throws FileAccessException
      */
     public function writeArrayToFile(FileName $fileName, array $contents): void
@@ -39,9 +37,9 @@ class FileWriter
      */
     public function writeFile(FileName $fileName, string $contents): void
     {
-        $result = file_put_contents($fileName->getFileName(), $contents);
+        $result = @file_put_contents($fileName->getFileName(), $contents);
         if (false === $result) {
-            throw FileAccessException::writeFileException();
+            throw FileAccessException::writeFileException($fileName);
         }
     }
 }

@@ -15,27 +15,45 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 class Location
 {
     /**
-     * @var FileName
+     * @var RelativeFileName
      */
-    private $fileName;
+    private $relativeFileName;
 
     /**
      * @var LineNumber
      */
     private $lineNumber;
+    /**
+     * @var AbsoluteFileName
+     */
+    private $absoluteFileName;
 
     /**
-     * Location constructor.
+     * @throws InvalidPathException
      */
-    public function __construct(FileName $fileName, LineNumber $lineNumber)
-    {
-        $this->fileName = $fileName;
-        $this->lineNumber = $lineNumber;
+    public static function fromAbsoluteFileName(
+        AbsoluteFileName $absoluteFileName,
+        ProjectRoot $projectRoot,
+        LineNumber $lineNumber
+    ): self {
+        $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName);
+
+        return new self($absoluteFileName, $relativeFileName, $lineNumber);
     }
 
-    public function getFileName(): FileName
+    private function __construct(
+        AbsoluteFileName $absoluteFileName,
+        RelativeFileName $relativeFileName,
+        LineNumber $lineNumber
+    ) {
+        $this->relativeFileName = $relativeFileName;
+        $this->lineNumber = $lineNumber;
+        $this->absoluteFileName = $absoluteFileName;
+    }
+
+    public function getRelativeFileName(): RelativeFileName
     {
-        return $this->fileName;
+        return $this->relativeFileName;
     }
 
     public function getLineNumber(): LineNumber
@@ -43,14 +61,9 @@ class Location
         return $this->lineNumber;
     }
 
-    /**
-     * Returns true if $other refers to same location as this Location object.
-     *
-     * @param Location $other
-     */
-    public function isEqual(self $other): bool
+    public function getAbsoluteFileName(): AbsoluteFileName
     {
-        return $this->fileName->isEqual($other->getFileName()) && $this->lineNumber->isEqual($other->getLineNumber());
+        return $this->absoluteFileName;
     }
 
     /**
@@ -58,8 +71,8 @@ class Location
      */
     public function compareTo(self $other): int
     {
-        if ($this->fileName->getFileName() !== $other->fileName->getFileName()) {
-            return $this->fileName->getFileName() <=> $other->fileName->getFileName();
+        if ($this->relativeFileName->getFileName() !== $other->relativeFileName->getFileName()) {
+            return $this->relativeFileName->getFileName() <=> $other->relativeFileName->getFileName();
         }
 
         return $this->lineNumber->getLineNumber() <=> $other->lineNumber->getLineNumber();

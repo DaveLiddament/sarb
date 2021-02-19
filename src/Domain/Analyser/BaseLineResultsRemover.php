@@ -13,11 +13,12 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLineResultsComparator;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 
 class BaseLineResultsRemover
 {
@@ -27,18 +28,18 @@ class BaseLineResultsRemover
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
         HistoryAnalyser $historyAnalyser,
-        AnalysisResults $baseLineAnalysisResults
+        BaseLineAnalysisResults $baseLineAnalysisResults
     ): AnalysisResults {
-        $prunedAnalysisResults = new AnalysisResults();
+        $prunedAnalysisResultsBuilder = new AnalysisResultsBuilder();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);
 
         foreach ($latestAnalysisResults->getAnalysisResults() as $analysisResult) {
             if (!$this->isInHistoricResults($analysisResult, $baseLineResultsComparator, $historyAnalyser)) {
-                $prunedAnalysisResults->addAnalysisResult($analysisResult);
+                $prunedAnalysisResultsBuilder->addAnalysisResult($analysisResult);
             }
         }
 
-        return $prunedAnalysisResults;
+        return $prunedAnalysisResultsBuilder->build();
     }
 
     private function isInHistoricResults(
@@ -46,14 +47,9 @@ class BaseLineResultsRemover
         BaseLineResultsComparator $baseLineResultsComparator,
         HistoryAnalyser $historyAnalyser
     ): bool {
-        $previousLocation = $historyAnalyser->getPreviousLocation($analysisResult->getLocation());
+        $location = $analysisResult->getLocation();
+        $previousLocation = $historyAnalyser->getPreviousLocation($location->getRelativeFileName(), $location->getLineNumber());
 
-        // Analysis result refers to a Location not in the BaseLine, then this is not an historic analysis result.
-        if ($previousLocation->isNoPreviousLocation()) {
-            return false;
-        }
-
-        // Now check through to history AnalysisResults to see if there is an exact match.
-        return $baseLineResultsComparator->isInBaseLine($previousLocation->getLocation(), $analysisResult->getType());
+        return $baseLineResultsComparator->isInBaseLine($previousLocation, $analysisResult->getType());
     }
 }

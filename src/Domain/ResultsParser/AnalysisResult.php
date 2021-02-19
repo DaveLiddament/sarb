@@ -12,24 +12,15 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 
 /**
  * Holds a single result from the static analysis results.
  */
 class AnalysisResult
 {
-    private const LINE_NUMBER = 'lineNumber';
-    private const FILE_NAME = 'fileName';
-    private const TYPE = 'type';
-    private const MESSAGE = 'message';
-    private const FULL_DETAILS = 'fullDetails';
-
     /**
      * @var Location
      */
@@ -46,17 +37,22 @@ class AnalysisResult
     private $message;
 
     /**
-     * @var string
+     * @var array
+     * @psalm-var array<mixed>
      */
     private $fullDetails;
 
     /**
      * AnalysisResult constructor.
      *
-     * NOTE: $fullDetails should be a serialised version of the violation containing all the details that the
-     * static analysis tool provided. It must be possible to reproduce the original violation from this string
+     * NOTE: $fullDetails should contain an array with all data from the original tool.
+     * This allows tool specific output formatters to be written to output additional information if needed.
+     * E.g. PHP-CS gives additional fields e.g. is_fixable. If this data needs to be shown to end user then
+     * then a custom output formatter could be written to give all this additional information.
+     *
+     * @psalm-param array<mixed> $fullDetails
      */
-    public function __construct(Location $location, Type $type, string $message, string $fullDetails)
+    public function __construct(Location $location, Type $type, string $message, array $fullDetails)
     {
         $this->location = $location;
         $this->type = $type;
@@ -74,7 +70,10 @@ class AnalysisResult
         return $this->type;
     }
 
-    public function getFullDetails(): string
+    /**
+     * @psalm-return array<mixed>
+     */
+    public function getFullDetails(): array
     {
         return $this->fullDetails;
     }
@@ -84,44 +83,13 @@ class AnalysisResult
         return $this->message;
     }
 
-    /**
-     * Return true if AnalysisResult matches given FileName, LineNumber and type.
-     */
-    public function isMatch(Location $location, Type $type): bool
+    public function asBaseLineAnalysisResult(): BaseLineAnalysisResult
     {
-        return $this->location->isEqual($location) && $this->type->isEqual($type);
-    }
-
-    /**
-     * @return array<string,mixed>
-     */
-    public function asArray(): array
-    {
-        return [
-            self::LINE_NUMBER => $this->location->getLineNumber()->getLineNumber(),
-            self::FILE_NAME => $this->location->getFileName()->getFileName(),
-            self::TYPE => $this->type->getType(),
-            self::MESSAGE => $this->message,
-            self::FULL_DETAILS => $this->getFullDetails(),
-        ];
-    }
-
-    /**
-     * @phpstan-param array<mixed> $array
-     *
-     * @throws ArrayParseException
-     *
-     * @return AnalysisResult
-     */
-    public static function fromArray(array $array): self
-    {
-        $lineNumber = new LineNumber(ArrayUtils::getIntValue($array, self::LINE_NUMBER));
-        $fileName = new FileName(ArrayUtils::getStringValue($array, self::FILE_NAME));
-        $type = new Type(ArrayUtils::getStringValue($array, self::TYPE));
-        $location = new Location($fileName, $lineNumber);
-        $message = ArrayUtils::getStringValue($array, self::MESSAGE);
-        $fullDetails = ArrayUtils::getStringValue($array, self::FULL_DETAILS);
-
-        return new self($location, $type, $message, $fullDetails);
+        return BaseLineAnalysisResult::make(
+            $this->location->getRelativeFileName(),
+            $this->location->getLineNumber(),
+            $this->type,
+            $this->message
+        );
     }
 }

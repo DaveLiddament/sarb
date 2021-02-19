@@ -1,0 +1,30 @@
+<?php
+
+namespace Webmozart\Assert;
+
+class Assert
+{
+    /**
+     * @psalm-assert true $value
+     */
+    public static function true($value, $message = '') {}
+
+    /**
+     * @psalm-assert string $value
+     */
+    public static function string($value, $message = '') {}
+
+
+    /**
+     * @psalm-assert !null $value
+     */
+    public static function notNull($value, $message = '') {}
+
+
+    /**
+     * @template T of object
+     * @param class-string<T> $type
+     * @psalm-assert T $value
+     */
+    public static function isInstanceOf($value, $type, $message = '') {}
+}

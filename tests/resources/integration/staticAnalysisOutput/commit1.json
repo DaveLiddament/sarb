@@ -1,0 +1,26 @@
+[
+  {
+    "line": 15,
+    "type": "MissingConstructor",
+    "message": "DaveLiddament\\DummyProject\\Person has an uninitialized variable $this->name, but no constructor",
+    "file": "__SCRATCH_PAD_PATH__/src/Person.php"
+  },
+  {
+    "line": 15,
+    "type": "MixedAssignment",
+    "message": "Cannot assign $person to a mixed type",
+    "file": "__SCRATCH_PAD_PATH__/src/PersonFinder.php"
+  },
+  {
+    "line": 16,
+    "type": "MixedMethodCall",
+    "message": "Cannot call method on a mixed variable $person",
+    "file": "__SCRATCH_PAD_PATH__/src/PersonFinder.php"
+  },
+  {
+    "line": 17,
+    "type": "MixedAssignment",
+    "message": "Cannot assign  to a mixed type",
+    "file": "__SCRATCH_PAD_PATH__/src/PersonFinder.php"
+  }
+]

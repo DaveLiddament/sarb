@@ -20,4 +20,19 @@ interface ResultsParserLookupService
      * @throws InvalidResultsParserException
      */
     public function getResultsParser(string $name): ResultsParser;
+
+    /**
+     * @return ResultsParser[]
+     */
+    public function getAll(): array;
+
+    /**
+     * Returns a list of all ResultsParser codes.
+     *
+     * These are used to identify which Static Analysis tool is being used for generating a baseline or comparing
+     * baseline results to.
+     *
+     * @return string[]
+     */
+    public function getIdentifiers(): array;
 }

@@ -12,17 +12,18 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 
 class FileAccessException extends SarbException
 {
-    public static function readFileException(): self
+    public static function readFileException(FileName $fileName): self
     {
-        return new self('Failed to read file (does it exist with correct permissions?)');
+        return new self("Failed to read file [{$fileName->getFileName()}] (does it exist with correct permissions?)");
     }
 
-    public static function writeFileException(): self
+    public static function writeFileException(FileName $fileName): self
     {
-        return new self('Failed to write file (are permissions correct?)');
+        return new self("Failed to write file [{$fileName->getFileName()}] (are permissions correct?)");
     }
 }

@@ -22,7 +22,7 @@ class ListHistoryAnalysersCommand extends Command
     public const COMMAND_NAME = 'list-history-analysers';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $defaultName = self::COMMAND_NAME;
 
@@ -40,9 +40,6 @@ class ListHistoryAnalysersCommand extends Command
         $this->historyFactoryRegistry = $historyFactoryRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->historyFactoryRegistry->getIdentifiers() as $identifier) {

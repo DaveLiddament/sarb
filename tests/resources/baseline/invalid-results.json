@@ -1,0 +1,13 @@
+{
+  "historyMarker": "9be6101dc6848d67b5958a5762494060062e42ec",
+  "historyAnalyser": "git",
+  "resultsParser": "sarb-json",
+  "analysisResults": [
+    {
+      "lineNumber": 10,
+      "fileName": "FILE_1",
+      "message": "MESSAGE_1",
+      "fullDetails": "FULL_DETAILS_1"
+    }
+  ]
+}

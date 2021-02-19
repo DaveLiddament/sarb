@@ -1,0 +1,8 @@
+[
+  {
+    "line": 25,
+    "type": "MissingConstructor",
+    "message": "DaveLiddament\\DummyProject\\Person has an uninitialized variable $this->name, but no constructor",
+    "file": "__SCRATCH_PAD_PATH__/src/Person.php"
+  }
+]

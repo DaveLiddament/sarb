@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 
 class FileReader
@@ -26,13 +25,10 @@ class FileReader
     public function readFile(FileName $fileName): string
     {
         $fileNameAsString = $fileName->getFileName();
-        if (!file_exists($fileNameAsString)) {
-            throw FileAccessException::readFileException();
-        }
 
-        $fileContents = file_get_contents($fileNameAsString);
+        $fileContents = @file_get_contents($fileNameAsString);
         if (false === $fileContents) {
-            throw FileAccessException::readFileException();
+            throw FileAccessException::readFileException($fileName);
         }
 
         return $fileContents;
@@ -41,10 +37,10 @@ class FileReader
     /**
      * Returns array representing the contents of the file. Assumes the file must be JSON.
      *
-     * @phpstan-return array<mixed>
+     * @psalm-return array<mixed>
      *
-     * @throws JsonParseException
      * @throws FileAccessException
+     * @throws InvalidContentTypeException
      */
     public function readJsonFile(FileName $fileName): array
     {

@@ -32,17 +32,11 @@ class GitHistoryMarkerFactory implements HistoryMarkerFactory
         $this->gitCliWrapper = $gitCliWrapper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function newHistoryMarker(string $historyMarkerAsString): HistoryMarker
     {
         return new GitCommit($historyMarkerAsString);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function newCurrentHistoryMarker(ProjectRoot $projectRoot): HistoryMarker
     {
         return $this->gitCliWrapper->getCurrentSha($projectRoot);

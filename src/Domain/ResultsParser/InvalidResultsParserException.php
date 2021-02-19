@@ -19,27 +19,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
  */
 class InvalidResultsParserException extends SarbException
 {
-    /**
-     * @var Identifier[]
-     */
-    private $possibleOptions;
-
-    /**
-     * InvalidResultsParserException constructor.
-     *
-     * @param Identifier[] $possibleValues
-     */
-    public function __construct(string $invalidOption, array $possibleValues)
+    public static function invalidIdentifier(string $identifier): self
     {
-        parent::__construct("Invalid {$invalidOption}");
-        $this->possibleOptions = $possibleValues;
-    }
-
-    /**
-     * @return Identifier[]
-     */
-    public function getPossibleOptions(): array
-    {
-        return $this->possibleOptions;
+        return new self("Invalid ResultsParser [$identifier]");
     }
 }

@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use PHPUnit\Framework\TestCase;
 
 class GitCommitTest extends TestCase
 {
+    /**
+     * @psalm-return array<string,array{string}>
+     */
     public function invalidGitCommitDataProvider(): array
     {
         return [
@@ -39,10 +43,13 @@ class GitCommitTest extends TestCase
      */
     public function testInvalidGitCommit(string $invalidCommit): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidHistoryMarkerException::class);
         new GitCommit($invalidCommit);
     }
 
+    /**
+     * @psalm-return array<int,array{string}>
+     */
     public function validGitCommitDataProvider(): array
     {
         return [

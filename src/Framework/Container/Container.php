@@ -13,9 +13,11 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddCommandCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddHistoryFactoryCompilerPass;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddOutputFormatterFactoryCompilerPass;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\internal\AddStaticAnalysisResultsParserCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
@@ -25,9 +27,10 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Container
 {
-    const COMMAND_TAG = 'console.command';
-    const RESULTS_PARSER_TAG = 'resultsParser';
-    const HISTORY_FACTORY_TAG = 'historyFactory';
+    public const COMMAND_TAG = 'console.command';
+    public const RESULTS_PARSER_TAG = 'resultsParser';
+    public const HISTORY_FACTORY_TAG = 'historyFactory';
+    public const OUTPUT_FORMATTER_TAG = 'outputFormatter';
 
     /**
      * @var ContainerBuilder
@@ -43,9 +46,11 @@ class Container
         $containerBuilder->registerForAutoconfiguration(Command::class)->addTag(self::COMMAND_TAG);
         $containerBuilder->registerForAutoconfiguration(ResultsParser::class)->addTag(self::RESULTS_PARSER_TAG);
         $containerBuilder->registerForAutoconfiguration(HistoryFactory::class)->addTag(self::HISTORY_FACTORY_TAG);
+        $containerBuilder->registerForAutoconfiguration(OutputFormatter::class)->addTag(self::OUTPUT_FORMATTER_TAG);
         $containerBuilder->addCompilerPass(new AddCommandCompilerPass());
         $containerBuilder->addCompilerPass(new AddStaticAnalysisResultsParserCompilerPass());
         $containerBuilder->addCompilerPass(new AddHistoryFactoryCompilerPass());
+        $containerBuilder->addCompilerPass(new AddOutputFormatterFactoryCompilerPass());
 
         $containerBuilder->compile();
         $this->containerBuilder = $containerBuilder;

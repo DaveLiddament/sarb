@@ -14,10 +14,11 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAna
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarkerFactory;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\Parser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
 use Webmozart\Assert\Assert;
 
@@ -43,7 +44,7 @@ class GitDiffHistoryFactory implements HistoryFactory
     }
 
     /**
-     * {@inheritdoc}
+     * @throws HistoryAnalyserException
      */
     public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser
     {
@@ -54,17 +55,11 @@ class GitDiffHistoryFactory implements HistoryFactory
         return new DiffHistoryAnalyser($fileMutations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function newHistoryMarkerFactory(): HistoryMarkerFactory
     {
         return new GitHistoryMarkerFactory($this->gitCliWrapper);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'git';

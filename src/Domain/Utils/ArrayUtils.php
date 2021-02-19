@@ -18,7 +18,7 @@ class ArrayUtils
      * Gets string value for given key in the array.
      *
      * @throws ArrayParseException
-     * @phpstan-param array<mixed> $array
+     * @psalm-param array<mixed> $array
      */
     public static function getStringValue(array $array, string $key): string
     {
@@ -33,7 +33,7 @@ class ArrayUtils
      * Gets int value for given key in the array.
      *
      * @throws ArrayParseException
-     * @phpstan-param array<mixed> $array
+     * @psalm-param array<mixed> $array
      */
     public static function getIntValue(array $array, string $key): int
     {
@@ -49,7 +49,7 @@ class ArrayUtils
      *
      * @throws ArrayParseException
      *
-     * @phpstan-param array<mixed> $array
+     * @psalm-param array<mixed> $array
      */
     public static function getIntOrNullValue(array $array, string $key): ?int
     {
@@ -67,8 +67,8 @@ class ArrayUtils
      * Gets array value for given key in the array.
      *
      * @throws ArrayParseException
-     * @phpstan-param array<mixed> $array
-     * @phpstan-return array<mixed> $array
+     * @psalm-param array<mixed> $array
+     * @psalm-return array<mixed> $array
      */
     public static function getArrayValue(array $array, string $key): array
     {
@@ -81,7 +81,7 @@ class ArrayUtils
 
     /**
      * @throws ArrayParseException
-     * @phpstan-param array<mixed> $array
+     * @psalm-param array<mixed> $array
      */
     private static function assertArrayKeyExists(array $array, string $key): void
     {
@@ -112,7 +112,7 @@ class ArrayUtils
      *
      * $age would be the integer value 21.
      *
-     * @phpstan-param array<mixed> $array
+     * @psalm-param array<mixed> $array
      *
      * @throws ArrayParseException
      */

@@ -22,7 +22,7 @@ class ListResultsParsesCommand extends Command
     public const COMMAND_NAME = 'list-static-analysis-tools';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $defaultName = self::COMMAND_NAME;
 
@@ -40,9 +40,6 @@ class ListResultsParsesCommand extends Command
         $this->staticAnalysisResultsParsersRegistry = $resultsParsersRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->staticAnalysisResultsParsersRegistry->getAll() as $resultsParser) {

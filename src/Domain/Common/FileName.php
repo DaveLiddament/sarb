@@ -22,10 +22,7 @@ class FileName
      */
     private $fileName;
 
-    /**
-     * FileName constructor.
-     */
-    public function __construct(string $fileName)
+    protected function __construct(string $fileName)
     {
         $this->fileName = $fileName;
     }

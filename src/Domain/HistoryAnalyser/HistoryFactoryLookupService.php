@@ -23,4 +23,13 @@ interface HistoryFactoryLookupService
      * @throws InvalidHistoryFactoryException
      */
     public function getHistoryFactory(string $identifier): HistoryFactory;
+
+    /**
+     * Returns a list of all HistoryFactory identifiers.
+     *
+     * These are used to identify which HistoryFactory to use.
+     *
+     * @return string[]
+     */
+    public function getIdentifiers(): array;
 }

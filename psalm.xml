@@ -1,23 +1,41 @@
 <?xml version="1.0"?>
 <psalm
     totallyTyped="true"
+    checkForThrowsDocblock="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config file:///vagrant/skeleton-project/vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="src" />
+        <directory name="src"/>
+        <directory name="tests"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
+            <directory name="tests/scratchpad"/>
+            <directory name="tests/resources"/>
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <LessSpecificReturnType errorLevel="info" />
+        <LessSpecificReturnType errorLevel="info"/>
+        <MissingThrowsDocblock>
+            <errorLevel type="suppress">
+                <directory name="tests/"/>
+                <directory name="src/Framework/Container/"/>
+            </errorLevel>
+        </MissingThrowsDocblock>
     </issueHandlers>
 
+    <ignoreExceptions>
+        <class name="InvalidArgumentException" />
+        <class name="LogicException" />
+        <class name="Symfony\Component\Console\Exception\InvalidArgumentException" />
+        <class name="Symfony\Component\Console\Exception\LogicException" />
+        <class name="Symfony\Component\Process\Exception\LogicException" />
+    </ignoreExceptions>
+
     <stubs>
-	    <file name="stubs/Symfony/Component/DependencyInjection/ContainerBuilder.php" />	    
-	    <file name="stubs/Webmozart/Assert/Assert.php" />	    
+	    <file name="stubs/Symfony/Component/DependencyInjection/ContainerBuilder.stub"/>
+	    <file name="stubs/Webmozart/Assert/Assert.stub"/>
     </stubs>
-</psalm>
+<plugins><pluginClass class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>

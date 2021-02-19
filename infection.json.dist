@@ -1,0 +1,23 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "mutators": {
+        "@default": true,
+        "MethodCallRemoval" : {
+          "ignoreSourceCodeByRegex": [
+            "Assert::.*"
+          ]
+        }
+    },
+    "logs" : {
+        "text": "reports/infection.log",
+        "json": "reports/infection.json",
+        "github" : true,
+	    "badge" : {
+	 	    "branch": "master"
+	    }
+    }
+}

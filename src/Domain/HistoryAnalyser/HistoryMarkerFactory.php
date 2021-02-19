@@ -18,11 +18,15 @@ interface HistoryMarkerFactory
 {
     /**
      * Create HistoryMarker based on the string version of it.
+     *
+     * @throws InvalidHistoryMarkerException
      */
     public function newHistoryMarker(string $historyMarkerAsString): HistoryMarker;
 
     /**
      * Return HistoryMarker representing current state of the code.
+     *
+     * @throws HistoryAnalyserException
      */
     public function newCurrentHistoryMarker(ProjectRoot $projectRoot): HistoryMarker;
 }

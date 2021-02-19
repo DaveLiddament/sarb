@@ -5,26 +5,28 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Analyser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\BaseLineResultsRemover;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationBuilder;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\internal\FileMutationsBuilder;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\LineMutation;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\NewFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\UnifiedDiffParser\OriginalFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\FileMutationBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\FileMutationsBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\LineMutation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\NewFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
 class BaseLineResultsRemoveTest extends TestCase
 {
     use AnalysisResultsAdderTrait;
 
+    private const PROJECT_ROOT_PATH = '/home/sarb';
     private const FILE_1 = 'foo/file1.txt';
+    private const FILE_1_FULL_PATH = self::PROJECT_ROOT_PATH.'/'.self::FILE_1;
     private const FILE_2 = 'foo/file2.txt';
     private const LINE_9 = 9;
     private const LINE_10 = 10;
@@ -35,10 +37,12 @@ class BaseLineResultsRemoveTest extends TestCase
 
     public function testRemoveBaseLineResults(): void
     {
+        $projectRoot = new ProjectRoot('/home/sarb', '/home/sarb');
+
         // Create baseline
-        $baselineAnalysisResults = new AnalysisResults();
-        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_1, self::LINE_10, self::TYPE_1);
-        $this->addAnalysisResult($baselineAnalysisResults, self::FILE_2, self::LINE_15, self::TYPE_2);
+        $baselineAnalysisResultsBuilder = new BaseLineResultsBuilder();
+        $baselineAnalysisResultsBuilder->add(self::FILE_1, self::LINE_10, self::TYPE_1);
+        $baselineAnalysisResultsBuilder->add(self::FILE_2, self::LINE_15, self::TYPE_2);
 
         // Create file mutations
         $fileMutationsBuilder = new FileMutationsBuilder();
@@ -50,16 +54,20 @@ class BaseLineResultsRemoveTest extends TestCase
         $fileMutations = $fileMutationsBuilder->build();
 
         // Create latest results
-        $latestAnalysisResults = new AnalysisResults();
+        $latestAnalysisResultsBuilder = new AnalysisResultsBuilder();
         // This is in the baseline (it was line 10 in baseline)
-        $this->addAnalysisResult($latestAnalysisResults, self::FILE_1, self::LINE_11, self::TYPE_1);
+        $this->addAnalysisResult($latestAnalysisResultsBuilder, $projectRoot, self::FILE_1_FULL_PATH, self::LINE_11, self::TYPE_1);
         // Added since baseline
-        $this->addAnalysisResult($latestAnalysisResults, self::FILE_1, self::LINE_9, self::TYPE_2);
+        $this->addAnalysisResult($latestAnalysisResultsBuilder, $projectRoot, self::FILE_1_FULL_PATH, self::LINE_9, self::TYPE_2);
 
         // Prune baseline results from latest results
         $historyAnalyser = new DiffHistoryAnalyser($fileMutations);
         $baseLineResultsRemover = new BaseLineResultsRemover();
-        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine($latestAnalysisResults, $historyAnalyser, $baselineAnalysisResults);
+        $prunedAnalysisResults = $baseLineResultsRemover->pruneBaseLine(
+            $latestAnalysisResultsBuilder->build(),
+            $historyAnalyser,
+            $baselineAnalysisResultsBuilder->build()
+        );
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();
 
@@ -71,10 +79,12 @@ class BaseLineResultsRemoveTest extends TestCase
         $this->assertCount(1, $actualResults);
 
         $actualAnalysisResult = $actualResults[0];
-        $expectedLocation = new Location(new FileName(self::FILE_1), new LineNumber(self::LINE_9));
+        $expectedFileName = new AbsoluteFileName(self::FILE_1_FULL_PATH);
+        $expectedLineNumber = new LineNumber(self::LINE_9);
         $expectedType = new Type(self::TYPE_2);
 
-        $this->assertTrue($expectedLocation->isEqual($actualAnalysisResult->getLocation()));
+        $this->assertTrue($expectedFileName->isEqual($actualAnalysisResult->getLocation()->getAbsoluteFileName()));
+        $this->assertTrue($expectedLineNumber->isEqual($actualAnalysisResult->getLocation()->getLineNumber()));
         $this->assertTrue($expectedType->isEqual($actualAnalysisResult->getType()));
     }
 }

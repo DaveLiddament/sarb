@@ -1,0 +1,17 @@
+[
+  {
+    "line": 67,
+    "type": "MismatchingDocblockParamType",
+    "file": "\/vagrant\/static-analysis-baseliner\/src\/Domain\/ResultsParser\/AnalysisResults.php"
+  },
+  {
+    "line": 29,
+    "type": "MixedAssignment",
+    "file": "\/vagrant\/static-analysis-baseliner\/src\/Domain\/Utils\/JsonUtils.php"
+  },
+  {
+    "line": 90,
+    "type": "MixedAssignment",
+    "file": "\/vagrant\/static-analysis-baseliner\/src\/Plugins\/PsalmJsonResultsParser\/PsalmJsonResultsParser.php"
+  }
+]

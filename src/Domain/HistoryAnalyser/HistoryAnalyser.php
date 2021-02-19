@@ -12,8 +12,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 
 /**
  * Provides mappings between the current Location (file and line number) and where it in the baseline. (If anywhere).
@@ -23,5 +25,5 @@ interface HistoryAnalyser
     /**
      * Return PreviousLocation (e.g. where it was in the baseline) for the current Location.
      */
-    public function getPreviousLocation(Location $location): PreviousLocation;
+    public function getPreviousLocation(RelativeFileName $fileName, LineNumber $lineNumber): PreviousLocation;
 }

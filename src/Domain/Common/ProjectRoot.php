@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
+use LogicException;
 use Webmozart\PathUtil\Path;
 
 /**
@@ -22,11 +23,6 @@ class ProjectRoot
      */
     private $rootDirectory;
 
-    /**
-     * ProjectRoot constructor.
-     *
-     * If
-     */
     public function __construct(string $rootDirectory, string $currentWorkingDirectory)
     {
         if (Path::isAbsolute($rootDirectory)) {
@@ -41,16 +37,38 @@ class ProjectRoot
      *
      * @throws InvalidPathException
      */
-    public function getPathRelativeToRootDirectory(string $fullPath): string
+    public function getPathRelativeToRootDirectory(AbsoluteFileName $absoluteFileName): RelativeFileName
     {
+        $fullPath = $absoluteFileName->getFileName();
         if (!Path::isBasePath($this->rootDirectory, $fullPath)) {
-            throw new InvalidPathException($fullPath, $this->rootDirectory);
+            throw InvalidPathException::notInProjectRoot($fullPath, $this->rootDirectory);
         }
 
-        return Path::makeRelative($fullPath, $this->rootDirectory);
+        $relativeFileName = Path::makeRelative($fullPath, $this->rootDirectory);
+
+        return new RelativeFileName($relativeFileName);
     }
 
     public function __toString(): string
+    {
+        return $this->getProjectRootDirectory();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getAbsoluteFileName(RelativeFileName $relativeFileName): AbsoluteFileName
+    {
+        $absoluteFileName = Path::join([$this->rootDirectory, $relativeFileName->getFileName()]);
+
+        try {
+            return new AbsoluteFileName($absoluteFileName);
+        } catch (InvalidPathException $e) {
+            throw new LogicException("Invalid $absoluteFileName");
+        }
+    }
+
+    public function getProjectRootDirectory(): string
     {
         return $this->rootDirectory;
     }

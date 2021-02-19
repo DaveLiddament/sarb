@@ -17,34 +17,46 @@ use Webmozart\Assert\Assert;
 class PreviousLocation
 {
     /**
-     * @var Location|null
+     * @var RelativeFileName|null
      */
-    private $location;
+    private $relativeFileName;
+    /**
+     * @var LineNumber|null
+     */
+    private $lineNumber;
 
     public static function noPreviousLocation(): self
     {
-        return new self(null);
+        return new self(null, null);
     }
 
-    public static function fromLocation(Location $location): self
+    public static function fromFileNameAndLineNumber(RelativeFileName $relativeFileName, LineNumber $lineNumber): self
     {
-        return new self($location);
+        return new self($relativeFileName, $lineNumber);
     }
 
-    private function __construct(?Location $location)
+    private function __construct(?RelativeFileName $relativeFileName, ?LineNumber $lineNumber)
     {
-        $this->location = $location;
+        $this->relativeFileName = $relativeFileName;
+        $this->lineNumber = $lineNumber;
     }
 
     public function isNoPreviousLocation(): bool
     {
-        return null === $this->location;
+        return null === $this->relativeFileName;
     }
 
-    public function getLocation(): Location
+    public function getRelativeFileName(): RelativeFileName
     {
-        Assert::notNull($this->location, 'Trying to get Location when PreviousLocation is not set');
+        Assert::notNull($this->relativeFileName, 'Trying to get FileName when PreviousLocation is not set');
 
-        return $this->location;
+        return $this->relativeFileName;
+    }
+
+    public function getLineNumber(): LineNumber
+    {
+        Assert::notNull($this->lineNumber, 'Trying to get LineNumber when PreviousLocation is not set');
+
+        return $this->lineNumber;
     }
 }

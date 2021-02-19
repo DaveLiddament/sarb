@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 class FqcnRemoverTest extends TestCase
 {
+    /**
+     * @psalm-return array<string,array{string,string}>
+     */
     public function dataProvider(): array
     {
         return [

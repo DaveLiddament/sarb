@@ -1,0 +1,8 @@
+{
+  "totals": {
+    "errors": 4,
+    "warnings": 2,
+    "fixable": 1
+  },
+  "files": [1, 2, 3]
+}

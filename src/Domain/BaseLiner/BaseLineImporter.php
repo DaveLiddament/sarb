@@ -13,18 +13,18 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileImportException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactoryLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryFactoryException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\InvalidResultsParserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParserLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonParseException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
 /**
  * Imports a baseline from the file.
@@ -46,9 +46,6 @@ class BaseLineImporter
      */
     private $resultsParserLookupService;
 
-    /**
-     * BaseLineImporter constructor.
-     */
     public function __construct(
         FileReader $fileReader,
         ResultsParserLookupService $resultsParserLookupService,
@@ -62,9 +59,10 @@ class BaseLineImporter
     /**
      * Imports baseline results.
      *
-     * @throws FileImportException
+     * @throws BaseLineImportException
+     * @throws FileAccessException
      */
-    public function import(FileName $fileName): BaseLine
+    public function import(BaseLineFileName $fileName): BaseLine
     {
         try {
             $baseLineData = $this->fileReader->readJsonFile($fileName);
@@ -78,13 +76,17 @@ class BaseLineImporter
             $historyFactory = $this->historyFactoryLookupService->getHistoryFactory($historyAnalyserName);
 
             $historyMarker = $historyFactory->newHistoryMarkerFactory()->newHistoryMarker($historyMarkerAsString);
-            $analysisResults = AnalysisResults::fromArray($analysisResultsAsArray);
+            $analysisResults = BaseLineAnalysisResults::fromArray($analysisResultsAsArray);
 
             return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
-        } catch (ArrayParseException | FileAccessException | InvalidResultsParserException | InvalidHistoryFactoryException $e) {
-            throw new FileImportException(BaseLine::BASE_LINE, $fileName, $e->getMessage());
-        } catch (JsonParseException $e) {
-            throw new FileImportException(BaseLine::BASE_LINE, $fileName, 'File not in JSON format');
+        } catch (
+            ArrayParseException |
+            InvalidResultsParserException |
+            InvalidHistoryFactoryException |
+            InvalidHistoryMarkerException |
+            InvalidContentTypeException |
+            ParseAtLocationException $e) {
+            throw BaseLineImportException::fromException($fileName, $e);
         }
     }
 }

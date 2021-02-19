@@ -20,7 +20,7 @@ class GitHistoryMarkerFactoryTest extends TestCase
      */
     private $gitHistoryMarkerFactory;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $gitWrapper = new StubGitWrapper(StubGitWrapper::GIT_SHA_1, '');
         $this->gitHistoryMarkerFactory = new GitHistoryMarkerFactory($gitWrapper);

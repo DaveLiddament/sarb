@@ -6,9 +6,15 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 class InvalidPathException extends SarbException
 {
-    public function __construct(string $path, string $basePath)
+    public static function notInProjectRoot(string $path, string $projectRootBasePath): self
     {
-        $message = "Path [$path] not in the project root [$basePath]. Is project root configured correctly?";
-        parent::__construct($message);
+        $message = "Path [$path] not in the project root [$projectRootBasePath]. Is project root configured correctly?";
+
+        return new self($message);
+    }
+
+    public static function notAbsolutePath(string $path): self
+    {
+        return new self("[$path] is not absolute");
     }
 }
