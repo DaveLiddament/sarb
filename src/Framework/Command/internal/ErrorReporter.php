@@ -9,7 +9,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
@@ -46,5 +45,4 @@ class ErrorReporter
             return 100;
         }
     }
-
 }
