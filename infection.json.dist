@@ -2,6 +2,11 @@
     "source": {
         "directories": [
             "src"
+        ],
+        "excludes" : [
+            "/Exception\\.php/",
+            "Framework/Command/internal/OutputWriter.php",
+            "Framework/Command/internal/ErrorReporter.php"
         ]
     },
     "mutators": {
