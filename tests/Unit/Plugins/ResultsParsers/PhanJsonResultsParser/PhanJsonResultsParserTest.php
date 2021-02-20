@@ -6,17 +6,18 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\Result
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser\PhanJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
 use PHPUnit\Framework\TestCase;
 
 class PhanJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;
+    use ExpectParseExceptionWithResultTrait;
     use ResourceLoaderTrait;
 
     /**
@@ -68,25 +69,25 @@ class PhanJsonResultsParserTest extends TestCase
     }
 
     /**
-     * @psalm-return array<int,array{string}>
+     * @psalm-return array<int,array{string, int}>
      */
     public function invalidFileProvider(): array
     {
         return [
-            ['phan/phan-invalid-missing-check_name.json'],
-            ['phan/phan-invalid-missing-description.json'],
-            ['phan/phan-invalid-missing-file.json'],
-            ['phan/phan-invalid-missing-line.json'],
+            ['phan/phan-invalid-missing-check_name.json', 1],
+            ['phan/phan-invalid-missing-description.json', 1],
+            ['phan/phan-invalid-missing-file.json', 1],
+            ['phan/phan-invalid-missing-line.json', 1],
         ];
     }
 
     /**
      * @dataProvider invalidFileProvider
      */
-    public function testInvalidFileFormat(string $fileName): void
+    public function testInvalidFileFormat(string $fileName, int $resultWithIssue): void
     {
         $fileContents = $this->getResource($fileName);
-        $this->expectException(ParseAtLocationException::class);
+        $this->expectParseAtLocationExceptionForResult($resultWithIssue);
         $this->phanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 

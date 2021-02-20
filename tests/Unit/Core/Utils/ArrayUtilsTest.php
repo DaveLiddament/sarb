@@ -31,6 +31,7 @@ class ArrayUtilsTest extends TestCase
         'some street',
         'some town',
     ];
+    private const INVALID_KEY = 'foo';
 
     public function testGetStringValue(): void
     {
@@ -92,10 +93,16 @@ class ArrayUtilsTest extends TestCase
         ArrayUtils::getIntOrNullValue(self::TEST_ARRAY, self::NAME_KEY);
     }
 
-    public function testGetInasAsStringNoneString(): void
+    public function testGetInAsAsStringNoneString(): void
     {
         $this->expectException(ArrayParseException::class);
         ArrayUtils::getIntAsStringValue(self::TEST_ARRAY, self::AGE_KEY);
+    }
+
+    public function testGetInAsAsStringKeyMissing(): void
+    {
+        $this->expectException(ArrayParseException::class);
+        ArrayUtils::getIntAsStringValue(self::TEST_ARRAY, self::INVALID_KEY);
     }
 
     /**
@@ -106,7 +113,7 @@ class ArrayUtilsTest extends TestCase
         ArrayUtils::assertArray(self::TEST_ARRAY);
     }
 
-    public function testAssertArratOnNoneArray(): void
+    public function testAssertArrayOnNoneArray(): void
     {
         $this->expectException(ArrayParseException::class);
         ArrayUtils::assertArray(self::AGE_VALUE);
@@ -115,6 +122,6 @@ class ArrayUtilsTest extends TestCase
     public function testInvalidArrayKey(): void
     {
         $this->expectException(ArrayParseException::class);
-        ArrayUtils::getStringValue(self::TEST_ARRAY, 'foo');
+        ArrayUtils::getStringValue(self::TEST_ARRAY, self::INVALID_KEY);
     }
 }
