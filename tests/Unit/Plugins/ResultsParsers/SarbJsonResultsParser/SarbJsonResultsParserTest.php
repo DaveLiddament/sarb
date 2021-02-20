@@ -7,17 +7,18 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\Result
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
 use PHPUnit\Framework\TestCase;
 
 class SarbJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;
+    use ExpectParseExceptionWithResultTrait;
     use ResourceLoaderTrait;
 
     /**
@@ -80,24 +81,25 @@ class SarbJsonResultsParserTest extends TestCase
     }
 
     /**
-     * @psalm-return array<int,array{string}>
+     * @psalm-return array<int,array{string, int}>
      */
     public function invalidFileProvider(): array
     {
         return [
-            ['sarb/sarb-invalid-missing-description.json'],
-            ['sarb/sarb-invalid-missing-file.json'],
-            ['sarb/sarb-invalid-missing-line.json'],
+            ['sarb/sarb-invalid-missing-description.json', 1],
+            ['sarb/sarb-invalid-missing-file.json', 2],
+            ['sarb/sarb-invalid-missing-line.json', 2],
+            ['sarb/sarb-invalid-missing-type.json', 3],
         ];
     }
 
     /**
      * @dataProvider invalidFileProvider
      */
-    public function testInvalidFileFormat(string $fileName): void
+    public function testInvalidFileFormat(string $fileName, int $resultWithIssue): void
     {
         $fileContents = $this->getResource($fileName);
-        $this->expectException(ParseAtLocationException::class);
+        $this->expectParseAtLocationExceptionForResult($resultWithIssue);
         $this->sarbJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 
