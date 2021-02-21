@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier
 
 class ResultsParserStubIdentifier implements Identifier
 {
-    const CODE = 'results-parser-stub';
+    public const CODE = 'results-parser-stub';
 
     public function getCode(): string
     {
@@ -18,5 +18,10 @@ class ResultsParserStubIdentifier implements Identifier
     public function getDescription(): string
     {
         return 'description of '.self::CODE;
+    }
+
+    public function getToolCommand(): string
+    {
+        return 'tool';
     }
 }

@@ -42,7 +42,13 @@ Assume we have a results parser to handle Psalm's JSON output..:
 ### Identifier
 
 The first thing to do is to create the class `PsalmJsonIdentifier`. This implements the `Identifier` interface.
-It provide a method of returning the identifier string (`psalm-json`) and a longer description. E.g.
+It provides:
+- a method of returning the identifier string (`psalm-json`)
+- a longer human readable description (`Psalm results (JSON format)`)
+- how to run the tool to give the output in the desired format (`psalm --output-format=json`) 
+  This is shown when running  `sarb list-history-analysers`
+
+E.g. 
 
 ```php
 declare(strict_types=1);
@@ -59,10 +65,14 @@ class PsalmJsonIdentifier implements Identifier
         return 'psalm-json';
     }
 
-
     public function getDescription(): string
     {
         return 'Psalm results (JSON format)';
+    }
+    
+    public function getToolCommand() : string
+    {
+        return 'psalm --output-format=json';
     }
 }
 ```

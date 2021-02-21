@@ -20,9 +20,16 @@ interface Identifier
     public function getCode(): string;
 
     /**
-     * Human readable description with plenty of detail.
+     * Human readable name.
      *
-     * E.g. "Psalm results (JSON format)"
+     * E.g. "Psalm results (JSON format)."
      */
     public function getDescription(): string;
+
+    /**
+     * Command to run to make the tool output in correct format.
+     *
+     * E.g  "psalm --output-format=json"
+     */
+    public function getToolCommand(): string;
 }

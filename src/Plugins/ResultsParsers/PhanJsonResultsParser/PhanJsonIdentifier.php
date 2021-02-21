@@ -23,6 +23,11 @@ class PhanJsonIdentifier implements Identifier
 
     public function getDescription(): string
     {
-        return 'Phan results (JSON format). To generate use: phan -m json -o <filename>.json';
+        return 'Phan results (JSON format)';
+    }
+
+    public function getToolCommand(): string
+    {
+        return 'phan -m json';
     }
 }

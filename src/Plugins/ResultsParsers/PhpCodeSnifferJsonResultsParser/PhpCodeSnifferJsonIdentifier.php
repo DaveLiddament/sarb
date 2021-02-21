@@ -23,6 +23,11 @@ class PhpCodeSnifferJsonIdentifier implements Identifier
 
     public function getDescription(): string
     {
-        return 'PHP Code Sniffer (default format). To generate use: phpcs --report=json <code directory> > <output.txt> ';
+        return 'PHP Code Sniffer (JSON format).';
+    }
+
+    public function getToolCommand(): string
+    {
+        return 'phpcs --report=json <code directory>';
     }
 }
