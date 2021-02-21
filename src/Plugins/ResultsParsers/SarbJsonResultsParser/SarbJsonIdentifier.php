@@ -27,4 +27,9 @@ class SarbJsonIdentifier implements Identifier
     {
         return 'SARB format';
     }
+
+    public function getToolCommand(): string
+    {
+        return 'sarb-outputting-tool';
+    }
 }

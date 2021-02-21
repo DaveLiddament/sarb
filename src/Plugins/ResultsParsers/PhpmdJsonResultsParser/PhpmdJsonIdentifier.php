@@ -23,6 +23,11 @@ class PhpmdJsonIdentifier implements Identifier
 
     public function getDescription(): string
     {
-        return 'PHP Mess Detector results (JSON format). To generate use: phpmd <files|directories to scan> json <rulesets> > <filename>.json';
+        return 'PHP Mess Detector results (JSON format).';
+    }
+
+    public function getToolCommand(): string
+    {
+        return 'phpmd <files|directories to scan> json <rulesets>';
     }
 }

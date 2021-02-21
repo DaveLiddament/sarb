@@ -148,8 +148,8 @@ vendor/bin/psalm --output-format=json | vendor/bin/sarb remove psalm.baseline
 
 #### [PHPStan](https://phpstan.org)
 ```shell
-vendor/bin/phpstan --format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
-vendor/bin/phpstan --format=json | vendor/bin/sarb remove phpstan.baseline
+vendor/bin/phpstan analyse --format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
+vendor/bin/phpstan analyse --format=json | vendor/bin/sarb remove phpstan.baseline
 ```
 
 ## My tool isn't supported...

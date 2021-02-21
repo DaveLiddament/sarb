@@ -23,6 +23,11 @@ class ExakatJsonIdentifier implements Identifier
 
     public function getDescription(): string
     {
-        return 'Exakat results (JSON format, SARB support). To generate use: php exakat.phar report -p <project> -format Sarb';
+        return 'Exakat results (SARB support).';
+    }
+
+    public function getToolCommand(): string
+    {
+        return 'php exakat.phar report -p <project> -format Sarb';
     }
 }

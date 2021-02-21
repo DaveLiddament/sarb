@@ -18,11 +18,16 @@ class PhpstanJsonIdentifier implements Identifier
 {
     public function getCode(): string
     {
-        return 'phpstan-json-tmp';
+        return 'phpstan-json';
     }
 
     public function getDescription(): string
     {
-        return 'PHPStan results (JSON format). To generate use: phpstan analyse --error-format json > <filename>.json  NOTE: this will be deprecated once this enhancement has been released: https://github.com/phpstan/phpstan/issues/1686';
+        return 'PHPStan results (JSON format).';
+    }
+
+    public function getToolCommand(): string
+    {
+        return 'phpstan analyse --format=json';
     }
 }

@@ -42,9 +42,32 @@ class ListResultsParsesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('Supported static analysers');
         foreach ($this->staticAnalysisResultsParsersRegistry->getAll() as $resultsParser) {
             $identifier = $resultsParser->getIdentifier();
-            $output->writeln(sprintf('[%s] %s', $identifier->getCode(), $identifier->getDescription()));
+
+            $output->writeln(
+                sprintf(
+                    '[<info>%s</info>] %s',
+                    $identifier->getCode(),
+                    $identifier->getDescription()
+                )
+            );
+
+            $output->writeln(
+                sprintf(
+                    '    Create baseline:         <info>%s | sarb create --input-format="%s"</info>',
+                    $identifier->getToolCommand(),
+                    $identifier->getCode()
+                )
+            );
+
+            $output->writeln(
+                sprintf(
+                    '    Remove baseline results: <info>%s | sarb remove</info>',
+                    $identifier->getToolCommand()
+                )
+            );
         }
 
         return 0;
