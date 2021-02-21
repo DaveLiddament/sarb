@@ -116,8 +116,7 @@ class GitCliWrapper implements GitWrapper
      */
     public function addAndCommit(string $message, ProjectRoot $projectRoot): void
     {
-        $addCommand = $this->getGitCommand(['add', '.'], $projectRoot);
-        $this->runCommand($addCommand, 'Git add .');
+        $this->addAll($projectRoot);
 
         $commitCommand = $this->getGitCommand([
             '-c',
@@ -129,5 +128,29 @@ class GitCliWrapper implements GitWrapper
             "$message",
         ], $projectRoot);
         $this->runCommand($commitCommand, 'git commit');
+    }
+
+    /**
+     * Only used for testing.
+     *
+     * @throws CommandFailedException
+     */
+    public function addAll(ProjectRoot $projectRoot): void
+    {
+        $addCommand = $this->getGitCommand(['add', '.'], $projectRoot);
+        $this->runCommand($addCommand, 'Git add .');
+    }
+
+    /**
+     * Only used for testing.
+     *
+     * @throws CommandFailedException
+     */
+    public function isClean(ProjectRoot $projectRoot): bool
+    {
+        $addCommand = $this->getGitCommand(['status', '--porcelain'], $projectRoot);
+        $changes = $this->runCommand($addCommand, 'Git status --porcelain');
+
+        return '' === trim($changes);
     }
 }

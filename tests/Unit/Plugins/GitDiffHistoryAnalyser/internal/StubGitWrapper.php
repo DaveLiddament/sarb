@@ -38,4 +38,9 @@ class StubGitWrapper implements GitWrapper
     {
         return $this->diff;
     }
+
+    public function isClean(ProjectRoot $projectRoot): bool
+    {
+        return true;
+    }
 }
