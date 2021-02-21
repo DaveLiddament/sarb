@@ -14,12 +14,15 @@ class Assert
      */
     public static function string($value, $message = '') {}
 
+    /**
+     * @psalm-assert bool $value
+     */
+    public static function boolean($value, $message = '') {}
 
     /**
      * @psalm-assert !null $value
      */
     public static function notNull($value, $message = '') {}
-
 
     /**
      * @template T of object
