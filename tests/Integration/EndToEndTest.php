@@ -310,7 +310,7 @@ class EndToEndTest extends TestCase
     }
 
     /**
-     * @param string[] $arguments
+     * @param array<string, string|null> $arguments
      */
     private function runCommand(
         string $commandName,
