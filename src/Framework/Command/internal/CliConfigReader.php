@@ -62,4 +62,12 @@ class CliConfigReader
 
         return $input;
     }
+
+    public static function getBooleanOption(InputInterface $input, string $argument): bool
+    {
+        $option = $input->getOption($argument);
+        Assert::boolean($option);
+
+        return $option;
+    }
 }

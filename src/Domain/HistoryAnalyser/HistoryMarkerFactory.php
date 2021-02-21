@@ -28,5 +28,5 @@ interface HistoryMarkerFactory
      *
      * @throws HistoryAnalyserException
      */
-    public function newCurrentHistoryMarker(ProjectRoot $projectRoot): HistoryMarker;
+    public function newCurrentHistoryMarker(ProjectRoot $projectRoot, bool $forceBaselineCreation): HistoryMarker;
 }

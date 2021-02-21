@@ -68,13 +68,15 @@ class EndToEndTest extends TestCase
     public function testInvalidConfig(): void
     {
         $this->createTestDirectory();
+
         $arguments = [
             '--input-format' => 'rubbish',
             'baseline-file' => $this->getBaselineFilePath(),
         ];
 
         $this->runCommand(
-            CreateBaseLineCommand::COMMAND_NAME, $arguments,
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
             11,
             self::COMMIT_1_RESULTS
         );
@@ -86,12 +88,17 @@ class EndToEndTest extends TestCase
     public function testInvalidAnalysisResults(): void
     {
         $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
+            '--project-root' => (string) $this->projectRoot,
         ];
 
         $this->runCommand(
-            CreateBaseLineCommand::COMMAND_NAME, $arguments,
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
             13,
             self::INVALID_RESULTS
         );
@@ -100,9 +107,12 @@ class EndToEndTest extends TestCase
         $this->removeTestDirectory();
     }
 
-    public function testInvalidProjectROot(): void
+    public function testInvalidProjectRoot(): void
     {
         $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+
         $arguments = [
             'baseline-file' => $this->getProjectRootFilename('InvalidFileName.json'),
             '--project-root' => '/tmp/foo/bar',
@@ -112,7 +122,8 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             15,
-            self::COMMIT_1_RESULTS);
+            self::COMMIT_1_RESULTS
+        );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
         $this->removeTestDirectory();
@@ -176,6 +187,50 @@ class EndToEndTest extends TestCase
             self::COMMIT_3_RESULTS,
             0,
         ''
+        );
+
+        // Only delete test directory if tests passed. Keep to investigate test failures
+        $this->removeTestDirectory();
+    }
+
+    public function testAttemptToCreateBaselineWithNonCleanGitStatus(): void
+    {
+        $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+        $this->addNonCheckedInFile();
+
+        $arguments = [
+            'baseline-file' => $this->getProjectRootFilename('baseline.json'),
+        ];
+
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
+            15,
+            self::COMMIT_1_RESULTS
+        );
+
+        $this->removeTestDirectory();
+    }
+
+    public function testForceCreateBaselineWithNonCleanGitStatus(): void
+    {
+        $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+        $this->addNonCheckedInFile();
+
+        $arguments = [
+            'baseline-file' => $this->getProjectRootFilename('baseline.json'),
+            '--force' => null,
+        ];
+
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
+            0,
+            self::COMMIT_1_RESULTS
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -320,5 +375,12 @@ class EndToEndTest extends TestCase
                 file_put_contents($fullPath, $newContents);
             }
         }
+    }
+
+    private function addNonCheckedInFile(): void
+    {
+        // Add a new file that is not checked in
+        $newFile = new RelativeFileName('new.php');
+        $this->fileSystem->dumpFile($this->projectRoot->getAbsoluteFileName($newFile)->getFileName(), 'new');
     }
 }
