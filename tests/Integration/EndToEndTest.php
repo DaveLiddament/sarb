@@ -24,6 +24,7 @@ use Webmozart\PathUtil\Path;
 class EndToEndTest extends TestCase
 {
     use ResourceLoaderTrait;
+    use TestDirectoryTrait;
 
     private const COMMIT_1_DIRECTORY = 'integration/commit1';
     private const COMMIT_1_RESULTS = 'commit1.json';
@@ -68,13 +69,15 @@ class EndToEndTest extends TestCase
     public function testInvalidConfig(): void
     {
         $this->createTestDirectory();
+
         $arguments = [
             '--input-format' => 'rubbish',
             'baseline-file' => $this->getBaselineFilePath(),
         ];
 
         $this->runCommand(
-            CreateBaseLineCommand::COMMAND_NAME, $arguments,
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
             11,
             self::COMMIT_1_RESULTS
         );
@@ -86,12 +89,17 @@ class EndToEndTest extends TestCase
     public function testInvalidAnalysisResults(): void
     {
         $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
+            '--project-root' => (string) $this->projectRoot,
         ];
 
         $this->runCommand(
-            CreateBaseLineCommand::COMMAND_NAME, $arguments,
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
             13,
             self::INVALID_RESULTS
         );
@@ -100,9 +108,12 @@ class EndToEndTest extends TestCase
         $this->removeTestDirectory();
     }
 
-    public function testInvalidProjectROot(): void
+    public function testInvalidProjectRoot(): void
     {
         $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+
         $arguments = [
             'baseline-file' => $this->getProjectRootFilename('InvalidFileName.json'),
             '--project-root' => '/tmp/foo/bar',
@@ -112,7 +123,8 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             15,
-            self::COMMIT_1_RESULTS);
+            self::COMMIT_1_RESULTS
+        );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
         $this->removeTestDirectory();
@@ -182,6 +194,52 @@ class EndToEndTest extends TestCase
         $this->removeTestDirectory();
     }
 
+    public function testAttemptToCreateBaselineWithNonCleanGitStatus(): void
+    {
+        $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+        $this->addNonCheckedInFile();
+
+        $arguments = [
+            'baseline-file' => $this->getProjectRootFilename('baseline.json'),
+            '--project-root' => (string) $this->projectRoot,
+        ];
+
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
+            15,
+            self::COMMIT_1_RESULTS
+        );
+
+        $this->removeTestDirectory();
+    }
+
+    public function testForceCreateBaselineWithNonCleanGitStatus(): void
+    {
+        $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+        $this->commit(self::COMMIT_1_DIRECTORY);
+        $this->addNonCheckedInFile();
+
+        $arguments = [
+            'baseline-file' => $this->getProjectRootFilename('baseline.json'),
+            '--project-root' => (string) $this->projectRoot,
+            '--force' => null,
+        ];
+
+        $this->runCommand(
+            CreateBaseLineCommand::COMMAND_NAME,
+            $arguments,
+            0,
+            self::COMMIT_1_RESULTS
+        );
+
+        // Only delete test directory if tests passed. Keep to investigate test failures
+        $this->removeTestDirectory();
+    }
+
     /**
      * This is just a smoke test.
      */
@@ -196,16 +254,6 @@ class EndToEndTest extends TestCase
     public function testListSupportedHistoryAnalysers(): void
     {
         $this->runCommand(ListHistoryAnalysersCommand::COMMAND_NAME, [], 0, null);
-    }
-
-    private function createTestDirectory(): void
-    {
-        $dateTimeFolderName = date('Ymd_His');
-        $testDirectory = __DIR__."/../scratchpad/{$dateTimeFolderName}";
-        $this->fileSystem->mkdir($testDirectory);
-        $cwd = getcwd();
-        $this->assertNotFalse($cwd);
-        $this->projectRoot = new ProjectRoot($testDirectory, $cwd);
     }
 
     private function commit(string $directory): void
@@ -255,7 +303,7 @@ class EndToEndTest extends TestCase
     }
 
     /**
-     * @param string[] $arguments
+     * @param array<string, string|null> $arguments
      */
     private function runCommand(
         string $commandName,
@@ -282,11 +330,6 @@ class EndToEndTest extends TestCase
     private function getBaselineFilePath(): string
     {
         return "{$this->projectRoot}/baseline.json";
-    }
-
-    private function removeTestDirectory(): void
-    {
-        $this->fileSystem->remove((string) $this->projectRoot);
     }
 
     private function getStaticAnalysisResultsAsString(string $resourceName): string
@@ -320,5 +363,12 @@ class EndToEndTest extends TestCase
                 file_put_contents($fullPath, $newContents);
             }
         }
+    }
+
+    private function addNonCheckedInFile(): void
+    {
+        // Add a new file that is not checked in
+        $newFile = new RelativeFileName('new.php');
+        $this->fileSystem->dumpFile($this->projectRoot->getAbsoluteFileName($newFile)->getFileName(), 'new');
     }
 }

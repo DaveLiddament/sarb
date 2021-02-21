@@ -34,7 +34,8 @@ class GitHistoryMarkerFactoryTest extends TestCase
 
     public function testNewCurrentHistoryMarker(): void
     {
-        $actual = $this->gitHistoryMarkerFactory->newCurrentHistoryMarker(new ProjectRoot('/foo', '/foo'));
+        $projectRoot = new ProjectRoot('/foo', '/foo');
+        $actual = $this->gitHistoryMarkerFactory->newCurrentHistoryMarker($projectRoot, false);
         $this->assertGitCommit(StubGitWrapper::GIT_SHA_1, $actual);
         $this->assertInstanceOf(GitCommit::class, $actual);
     }

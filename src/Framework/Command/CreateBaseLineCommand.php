@@ -36,11 +36,14 @@ class CreateBaseLineCommand extends Command
 {
     public const COMMAND_NAME = 'create';
 
-    public const INPUT_FORMAT = 'input-format';
+    private const INPUT_FORMAT = 'input-format';
     private const DEFAULT_STATIC_ANALYSIS_FORMAT = SarbJsonIdentifier::CODE;
 
     private const HISTORY_ANALYSER = 'history-analyser';
     private const DEFAULT_HISTORY_FACTORY_NAME = 'git';
+
+    private const FORCE = 'force';
+
     private const DOC_URL = 'https://github.com/DaveLiddament/sarb/blob/master/docs/ViolationTypeClassificationGuessing.md';
 
     /**
@@ -95,6 +98,13 @@ class CreateBaseLineCommand extends Command
             self::DEFAULT_HISTORY_FACTORY_NAME
         );
 
+        $this->addOption(
+            self::FORCE,
+            'f',
+            InputOption::VALUE_NONE,
+            'Force creation of baseline'
+        );
+
         ProjectRootHelper::configureProjectRootOption($this);
 
         BaseLineFileHelper::configureBaseLineFileArgument($this);
@@ -107,6 +117,7 @@ class CreateBaseLineCommand extends Command
             $historyFactory = $this->getHistoryFactory($input, $output);
             $resultsParser = $this->getResultsParser($input, $output);
             $baselineFile = BaseLineFileHelper::getBaselineFile($input);
+            $force = CliConfigReader::getBooleanOption($input, self::FORCE);
             $analysisResultsAsString = CliConfigReader::getStdin($input);
 
             $baseLine = $this->baseLineCreator->createBaseLine(
@@ -114,7 +125,8 @@ class CreateBaseLineCommand extends Command
                 $resultsParser,
                 $baselineFile,
                 $projectRoot,
-                $analysisResultsAsString
+                $analysisResultsAsString,
+                $force
             );
 
             $errorsInBaseLine = $baseLine->getAnalysisResults()->getCount();

@@ -31,4 +31,12 @@ interface GitWrapper
      * @throws GitException
      */
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string;
+
+    /**
+     * Returns true if git repo is clean. To be clean ALL of the following MUST be true:
+     * - No staged changes
+     * - No none staged changes
+     * - No files that aren't being tracked by git.
+     */
+    public function isClean(ProjectRoot $projectRoot): bool;
 }

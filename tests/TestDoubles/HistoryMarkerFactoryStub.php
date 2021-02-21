@@ -16,7 +16,7 @@ class HistoryMarkerFactoryStub implements HistoryMarkerFactory
         return new GitCommit('6b950d7ea0c49a43e1a909361d4f9bb8425d86a9');
     }
 
-    public function newCurrentHistoryMarker(ProjectRoot $projectRoot): HistoryMarker
+    public function newCurrentHistoryMarker(ProjectRoot $projectRoot, bool $forceBaselineCreation): HistoryMarker
     {
         return new GitCommit('61d7f9833c128692c656160b2d21ed82e5358910');
     }

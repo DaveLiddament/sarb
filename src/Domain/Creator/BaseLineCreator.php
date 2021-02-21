@@ -37,9 +37,10 @@ class BaseLineCreator implements BaseLineCreatorInterface
         ResultsParser $resultsParser,
         BaseLineFileName $baselineFile,
         ProjectRoot $projectRoot,
-        string $analysisResultsAsString
+        string $analysisResultsAsString,
+        bool $forceBaselineCreation
     ): BaseLine {
-        $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker($projectRoot);
+        $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker($projectRoot, $forceBaselineCreation);
         $analysisResults = $this->analysisResultsImporter->import($resultsParser, $projectRoot, $analysisResultsAsString);
         $baseLineAnalysisResults = BaseLineAnalysisResults::fromAnalysisResults($analysisResults);
         $baseline = new BaseLine($historyFactory, $baseLineAnalysisResults, $resultsParser, $historyMarker);

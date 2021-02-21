@@ -50,14 +50,14 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
         ResultsParser $expectedResultsParser,
         BaseLineFileName $expectedBaseLineFileName,
         ?ProjectRoot $expectedProjectRoot,
-        string $expectedAnaylsisResutlsAsString,
+        string $expectedAnaylsisResultsAsString,
         ?Throwable $throwable
     ) {
         $this->expectedHistoryFactory = $expectedHistoryFactory;
         $this->expectedResultsParser = $expectedResultsParser;
         $this->expectedBaseLineFileName = $expectedBaseLineFileName;
         $this->expectedProjectRoot = $expectedProjectRoot;
-        $this->expectedAnaylsisResultsAsString = $expectedAnaylsisResutlsAsString;
+        $this->expectedAnaylsisResultsAsString = $expectedAnaylsisResultsAsString;
         $this->throwable = $throwable;
     }
 
@@ -66,7 +66,8 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
         ResultsParser $resultsParser,
         BaseLineFileName $baselineFile,
         ProjectRoot $projectRoot,
-        string $analysisResultsAsString
+        string $analysisResultsAsString,
+        bool $forceBaselineCreation
     ): BaseLine {
         Assert::assertSame($this->expectedHistoryFactory, $historyFactory);
         Assert::assertSame($this->expectedResultsParser, $resultsParser);

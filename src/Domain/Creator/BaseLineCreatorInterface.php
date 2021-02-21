@@ -27,6 +27,7 @@ interface BaseLineCreatorInterface
         ResultsParser $resultsParser,
         BaseLineFileName $baselineFile,
         ProjectRoot $projectRoot,
-        string $analysisResultsAsString
+        string $analysisResultsAsString,
+        bool $forceBaselineCreation
     ): BaseLine;
 }
