@@ -202,6 +202,7 @@ class EndToEndTest extends TestCase
 
         $arguments = [
             'baseline-file' => $this->getProjectRootFilename('baseline.json'),
+            '--project-root' => (string) $this->projectRoot,
         ];
 
         $this->runCommand(
@@ -223,6 +224,7 @@ class EndToEndTest extends TestCase
 
         $arguments = [
             'baseline-file' => $this->getProjectRootFilename('baseline.json'),
+            '--project-root' => (string) $this->projectRoot,
             '--force' => null,
         ];
 
