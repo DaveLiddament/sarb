@@ -24,6 +24,7 @@ use Webmozart\PathUtil\Path;
 class EndToEndTest extends TestCase
 {
     use ResourceLoaderTrait;
+    use TestDirectoryTrait;
 
     private const COMMIT_1_DIRECTORY = 'integration/commit1';
     private const COMMIT_1_RESULTS = 'commit1.json';
@@ -255,16 +256,6 @@ class EndToEndTest extends TestCase
         $this->runCommand(ListHistoryAnalysersCommand::COMMAND_NAME, [], 0, null);
     }
 
-    private function createTestDirectory(): void
-    {
-        $dateTimeFolderName = date('Ymd_His');
-        $testDirectory = __DIR__."/../scratchpad/{$dateTimeFolderName}";
-        $this->fileSystem->mkdir($testDirectory);
-        $cwd = getcwd();
-        $this->assertNotFalse($cwd);
-        $this->projectRoot = new ProjectRoot($testDirectory, $cwd);
-    }
-
     private function commit(string $directory): void
     {
         $source = $this->getPath($directory);
@@ -339,11 +330,6 @@ class EndToEndTest extends TestCase
     private function getBaselineFilePath(): string
     {
         return "{$this->projectRoot}/baseline.json";
-    }
-
-    private function removeTestDirectory(): void
-    {
-        $this->fileSystem->remove((string) $this->projectRoot);
     }
 
     private function getStaticAnalysisResultsAsString(string $resourceName): string

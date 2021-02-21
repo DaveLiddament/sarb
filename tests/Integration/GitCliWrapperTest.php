@@ -13,6 +13,8 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GitCliWrapperTest extends TestCase
 {
+    use TestDirectoryTrait;
+
     /**
      * @var Filesystem
      */
@@ -31,14 +33,7 @@ class GitCliWrapperTest extends TestCase
     {
         $this->fileSystem = new Filesystem();
         $this->gitWrapper = new GitCliWrapper();
-
-        $dateTimeFolderName = date('Ymd_His');
-        $random = rand(0, 10000);
-        $testDirectory = __DIR__."/../scratchpad/{$dateTimeFolderName}{$random}";
-        $this->fileSystem->mkdir($testDirectory);
-        $cwd = getcwd();
-        $this->assertNotFalse($cwd);
-        $this->projectRoot = new ProjectRoot($testDirectory, $cwd);
+        $this->createTestDirectory();
         $this->gitWrapper->init($this->projectRoot);
     }
 
@@ -109,10 +104,5 @@ class GitCliWrapperTest extends TestCase
     {
         Assert::assertTrue($this->gitWrapper->isClean($this->projectRoot));
         $this->removeTestDirectory();
-    }
-
-    private function removeTestDirectory(): void
-    {
-        $this->fileSystem->remove((string) $this->projectRoot);
     }
 }
