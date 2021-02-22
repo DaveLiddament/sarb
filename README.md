@@ -160,7 +160,7 @@ That's no problem there are 3 methods to [integrate a static analysis tool](docs
 ## Output formats 
 
 The format for showing issues after the baseline is removed can be specified using `--output-format` option. 
-Possible values are: `table`, `text` or `json`.
+Possible values are: `table`, `text`, `json` or `github` (for Github actions).
 
 
 ## Further Reading
