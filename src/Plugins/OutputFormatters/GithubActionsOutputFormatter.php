@@ -19,7 +19,7 @@ class GithubActionsOutputFormatter implements OutputFormatter
 
             $message = str_replace("\n", '%0A', $analysisResult->getMessage());
             $lines[] = sprintf(
-                '::New Issue file=%s,line=%d::%s',
+                '::error file=%s,line=%d::%s',
                 $location->getRelativeFileName()->getFileName(),
                 $location->getLineNumber()->getLineNumber(),
                 $message,

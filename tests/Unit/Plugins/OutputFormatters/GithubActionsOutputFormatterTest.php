@@ -22,9 +22,9 @@ class GithubActionsOutputFormatterTest extends AbstractOutputFormatterTest
     public function testWithIssues(): void
     {
         $expectedOuput = <<<EOF
-::New Issue file=FILE_1,line=10::MESSAGE_1
-::New Issue file=FILE_1,line=12::MESSAGE_2
-::New Issue file=FILE_2,line=0::MESSAGE_3
+::error file=FILE_1,line=10::MESSAGE_1
+::error file=FILE_1,line=12::MESSAGE_2
+::error file=FILE_2,line=0::MESSAGE_3
 EOF;
 
         $this->assertIssuesOutput($expectedOuput);
