@@ -36,7 +36,7 @@ Assume we have a results parser to handle Psalm's JSON output..:
  - the identifier is `psalm-json`
  - the name of the ResultsParser class is `PsalmJsonResultsParser`
  - the name of the Identifier class is `PsalmJsonIdentifier`
- - the above classes live under the namespace `dave-liddament\StaticAnalysisResultsBaseliner\plugins\PsalmJsonResultsParser`
+ - the above classes live under the namespace `dave-liddament\StaticAnalysisResultsBaseliner\plugins\ResultsParsers\PsalmJsonResultsParser`
 
 
 ### Identifier
@@ -46,14 +46,14 @@ It provides:
 - a method of returning the identifier string (`psalm-json`)
 - a longer human readable description (`Psalm results (JSON format)`)
 - how to run the tool to give the output in the desired format (`psalm --output-format=json`) 
-  This is shown when running  `sarb list-history-analysers`
+  This is shown when running  `sarb list-static-analysis-tools`
 
 E.g. 
 
 ```php
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PsalmJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 
@@ -89,7 +89,7 @@ The first method to implement is `getIdentifer` this just returns an instance of
 ```php
 declare(strict_types=1);
 
-namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\PsalmJsonResultsParser;
+namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PsalmJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
