@@ -35,7 +35,7 @@ those issues in the baseline and report the issues raised since the baseline.
 SARB does this, in conjunction with git, by tracking lines of code between commits.
 Currently SARB only supports git but it is possible to [add support for other SCMs](docs/NewHistoryAnalyser.md).
 
-SARB is written in PHP, however it can be used to baseline results for any language and any static analysis tool.
+SARB is written in PHP, however it can be used to baseline results for any language and [any static analysis tool](docs/CustomInputFormats.md).
 
 
 #### Why not SARB?
@@ -154,7 +154,7 @@ vendor/bin/phpstan analyse --format=json | vendor/bin/sarb remove phpstan.baseli
 
 ## My tool isn't supported...
 
-That's no problem there are 3 methods to [integrate a static analysis tool](docs/CustomInputFormats.md) with SARB.
+That's no problem there are 2 methods to [integrate a static analysis tool](docs/CustomInputFormats.md) with SARB.
 
 
 ## Output formats 

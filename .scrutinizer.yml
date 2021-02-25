@@ -8,3 +8,4 @@ filter:
     - tests/scratchpad
     - tests/resources
     - stubs
+    - example
