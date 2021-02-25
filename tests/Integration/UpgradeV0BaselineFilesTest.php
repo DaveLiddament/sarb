@@ -2,26 +2,23 @@
 
 declare(strict_types=1);
 
-
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Integration;
 
-
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineExporter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\UpgradeBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\Container;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\HistoryFactoryRegistry;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Legacy\BaselineUpgrader;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Legacy\LegacyResultsParserConverter;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitDiffHistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitCliWrapper;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser\PhanJsonIdentifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser\PhpCodeSnifferJsonIdentifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonIdentifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpstanJsonResultsParser\PhpstanJsonIdentifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PsalmJsonResultsParser\PsalmJsonIdentifier;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
@@ -31,7 +28,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class UpgradeV0BaselineFilesTest extends TestCase
 {
-
     use ResourceLoaderTrait;
     use TestDirectoryTrait;
 
@@ -73,7 +69,7 @@ class UpgradeV0BaselineFilesTest extends TestCase
         $this->fileSystem = new Filesystem();
         $this->gitWrapper = new GitCliWrapper();
         $this->createTestDirectory();
-        $baseline = $this->projectRoot->getAbsoluteFileName(new RelativeFileName("baseline"));
+        $baseline = $this->projectRoot->getAbsoluteFileName(new RelativeFileName('baseline'));
         $this->baseLineFileName = new BaseLineFileName($baseline->getFileName());
         $this->fileWriter = new FileWriter();
 
@@ -82,11 +78,29 @@ class UpgradeV0BaselineFilesTest extends TestCase
         $this->upgradeCommand = $this->application->find(UpgradeBaseLineCommand::COMMAND_NAME);
     }
 
-    public function testSarbUpgrade(): void
+    /** @return array<int,array{string,Identifier}> */
+    public function dataProvider(): array
     {
-        $originalFileContents = $this->getResource('v0/sarb.baseline');
-        $this->fileWriter->writeFile($this->baseLineFileName, $originalFileContents);
+        return [
+            ['phan', new PhanJsonIdentifier()],
+            ['phpcs-json', new PhpCodeSnifferJsonIdentifier()],
+            ['phpcs-txt',  new PhpCodeSnifferJsonIdentifier()],
+            ['phpmd', new PhpmdJsonIdentifier()],
+            ['phpstan-json', new PhpstanJsonIdentifier()],
+            ['phpstan-text', new PhpstanJsonIdentifier()],
+            ['psalm-json', new PsalmJsonIdentifier()],
+            ['psalm-text', new PsalmJsonIdentifier()],
+            ['sarb', new SarbJsonIdentifier()],
+        ];
+    }
 
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testUpgrade(string $file, Identifier $identifier): void
+    {
+        $originalBaselineContents = $this->getResource("v0/{$file}.baseline");
+        $this->fileWriter->writeFile($this->baseLineFileName, $originalBaselineContents);
 
         $commandTester = new CommandTester($this->upgradeCommand);
         $arguments = [
@@ -96,9 +110,32 @@ class UpgradeV0BaselineFilesTest extends TestCase
 
         $actualExitCode = $commandTester->execute($arguments);
 
+        // Check CLI responds with correct messaging to the user
         $this->assertSame(0, $actualExitCode);
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Baseline updated', $output);
+        $this->assertStringContainsString($identifier->getToolCommand(), $output);
 
+        // Check updated baseline is correct
+        $fileReader = new FileReader();
+        $updatedBaselineContents = $fileReader->readFile($this->baseLineFileName);
+        $expectedBaselineContents = $this->getResource("v0/{$file}.expected");
+        $this->assertSame($expectedBaselineContents, $updatedBaselineContents);
+
+        $this->removeTestDirectory();
     }
 
+    public function testUpgradeFails(): void
+    {
+        $commandTester = new CommandTester($this->upgradeCommand);
+        $arguments = [
+            'command' => $this->upgradeCommand->getName(),
+            'baseline-file' => 'invalid',
+        ];
 
+        $actualExitCode = $commandTester->execute($arguments);
+
+        $this->assertSame(14, $actualExitCode);
+        $this->removeTestDirectory();
+    }
 }

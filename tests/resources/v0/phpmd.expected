@@ -1,0 +1,25 @@
+{
+    "historyAnalyser": "git",
+    "historyMarker": "0f078b7d445f661991605b91d8ddb9c7f796242d",
+    "resultsParser": "phpmd-json",
+    "analysisResults": [
+        {
+            "lineNumber": 28,
+            "fileName": "static-analysis-baseliner\/src\/Domain\/Analyser\/BaseLineResultsRemover.php",
+            "type": "LongVariable",
+            "message": "Avoid excessively long variable names like $latestAnalysisResults. Keep variable name length under 20."
+        },
+        {
+            "lineNumber": 30,
+            "fileName": "static-analysis-baseliner\/src\/Domain\/Analyser\/BaseLineResultsRemover.php",
+            "type": "LongVariable",
+            "message": "Avoid excessively long variable names like $baseLineAnalysisResults. Keep variable name length under 20."
+        },
+        {
+            "lineNumber": 36,
+            "fileName": "static-analysis-baseliner\/src\/Domain\/Analyser\/internal\/BaseLineResultsComparator.php",
+            "type": "LongVariable",
+            "message": "Avoid excessively long variable names like $baseLineAnalysisResults. Keep variable name length under 20."
+        }
+    ]
+}
