@@ -1,0 +1,19 @@
+{
+    "historyAnalyser": "git",
+    "historyMarker": "0f078b7d445f661991605b91d8ddb9c7f796242d",
+    "resultsParser": "phan-json",
+    "analysisResults": [
+        {
+            "lineNumber": 16,
+            "fileName": "src\/Domain\/Analyser\/BaseLineResultsRemover.php",
+            "type": "PhanUnreferencedUseNormal",
+            "message": "NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike\/namespace BaseLine (\\DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\Common\\BaseLine)"
+        },
+        {
+            "lineNumber": 107,
+            "fileName": "src\/Plugins\/PsalmJsonResultsParser\/PsalmJsonResultsParser.php",
+            "type": "PhanPossiblyNullTypeArgument",
+            "message": "TypeError PhanPossiblyNullTypeArgument Argument 1 ($analysisResultAsArray) is mixed|null but \\DaveLiddament\\StaticAnalysisResultsBaseliner\\Plugins\\PsalmJsonResultsParser\\PsalmJsonResultsParser::convertAnalysisResultFromArray() takes array (null is incompatible) defined at src\/Plugins\/PsalmJsonResultsParser\/PsalmJsonResultsParser.php:127"
+        }
+    ]
+}

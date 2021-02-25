@@ -67,7 +67,7 @@ If you install globally make sure the composer bin directory is in your path.
 
 ## Using SARB
 
-If you're using version 0.x see the [old documentation](docs/version0/README.md) 
+If you're using version 0.x see the [old documentation](docs/version0/README.md) and how to [upgrade](docs/version0/UpgradingToVersion1.md). 
 
 
 #### 1. Make sure the current git commit is the one to be used in the baseline

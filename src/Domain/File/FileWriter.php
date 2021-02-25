@@ -35,7 +35,7 @@ class FileWriter
      *
      * @throws FileAccessException
      */
-    private function writeFile(FileName $fileName, string $contents): void
+    public function writeFile(FileName $fileName, string $contents): void
     {
         $result = @file_put_contents($fileName->getFileName(), $contents);
         if (false === $result) {

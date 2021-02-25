@@ -1,5 +1,6 @@
 # Using SARB version 0.x
 
+Instructions for [upgrading to v1 of SARB](UpgradingToVersion1.md).
 
 #### 1. Make sure the current git commit is the one to be used in the baseline
 

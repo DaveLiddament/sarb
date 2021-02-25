@@ -1,0 +1,43 @@
+{
+    "historyAnalyser": "git",
+    "historyMarker": "0f078b7d445f661991605b91d8ddb9c7f796242d",
+    "resultsParser": "phpcodesniffer-json",
+    "analysisResults": [
+        {
+            "lineNumber": 2,
+            "fileName": "src\/Domain\/Common\/InvalidPathException.php",
+            "type": "Squiz.Commenting.FileComment.Missing",
+            "message": "Missing file doc comment"
+        },
+        {
+            "lineNumber": 7,
+            "fileName": "src\/Domain\/Common\/InvalidPathException.php",
+            "type": "Squiz.Commenting.ClassComment.Missing",
+            "message": "Missing doc comment for class InvalidPathException"
+        },
+        {
+            "lineNumber": 9,
+            "fileName": "src\/Domain\/Common\/InvalidPathException.php",
+            "type": "Squiz.Commenting.FunctionComment.Missing",
+            "message": "Missing doc comment for function __construct()"
+        },
+        {
+            "lineNumber": 11,
+            "fileName": "src\/Domain\/Common\/InvalidPathException.php",
+            "type": "Generic.Files.LineLength.TooLong",
+            "message": "Line exceeds 85 characters; contains 109 characters"
+        },
+        {
+            "lineNumber": 8,
+            "fileName": "src\/Domain\/BaseLiner\/BaseLineImporter.php",
+            "type": "Generic.Files.LineLength.TooLong",
+            "message": "Line exceeds 85 characters; contains 113 characters"
+        },
+        {
+            "lineNumber": 52,
+            "fileName": "src\/Domain\/BaseLiner\/BaseLineImporter.php",
+            "type": "Squiz.WhiteSpace.FunctionSpacing.Before",
+            "message": "Expected 18 spaces after parameter type; 1 found"
+        }
+    ]
+}
