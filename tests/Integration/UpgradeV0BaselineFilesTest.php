@@ -99,8 +99,7 @@ class UpgradeV0BaselineFilesTest extends TestCase
      */
     public function testUpgrade(string $file, Identifier $identifier): void
     {
-        $originalBaselineContents = $this->getResource("v0/{$file}.baseline");
-        $this->fileWriter->writeFile($this->baseLineFileName, $originalBaselineContents);
+        $this->createOriginalBaselineFile($file);
 
         $commandTester = new CommandTester($this->upgradeCommand);
         $arguments = [
@@ -127,15 +126,23 @@ class UpgradeV0BaselineFilesTest extends TestCase
 
     public function testUpgradeFails(): void
     {
+        $this->createOriginalBaselineFile('invalid');
+
         $commandTester = new CommandTester($this->upgradeCommand);
         $arguments = [
             'command' => $this->upgradeCommand->getName(),
-            'baseline-file' => 'invalid',
+            'baseline-file' => $this->baseLineFileName->getFileName(),
         ];
 
         $actualExitCode = $commandTester->execute($arguments);
 
-        $this->assertSame(14, $actualExitCode);
+        $this->assertSame(12, $actualExitCode);
         $this->removeTestDirectory();
+    }
+
+    private function createOriginalBaselineFile(string $file): void
+    {
+        $originalBaselineContents = $this->getResource("v0/{$file}.baseline");
+        $this->fileWriter->writeFile($this->baseLineFileName, $originalBaselineContents);
     }
 }
