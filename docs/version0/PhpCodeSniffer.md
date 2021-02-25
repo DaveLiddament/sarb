@@ -26,9 +26,11 @@ Make sure before creating the baseline that:
 
 Generate the output from PHP CS:
 ```
-vendor/bin/phpcs src/ > /tmp/phpcs.txt
+vendor/bin/phpcs  --report-width=auto src/ > /tmp/phpcs.txt
 ```
 
+*NOTE* SARB needs the full file path. PHP CS assumes a page width of 80 characters, so this can truncate the paths.
+The `--report-width=auto` prevents this. See [here](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#setting-the-default-report-width).
 
 Generate the SARB baseline:
 ```
@@ -50,7 +52,7 @@ After you've created the baseline, edit the code. Once done run PHP CodeSniffer 
 this time removing the baseline to make you've not added any extra issues.
 
 ```
-vendor/bin/phpcs src/ > /tmp/phpcs.txt
+vendor/bin/phpcs  --report-width=auto src/ > /tmp/phpcs.txt
 vendor/bin/sarb remove-baseline /tmp/phpcs.txt phpcs.baseline /tmp/phpcs-baseline-removed.txt
 ```
 
