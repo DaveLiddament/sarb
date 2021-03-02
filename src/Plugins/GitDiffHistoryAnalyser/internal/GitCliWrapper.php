@@ -44,6 +44,7 @@ class GitCliWrapper implements GitWrapper
             'diff',
             '-w',
             '-M',
+            '-l0',
             $originalCommit->asString(),
         ];
         $command = $this->getGitCommand($arguments, $projectRoot);
@@ -142,8 +143,6 @@ class GitCliWrapper implements GitWrapper
     }
 
     /**
-     * Only used for testing.
-     *
      * @throws CommandFailedException
      */
     public function isClean(ProjectRoot $projectRoot): bool
