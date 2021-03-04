@@ -164,6 +164,21 @@ That's no problem there are 3 methods to [integrate a static analysis tool](docs
 The format for showing issues after the baseline is removed can be specified using `--output-format` option. 
 Possible values are: `table`, `text`, `json` or `github` (for Github actions).
 
+## SARB with Github Actions
+
+If you're using `actions/checkout@v2` to checkout your code you'll need to add set `fetch-depth` to `0`.
+By default `checkout` only gets that latest state of the code and none of the history. 
+SARB uses git, which needs the full git history, to track file changes since the baseline. 
+To get the full history checked out use this:
+```
+- uses: actions/checkout@v2
+  with:
+    fetch-depth: 0
+```
+
+Also don't forget to use the SARB option `--output-format=github`. 
+It will annotate you PR with any issues that have been added since the baseline.
+
 
 ## Further Reading
  
