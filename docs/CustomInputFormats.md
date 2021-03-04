@@ -14,7 +14,7 @@ The output from tool is piped into the converter (e.g. `tool2sarb`) which is the
 tool | tool2sarb | sarb create tool.baseline
 ```
 
-This example will show how to write a [simple PHP script](../example/eslint2sarb.php) to convert ESLint's [JSON format](https://eslint.org/docs/user-guide/formatters/#json) to the S[SARB format](SarbFormat.md).
+This example will show how to write a [simple PHP script](../example/eslint2sarb.php) to convert ESLint's [JSON format](https://eslint.org/docs/user-guide/formatters/#json) to the [SARB format](SarbFormat.md).
 
 Here is a snippet from ESLint's JSON output...
 

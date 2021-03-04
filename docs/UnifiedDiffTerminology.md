@@ -1,7 +1,6 @@
 # Unified diff format terminology
 
-This document outlines terminology surrounding diffs is as per [Unified format](https://en.wikipedia.org/wiki/Diff#Unified_format)
-.
+This document outlines terminology surrounding diffs is as per [Unified format](https://en.wikipedia.org/wiki/Diff#Unified_format).
 
 
 

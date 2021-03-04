@@ -145,16 +145,18 @@ vendor/bin/phpmd src json <ruleset> | vendor/bin/sarb remove phpmd.baseline
 vendor/bin/psalm --output-format=json | vendor/bin/sarb create --input-format="psalm-json" psalm.baseline
 vendor/bin/psalm --output-format=json | vendor/bin/sarb remove psalm.baseline
 ```
+NOTE: Checkout Psalm's built in [baseline feature](https://psalm.dev/docs/running_psalm/dealing_with_code_issues/#using-a-baseline-file). Learn how [it differs from SARB](docs/SarbVsOtherBaseliningTechniques.md).
 
 #### [PHPStan](https://phpstan.org)
 ```shell
-vendor/bin/phpstan analyse --format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
-vendor/bin/phpstan analyse --format=json | vendor/bin/sarb remove phpstan.baseline
+vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
+vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb remove phpstan.baseline
 ```
+NOTE: Checkout PHPStan's built in [baseline feature](https://phpstan.org/user-guide/baseline). Learn how [it differs from SARB](docs/SarbVsOtherBaseliningTechniques.md).
 
 ## My tool isn't supported...
 
-That's no problem there are 2 methods to [integrate a static analysis tool](docs/CustomInputFormats.md) with SARB.
+That's no problem there are 3 methods to [integrate a static analysis tool](docs/CustomInputFormats.md) with SARB.
 
 
 ## Output formats 
@@ -171,6 +173,7 @@ Possible values are: `table`, `text`, `json` or `github` (for Github actions).
  * [How to contribute](docs/Contributing.md)
  * [Unified Diff Terminology](docs/UnifiedDiffTerminology.md)
  * [SARB format](docs/SarbFormat.md)
+ * [SARB vs other tools with baselining functionality](docs/SarbVsOtherBaseliningTechniques.md)
 
 
 ## Authors
