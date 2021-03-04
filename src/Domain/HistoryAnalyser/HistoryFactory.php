@@ -29,7 +29,7 @@ interface HistoryFactory
     public function newHistoryMarkerFactory(): HistoryMarkerFactory;
 
     /**
-     * Returns Identifier for HistoryMarker.
+     * Returns Identifier for HistoryMarker (e.g. "git").
      */
     public function getIdentifier(): string;
 }

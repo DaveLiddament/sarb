@@ -9,10 +9,18 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryA
 class GitNotCleanException extends HistoryAnalyserException
 {
     private const MESSAGE = <<<TEXT
-There are modified or new files (to see them run: git status).
-Either commit these or if the modified/new files have no impact the static analysers output rerun this command with -f flag.
+There are modified or new files. To see them run:
+
+ git status
+
 
 SARB pins the baseline current git SHA, as files are some modified/new files the current SHA it not representative of the current state of the codebase.
+
+To fix there are 2 choices:
+
+1. Commit these modified/new files
+2. If the modified/new files have no impact on the static analyser's output rerun this command with -f flag.
+
 TEXT;
 
     public function __construct()

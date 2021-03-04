@@ -28,6 +28,6 @@ class PhpstanJsonIdentifier implements Identifier
 
     public function getToolCommand(): string
     {
-        return 'phpstan analyse --format=json';
+        return 'phpstan analyse --error-format=json';
     }
 }
