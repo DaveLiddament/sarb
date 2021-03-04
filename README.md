@@ -177,7 +177,7 @@ To get the full history checked out use this:
 ```
 
 Also don't forget to use the SARB option `--output-format=github`. 
-It will annotate you PR with any issues that have been added since the baseline.
+It will annotate your PR with any issues that have been added since the baseline.
 
 
 ## Further Reading
