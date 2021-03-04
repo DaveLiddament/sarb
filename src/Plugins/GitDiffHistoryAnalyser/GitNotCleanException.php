@@ -10,7 +10,7 @@ class GitNotCleanException extends HistoryAnalyserException
 {
     private const MESSAGE = <<<TEXT
 There are modified or new files. To see them run:
- 
+
  git status
 
 
