@@ -27,6 +27,7 @@
     </issueHandlers>
 
     <ignoreExceptions>
+        <class name="Webmozart\Assert\InvalidArgumentException" />
         <class name="InvalidArgumentException" />
         <class name="LogicException" />
         <class name="Symfony\Component\Console\Exception\InvalidArgumentException" />
