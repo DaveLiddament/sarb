@@ -56,8 +56,9 @@ class UpgradeBaseLineCommand extends Command
             $output->writeln('<info>Baseline updated.</info>');
             $output->writeln(
                 sprintf(
-                    "Update the command to remove baseline results to:\n%s | sarb remove",
-                    $identifier->getToolCommand()
+                    "Update the command to remove baseline results to:\n%s | sarb remove %s",
+                    $identifier->getToolCommand(),
+                    $baselineFile->getFileName()
                 )
             );
 
