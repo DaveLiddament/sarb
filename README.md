@@ -83,7 +83,7 @@ Run the static analyser of choice and pipe the results into SARB:
 E.g. using [Psalm's](https://psalm.dev) JSON output:
 
 ```shell
-vendor/bin/psalm --output-format=json | vendor/bin/sarb create-baseline --format="psalm-json" psalm.baseline
+vendor/bin/psalm --output-format=json | vendor/bin/sarb create --input-format="psalm-json" psalm.baseline
 ```
 
 This creates a baseline file called `psalm.baseline`. You'll want to check this in to your repository.
@@ -95,7 +95,7 @@ This creates a baseline file called `psalm.baseline`. You'll want to check this 
 Continue coding. Then rerun static analyser and pipe results into SARB:
 
 ```shell
-vendor/bin/psalm --output-format=json | vendor/bin/sarb remove-baseline psalm.baseline
+vendor/bin/psalm --output-format=json | vendor/bin/sarb remove psalm.baseline
 ```
 
 ### Running SARB from a global installation
@@ -104,7 +104,7 @@ If you are running SARB from a global installation you will need to specify the 
 The above would become:
 
 ```shell
-psalm --output-format=json | sarb create-baseline --project-root=/path/to/project/root --format="psalm-json" psalm.baseline
+psalm --output-format=json | sarb create --project-root=/path/to/project/root --input-format="psalm-json" psalm.baseline
 ```
 
 ### Supported tools
