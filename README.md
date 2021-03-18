@@ -186,6 +186,7 @@ It will annotate your PR with any issues that have been added since the baseline
  * [Adding support for new static analysis tools / format](docs/NewResultsParser.md)
  * [Adding support for SCMs other than git](docs/NewHistoryAnalyser.md)
  * [How to contribute](docs/Contributing.md)
+ * [Code of Conduct](docs/CodeOfConduct.md)
  * [Unified Diff Terminology](docs/UnifiedDiffTerminology.md)
  * [SARB format](docs/SarbFormat.md)
  * [SARB vs other tools with baselining functionality](docs/SarbVsOtherBaseliningTechniques.md)
