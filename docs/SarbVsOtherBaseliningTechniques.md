@@ -137,7 +137,7 @@ FILE: /home/vagrant/phpstan-demo/src/Person.php
 
 ### Renaming a file (SARB and PHPStan differ)
 
-§Now the `Person` class is updated to `Employee` so `src/Person.php` is moved to `src/Employee.php`:
+Now the `Person` class is updated to `Employee` so `src/Person.php` is moved to `src/Employee.php`:
 
 ```php
 <?php
