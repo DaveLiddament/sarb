@@ -76,7 +76,6 @@ EOF;
     public function testNoNewIssues(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultOutputFormater,
             $this->getAnalysisResultsWithXResults(0),
             self::BASELINE_FILENAME,
             null,
@@ -96,7 +95,6 @@ EOF;
     public function test1NewIssues(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultOutputFormater,
             $this->getAnalysisResultsWithXResults(1),
             self::BASELINE_FILENAME,
             null,
@@ -114,7 +112,6 @@ EOF;
     public function testPickNonDefaultOutputFormatter(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->stubOutputFormatter,
             $this->getAnalysisResultsWithXResults(0),
             self::BASELINE_FILENAME,
             null,
@@ -136,7 +133,6 @@ EOF;
     public function testPickNonDefaultOutputFormatterWithIssues(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->stubOutputFormatter,
             $this->getAnalysisResultsWithXResults(8),
             self::BASELINE_FILENAME,
             null,
@@ -158,7 +154,6 @@ EOF;
     public function testInvalidResultsParser(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultOutputFormater,
             $this->getAnalysisResultsWithXResults(0),
             self::BASELINE_FILENAME,
             null,
@@ -180,7 +175,6 @@ EOF;
     public function testSpecifyProjectRoot(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultOutputFormater,
             $this->getAnalysisResultsWithXResults(0),
             self::BASELINE_FILENAME,
             $this->projectRoot,
@@ -198,7 +192,6 @@ EOF;
     public function testException(): void
     {
         $commandTester = $this->createCommandTester(
-            $this->defaultOutputFormater,
             $this->getAnalysisResultsWithXResults(1),
             self::BASELINE_FILENAME,
             null,
@@ -213,7 +206,6 @@ EOF;
     }
 
     private function createCommandTester(
-        OutputFormatter $expectedOutputFormatter,
         AnalysisResults $expectedAnalysisResults,
         string $baselineFileName,
         ?ProjectRoot $projectRoot,
