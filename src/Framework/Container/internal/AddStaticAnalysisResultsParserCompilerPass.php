@@ -25,7 +25,7 @@ class AddStaticAnalysisResultsParserCompilerPass implements CompilerPassInterfac
         $definition = $container->getDefinition(ResultsParsersRegistry::class);
         $taggedServices = $container->findTaggedServiceIds(Container::RESULTS_PARSER_TAG);
         $services = [];
-        foreach ($taggedServices as $id => $tags) {
+        foreach (array_keys($taggedServices) as $id) {
             $services[] = new Reference($id);
         }
         $definition->setArgument(0, $services);

@@ -26,7 +26,7 @@ class AddCommandCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition(Application::class);
         $definition->setPublic(true);
         $taggedServices = $container->findTaggedServiceIds(Container::COMMAND_TAG);
-        foreach ($taggedServices as $id => $tags) {
+        foreach (array_keys($taggedServices) as $id) {
             $definition->addMethodCall('add', [new Reference($id)]);
         }
     }

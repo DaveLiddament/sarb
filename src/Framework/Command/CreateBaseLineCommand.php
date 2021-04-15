@@ -114,7 +114,7 @@ class CreateBaseLineCommand extends Command
     {
         try {
             $projectRoot = ProjectRootHelper::getProjectRoot($input);
-            $historyFactory = $this->getHistoryFactory($input, $output);
+            $historyFactory = $this->getHistoryFactory($input);
             $resultsParser = $this->getResultsParser($input, $output);
             $baselineFile = BaseLineFileHelper::getBaselineFile($input);
             $force = CliConfigReader::getBooleanOption($input, self::FORCE);
@@ -163,7 +163,7 @@ class CreateBaseLineCommand extends Command
     /**
      * @throws InvalidConfigException
      */
-    private function getHistoryFactory(InputInterface $input, OutputInterface $output): HistoryFactory
+    private function getHistoryFactory(InputInterface $input): HistoryFactory
     {
         $identifier = CliConfigReader::getOptionWithDefaultValue($input, self::HISTORY_ANALYSER);
 

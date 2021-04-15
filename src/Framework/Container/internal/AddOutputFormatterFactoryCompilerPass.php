@@ -25,7 +25,7 @@ class AddOutputFormatterFactoryCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition(OutputFormatterRegistry::class);
         $taggedServices = $container->findTaggedServiceIds(Container::OUTPUT_FORMATTER_TAG);
         $services = [];
-        foreach ($taggedServices as $id => $tags) {
+        foreach (array_keys($taggedServices) as $id) {
             $services[] = new Reference($id);
         }
         $definition->setArgument(0, $services);

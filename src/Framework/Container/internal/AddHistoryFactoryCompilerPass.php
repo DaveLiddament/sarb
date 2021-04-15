@@ -25,7 +25,7 @@ class AddHistoryFactoryCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition(HistoryFactoryRegistry::class);
         $taggedServices = $container->findTaggedServiceIds(Container::HISTORY_FACTORY_TAG);
         $services = [];
-        foreach ($taggedServices as $id => $tags) {
+        foreach (array_keys($taggedServices) as $id) {
             $services[] = new Reference($id);
         }
         $definition->setArgument(0, $services);
