@@ -14,12 +14,12 @@ There are modified or new files. To see them run:
  git status
 
 
-SARB pins the baseline current git SHA, as files are some modified/new files the current SHA it not representative of the current state of the codebase.
+SARB pins the baseline current git SHA. As some files are modified/new the current SHA it not representative of the current state of the codebase.
 
 To fix there are 2 choices:
 
 1. Commit these modified/new files
-2. If the modified/new files have no impact on the static analyser's output rerun this command with -f flag.
+2. If the modified/new files have no impact on the static analyser's output rerun this command with the -f flag.
 
 TEXT;
 
