@@ -16,7 +16,7 @@ trait TestDirectoryTrait
         $this->fileSystem->mkdir($testDirectory);
         $cwd = getcwd();
         $this->assertNotFalse($cwd);
-        $this->projectRoot = new ProjectRoot($testDirectory, $cwd);
+        $this->projectRoot = ProjectRoot::fromProjectRoot($testDirectory, $cwd);
     }
 
     private function removeTestDirectory(): void

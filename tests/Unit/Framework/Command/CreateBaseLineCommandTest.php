@@ -18,8 +18,10 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\HistoryFactor
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStub;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\ResultsParserStubIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Throwable;
 
 class CreateBaseLineCommandTest extends TestCase
 {
@@ -81,7 +83,7 @@ EOF;
             $this->historyFactoryStub,
         ]);
 
-        $this->projectRoot = new ProjectRoot('/tmp', '/tmp/foo/bar');
+        $this->projectRoot = ProjectRoot::fromProjectRoot('/tmp', '/tmp/foo/bar');
     }
 
     public function testHappyPath(): void
@@ -212,7 +214,7 @@ EOF;
             $this->defaultResultsParser,
             self::BASELINE_FILENAME,
             null,
-            new \Exception()
+            new Exception()
         );
 
         $commandTester->execute([
@@ -229,7 +231,7 @@ EOF;
         ResultsParser $expectedResultsParser,
         string $baselineFileName,
         ?ProjectRoot $projectRoot,
-        ?\Throwable $exception
+        ?Throwable $exception
     ): CommandTester {
         $mockBaseLineCreator = new MockBaseLineCreator(
             $expectedHistoryFactory,

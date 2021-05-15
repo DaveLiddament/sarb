@@ -31,7 +31,7 @@ class AnalysisResultsTest extends TestCase
     protected function setUp(): void
     {
         $this->analysisResultsBuilder = new AnalysisResultsBuilder();
-        $this->projectRoot = new ProjectRoot('/', '/');
+        $this->projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
     }
 
     public function testNoResults(): void

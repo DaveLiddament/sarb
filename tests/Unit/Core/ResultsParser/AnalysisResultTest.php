@@ -24,7 +24,7 @@ class AnalysisResultTest extends TestCase
 
     public function testHappyPath(): void
     {
-        $projectRoot = new ProjectRoot('/', '/');
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
 
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName(self::FILE_NAME),

@@ -36,7 +36,7 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->projectRoot = new ProjectRoot('/vagrant', '/home');
+        $this->projectRoot = ProjectRoot::fromProjectRoot('/vagrant', '/home');
         $this->phpCodeSnifferJsonResultsParser = new PhpCodeSnifferJsonResultsParser();
         $this->fileContents = $this->getResource('phpCodeSniffer/full.json');
     }
