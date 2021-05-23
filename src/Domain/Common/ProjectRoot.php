@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 use LogicException;
+use Webmozart\Assert\Assert;
 use Webmozart\PathUtil\Path;
 
 /**
@@ -23,13 +24,28 @@ class ProjectRoot
      */
     private $rootDirectory;
 
-    public function __construct(string $rootDirectory, string $currentWorkingDirectory)
+    public static function fromCurrentWorkingDirectory(string $currentWorkingDirectory): self
     {
-        if (Path::isAbsolute($rootDirectory)) {
-            $this->rootDirectory = Path::canonicalize($rootDirectory);
+        Assert::true(Path::isAbsolute($currentWorkingDirectory));
+        $rootDirectory = Path::canonicalize($currentWorkingDirectory);
+
+        return new self($rootDirectory);
+    }
+
+    public static function fromProjectRoot(string $projectRoot, string $currentWorkingDirectory): self
+    {
+        if (Path::isAbsolute($projectRoot)) {
+            $rootDirectory = Path::canonicalize($projectRoot);
         } else {
-            $this->rootDirectory = Path::makeAbsolute($rootDirectory, $currentWorkingDirectory);
+            $rootDirectory = Path::makeAbsolute($projectRoot, $currentWorkingDirectory);
         }
+
+        return new self($rootDirectory);
+    }
+
+    private function __construct(string $rootDirectory)
+    {
+        $this->rootDirectory = $rootDirectory;
     }
 
     /**

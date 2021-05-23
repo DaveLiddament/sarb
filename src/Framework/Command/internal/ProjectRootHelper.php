@@ -33,10 +33,10 @@ class ProjectRootHelper
         $cwd = self::getCwd();
 
         if (null === $projectRootAsString) {
-            $projectRootAsString = $cwd;
+            return ProjectRoot::fromCurrentWorkingDirectory($cwd);
         }
 
-        return new ProjectRoot($projectRootAsString, $cwd);
+        return ProjectRoot::fromProjectRoot($projectRootAsString, $cwd);
     }
 
     /**

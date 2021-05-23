@@ -45,7 +45,7 @@ class LocationSortTest extends TestCase
 
     private function location(string $fileName, int $lineNumber): Location
     {
-        $projectRoot = new ProjectRoot('/', '/');
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
 
         return Location::fromAbsoluteFileName(
             new AbsoluteFileName($fileName),

@@ -70,7 +70,7 @@ EOF;
             $this->stubOutputFormatter,
         ]);
 
-        $this->projectRoot = new ProjectRoot('/tmp', '/tmp/foo/bar');
+        $this->projectRoot = ProjectRoot::fromProjectRoot('/tmp', '/tmp/foo/bar');
     }
 
     public function testNoNewIssues(): void
@@ -263,7 +263,7 @@ EOF;
 
     private function getAnalysisResultsWithXResults(int $count): AnalysisResults
     {
-        $projectRoot = new ProjectRoot('/', '/');
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
 
         $analysisResultsBuilder = new AnalysisResultsBuilder();
         for ($i = 0; $i < $count; ++$i) {

@@ -37,7 +37,7 @@ class PsalmJsonResultsParserTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
+        $this->projectRoot = ProjectRoot::fromProjectRoot('/vagrant/static-analysis-baseliner', '/home');
 
         $this->psalmResultsParser = new PsalmJsonResultsParser();
 

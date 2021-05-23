@@ -96,7 +96,7 @@ class BaseLineAnalysisResultsTest extends TestCase
         $type = new Type(self::TYPE_1);
         $analysisResultsBuilder = new AnalysisResultsBuilder();
 
-        $projectRoot = new ProjectRoot(self::PROJECT_ROOT, self::PROJECT_ROOT);
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory(self::PROJECT_ROOT);
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName(self::ABSOLUTE_FILE_NAME_1),
             $projectRoot,
