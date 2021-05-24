@@ -11,7 +11,7 @@ interface OutputFormatterLookupService
      *
      * @throws InvalidOutputFormatterException
      */
-    public function getOutputFormatter(string $name): OutputFormatter;
+    public function getOutputFormatter(string $identifier): OutputFormatter;
 
     /**
      * Returns a list of all OutputFormatter identifiers.
