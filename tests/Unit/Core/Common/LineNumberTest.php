@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Common;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class LineNumberTest extends TestCase
@@ -17,7 +18,7 @@ class LineNumberTest extends TestCase
 
     public function testInvalidLineNumber(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         new LineNumber(-1);
     }
 

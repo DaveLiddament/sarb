@@ -31,7 +31,7 @@ class PhpmdJsonResultsParserTest extends TestCase
 
     protected function setUp(): void
     {
-        $projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
+        $projectRoot = ProjectRoot::fromProjectRoot('/vagrant/static-analysis-baseliner', '/home');
 
         $this->phpmdResultsParser = new PhpmdJsonResultsParser();
         $original = $this->getResource('phpmd/phpmd.json');

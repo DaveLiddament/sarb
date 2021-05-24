@@ -23,7 +23,7 @@ class InvalidPhpmdFileFormatTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
+        $this->projectRoot = ProjectRoot::fromProjectRoot('/vagrant/static-analysis-baseliner', '/home');
     }
 
     /**
@@ -66,7 +66,7 @@ class InvalidPhpmdFileFormatTest extends TestCase
     private function assertExceptionThrown(string $exceptionType, string $fileName): void
     {
         $fileContents = $this->getResource("phpmd/$fileName");
-        $projectRoot = new ProjectRoot('/vagrant/static-analysis-baseliner', '/home');
+        $projectRoot = ProjectRoot::fromProjectRoot('/vagrant/static-analysis-baseliner', '/home');
         $phpmdResultsParser = new PhpmdJsonResultsParser();
 
         $this->expectException($exceptionType);

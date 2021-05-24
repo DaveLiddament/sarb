@@ -61,7 +61,7 @@ abstract class AbstractOutputFormatterTest extends TestCase
         string $type,
         string $message
     ): void {
-        $projectRoot = new ProjectRoot('/', '/');
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
         $absoluteFileName = new AbsoluteFileName($file);
         $lineNumber = new LineNumber($lineNumberAsInt);
         $location = Location::fromAbsoluteFileName($absoluteFileName, $projectRoot, $lineNumber);

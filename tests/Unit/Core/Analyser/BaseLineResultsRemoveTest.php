@@ -37,7 +37,7 @@ class BaseLineResultsRemoveTest extends TestCase
 
     public function testRemoveBaseLineResults(): void
     {
-        $projectRoot = new ProjectRoot('/home/sarb', '/home/sarb');
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory(self::PROJECT_ROOT_PATH);
 
         // Create baseline
         $baselineAnalysisResultsBuilder = new BaseLineResultsBuilder();

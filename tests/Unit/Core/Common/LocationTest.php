@@ -14,7 +14,7 @@ class LocationTest extends TestCase
 {
     public function testCreateFromAbsolutePath(): void
     {
-        $projectRoot = new ProjectRoot('/sarb/root', '/sarb/root');
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/sarb/root');
         $absoluteFileName = new AbsoluteFileName('/sarb/root/src/File.php');
         $lineNumber = new LineNumber(10);
 
