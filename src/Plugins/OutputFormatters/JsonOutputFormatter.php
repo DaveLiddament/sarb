@@ -11,11 +11,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 class JsonOutputFormatter implements OutputFormatter
 {
     public function outputResults(
-        AnalysisResults $baseLineRemovedResults
+        AnalysisResults $analysisResults
     ): string {
         $results = [];
 
-        foreach ($baseLineRemovedResults->getAnalysisResults() as $analysisResult) {
+        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
             $location = $analysisResult->getLocation();
             $results[] = [
                 'file' => $location->getAbsoluteFileName()->getFileName(),

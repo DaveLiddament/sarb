@@ -10,11 +10,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 class GithubActionsOutputFormatter implements OutputFormatter
 {
     public function outputResults(
-        AnalysisResults $baseLineRemovedResults
+        AnalysisResults $analysisResults
     ): string {
         $lines = [];
 
-        foreach ($baseLineRemovedResults->getAnalysisResults() as $analysisResult) {
+        foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
             $location = $analysisResult->getLocation();
 
             $message = str_replace("\n", '%0A', $analysisResult->getMessage());
