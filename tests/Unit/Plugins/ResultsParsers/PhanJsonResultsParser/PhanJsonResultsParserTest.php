@@ -63,6 +63,35 @@ class PhanJsonResultsParserTest extends TestCase
         );
     }
 
+    public function testWithRelativePath(): void
+    {
+        $projectRoot = $this->projectRoot->withRelativePath('code');
+
+        $fileContents = $this->getResource('phan/phan.json');
+        $analysisResults = $this->phanJsonResultsParser->convertFromString($fileContents, $projectRoot);
+
+        $this->assertCount(2, $analysisResults->getAnalysisResults());
+
+        $result1 = $analysisResults->getAnalysisResults()[0];
+        $result2 = $analysisResults->getAnalysisResults()[1];
+
+        $this->assertMatch($result1,
+            'code/src/Domain/Analyser/BaseLineResultsRemover.php',
+            16,
+            'PhanUnreferencedUseNormal'
+        );
+        $this->assertSame(
+            'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
+            $result1->getMessage()
+        );
+
+        $this->assertMatch($result2,
+            'code/src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
+            107,
+            'PhanPossiblyNullTypeArgument'
+        );
+    }
+
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phanJsonResultsParser->showTypeGuessingWarning());
