@@ -2,8 +2,8 @@
 
 SARB needs to match up the results from the static analyser and the SCM (e.g. git). 
 
-If the static analyser give the full paths of the files containing issues then everything is fine. 
-However some static analysers, e.g. Phan, only provide relative paths to the files with issues. 
+If the static analyser give the absolute paths of the files containing issues then everything is fine. 
+However, some static analysers, e.g. Phan, only provide relative paths to the files with issues. 
 Depending on the directory layout you might need to supply `--relative-path-to-code` option when running SARB.
 
 The _project root_ is the root directory for project. E.g. if using git then this is the directory that contains the `.git` folder.
