@@ -76,7 +76,7 @@ class PhanJsonResultsParserTest extends TestCase
         $result2 = $analysisResults->getAnalysisResults()[1];
 
         $this->assertMatch($result1,
-            'code/src/Domain/Analyser/BaseLineResultsRemover.php',
+            'src/Domain/Analyser/BaseLineResultsRemover.php',
             16,
             'PhanUnreferencedUseNormal'
         );
@@ -86,7 +86,7 @@ class PhanJsonResultsParserTest extends TestCase
         );
 
         $this->assertMatch($result2,
-            'code/src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
+            'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             107,
             'PhanPossiblyNullTypeArgument'
         );

@@ -81,13 +81,12 @@ class PhanJsonResultsParser implements ResultsParser
 
         $relativeFileNameAsString = ArrayUtils::getStringValue($locationArray, self::FILE_PATH);
         $relativeFileName = new RelativeFileName($relativeFileNameAsString);
-        $absoluteFileName = $projectRoot->getAbsoluteFileName($relativeFileName);
 
         $linesArray = ArrayUtils::getArrayValue($locationArray, self::LINES);
         $lineAsInt = ArrayUtils::getIntValue($linesArray, self::LINE);
 
-        $location = Location::fromAbsoluteFileName(
-            $absoluteFileName,
+        $location = Location::fromRelativeFileName(
+            $relativeFileName,
             $projectRoot,
             new LineNumber($lineAsInt)
         );
