@@ -1,0 +1,20 @@
+[
+  {
+    "line": 67,
+    "type": "MismatchingDocblockParamType",
+    "message": "Parameter $array has wrong type 'array<mixed, mixed>', should be 'int'",
+    "relative_path": "src\/Domain\/ResultsParser\/AnalysisResults.php"
+  },
+  {
+    "line": 29,
+    "type": "MixedAssignment",
+    "message": "Cannot assign $asArray to a mixed type",
+    "relative_path": "src\/Domain\/Utils\/JsonUtils.php"
+  },
+  {
+    "line": 90,
+    "type": "MixedAssignment",
+    "message": "Cannot assign $analysisResultAsArray to a mixed type",
+    "relative_path": "src\/Plugins\/PsalmJsonResultsParser\/PsalmJsonResultsParser.php"
+  }
+]
