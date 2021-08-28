@@ -194,6 +194,35 @@ class EndToEndTest extends TestCase
         $this->removeTestDirectory();
     }
 
+    public function testRelativePathFlagHasNoAffectWhenUsingAbsolutPaths(): void
+    {
+        $this->createTestDirectory();
+        $this->gitWrapper->init($this->projectRoot);
+
+        $this->commit(self::COMMIT_1_DIRECTORY);
+        $this->runCreateBaseLineCommand('code');
+
+        // Now create commit 2. THis introduces some new errors
+        $this->commit(self::COMMIT_2_DIRECTORY);
+        $this->runStripBaseLineFromResultsCommand(
+            self::COMMIT_2_RESULTS,
+            1,
+            $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS),
+            'code'
+        );
+
+        // Now create commit 3. This has errors that were only in the baseline.
+        $this->commit(self::COMMIT_3_DIRECTORY);
+        $this->runStripBaseLineFromResultsCommand(
+            self::COMMIT_3_RESULTS,
+            0,
+            ''
+        );
+
+        // Only delete test directory if tests passed. Keep to investigate test failures
+        $this->removeTestDirectory();
+    }
+
     public function testAttemptToCreateBaselineWithNonCleanGitStatus(): void
     {
         $this->createTestDirectory();
@@ -264,12 +293,16 @@ class EndToEndTest extends TestCase
         $this->gitWrapper->addAndCommit("Updating code to $directory", $this->projectRoot);
     }
 
-    private function runCreateBaseLineCommand(): void
+    private function runCreateBaseLineCommand(?string $relativePathToCode = null): void
     {
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
             '--project-root' => (string) $this->projectRoot,
         ];
+
+        if (null !== $relativePathToCode) {
+            $arguments['--relative-path-to-code'] = $relativePathToCode;
+        }
 
         $this->runCommand(
             CreateBaseLineCommand::COMMAND_NAME,
@@ -282,13 +315,18 @@ class EndToEndTest extends TestCase
     private function runStripBaseLineFromResultsCommand(
         string $psalmResults,
         int $expectedExitCode,
-        string $expectedResultsJson
+        string $expectedResultsJson,
+        ?string $relativePathToCode = null
     ): void {
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
             '--output-format' => 'json',
             '--project-root' => (string) $this->projectRoot,
         ];
+
+        if (null !== $relativePathToCode) {
+            $arguments['--relative-path-to-code'] = $relativePathToCode;
+        }
 
         $output = $this->runCommand(
             RemoveBaseLineFromResultsCommand::COMMAND_NAME,
