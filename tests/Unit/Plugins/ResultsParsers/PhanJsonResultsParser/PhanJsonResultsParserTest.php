@@ -55,6 +55,10 @@ class PhanJsonResultsParserTest extends TestCase
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
             $result1->getMessage()
         );
+        $this->assertSame(
+            '/vagrant/static-analysis-baseliner/src/Domain/Analyser/BaseLineResultsRemover.php',
+            $result1->getLocation()->getAbsoluteFileName()->getFileName(),
+        );
 
         $this->assertMatch($result2,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
@@ -83,6 +87,10 @@ class PhanJsonResultsParserTest extends TestCase
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
             $result1->getMessage()
+        );
+        $this->assertSame(
+            '/vagrant/static-analysis-baseliner/code/src/Domain/Analyser/BaseLineResultsRemover.php',
+            $result1->getLocation()->getAbsoluteFileName()->getFileName(),
         );
 
         $this->assertMatch($result2,
