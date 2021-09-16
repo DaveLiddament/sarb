@@ -50,7 +50,7 @@ XML;
 
             $relativeFileName = $analysisResult->getLocation()->getRelativeFileName()->getFileName();
 
-            if ($oldRel !== $relativeFileName || null == $testsuite) {
+            if ($oldRel !== $relativeFileName || null === $testsuite) {
                 $testsuite = $test->addChild('testsuite');
                 $testsuite->addAttribute('errors', '0');
                 $testsuite->addAttribute('tests', (string) $caseCount);
@@ -87,13 +87,13 @@ XML;
         $dom->formatOutput = true;
         $asXml = $test->asXML();
 
-        if ($asXml !== false) {
+        if (false !== $asXml) {
             $dom->loadXML($asXml);
         } else {
             throw new RuntimeException('xml could not be loaded');
         }
         $saveXml = $dom->saveXML();
-        if ($saveXml !== false) {
+        if (false !== $saveXml) {
             return $saveXml;
         }
         throw new RuntimeException('dom could not be saved');
