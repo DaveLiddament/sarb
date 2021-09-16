@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFo
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DOMDocument;
 use Exception;
+use http\Exception\RuntimeException;
 use SimpleXMLElement;
 
 class JunitOutputFormatter implements OutputFormatter
@@ -32,11 +33,10 @@ XML;
 
         $xml = $this->getXmlString();
         $test = new SimpleXMLElement($xml);
-        $dom = new DOMDocument('1.0');
 
         $testCount = (string) $analysisResults->getCount();
-        $test->attributes()->tests = $testCount;
-        $test->attributes()->failures = $testCount;
+        $test['tests'] = $testCount;
+        $test['failures'] = $testCount;
 
         $suitCount = 0;
         $caseCount = 0;
@@ -50,7 +50,7 @@ XML;
 
             $relativeFileName = $analysisResult->getLocation()->getRelativeFileName()->getFileName();
 
-            if ($oldRel !== $relativeFileName || null === $testsuite) {
+            if ($oldRel !== $relativeFileName || null == $testsuite) {
                 $testsuite = $test->addChild('testsuite');
                 $testsuite->addAttribute('errors', '0');
                 $testsuite->addAttribute('tests', (string) $caseCount);
@@ -78,14 +78,25 @@ XML;
                 $analysisResult->getMessage()
             );
             ++$caseCount;
-            $testsuite->attributes()->tests = $caseCount;
-            $testsuite->attributes()->failures = $caseCount;
+            $testsuite['tests'] = $caseCount;
+            $testsuite['failures'] = $caseCount;
         }
+
+        $dom = new DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
-        $dom->loadXML($test->asXML());
+        $asXml = $test->asXML();
 
-        return $dom->saveXML();
+        if ($asXml !== false) {
+            $dom->loadXML($asXml);
+        } else {
+            throw new RuntimeException('xml could not be loaded');
+        }
+        $saveXml = $dom->saveXML();
+        if ($saveXml !== false) {
+            return $saveXml;
+        }
+        throw new RuntimeException('dom could not be saved');
     }
 
     private function getXmlString(): string
