@@ -70,4 +70,12 @@ class ProjectRootTest extends TestCase
         $fullPath = $projectRoot->getAbsoluteFileName(new RelativeFileName('fruit/orange.php'));
         $this->assertSame('/home/sarb/fruit/orange.php', $fullPath->getFileName());
     }
+
+    public function testProjectRootWithRelativePath(): void
+    {
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory(self::CURRENT_WORKING_DIRECTORY);
+        $projectRoot = $projectRoot->withRelativePath('foo/bar');
+        $fullPath = $projectRoot->getAbsoluteFileName(new RelativeFileName('fruit/orange.php'));
+        $this->assertSame('/home/sarb/foo/bar/fruit/orange.php', $fullPath->getFileName());
+    }
 }

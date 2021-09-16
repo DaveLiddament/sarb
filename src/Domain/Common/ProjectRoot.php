@@ -24,6 +24,11 @@ class ProjectRoot
      */
     private $rootDirectory;
 
+    /**
+     * @var string
+     */
+    private $relativePath = '';
+
     public static function fromCurrentWorkingDirectory(string $currentWorkingDirectory): self
     {
         Assert::true(Path::isAbsolute($currentWorkingDirectory));
@@ -46,6 +51,17 @@ class ProjectRoot
     private function __construct(string $rootDirectory)
     {
         $this->rootDirectory = $rootDirectory;
+    }
+
+    /**
+     * Return a new ProjectRoot configured with a relativePath.
+     */
+    public function withRelativePath(string $relativePath): self
+    {
+        $projectRoot = new self($this->rootDirectory);
+        $projectRoot->relativePath = $relativePath;
+
+        return $projectRoot;
     }
 
     /**
@@ -75,7 +91,11 @@ class ProjectRoot
      */
     public function getAbsoluteFileName(RelativeFileName $relativeFileName): AbsoluteFileName
     {
-        $absoluteFileName = Path::join([$this->rootDirectory, $relativeFileName->getFileName()]);
+        $absoluteFileName = Path::join([
+            $this->rootDirectory,
+            $this->relativePath,
+            $relativeFileName->getFileName(),
+        ]);
 
         try {
             return new AbsoluteFileName($absoluteFileName);

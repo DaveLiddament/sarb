@@ -117,15 +117,8 @@ The method that needs implementing looks like this:
 
     /**
      * Takes a string representation of the static analysis results and converts to AnalysisResults.
-     *
-     * @param string $resultsAsString
-     *
-     * @throws ParseAtLocationException
-     * @throws InvalidContentTypeException
-     *
-     * @return AnalysisResults
      */
-    public function convertFromString(string $resultsAsString): AnalysisResults;
+    public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults;
 
 }
 ```
@@ -164,7 +157,7 @@ A valid implementation to do this would be this...
 ```php
 
 
-    public function convertFromString(string $resultsAsString): AnalysisResults;
+    public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults;
     {
         try {
             $analysisResultsAsArray = JsonUtils::asArray($resultsAsString);
@@ -188,8 +181,9 @@ A valid implementation to do this would be this...
                 $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'type');
                 $message = ArrayUtils::getStringValue($analysisResultAsArray, 'message');
 
-                $location = new Location(
-                    new FileName($fileNameAsString),
+                $location = Location::fromAbsoluteFileName(
+                    new AbsoluteFileName($fileNameAsString),
+                    $projectRoot,
                     new LineNumber($lineAsInt)
                 );
 
@@ -286,7 +280,7 @@ SARB needs to pull out:
 **NOTES:** 
 
 1. `Type` must refer to the type of violation (e.g. `MissingConstructor`). See more about this at [How SARB works](HowSarbWorks.md)
-1. The file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path.
+1. Ideally the file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path. If the static analysis tool does not provide an absoute path then a relative path can be used, see [using a relative path](#using-relative-paths).
 
 Here is a the code to pull the information from the array:
 
@@ -305,7 +299,8 @@ E.g. PHP-CS gives additional fields e.g. is_fixable. If this data needs to be sh
 SARB needs to capture all ths information and create an `AnalysisResult`.
 ```php
                 $location = new Location(
-                    new FileName($fileNameAsString),
+                    new AbsoluteFileName($fileNameAsString),
+                    $projectRoot,
                     new LineNumber($lineAsInt)
                 );
 
@@ -337,8 +332,6 @@ The final method to implement just returns true or false.
      * Returns true if the ResultsParser has to guess the violation type.
      *
      * See docs/ViolationTypeClassificationGuessing.md
-     *
-     * @return bool
      */
     public function showTypeGuessingWarning(): bool
     {
@@ -349,3 +342,20 @@ The final method to implement just returns true or false.
 Read more about [guessing violation type classification](ViolationTypeClassificationGuessing.md).
 In this example the static analysis tool provides a `type` so we are not guessing the
 classification. So this will return false.
+
+
+## Using relative paths
+
+Using relative paths is less ideal than using absolute paths. See [Results with relative paths](ResultsWithRelativePaths.md). 
+If the relative paths are not relative then use the following code for creating the `Location` object.
+
+```php
+        $relativeFileNameAsString = ArrayUtils::getStringValue($analysisResult, 'relative_file_path');
+        $lineAsInt = ArrayUtils::getIntValue($analysisResult, 'line_number');
+
+        $location = Location::fromAbsoluteFileName(
+            new RelativeFileName($relativeFileNameAsString),
+            $projectRoot,
+            new LineNumber($lineAsInt)
+        );
+```

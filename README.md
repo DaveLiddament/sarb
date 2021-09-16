@@ -128,6 +128,8 @@ vendor/bin/phan -m json | vendor/bin/sarb create --input-format="phan-json" phan
 vendor/bin/phan -m json | vendor/bin/sarb remove phan.baseline
 ```
 
+See notes on [relative paths](docs/ResultsWithRelativePaths.md).
+
 ### [Exakat](https://www.exakat.io/)
 ```shell
 php exakat.phar report -p <project> -format sarb | vendor/bin/sarb create --input-format="exakat-sarb" exakat.baseline
