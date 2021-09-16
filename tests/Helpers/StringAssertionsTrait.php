@@ -18,6 +18,7 @@ trait StringAssertionsTrait
             $expectedValue.\PHP_EOL,
         ];
 
-        Assert::assertTrue(in_array($actualValue, $validResults, true));
+        $isMatch = in_array($actualValue, $validResults, true);
+        Assert::assertTrue($isMatch);
     }
 }
