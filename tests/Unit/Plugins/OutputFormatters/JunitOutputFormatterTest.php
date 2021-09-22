@@ -35,15 +35,15 @@ XML;
         $expectedOuput = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites name="SARB" tests="3" failures="3">
-  <testsuite errors="0" tests="2" failures="2" name="FILE_1">
-    <testcase name="TYPE_1 at /FILE_1 (10:0)">
-      <failure type="error" message="MESSAGE_1"/>
+  <testsuite name="FILE_1" errors="0" tests="2" failures="2">
+    <testcase name="TYPE_1 at /FILE_1 (10:10)">
+      <failure type="warning" message="MESSAGE_1"/>
     </testcase>
     <testcase name="TYPE_2 at /FILE_1 (12:0)">
       <failure type="error" message="MESSAGE_2"/>
     </testcase>
   </testsuite>
-  <testsuite errors="0" tests="1" failures="1" name="FILE_2">
+  <testsuite name="FILE_2" errors="0" tests="1" failures="1">
     <testcase name="TYPE_1 at /FILE_2 (0:0)">
       <failure type="error" message="MESSAGE_3"/>
     </testcase>

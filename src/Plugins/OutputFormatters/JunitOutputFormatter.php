@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DOMDocument;
-use Exception;
-use http\Exception\RuntimeException;
 use SimpleXMLElement;
 
 class JunitOutputFormatter implements OutputFormatter
 {
     /**
-     * @throws Exception
+     * @throws SarbException
      */
     public function outputResults(AnalysisResults $analysisResults): string
     {
+        if (!extension_loaded('simplexml')) {
+            throw new SarbException('Simple XML required for JUnit output format'); // @codeCoverageIgnore
+        }
+
         if (0 === $analysisResults->getCount()) {
             return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -31,56 +34,64 @@ class JunitOutputFormatter implements OutputFormatter
 XML;
         }
 
-        $xml = $this->getXmlString();
+        $xml = $this->getXmlString($analysisResults->getCount());
         $test = new SimpleXMLElement($xml);
-
-        $testCount = (string) $analysisResults->getCount();
-        $test['tests'] = $testCount;
-        $test['failures'] = $testCount;
 
         $suitCount = 0;
         $caseCount = 0;
-        $oldRel = null;
+        $previousRelativeFileName = null;
         $testsuite = null;
         foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
             $details = $analysisResult->getFullDetails();
-            $type = $details['type'] ?? 'error';
+
+            /** @var mixed $type */
+            $type = $details['type'] ?? null;
+            if (!is_string($type)) {
+                $type = 'error';
+            }
             $type = strtolower($type);
-            $column = $details['column'] ?? '0';
+
+            /** @var mixed $column */
+            $column = $details['column'] ?? null;
+            if (is_numeric($column)) {
+                $column = (string) ((int) $column);
+            } else {
+                $column = '0';
+            }
 
             $relativeFileName = $analysisResult->getLocation()->getRelativeFileName()->getFileName();
 
-            if ($oldRel !== $relativeFileName || null === $testsuite) {
+            if ((null === $testsuite) || ($previousRelativeFileName !== $relativeFileName)) {
+                // Add final counts to previous testsuite (if one exists)
+                $this->addCounts($testsuite, $caseCount);
+
                 $testsuite = $test->addChild('testsuite');
-                $testsuite->addAttribute('errors', '0');
-                $testsuite->addAttribute('tests', (string) $caseCount);
-                $testsuite->addAttribute('failures', (string) $caseCount);
                 $testsuite->addAttribute('name', $relativeFileName);
 
-                $oldRel = $relativeFileName;
+                $previousRelativeFileName = $relativeFileName;
                 ++$suitCount;
                 $caseCount = 0;
             }
 
             $lineSprint = sprintf(
-                '%s at %s (%s:%s)',
+                '%s at %s (%d:%s)',
                 $analysisResult->getType()->getType(),
                 $analysisResult->getLocation()->getAbsoluteFileName()->getFileName(),
-                (string) $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
+                $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
                 $column
             );
             $testcase = $testsuite->addChild('testcase');
             $testcase->addAttribute('name', $lineSprint);
-            $testcase->addChild('failure');
-            $testcase->failure->addAttribute('type', $type);
-            $testcase->failure->addAttribute(
+            $failure = $testcase->addChild('failure');
+            $failure->addAttribute('type', $type);
+            $failure->addAttribute(
                 'message',
                 $analysisResult->getMessage()
             );
             ++$caseCount;
-            $testsuite['tests'] = $caseCount;
-            $testsuite['failures'] = $caseCount;
         }
+
+        $this->addCounts($testsuite, $caseCount);
 
         $dom = new DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
@@ -90,21 +101,21 @@ XML;
         if (false !== $asXml) {
             $dom->loadXML($asXml);
         } else {
-            throw new RuntimeException('xml could not be loaded');
+            throw new SarbException('xml could not be loaded'); // @codeCoverageIgnore
         }
         $saveXml = $dom->saveXML();
         if (false !== $saveXml) {
             return $saveXml;
         }
-        throw new RuntimeException('dom could not be saved');
+        throw new SarbException('dom could not be saved'); // @codeCoverageIgnore
     }
 
-    private function getXmlString(): string
+    private function getXmlString(int $issues): string
     {
         $xmlstr = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites
-        name="SARB" tests="1" failures="0">
+        name="SARB" tests="{$issues}" failures="{$issues}">
 </testsuites>
 
 XML;
@@ -115,5 +126,14 @@ XML;
     public function getIdentifier(): string
     {
         return 'junit';
+    }
+
+    private function addCounts(?SimpleXMLElement $testsuite, int $caseCount): void
+    {
+        if (null !== $testsuite) {
+            $testsuite->addAttribute('errors', '0');
+            $testsuite->addAttribute('tests', (string) $caseCount);
+            $testsuite->addAttribute('failures', (string) $caseCount);
+        }
     }
 }
