@@ -133,7 +133,7 @@ See notes on [relative paths](docs/ResultsWithRelativePaths.md).
 ### [Exakat](https://www.exakat.io/)
 ```shell
 php exakat.phar report -p <project> -format sarb | vendor/bin/sarb create --input-format="exakat-sarb" exakat.baseline
-php exakat.phar report -p <project> -format sarb | vendor/bin/sarb remove phan.baseline
+php exakat.phar report -p <project> -format sarb | vendor/bin/sarb remove exakat.baseline
 ```
 
 ### [PHPMD](https://github.com/phpmd/phpmd)
