@@ -40,9 +40,36 @@ abstract class AbstractOutputFormatterTest extends TestCase
     protected function assertIssuesOutput(string $expectedOutput): void
     {
         $analysisResultsBuilder = new AnalysisResultsBuilder();
-        $this->addAnalysisResult($analysisResultsBuilder, self::FILE_1, 10, self::TYPE_1, 'MESSAGE_1');
-        $this->addAnalysisResult($analysisResultsBuilder, self::FILE_1, 12, self::TYPE_2, 'MESSAGE_2');
-        $this->addAnalysisResult($analysisResultsBuilder, self::FILE_2, 0, self::TYPE_1, 'MESSAGE_3');
+        $this->addAnalysisResult(
+            $analysisResultsBuilder,
+            self::FILE_1,
+            10,
+            self::TYPE_1,
+            'MESSAGE_1',
+            [
+                'column' => '10',
+                'type' => 'warning',
+            ]
+        );
+        $this->addAnalysisResult(
+            $analysisResultsBuilder,
+            self::FILE_1,
+            12,
+            self::TYPE_2,
+            'MESSAGE_2',
+            [
+                'column' => 'invalid',
+                'type' => false, // not a string, so ignored in junit formatter
+            ]
+        );
+        $this->addAnalysisResult(
+            $analysisResultsBuilder,
+            self::FILE_2,
+            0,
+            self::TYPE_1,
+            'MESSAGE_3',
+            []
+        );
 
         $this->assertOutput($expectedOutput, $analysisResultsBuilder->build());
     }
@@ -54,19 +81,21 @@ abstract class AbstractOutputFormatterTest extends TestCase
         $this->assertSame($expectedOutput, $output);
     }
 
+    /** @param array<mixed> $data */
     private function addAnalysisResult(
         AnalysisResultsBuilder $analysisResultsBuilder,
         string $file,
         int $lineNumberAsInt,
         string $type,
-        string $message
+        string $message,
+        array $data
     ): void {
         $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
         $absoluteFileName = new AbsoluteFileName($file);
         $lineNumber = new LineNumber($lineNumberAsInt);
         $location = Location::fromAbsoluteFileName($absoluteFileName, $projectRoot, $lineNumber);
 
-        $analysisResult = new AnalysisResult($location, new Type($type), $message, []);
+        $analysisResult = new AnalysisResult($location, new Type($type), $message, $data);
 
         $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }
