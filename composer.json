@@ -35,7 +35,7 @@
     "psalm/plugin-phpunit": "^0.15.1",
     "qossmic/deptrac-shim": "^0.11",
     "symfony/filesystem": "^3.4 || ^4.0 || ^5.0",
-    "vimeo/psalm": "^4.4.1"
+    "vimeo/psalm": "^4.5"
   },
   "bin" : ["sarb"],
   "autoload": {
