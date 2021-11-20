@@ -12,7 +12,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\UpgradeBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\Container;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitCliWrapper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser\PhanJsonIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser\PhpCodeSnifferJsonIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonIdentifier;
@@ -35,11 +34,6 @@ class UpgradeV0BaselineFilesTest extends TestCase
      * @var Filesystem
      */
     private $fileSystem;
-
-    /**
-     * @var GitCliWrapper
-     */
-    private $gitWrapper;
 
     /**
      * @var ProjectRoot
@@ -67,7 +61,6 @@ class UpgradeV0BaselineFilesTest extends TestCase
     protected function setUp(): void
     {
         $this->fileSystem = new Filesystem();
-        $this->gitWrapper = new GitCliWrapper();
         $this->createTestDirectory();
         $baseline = $this->projectRoot->getAbsoluteFileName(new RelativeFileName('baseline'));
         $this->baseLineFileName = new BaseLineFileName($baseline->getFileName());

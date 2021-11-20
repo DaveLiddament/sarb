@@ -18,11 +18,6 @@ class GitDiffHistoryFactoryTest extends TestCase
     use AssertGitCommit;
 
     /**
-     * @var string
-     */
-    private const PROJECT_ROOT = 'project/foo';
-
-    /**
      * @var GitDiffHistoryFactory
      */
     private $gitDiffHistoryFactory;

@@ -17,16 +17,6 @@ class InvalidPhpmdFileFormatTest extends TestCase
     use ResourceLoaderTrait;
 
     /**
-     * @var ProjectRoot
-     */
-    private $projectRoot;
-
-    protected function setUp(): void
-    {
-        $this->projectRoot = ProjectRoot::fromProjectRoot('/vagrant/static-analysis-baseliner', '/home');
-    }
-
-    /**
      * @psalm-return array<int,array{string}>
      */
     public function filenameDataProvider(): array

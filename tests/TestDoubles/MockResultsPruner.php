@@ -17,10 +17,6 @@ class MockResultsPruner implements ResultsPrunerInterface
     use StringAssertionsTrait;
 
     /**
-     * @var BaseLineFileName
-     */
-    private $expectedBaseLineFileName;
-    /**
      * @var string
      */
     private $expectedAnalysisResults;
@@ -38,13 +34,11 @@ class MockResultsPruner implements ResultsPrunerInterface
     private $throwable;
 
     public function __construct(
-        BaseLineFileName $expectedBaseLineFileName,
         string $expectedAnalysisResults,
         PrunedResults $prunedOutputResults,
         ?ProjectRoot $projectRoot,
         ?Throwable $throwable
     ) {
-        $this->expectedBaseLineFileName = $expectedBaseLineFileName;
         $this->expectedAnalysisResults = $expectedAnalysisResults;
         $this->prunedOutputResults = $prunedOutputResults;
         $this->projectRoot = $projectRoot;
