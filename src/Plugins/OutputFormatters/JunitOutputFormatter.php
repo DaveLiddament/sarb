@@ -37,7 +37,6 @@ XML;
         $xml = $this->getXmlString($analysisResults->getCount());
         $test = new SimpleXMLElement($xml);
 
-        $suitCount = 0;
         $caseCount = 0;
         $previousRelativeFileName = null;
         $testsuite = null;
@@ -69,7 +68,6 @@ XML;
                 $testsuite->addAttribute('name', $relativeFileName);
 
                 $previousRelativeFileName = $relativeFileName;
-                ++$suitCount;
                 $caseCount = 0;
             }
 
