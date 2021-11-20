@@ -65,8 +65,8 @@ jobs:
 
       - name: "Full CI"
         run: |
-          - "export PHP_CS_FIXER_IGNORE_ENV=true"
-          - "composer ci"
+          export PHP_CS_FIXER_IGNORE_ENV=true
+          composer ci
 
 
   one-version-only:
