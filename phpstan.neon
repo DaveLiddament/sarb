@@ -3,7 +3,7 @@ parameters:
     paths:
     - src
     - tests
-    excludes_analyse:
+    excludePaths:
     - tests/resources
     - tests/scratchpad
     ignoreErrors:
