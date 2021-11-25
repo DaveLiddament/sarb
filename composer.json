@@ -55,8 +55,7 @@
       "@cs",
       "@test",
       "@psalm",
-      "@phpstan",
-      "@deptrac"
+      "@phpstan"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",

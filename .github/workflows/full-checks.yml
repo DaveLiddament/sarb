@@ -38,7 +38,7 @@ jobs:
         with:
           coverage: Xdebug
           php-version: "${{ matrix.php-version }}"
-          tools: composer, qossmic/deptrac-shim
+          tools: composer
 
       - name: Get composer cache directory
         id: composercache
@@ -70,7 +70,7 @@ jobs:
 
 
   one-version-only:
-    name: "Runs code coverage and infection"
+    name: "Runs code coverage, infection and deptrac"
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -92,7 +92,7 @@ jobs:
         with:
           coverage: Xdebug
           php-version: "${{ matrix.php-version }}"
-          tools: composer, infection
+          tools: composer, infection, qossmic/deptrac-shim
 
       - name: Get composer cache directory
         id: composercache
@@ -117,6 +117,9 @@ jobs:
         with:
           file: reports/phpunit.xml
           name: Test coverage
+
+      - name: "Run deptrack"
+        run: composer deptrac
 
       - name: "Run mutation tests with Xdebug and infection/infection"
         env:
