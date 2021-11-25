@@ -18,6 +18,7 @@ Please make sure that the code runs on the following PHP versions:
 - 7.3
 - 7.4
 - 8.0
+- 8.1
 
 
 ### Code checks
