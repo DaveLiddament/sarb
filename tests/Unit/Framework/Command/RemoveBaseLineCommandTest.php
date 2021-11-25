@@ -6,7 +6,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Comm
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
@@ -77,7 +76,6 @@ EOF;
     {
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
-            self::BASELINE_FILENAME,
             null,
             null
         );
@@ -96,7 +94,6 @@ EOF;
     {
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(1),
-            self::BASELINE_FILENAME,
             null,
             null
         );
@@ -113,7 +110,6 @@ EOF;
     {
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
-            self::BASELINE_FILENAME,
             null,
             null
         );
@@ -134,7 +130,6 @@ EOF;
     {
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(8),
-            self::BASELINE_FILENAME,
             null,
             null
         );
@@ -155,7 +150,6 @@ EOF;
     {
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
-            self::BASELINE_FILENAME,
             null,
             null
         );
@@ -176,7 +170,6 @@ EOF;
     {
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
-            self::BASELINE_FILENAME,
             $this->projectRoot,
             null
         );
@@ -193,7 +186,6 @@ EOF;
     {
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(1),
-            self::BASELINE_FILENAME,
             null,
             new Exception()
         );
@@ -207,7 +199,6 @@ EOF;
 
     private function createCommandTester(
         AnalysisResults $expectedAnalysisResults,
-        string $baselineFileName,
         ?ProjectRoot $projectRoot,
         ?Throwable $exception
     ): CommandTester {
@@ -231,7 +222,6 @@ EOF;
         );
 
         $mockResultsPruner = new MockResultsPruner(
-            new BaseLineFileName($baselineFileName),
             self::INPUT_STRING_1,
             $prunedResults,
             $projectRoot,

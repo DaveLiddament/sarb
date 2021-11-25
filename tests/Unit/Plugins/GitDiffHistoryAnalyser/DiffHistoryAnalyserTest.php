@@ -19,7 +19,6 @@ class DiffHistoryAnalyserTest extends TestCase
 {
     private const FILE_1 = 'foo/one.txt';
     private const FILE_2 = 'bar/two.txt';
-    private const FILE_3 = 'bar/three.txt';
 
     /**
      * @var FileMutationsBuilder

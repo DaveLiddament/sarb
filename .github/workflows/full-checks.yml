@@ -25,6 +25,7 @@ jobs:
           - "7.3"
           - "7.4"
           - "8.0"
+          - "8.1"
         operating-system:
           - "ubuntu-18.04"
 
@@ -63,11 +64,13 @@ jobs:
         run: "composer update --no-interaction --no-progress"
 
       - name: "Full CI"
-        run: "composer ci"
+        run: |
+          export PHP_CS_FIXER_IGNORE_ENV=true
+          composer ci
 
 
   one-version-only:
-    name: "Runs code coverage and infection"
+    name: "Runs code coverage, infection and deptrac"
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -89,7 +92,7 @@ jobs:
         with:
           coverage: Xdebug
           php-version: "${{ matrix.php-version }}"
-          tools: composer, infection
+          tools: composer, infection, qossmic/deptrac-shim
 
       - name: Get composer cache directory
         id: composercache
@@ -114,6 +117,9 @@ jobs:
         with:
           file: reports/phpunit.xml
           name: Test coverage
+
+      - name: "Run deptrack"
+        run: composer deptrac
 
       - name: "Run mutation tests with Xdebug and infection/infection"
         env:

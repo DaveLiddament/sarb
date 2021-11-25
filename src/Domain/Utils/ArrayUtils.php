@@ -92,6 +92,7 @@ class ArrayUtils
 
     /**
      * @param mixed $entity
+     * @psalm-assert array $entity
      *
      * @throws ArrayParseException
      */
