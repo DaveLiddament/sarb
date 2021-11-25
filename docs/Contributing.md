@@ -29,7 +29,7 @@ composer cs-fix
 ```
 
 
-Check all the CI tasks would run:
+Check all the CI tasks would run. NOTE you'll need to download the deptrac PHAR, see [instructions](https://github.com/qossmic/deptrac#installation):
 ```
 composer ci
 ```
