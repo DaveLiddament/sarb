@@ -48,21 +48,59 @@
     }
   },
   "scripts": {
-    "ci" : [
+    "ci-7.3" : [
       "@composer-validate",
       "@lint",
       "@var-dump-checker",
       "@cs",
       "@test",
       "@psalm",
-      "@phpstan"
+      "@phpstan",
+      "@psalm-7.3"
+    ],
+    "ci-7.4" : [
+      "@composer-validate",
+      "@lint",
+      "@var-dump-checker",
+      "@cs",
+      "@test",
+      "@psalm",
+      "@phpstan",
+      "@psalm-7.4"
+    ],
+    "ci-8.0" : [
+      "@composer-validate",
+      "@lint",
+      "@var-dump-checker",
+      "@cs",
+      "@test",
+      "@psalm",
+      "@phpstan",
+      "@psalm-8.0"
+    ],
+    "ci-8.1" : [
+      "@composer-validate",
+      "@lint",
+      "@var-dump-checker",
+      "@cs-8.1",
+      "@test",
+      "@psalm",
+      "@phpstan",
+      "@psalm-8.1"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
     "cs" : "php-cs-fixer fix -v --dry-run",
     "cs-fix" : "php-cs-fixer fix -v",
-    "psalm" : "psalm --shepherd",
+    "cs-fix-8.1" : [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=true",
+      "php-cs-fixer fix -v"
+    ],
+    "psalm-7.3" : "psalm --php-version=7.3",
+    "psalm-7.4" : "psalm --php-version=7.4",
+    "psalm-8.0" : "psalm --php-version=8.0",
+    "psalm-8.1" : "psalm --php-version=8.1 --shepherd",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
     "test" : [
