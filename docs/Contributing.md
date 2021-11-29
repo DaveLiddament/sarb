@@ -32,7 +32,10 @@ composer cs-fix
 
 Check all the CI tasks would run. NOTE you'll need to download the deptrac PHAR, see [instructions](https://github.com/qossmic/deptrac#installation):
 ```
-composer ci
+composer ci-<php version>
+
+# e.g.
+composer ci-8.1
 ```
 
 In addition to the above code coverage needs to 100%. 
