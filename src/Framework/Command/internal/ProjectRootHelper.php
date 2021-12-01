@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Filesystem\Exception\InvalidArgumentException;
 
 class ProjectRootHelper
 {
@@ -34,6 +35,7 @@ class ProjectRootHelper
 
     /**
      * @throws SarbException
+     * @throws InvalidArgumentException
      */
     public static function getProjectRoot(InputInterface $input): ProjectRoot
     {

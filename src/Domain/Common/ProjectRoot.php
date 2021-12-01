@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 use LogicException;
+use Symfony\Component\Filesystem\Exception\InvalidArgumentException;
+use Symfony\Component\Filesystem\Path;
 use Webmozart\Assert\Assert;
-use Webmozart\PathUtil\Path;
 
 /**
  * Holds the root directory for the project being analysed.
@@ -37,6 +38,9 @@ class ProjectRoot
         return new self($rootDirectory);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public static function fromProjectRoot(string $projectRoot, string $currentWorkingDirectory): self
     {
         if (Path::isAbsolute($projectRoot)) {
@@ -76,7 +80,11 @@ class ProjectRoot
             throw InvalidPathException::notInProjectRoot($fullPath, $this->rootDirectory);
         }
 
-        $relativeFileName = Path::makeRelative($fullPath, $this->rootDirectory);
+        try {
+            $relativeFileName = Path::makeRelative($fullPath, $this->rootDirectory);
+        } catch (InvalidArgumentException $e) {
+            throw InvalidPathException::notInProjectRoot($fullPath, $this->rootDirectory);
+        }
 
         return new RelativeFileName($relativeFileName);
     }
@@ -91,11 +99,11 @@ class ProjectRoot
      */
     public function getAbsoluteFileName(RelativeFileName $relativeFileName): AbsoluteFileName
     {
-        $absoluteFileName = Path::join([
+        $absoluteFileName = Path::join(
             $this->rootDirectory,
             $this->relativePath,
             $relativeFileName->getFileName(),
-        ]);
+        );
 
         try {
             return new AbsoluteFileName($absoluteFileName);
