@@ -53,7 +53,6 @@
       "@var-dump-checker",
       "@cs",
       "@test",
-      "@psalm",
       "@phpstan",
       "@psalm-7.3"
     ],
@@ -63,7 +62,6 @@
       "@var-dump-checker",
       "@cs",
       "@test",
-      "@psalm",
       "@phpstan",
       "@psalm-7.4"
     ],
@@ -73,7 +71,6 @@
       "@var-dump-checker",
       "@cs",
       "@test",
-      "@psalm",
       "@phpstan",
       "@psalm-8.0"
     ],
@@ -83,7 +80,6 @@
       "@var-dump-checker",
       "@cs-8.1",
       "@test",
-      "@psalm",
       "@phpstan",
       "@psalm-8.1"
     ],
