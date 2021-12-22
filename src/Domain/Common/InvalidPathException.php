@@ -20,6 +20,6 @@ class InvalidPathException extends SarbException
 
     public static function operatingSystemNotSupported(): self
     {
-        return new self('Your operating system is not supported. Can not find the home directory');
+        return new self('Your environment or operating system is not supported.');
     }
 }
