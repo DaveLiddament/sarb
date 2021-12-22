@@ -41,6 +41,9 @@ class Location
         return new self($absoluteFileName, $relativeFileName, $lineNumber);
     }
 
+    /**
+     * @throws InvalidPathException
+     */
     public static function fromRelativeFileName(
         RelativeFileName $relativeFileName,
         ProjectRoot $projectRoot,

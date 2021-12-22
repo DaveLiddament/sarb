@@ -17,4 +17,9 @@ class InvalidPathException extends SarbException
     {
         return new self("[$path] is not absolute");
     }
+
+    public static function operatingSystemNotSupported(): self
+    {
+        return new self('Your operating system is not supported. Can not find the home directory');
+    }
 }

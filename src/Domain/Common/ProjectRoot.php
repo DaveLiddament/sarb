@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
 use LogicException;
 use Webmozart\Assert\Assert;
-use Webmozart\PathUtil\Path;
 
 /**
  * Holds the root directory for the project being analysed.
@@ -29,6 +29,9 @@ class ProjectRoot
      */
     private $relativePath = '';
 
+    /**
+     * @throws InvalidPathException
+     */
     public static function fromCurrentWorkingDirectory(string $currentWorkingDirectory): self
     {
         Assert::true(Path::isAbsolute($currentWorkingDirectory));
@@ -37,6 +40,9 @@ class ProjectRoot
         return new self($rootDirectory);
     }
 
+    /**
+     * @throws InvalidPathException
+     */
     public static function fromProjectRoot(string $projectRoot, string $currentWorkingDirectory): self
     {
         if (Path::isAbsolute($projectRoot)) {
@@ -88,6 +94,8 @@ class ProjectRoot
 
     /**
      * @codeCoverageIgnore
+     *
+     * @throws InvalidPathException
      */
     public function getAbsoluteFileName(RelativeFileName $relativeFileName): AbsoluteFileName
     {
