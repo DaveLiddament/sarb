@@ -8,11 +8,14 @@ If you want to support another static analysis tool then please read [Adding sup
 
 ## Requirements for code created
 
-### Including new libraries
-
-Unless there is a very good reason, it would be good NOT to include any other libraries. 
+Given SARB's use case it will probably be used with older code bases. 
+For that reason the aim is to keep supported PHP versions and dependencies as wide as possible. 
 
 ### Supported PHP versions
+
+SARB must support all PHP versions that are either in [active or security](https://www.php.net/supported-versions.php) support. 
+
+Support for out of date versions of PHP should only be dropped if it is too difficult to keep them.
 
 Please make sure that the code runs on the following PHP versions:
 - 7.3
@@ -21,7 +24,15 @@ Please make sure that the code runs on the following PHP versions:
 - 8.1
 
 
-### Code checks
+### Including new libraries
+
+SARB's main dependencies are Symfony Components. 
+SARB must work with all currently [supported](https://symfony.com/releases) Symfony versions (maintained and security fixes).
+
+Unless there is a very good reason do NOT add any other libraries. 
+
+
+## Code checks
 
 After writing your code run code style fixer, this will automatically format the code to the project style:
 
