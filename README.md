@@ -19,7 +19,6 @@
  * [Requirements](#requirements)
  * [Installing](#installing)
  * [Using SARB](#using-sarb)
- * [Examples](#examples)
  * [Further reading](#further-reading)
 
 ## Why SARB?
@@ -30,10 +29,10 @@ to legacy projects the tools have probably reported thousands of problems.
 It's unrealistic to fix all but the most critical ones before continuing development.
 
 SARB is used to create a baseline of these results. As work on the project
-progresses SARB can takes the latest static analysis results, removes
+progresses SARB takes the latest static analysis results, removes
 those issues in the baseline and report the issues raised since the baseline.
 SARB does this, in conjunction with git, by tracking lines of code between commits.
-Currently SARB only supports git but it is possible to [add support for other SCMs](docs/NewHistoryAnalyser.md).
+Currently, SARB only supports git, but it is possible to [add support for other SCMs](docs/NewHistoryAnalyser.md).
 
 SARB is written in PHP, however it can be used to baseline results for any language and [any static analysis tool](docs/CustomInputFormats.md).
 
@@ -44,7 +43,7 @@ SARB should not be used on greenfield projects. If you're lucky enough to work o
 
 ## Requirements
 
-Currently SARB only supports projects that use [git](https://git-scm.com/).
+Currently, SARB only supports projects that use [git](https://git-scm.com/).
 
 SARB requires PHP >= 7.3 to run. The project being analysed does not need to run PHP 7.3 or even be a PHP project at all.
 
@@ -188,6 +187,16 @@ To get the full history checked out use this:
 
 Also don't forget to use the SARB option `--output-format=github`. 
 It will annotate your PR with any issues that have been added since the baseline.
+
+## Gradually improving the codebase
+
+In an ideal world SARB should not be required. SARB prevents you from adding new issues to your codebase. 
+
+It also provides a `--clean-up` option when running `remove`. 
+Running SARB with this option will pick out 5 random issues that are still in the baseline.
+Challenge your team to fix 5 issues in the baseline every day.
+Over a working year that'll be 1000 issues gone from the baseline!
+Soon you'll be able to ditch SARB for good!
 
 
 ## Further Reading

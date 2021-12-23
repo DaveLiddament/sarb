@@ -16,6 +16,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidO
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatterLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\ResultsPrunerInterface;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\BaseLineFileHelper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
@@ -34,6 +35,8 @@ class RemoveBaseLineFromResultsCommand extends Command
     public const COMMAND_NAME = 'remove-baseline-results';
 
     private const OUTPUT_FORMAT = 'output-format';
+    private const SHOW_RANDOM_ERRORS = 'clean-up';
+    const RANDOM_ISSUES_TO_FIX = 5;
 
     /**
      * @var string|null
@@ -48,14 +51,20 @@ class RemoveBaseLineFromResultsCommand extends Command
      * @var ResultsPrunerInterface
      */
     private $resultsPruner;
+    /**
+     * @var TableOutputFormatter
+     */
+    private $tableOutputFormatter;
 
     public function __construct(
         ResultsPrunerInterface $resultsPruner,
-        OutputFormatterLookupService $outputFormatterLookupService
+        OutputFormatterLookupService $outputFormatterLookupService,
+        TableOutputFormatter $tableOutputFormatter
     ) {
         $this->outputFormatterLookupService = $outputFormatterLookupService;
         parent::__construct(self::COMMAND_NAME);
         $this->resultsPruner = $resultsPruner;
+        $this->tableOutputFormatter = $tableOutputFormatter;
     }
 
     protected function configure(): void
@@ -71,6 +80,13 @@ class RemoveBaseLineFromResultsCommand extends Command
             TableOutputFormatter::CODE
         );
 
+        $this->addOption(
+            self::SHOW_RANDOM_ERRORS,
+            null,
+            InputOption::VALUE_NONE,
+            'Show a random 5 issues in the baseline to fix'
+        );
+
         ProjectRootHelper::configureProjectRootOption($this);
 
         BaseLineFileHelper::configureBaseLineFileArgument($this);
@@ -83,6 +99,7 @@ class RemoveBaseLineFromResultsCommand extends Command
             $outputFormatter = $this->getOutputFormatter($input);
             $baseLineFileName = BaseLineFileHelper::getBaselineFile($input);
             $inputAnalysisResultsAsString = CliConfigReader::getStdin($input);
+            $showRandomIssues = CliConfigReader::getBooleanOption($input, self::SHOW_RANDOM_ERRORS);
 
             $prunedResults = $this->resultsPruner->getPrunedResults(
                 $baseLineFileName,
@@ -94,7 +111,7 @@ class RemoveBaseLineFromResultsCommand extends Command
 
             OutputWriter::writeToStdError(
                 $output,
-                "Latest analysis issue count: {$prunedResults->getInputAnalysisResultsCount()}",
+                "Latest analysis issue count: {$prunedResults->getInputAnalysisResults()->getCount()}",
                 false
             );
 
@@ -113,7 +130,36 @@ class RemoveBaseLineFromResultsCommand extends Command
             $outputAsString = $outputFormatter->outputResults($outputAnalysisResults);
             $output->writeln($outputAsString);
 
-            return $outputAnalysisResults->hasNoIssues() ? 0 : 1;
+            $returnCode = $outputAnalysisResults->hasNoIssues() ? 0 : 1;
+
+            if ($showRandomIssues) {
+                $issuesToReport = min(self::RANDOM_ISSUES_TO_FIX, $prunedResults->getInputAnalysisResults()->getCount());
+
+                OutputWriter::writeToStdError(
+                    $output,
+                    "Random {$issuesToReport} issues in the baseline to fix...",
+                    false
+                );
+
+                $randomIssuesBuilder = new AnalysisResultsBuilder();
+                $allIssues = $prunedResults->getInputAnalysisResults()->getAnalysisResults();
+
+                for ($i = 0; $i < $issuesToReport; ++$i) {
+                    $totalRemaining = count($allIssues);
+                    $issuePicked = rand(0, $totalRemaining - 1);
+                    $randomIssuesBuilder->addAnalysisResult($allIssues[$issuePicked]);
+                }
+
+                $outputAsString = $this->tableOutputFormatter->outputResults($randomIssuesBuilder->build());
+
+                OutputWriter::writeToStdError(
+                    $output,
+                    $outputAsString,
+                    false
+                );
+            }
+
+            return $returnCode;
         } catch (Throwable $throwable) {
             $returnCode = ErrorReporter::reportError($output, $throwable);
 

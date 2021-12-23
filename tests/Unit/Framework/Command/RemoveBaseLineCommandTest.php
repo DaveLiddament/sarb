@@ -218,7 +218,7 @@ EOF;
         $prunedResults = new PrunedResults(
             $baseLine,
             $expectedAnalysisResults,
-            2
+            $this->getAnalysisResultsWithXResults(2)
         );
 
         $mockResultsPruner = new MockResultsPruner(
@@ -230,7 +230,8 @@ EOF;
 
         $command = new RemoveBaseLineFromResultsCommand(
             $mockResultsPruner,
-            $this->outputFormatterRegistry
+            $this->outputFormatterRegistry,
+            new TableOutputFormatter(),
         );
 
         $commandTester = new CommandTester($command);

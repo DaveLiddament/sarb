@@ -18,15 +18,18 @@ class PrunedResults
      */
     private $prunedResults;
     /**
-     * @var int
+     * @var AnalysisResults
      */
-    private $inputAnalysisResultsCount;
+    private $inputAnalysisResults;
 
-    public function __construct(BaseLine $baseLine, AnalysisResults $prunedResults, int $inputAnalysisResultsCount)
-    {
+    public function __construct(
+        BaseLine $baseLine,
+        AnalysisResults $prunedResults,
+        AnalysisResults $inputAnalysisResults
+    ) {
         $this->baseLine = $baseLine;
         $this->prunedResults = $prunedResults;
-        $this->inputAnalysisResultsCount = $inputAnalysisResultsCount;
+        $this->inputAnalysisResults = $inputAnalysisResults;
     }
 
     public function getBaseLine(): BaseLine
@@ -39,8 +42,8 @@ class PrunedResults
         return $this->prunedResults;
     }
 
-    public function getInputAnalysisResultsCount(): int
+    public function getInputAnalysisResults(): AnalysisResults
     {
-        return $this->inputAnalysisResultsCount;
+        return $this->inputAnalysisResults;
     }
 }

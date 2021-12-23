@@ -20,7 +20,6 @@ class ResultsPruner implements ResultsPrunerInterface
      * @var BaseLineImporter
      */
     private $baseLineImporter;
-
     /**
      * @var BaseLineResultsRemover
      */
@@ -64,6 +63,6 @@ class ResultsPruner implements ResultsPrunerInterface
             $baseLine->getAnalysisResults()
         );
 
-        return new PrunedResults($baseLine, $outputAnalysisResults, $inputAnalysisResults->getCount());
+        return new PrunedResults($baseLine, $outputAnalysisResults, $inputAnalysisResults);
     }
 }
