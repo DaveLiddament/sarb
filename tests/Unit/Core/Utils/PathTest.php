@@ -361,6 +361,20 @@ class PathTest extends TestCase
         $this->assertSame(Path::canonicalize($absolutePath), Path::makeAbsolute($absolutePath, $basePath));
     }
 
+    public function testMakeAbsoluteFailsIfBasePathNotAbsolute(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The base path "webmozart/puli" is not an absolute path.');
+        Path::makeAbsolute('css/style.css', 'webmozart/puli');
+    }
+
+    public function testMakeAbsoluteFailsIfBasePathEmpty(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The base path must be a non-empty string. Got: ""');
+        Path::makeAbsolute('css/style.css', '');
+    }
+
     /** @return array<int,array{string,string, string}> */
     public function provideMakeRelativeTests(): array
     {
