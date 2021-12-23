@@ -87,6 +87,10 @@
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
     "cs" : "php-cs-fixer fix -v --dry-run",
+    "cs-8.1" : [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=true",
+      "php-cs-fixer fix -v --dry-run"
+    ],
     "cs-fix" : "php-cs-fixer fix -v",
     "cs-fix-8.1" : [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=true",
