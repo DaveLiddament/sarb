@@ -676,7 +676,7 @@ class PathTest extends TestCase
         putenv('HOME=');
 
         $this->expectException(InvalidPathException::class);
-        $this->expectExceptionMessage("Your environment or operating system is not supported");
+        $this->expectExceptionMessage('Your environment or operating system is not supported');
 
         Path::getHomeDirectory();
     }
