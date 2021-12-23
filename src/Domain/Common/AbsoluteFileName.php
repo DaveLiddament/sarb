@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
-use Webmozart\PathUtil\Path;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
 
 class AbsoluteFileName extends FileName
 {
