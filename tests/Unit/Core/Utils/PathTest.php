@@ -708,4 +708,14 @@ class PathTest extends TestCase
 
         $this->assertEquals('C:/users/webmozart', Path::getHomeDirectory());
     }
+
+    public function testExceedingBufferSize(): void
+    {
+        for ($i = 0; $i < 2000; ++$i) {
+            $input = "/path{$i}/bar/../foo";
+            $expected = "/path{$i}/foo";
+            $actual = Path::canonicalize($input);
+            $this->assertSame($expected, $actual);
+        }
+    }
 }

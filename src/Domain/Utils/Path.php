@@ -496,6 +496,9 @@ final class Path
         return [$root, $path];
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
