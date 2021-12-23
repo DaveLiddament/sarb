@@ -1,6 +1,6 @@
 # Static Analysis Results Baseliner (SARB)
 
-[![Minimum PHP version: 7.3.0](https://img.shields.io/badge/php-7.3.0%2B-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
+[![PHP versions: 7.3 to 8.1](https://img.shields.io/badge/php-7.3|7.4|8.0|8.1-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
 [![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
 [![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://packagist.org/packages/dave-liddament/sarb)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb)
@@ -8,6 +8,8 @@
 [![Continuous Integration](https://github.com/DaveLiddament/sarb/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/sarb/actions) 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
 [![Type coverage](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)
+[![PHPStan level 8](https://img.shields.io/badge/Psalm-max%20level-brightgreen.svg)](https://packagist.org/packages/dave-liddament/sarb)
+[![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://packagist.org/packages/dave-liddament/sarb)
 [![Code Coverage](https://codecov.io/gh/DaveLiddament/sarb/branch/master/graph/badge.svg)](https://codecov.io/gh/DaveLiddament/sarb)
 [![Infection MSI](https://badge.stryker-mutator.io/github.com/DaveLiddament/sarb/master)](https://infection.github.io)
 
