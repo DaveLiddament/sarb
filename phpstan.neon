@@ -1,5 +1,5 @@
 parameters:
-    level: 8
+    level: max
     paths:
     - src
     - tests
@@ -8,6 +8,11 @@ parameters:
     - tests/scratchpad
     ignoreErrors:
     - '#Dynamic call to static method PHPUnit\\Framework\\.*#'
+services:
+    -
+        class: Tools\Phpstan\ArrayUtilsTypeSpecifyingExtension
+        tags:
+        - phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
 includes:
 - vendor/phpstan/phpstan-webmozart-assert/extension.neon
 - vendor/phpstan/phpstan-strict-rules/rules.neon
