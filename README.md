@@ -156,6 +156,14 @@ vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb remove phpstan.
 ```
 NOTE: Checkout PHPStan's built in [baseline feature](https://phpstan.org/user-guide/baseline). Learn how [it differs from SARB](docs/SarbVsOtherBaseliningTechniques.md).
 
+#### [PHP Magic Number Detector](https://github.com/povils/phpmnd)
+```shell
+vendor/bin/phpmnd . | vendor/bin/sarb create --input-format="phpmnd" phpmnd.baseline
+vendor/bin/phpmnd . | vendor/bin/sarb remove phpmnd.baseline
+```
+
+See notes on [relative paths](docs/ResultsWithRelativePaths.md).
+
 ## My tool isn't supported...
 
 That's no problem there are 3 methods to [integrate a static analysis tool](docs/CustomInputFormats.md) with SARB.
