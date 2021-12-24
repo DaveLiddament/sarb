@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
-use Webmozart\PathUtil\Path;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
 
 // TODO this is getting a bit big. Split into multiple files.
 class EndToEndTest extends TestCase
