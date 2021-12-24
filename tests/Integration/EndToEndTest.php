@@ -6,6 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Integration;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListHistoryAnalysersCommand;
@@ -18,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
-use Webmozart\PathUtil\Path;
 
 // TODO this is getting a bit big. Split into multiple files.
 class EndToEndTest extends TestCase
