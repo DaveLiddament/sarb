@@ -21,8 +21,8 @@
         "text": "reports/infection.log",
         "json": "reports/infection.json",
         "github" : true,
-	    "badge" : {
-	 	    "branch": "master"
+        "stryker": {
+	        "badge" : "master"
 	    }
     }
 }
