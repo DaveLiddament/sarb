@@ -12,9 +12,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\RandomResultsPicker\RandomResultsPicker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\RandomNumberGenerator;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\RemoveBaseLineFromResultsCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\OutputFormatterRegistry;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
@@ -40,6 +42,7 @@ EOF;
     public const BASELINE_FILE_ARGUMENT = 'baseline-file';
     public const OUTPUT_FORMAT_OPTION = '--output-format';
     public const PROJECT_ROOT = '--project-root';
+    public const CLEAN_UP = '--clean-up';
 
     /**
      * @var ProjectRoot
@@ -197,6 +200,27 @@ EOF;
         $this->assertReturnCode(100, $commandTester);
     }
 
+    public function testCleanUpOptions(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->getAnalysisResultsWithXResults(0),
+            null,
+            null
+        );
+
+        $commandTester->execute([
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+            self::CLEAN_UP => true,
+        ]);
+
+        $this->assertReturnCode(0, $commandTester);
+
+        $this->assertResponseContains('Random 2 issues in the baseline to fix...', $commandTester);
+        $this->assertResponseContains('FILE: /FILE_2', $commandTester);
+        $this->assertResponseContains('| 2    | MESSAGE_1   |', $commandTester);
+        $this->assertResponseContains('| 2    | MESSAGE_0   |', $commandTester);
+    }
+
     private function createCommandTester(
         AnalysisResults $expectedAnalysisResults,
         ?ProjectRoot $projectRoot,
@@ -232,6 +256,7 @@ EOF;
             $mockResultsPruner,
             $this->outputFormatterRegistry,
             new TableOutputFormatter(),
+            new RandomResultsPicker(new RandomNumberGenerator())
         );
 
         $commandTester = new CommandTester($command);

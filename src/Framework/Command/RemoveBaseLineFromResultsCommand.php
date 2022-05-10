@@ -16,7 +16,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidO
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatterLookupService;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\ResultsPrunerInterface;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\RandomResultsPicker\RandomResultsPicker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\BaseLineFileHelper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\CliConfigReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal\ErrorReporter;
@@ -36,7 +36,6 @@ class RemoveBaseLineFromResultsCommand extends Command
 
     private const OUTPUT_FORMAT = 'output-format';
     private const SHOW_RANDOM_ERRORS = 'clean-up';
-    const RANDOM_ISSUES_TO_FIX = 5;
 
     /**
      * @var string|null
@@ -55,16 +54,22 @@ class RemoveBaseLineFromResultsCommand extends Command
      * @var TableOutputFormatter
      */
     private $tableOutputFormatter;
+    /**
+     * @var RandomResultsPicker
+     */
+    private $randomResultsPicker;
 
     public function __construct(
         ResultsPrunerInterface $resultsPruner,
         OutputFormatterLookupService $outputFormatterLookupService,
-        TableOutputFormatter $tableOutputFormatter
+        TableOutputFormatter $tableOutputFormatter,
+        RandomResultsPicker $randomResultsPicker
     ) {
         $this->outputFormatterLookupService = $outputFormatterLookupService;
         parent::__construct(self::COMMAND_NAME);
         $this->resultsPruner = $resultsPruner;
         $this->tableOutputFormatter = $tableOutputFormatter;
+        $this->randomResultsPicker = $randomResultsPicker;
     }
 
     protected function configure(): void
@@ -132,25 +137,16 @@ class RemoveBaseLineFromResultsCommand extends Command
 
             $returnCode = $outputAnalysisResults->hasNoIssues() ? 0 : 1;
 
-            if ($showRandomIssues) {
-                $issuesToReport = min(self::RANDOM_ISSUES_TO_FIX, $prunedResults->getInputAnalysisResults()->getCount());
+            if ($showRandomIssues && !$prunedResults->getInputAnalysisResults()->hasNoIssues()) {
+                $randomIssues = $this->randomResultsPicker->getRandomResultsToFix($prunedResults->getInputAnalysisResults());
 
                 OutputWriter::writeToStdError(
                     $output,
-                    "Random {$issuesToReport} issues in the baseline to fix...",
+                    "\n\nRandom {$randomIssues->getCount()} issues in the baseline to fix...",
                     false
                 );
 
-                $randomIssuesBuilder = new AnalysisResultsBuilder();
-                $allIssues = $prunedResults->getInputAnalysisResults()->getAnalysisResults();
-
-                for ($i = 0; $i < $issuesToReport; ++$i) {
-                    $totalRemaining = count($allIssues);
-                    $issuePicked = rand(0, $totalRemaining - 1);
-                    $randomIssuesBuilder->addAnalysisResult($allIssues[$issuePicked]);
-                }
-
-                $outputAsString = $this->tableOutputFormatter->outputResults($randomIssuesBuilder->build());
+                $outputAsString = $this->tableOutputFormatter->outputResults($randomIssues);
 
                 OutputWriter::writeToStdError(
                     $output,
