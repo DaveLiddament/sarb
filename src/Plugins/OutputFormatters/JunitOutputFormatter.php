@@ -96,7 +96,7 @@ XML;
         $dom->formatOutput = true;
         $asXml = $test->asXML();
 
-        if (false !== $asXml) {
+        if ((false !== $asXml) && ('' !== $asXml)) {
             $dom->loadXML($asXml);
         } else {
             throw new SarbException('xml could not be loaded'); // @codeCoverageIgnore
