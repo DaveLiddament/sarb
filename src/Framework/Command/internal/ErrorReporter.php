@@ -41,6 +41,7 @@ class ErrorReporter
         } catch (Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
             OutputWriter::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}", true);
+            OutputWriter::writeToStdError($output, $e->getTraceAsString(), true);
 
             return 100;
         }

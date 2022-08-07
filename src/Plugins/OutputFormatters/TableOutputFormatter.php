@@ -56,7 +56,7 @@ class TableOutputFormatter implements OutputFormatter
                 $currentTable->setHeaders($headings);
             }
 
-            Assert::notNull($currentTable);
+            Assert::notNull($currentTable, 'No Table object');
             $currentTable->addRow([
                 $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
                 $analysisResult->getMessage(),
