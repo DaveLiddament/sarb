@@ -10,7 +10,7 @@ on:
 
 jobs:
   full-checks:
-    name: "Full CI checks for all PHP versions and composer highest, locked and lowest"
+    name: "PHP version ${{ matrix.php-version }}, deps. ${{ matrix.dependencies }}"
 
     runs-on: ${{ matrix.operating-system }}
 
