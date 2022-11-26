@@ -124,4 +124,16 @@ class ArrayUtilsTest extends TestCase
         $this->expectException(ArrayParseException::class);
         ArrayUtils::getStringValue(self::TEST_ARRAY, self::INVALID_KEY);
     }
+
+    public function testGetStringOrNullWithNull(): void
+    {
+        $actual = ArrayUtils::getStringOrNullValue(self::TEST_ARRAY, self::NULL_KEY);
+        $this->assertNull($actual);
+    }
+
+    public function testGetStringOrNullWithString(): void
+    {
+        $actual = ArrayUtils::getStringOrNullValue(self::TEST_ARRAY, self::NAME_KEY);
+        $this->assertEquals(self::NAME_VALUE, $actual);
+    }
 }

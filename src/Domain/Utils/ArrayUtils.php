@@ -64,6 +64,25 @@ class ArrayUtils
     }
 
     /**
+     * Gets string value for given key in the array.
+     *
+     * @throws ArrayParseException
+     *
+     * @psalm-param array<mixed> $array
+     */
+    public static function getStringOrNullValue(array $array, string $key): ?string
+    {
+        self::assertArrayKeyExists($array, $key);
+        if (null === $array[$key]) {
+            return null;
+        }
+        if (is_string($array[$key])) {
+            return $array[$key];
+        }
+        throw ArrayParseException::invalidType($key, 'string');
+    }
+
+    /**
      * Gets array value for given key in the array.
      *
      * @throws ArrayParseException
