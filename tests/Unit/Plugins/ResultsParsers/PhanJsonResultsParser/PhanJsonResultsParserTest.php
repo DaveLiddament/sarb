@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhanJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhanJsonResultsParser\PhanJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
@@ -49,8 +50,8 @@ class PhanJsonResultsParserTest extends TestCase
         $this->assertMatch($result1,
             'src/Domain/Analyser/BaseLineResultsRemover.php',
             16,
-            'PhanUnreferencedUseNormal'
-        );
+            'PhanUnreferencedUseNormal',
+            Severity::error());
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
             $result1->getMessage()
@@ -63,8 +64,8 @@ class PhanJsonResultsParserTest extends TestCase
         $this->assertMatch($result2,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             107,
-            'PhanPossiblyNullTypeArgument'
-        );
+            'PhanPossiblyNullTypeArgument',
+            Severity::error());
     }
 
     public function testWithRelativePath(): void
@@ -82,8 +83,8 @@ class PhanJsonResultsParserTest extends TestCase
         $this->assertMatch($result1,
             'src/Domain/Analyser/BaseLineResultsRemover.php',
             16,
-            'PhanUnreferencedUseNormal'
-        );
+            'PhanUnreferencedUseNormal',
+            Severity::error());
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
             $result1->getMessage()
@@ -96,8 +97,8 @@ class PhanJsonResultsParserTest extends TestCase
         $this->assertMatch($result2,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             107,
-            'PhanPossiblyNullTypeArgument'
-        );
+            'PhanPossiblyNullTypeArgument',
+            Severity::error());
     }
 
     public function testTypeGuesser(): void

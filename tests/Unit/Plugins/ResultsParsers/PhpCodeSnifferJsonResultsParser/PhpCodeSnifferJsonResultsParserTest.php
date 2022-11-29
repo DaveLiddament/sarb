@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpCodeSnifferJsonResultsParser\PhpCodeSnifferJsonResultsParser;
@@ -58,19 +59,22 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         $this->assertMatch($result1,
             'src/Domain/BaseLiner/BaseLineImporter.php',
             8,
-            'Generic.Files.LineLength.TooLong'
+            'Generic.Files.LineLength.TooLong',
+            Severity::warning()
         );
 
         $this->assertMatch($result2,
             'src/Domain/BaseLiner/BaseLineImporter.php',
             52,
-            'Squiz.WhiteSpace.FunctionSpacing.Before'
+            'Squiz.WhiteSpace.FunctionSpacing.Before',
+            Severity::error()
         );
 
         $this->assertMatch($result3,
             'src/Domain/Common/InvalidPathException.php',
             2,
-            'Squiz.Commenting.FileComment.Missing'
+            'Squiz.Commenting.FileComment.Missing',
+            Severity::error()
         );
         $this->assertSame(
             'Missing file doc comment',
@@ -80,19 +84,22 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
         $this->assertMatch($result4,
             'src/Domain/Common/InvalidPathException.php',
             7,
-            'Squiz.Commenting.ClassComment.Missing'
+            'Squiz.Commenting.ClassComment.Missing',
+            Severity::error()
         );
 
         $this->assertMatch($result5,
             'src/Domain/Common/InvalidPathException.php',
             9,
-            'Squiz.Commenting.FunctionComment.Missing'
+            'Squiz.Commenting.FunctionComment.Missing',
+            Severity::error()
         );
 
         $this->assertMatch($result6,
             'src/Domain/Common/InvalidPathException.php',
             11,
-            'Generic.Files.LineLength.TooLong'
+            'Generic.Files.LineLength.TooLong',
+            Severity::warning()
         );
     }
 

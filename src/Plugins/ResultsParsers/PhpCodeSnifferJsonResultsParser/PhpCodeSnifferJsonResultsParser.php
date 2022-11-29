@@ -37,6 +37,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
     private const LINE = 'line';
     private const SOURCE = 'source';
     private const FILES = 'files';
+    private const SEVERITY = 'type';
     private const MESSAGES = 'messages';
     private const MESSAGE = 'message';
 
@@ -91,6 +92,15 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $rawMessage = ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE);
         $rawSource = ArrayUtils::getStringValue($analysisResultAsArray, self::SOURCE);
+        $rawSeverity = ArrayUtils::getStringValue($analysisResultAsArray, self::SEVERITY);
+
+        if ('ERROR' === $rawSeverity) {
+            $severity = Severity::error();
+        } elseif ('WARNING' === $rawSeverity) {
+            $severity = Severity::warning();
+        } else {
+            throw new ArrayParseException("Unknown severity type: [$rawSeverity]");
+        }
 
         $location = Location::fromAbsoluteFileName(
             $absoluteFileName,
@@ -103,7 +113,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
             new Type($rawSource),
             $rawMessage,
             $analysisResultAsArray,
-            Severity::error()
+            $severity
         );
     }
 

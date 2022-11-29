@@ -30,6 +30,11 @@ class Severity
         return new self(self::ERROR);
     }
 
+    public static function warning(): self
+    {
+        return new self(self::WARNING);
+    }
+
     private function __construct(string $severity)
     {
         Assert::true(self::isValueValid($severity), "Invalid severity: $severity");

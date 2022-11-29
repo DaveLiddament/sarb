@@ -90,6 +90,11 @@ class AnalysisResult
         return $this->message;
     }
 
+    public function getSeverity(): Severity
+    {
+        return $this->severity;
+    }
+
     public function asBaseLineAnalysisResult(): BaseLineAnalysisResult
     {
         return BaseLineAnalysisResult::make(

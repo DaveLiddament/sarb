@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpmdJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonResultsParser;
@@ -51,7 +52,8 @@ class PhpmdJsonResultsParserTest extends TestCase
         $this->assertMatch($result1,
             'src/Domain/Analyser/BaseLineResultsRemover.php',
             28,
-            'LongVariable'
+            'LongVariable',
+            Severity::error()
         );
         $this->assertSame(
             'Avoid excessively long variable names like $latestAnalysisResults. Keep variable name length under 20.',
@@ -61,13 +63,15 @@ class PhpmdJsonResultsParserTest extends TestCase
         $this->assertMatch($result2,
             'src/Domain/Analyser/BaseLineResultsRemover.php',
             30,
-            'LongVariable'
+            'LongVariable',
+            Severity::error()
         );
 
         $this->assertMatch($result3,
             'src/Domain/Analyser/internal/BaseLineResultsComparator.php',
             36,
-            'LongVariable'
+            'LongVariable',
+            Severity::error()
         );
     }
 

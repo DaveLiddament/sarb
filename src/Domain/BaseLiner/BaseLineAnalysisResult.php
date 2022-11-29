@@ -121,7 +121,7 @@ class BaseLineAnalysisResult
     }
 
     /**
-     * Return true if this matches matches given FileName, LineNumber and type.
+     * Return true if this matches given FileName, LineNumber and type.
      */
     public function isMatch(PreviousLocation $location, Type $type): bool
     {
