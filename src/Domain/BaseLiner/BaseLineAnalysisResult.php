@@ -7,6 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
@@ -17,6 +18,7 @@ class BaseLineAnalysisResult
     private const FILE_NAME = 'fileName';
     private const TYPE = 'type';
     private const MESSAGE = 'message';
+    private const SEVERITY = 'severity';
 
     /**
      * @var RelativeFileName
@@ -34,6 +36,10 @@ class BaseLineAnalysisResult
      * @var string
      */
     private $message;
+    /**
+     * @var Severity
+     */
+    private $severity;
 
     /**
      * @psalm-param array<mixed> $array
@@ -45,26 +51,34 @@ class BaseLineAnalysisResult
         $lineNumber = new LineNumber(ArrayUtils::getIntValue($array, self::LINE_NUMBER));
         $fileName = new RelativeFileName(ArrayUtils::getStringValue($array, self::FILE_NAME));
         $type = new Type(ArrayUtils::getStringValue($array, self::TYPE));
+        $severity = Severity::fromStringOrNull(ArrayUtils::getOptionalStringValue($array, self::SEVERITY));
         $message = ArrayUtils::getStringValue($array, self::MESSAGE);
 
-        return new self($fileName, $lineNumber, $type, $message);
+        return new self($fileName, $lineNumber, $type, $message, $severity);
     }
 
     public static function make(
         RelativeFileName $fileName,
         LineNumber $lineNumber,
         Type $type,
-        string $message
+        string $message,
+        Severity $severity
     ): self {
-        return new self($fileName, $lineNumber, $type, $message);
+        return new self($fileName, $lineNumber, $type, $message, $severity);
     }
 
-    private function __construct(RelativeFileName $fileName, LineNumber $lineNumber, Type $type, string $message)
-    {
+    private function __construct(
+        RelativeFileName $fileName,
+        LineNumber $lineNumber,
+        Type $type,
+        string $message,
+        Severity $severtiy
+        ) {
         $this->fileName = $fileName;
         $this->lineNumber = $lineNumber;
         $this->type = $type;
         $this->message = $message;
+        $this->severity = $severtiy;
     }
 
     public function getFileName(): RelativeFileName
@@ -87,6 +101,11 @@ class BaseLineAnalysisResult
         return $this->message;
     }
 
+    public function getSeverity(): Severity
+    {
+        return $this->severity;
+    }
+
     /**
      * @psalm-return array<string,string|int>
      */
@@ -97,6 +116,7 @@ class BaseLineAnalysisResult
             self::FILE_NAME => $this->getFileName()->getFileName(),
             self::TYPE => $this->type->getType(),
             self::MESSAGE => $this->message,
+            self::SEVERITY => $this->severity->getSeverity(),
         ];
     }
 

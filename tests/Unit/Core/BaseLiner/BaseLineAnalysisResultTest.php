@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalys
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use PHPUnit\Framework\TestCase;
@@ -37,11 +38,17 @@ class BaseLineAnalysisResultTest extends TestCase
      */
     private $type;
 
+    /**
+     * @var Severity
+     */
+    private $severity;
+
     protected function setUp(): void
     {
         $this->relativeFileName = new RelativeFileName(self::FILE_NAME_1);
         $this->lineNumber = new LineNumber(self::LINE_NUMBER_1);
         $this->type = new Type(self::TYPE_1);
+        $this->severity = Severity::error();
     }
 
     public function testBuild(): void
@@ -160,7 +167,8 @@ class BaseLineAnalysisResultTest extends TestCase
             $this->relativeFileName,
             $this->lineNumber,
             $this->type,
-            self::MESSAGE_1
+            self::MESSAGE_1,
+            $this->severity
         );
 
         return $baseLineAnalysisResult;

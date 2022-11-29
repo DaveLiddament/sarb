@@ -7,37 +7,43 @@
             "lineNumber": 2,
             "fileName": "src\/Domain\/Common\/InvalidPathException.php",
             "type": "Missing file doc comment",
-            "message": "Missing file doc comment"
+            "message": "Missing file doc comment",
+            "severity": "error"
         },
         {
             "lineNumber": 7,
             "fileName": "src\/Domain\/Common\/InvalidPathException.php",
             "type": "Missing doc comment for class InvalidPathException",
-            "message": "Missing doc comment for class InvalidPathException"
+            "message": "Missing doc comment for class InvalidPathException",
+            "severity": "error"
         },
         {
             "lineNumber": 9,
             "fileName": "src\/Domain\/Common\/InvalidPathException.php",
             "type": "Missing doc comment for function __construct()",
-            "message": "Missing doc comment for function __construct()"
+            "message": "Missing doc comment for function __construct()",
+            "severity": "error"
         },
         {
             "lineNumber": 11,
             "fileName": "src\/Domain\/Common\/InvalidPathException.php",
             "type": "Line exceeds 85 characters; contains 109 characters",
-            "message": "Line exceeds 85 characters; contains 109 characters"
+            "message": "Line exceeds 85 characters; contains 109 characters",
+            "severity": "error"
         },
         {
             "lineNumber": 8,
             "fileName": "src\/Domain\/BaseLiner\/BaseLineImporter.php",
             "type": "Line exceeds 85 characters; contains 113 characters",
-            "message": "Line exceeds 85 characters; contains 113 characters"
+            "message": "Line exceeds 85 characters; contains 113 characters",
+            "severity": "error"
         },
         {
             "lineNumber": 52,
             "fileName": "src\/Domain\/BaseLiner\/BaseLineImporter.php",
             "type": "Expected 18 spaces after parameter type; 1 found",
-            "message": "Expected 18 spaces after parameter type; 1 found"
+            "message": "Expected 18 spaces after parameter type; 1 found",
+            "severity": "error"
         }
     ]
 }

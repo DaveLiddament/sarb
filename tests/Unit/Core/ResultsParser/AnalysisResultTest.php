@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +33,13 @@ class AnalysisResultTest extends TestCase
             new LineNumber(self::LINE_NUMBER)
         );
 
-        $analysisResult = new AnalysisResult($location, new Type(self::TYPE), self::MESSAGE, self::FULL_DETAILS);
+        $analysisResult = new AnalysisResult(
+            $location,
+            new Type(self::TYPE),
+            self::MESSAGE,
+            self::FULL_DETAILS,
+            Severity::error()
+        );
 
         $this->assertSame(self::FILE_NAME, $analysisResult->getLocation()->getAbsoluteFileName()->getFileName());
         $this->assertSame(self::LINE_NUMBER, $analysisResult->getLocation()->getLineNumber()->getLineNumber());

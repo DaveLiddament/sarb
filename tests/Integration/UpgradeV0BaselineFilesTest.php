@@ -110,8 +110,8 @@ class UpgradeV0BaselineFilesTest extends TestCase
 
         // Check updated baseline is correct
         $fileReader = new FileReader();
-        $updatedBaselineContents = $fileReader->readFile($this->baseLineFileName);
-        $expectedBaselineContents = $this->getResource("v0/{$file}.expected");
+        $updatedBaselineContents = trim($fileReader->readFile($this->baseLineFileName));
+        $expectedBaselineContents = trim($this->getResource("v0/{$file}.expected"));
         $this->assertSame($expectedBaselineContents, $updatedBaselineContents);
 
         $this->removeTestDirectory();

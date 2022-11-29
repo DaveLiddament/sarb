@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
@@ -95,7 +96,7 @@ abstract class AbstractOutputFormatterTest extends TestCase
         $lineNumber = new LineNumber($lineNumberAsInt);
         $location = Location::fromAbsoluteFileName($absoluteFileName, $projectRoot, $lineNumber);
 
-        $analysisResult = new AnalysisResult($location, new Type($type), $message, $data);
+        $analysisResult = new AnalysisResult($location, new Type($type), $message, $data, Severity::error());
 
         $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }

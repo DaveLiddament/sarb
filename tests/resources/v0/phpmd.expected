@@ -7,19 +7,22 @@
             "lineNumber": 28,
             "fileName": "static-analysis-baseliner\/src\/Domain\/Analyser\/BaseLineResultsRemover.php",
             "type": "LongVariable",
-            "message": "Avoid excessively long variable names like $latestAnalysisResults. Keep variable name length under 20."
+            "message": "Avoid excessively long variable names like $latestAnalysisResults. Keep variable name length under 20.",
+            "severity": "error"
         },
         {
             "lineNumber": 30,
             "fileName": "static-analysis-baseliner\/src\/Domain\/Analyser\/BaseLineResultsRemover.php",
             "type": "LongVariable",
-            "message": "Avoid excessively long variable names like $baseLineAnalysisResults. Keep variable name length under 20."
+            "message": "Avoid excessively long variable names like $baseLineAnalysisResults. Keep variable name length under 20.",
+            "severity": "error"
         },
         {
             "lineNumber": 36,
             "fileName": "static-analysis-baseliner\/src\/Domain\/Analyser\/internal\/BaseLineResultsComparator.php",
             "type": "LongVariable",
-            "message": "Avoid excessively long variable names like $baseLineAnalysisResults. Keep variable name length under 20."
+            "message": "Avoid excessively long variable names like $baseLineAnalysisResults. Keep variable name length under 20.",
+            "severity": "error"
         }
     ]
 }

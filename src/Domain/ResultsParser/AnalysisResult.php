@@ -14,6 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 
 /**
@@ -43,6 +44,11 @@ class AnalysisResult
     private $fullDetails;
 
     /**
+     * @var Severity
+     */
+    private $severity;
+
+    /**
      * AnalysisResult constructor.
      *
      * NOTE: $fullDetails should contain an array with all data from the original tool.
@@ -52,12 +58,13 @@ class AnalysisResult
      *
      * @psalm-param array<mixed> $fullDetails
      */
-    public function __construct(Location $location, Type $type, string $message, array $fullDetails)
+    public function __construct(Location $location, Type $type, string $message, array $fullDetails, Severity $severity)
     {
         $this->location = $location;
         $this->type = $type;
         $this->message = $message;
         $this->fullDetails = $fullDetails;
+        $this->severity = $severity;
     }
 
     public function getLocation(): Location
@@ -89,7 +96,8 @@ class AnalysisResult
             $this->location->getRelativeFileName(),
             $this->location->getLineNumber(),
             $this->type,
-            $this->message
+            $this->message,
+            $this->severity
         );
     }
 }

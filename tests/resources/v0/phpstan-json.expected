@@ -7,19 +7,22 @@
             "lineNumber": 89,
             "fileName": "static-analysis-baseliner\/src\/Domain\/BaseLiner\/BaseLineImporter.php",
             "type": "Parameter #1 $array of static method expects int, array given.",
-            "message": "Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given."
+            "message": "Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.",
+            "severity": "error"
         },
         {
             "lineNumber": 73,
             "fileName": "static-analysis-baseliner\/src\/Domain\/ResultsParser\/AnalysisResults.php",
             "type": "PHPDoc tag @param for parameter $array with type array is incompatible with native type int",
-            "message": "PHPDoc tag @param for parameter $array with type array is incompatible with native type int"
+            "message": "PHPDoc tag @param for parameter $array with type array is incompatible with native type int",
+            "severity": "error"
         },
         {
             "lineNumber": 0,
             "fileName": "static-analysis-baseliner\/src\/Domain\/ResultsParser\/AnalysisResults.php",
             "type": "Argument of an invalid type int supplied for foreach, only iterables are supported.",
-            "message": "Argument of an invalid type int supplied for foreach, only iterables are supported."
+            "message": "Argument of an invalid type int supplied for foreach, only iterables are supported.",
+            "severity": "error"
         }
     ]
 }
