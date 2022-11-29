@@ -3,18 +3,21 @@
         "file": "__SCRATCH_PAD_PATH__/src/Person.php",
         "line": 17,
         "type": "MissingPropertyType",
-        "message": "Property DaveLiddament\\DummyProject\\Person::$age does not have a declared type - consider int"
+        "message": "Property DaveLiddament\\DummyProject\\Person::$age does not have a declared type - consider int",
+        "severity": "error"
     },
     {
         "file": "__SCRATCH_PAD_PATH__/src/Person.php",
         "line": 43,
         "type": "MixedInferredReturnType",
-        "message": "Could not verify return type 'int' for DaveLiddament\\DummyProject\\Person::getAge"
+        "message": "Could not verify return type 'int' for DaveLiddament\\DummyProject\\Person::getAge",
+        "severity": "error"
     },
     {
         "file": "__SCRATCH_PAD_PATH__/src/Person.php",
         "line": 45,
         "type": "MixedReturnStatement",
-        "message": "Could not infer a return type"
+        "message": "Could not infer a return type",
+        "severity": "error"
     }
 ]
