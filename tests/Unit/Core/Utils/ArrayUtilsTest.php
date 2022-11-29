@@ -125,15 +125,21 @@ class ArrayUtilsTest extends TestCase
         ArrayUtils::getStringValue(self::TEST_ARRAY, self::INVALID_KEY);
     }
 
-    public function testGetStringOrNullWithNull(): void
+    public function testGetOptionalStringWithStringValue(): void
     {
-        $actual = ArrayUtils::getStringOrNullValue(self::TEST_ARRAY, self::NULL_KEY);
+        $actual = ArrayUtils::getOptionalStringValue(self::TEST_ARRAY, self::NAME_KEY);
+        $this->assertEquals(self::NAME_VALUE, $actual);
+    }
+
+    public function testGetOptionalStringWithNoKey(): void
+    {
+        $actual = ArrayUtils::getOptionalStringValue(self::TEST_ARRAY, self::INVALID_KEY);
         $this->assertNull($actual);
     }
 
-    public function testGetStringOrNullWithString(): void
+    public function testGetOptionalStringWithIncorrectType(): void
     {
-        $actual = ArrayUtils::getStringOrNullValue(self::TEST_ARRAY, self::NAME_KEY);
-        $this->assertEquals(self::NAME_VALUE, $actual);
+        $this->expectException(ArrayParseException::class);
+        ArrayUtils::getOptionalStringValue(self::TEST_ARRAY, self::AGE_KEY);
     }
 }

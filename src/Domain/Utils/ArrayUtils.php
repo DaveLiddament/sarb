@@ -64,18 +64,18 @@ class ArrayUtils
     }
 
     /**
-     * Gets string value for given key in the array.
+     * Gets optional value. Note: if key exists, then the value must be a string.
      *
      * @throws ArrayParseException
      *
      * @psalm-param array<mixed> $array
      */
-    public static function getStringOrNullValue(array $array, string $key): ?string
+    public static function getOptionalStringValue(array $array, string $key): ?string
     {
-        self::assertArrayKeyExists($array, $key);
-        if (null === $array[$key]) {
+        if (!array_key_exists($key, $array)) {
             return null;
         }
+
         if (is_string($array[$key])) {
             return $array[$key];
         }
