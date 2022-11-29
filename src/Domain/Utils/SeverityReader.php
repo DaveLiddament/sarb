@@ -10,6 +10,7 @@ class SeverityReader
 {
     /**
      * @param array<mixed> $data
+     *
      * @throws ArrayParseException
      */
     public static function getOptionalSeverity(array $data, string $key): Severity
@@ -24,6 +25,7 @@ class SeverityReader
 
     /**
      * @param array<mixed> $data
+     *
      * @throws ArrayParseException
      */
     public static function getMandatorySeverity(array $data, string $key): Severity
