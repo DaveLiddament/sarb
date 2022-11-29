@@ -32,6 +32,7 @@ class EndToEndTest extends TestCase
     private const COMMIT_2_DIRECTORY = 'integration/commit2';
     private const COMMIT_2_RESULTS = 'commit2.json';
     private const COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS = 'baseline-removed.json';
+    private const COMMIT_2_BASELINE_REMOVED_NO_WARNINGS_EXPECTED_RESULTS = 'baseline-removed-no-warnings.json';
 
     private const COMMIT_3_DIRECTORY = 'integration/commit3';
     private const COMMIT_3_RESULTS = 'commit3.json';
@@ -182,6 +183,15 @@ class EndToEndTest extends TestCase
             $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS)
         );
 
+        // Check remove warnings works as expected
+        $this->runStripBaseLineFromResultsCommand(
+            self::COMMIT_2_RESULTS,
+            1,
+            $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_NO_WARNINGS_EXPECTED_RESULTS),
+            null,
+            true
+        );
+
         // Now create commit 3. This has errors that were only in the baseline.
         $this->commit(self::COMMIT_3_DIRECTORY);
         $this->runStripBaseLineFromResultsCommand(
@@ -316,7 +326,8 @@ class EndToEndTest extends TestCase
         string $psalmResults,
         int $expectedExitCode,
         string $expectedResultsJson,
-        ?string $relativePathToCode = null
+        ?string $relativePathToCode = null,
+        bool $ignoreWarnings = false
     ): void {
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
@@ -326,6 +337,10 @@ class EndToEndTest extends TestCase
 
         if (null !== $relativePathToCode) {
             $arguments['--relative-path-to-code'] = $relativePathToCode;
+        }
+
+        if ($ignoreWarnings) {
+            $arguments['--ignore-warnings'] = null;
         }
 
         $output = $this->runCommand(

@@ -21,6 +21,7 @@
     "line": 45,
     "type": "MixedReturnStatement",
     "message": "Could not infer a return type",
-    "file": "__SCRATCH_PAD_PATH__/src/Person.php"
+    "file": "__SCRATCH_PAD_PATH__/src/Person.php",
+    "severity": "warning"
   }
 ]
