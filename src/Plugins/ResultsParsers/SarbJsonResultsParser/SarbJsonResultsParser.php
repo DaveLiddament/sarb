@@ -84,16 +84,6 @@ class SarbJsonResultsParser implements ResultsParser
         $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
-        $severityAsStringOrNull = ArrayUtils::getOptionalStringValue($analysisResultAsArray, self::SEVERITY);
-
-        if (null === $severityAsStringOrNull) {
-            $severity = Severity::error();
-        } else {
-            if (!Severity::isValueValid($severityAsStringOrNull)) {
-                throw ArrayParseException::invalidValue(self::SEVERITY, $severityAsStringOrNull);
-            }
-            $severity = Severity::fromStringOrNull($severityAsStringOrNull);
-        }
 
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName($absoluteFileNameAsString),

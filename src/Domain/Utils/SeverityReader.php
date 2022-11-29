@@ -8,7 +8,10 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 
 class SeverityReader
 {
-    /** @param array<mixed> $data */
+    /**
+     * @param array<mixed> $data
+     * @throws ArrayParseException
+     */
     public static function getOptionalSeverity(array $data, string $key): Severity
     {
         $severityAsStringOrNull = ArrayUtils::getOptionalStringValue($data, $key);
@@ -19,7 +22,10 @@ class SeverityReader
         return self::getMandatorySeverity($data, $key);
     }
 
-    /** @param array<mixed> $data */
+    /**
+     * @param array<mixed> $data
+     * @throws ArrayParseException
+     */
     public static function getMandatorySeverity(array $data, string $key): Severity
     {
         $severityAsString = ArrayUtils::getStringValue($data, $key);
