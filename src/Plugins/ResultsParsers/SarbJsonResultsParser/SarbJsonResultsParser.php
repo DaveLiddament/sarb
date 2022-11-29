@@ -28,6 +28,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
 class SarbJsonResultsParser implements ResultsParser
 {
@@ -35,6 +36,7 @@ class SarbJsonResultsParser implements ResultsParser
     private const TYPE = 'type';
     private const FILE = 'file';
     private const MESSAGE = 'message';
+    private const SEVERITY = 'severity';
 
     public function getIdentifier(): Identifier
     {
@@ -82,6 +84,16 @@ class SarbJsonResultsParser implements ResultsParser
         $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
+        $severityAsStringOrNull = ArrayUtils::getOptionalStringValue($analysisResultAsArray, self::SEVERITY);
+
+        if (null === $severityAsStringOrNull) {
+            $severity = Severity::error();
+        } else {
+            if (!Severity::isValueValid($severityAsStringOrNull)) {
+                throw ArrayParseException::invalidValue(self::SEVERITY, $severityAsStringOrNull);
+            }
+            $severity = Severity::fromStringOrNull($severityAsStringOrNull);
+        }
 
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName($absoluteFileNameAsString),
@@ -94,7 +106,7 @@ class SarbJsonResultsParser implements ResultsParser
             new Type($typeAsString),
             ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
             $analysisResultAsArray,
-            Severity::error()
+            SeverityReader::getOptionalSeverity($analysisResultAsArray, self::SEVERITY)
         );
     }
 }

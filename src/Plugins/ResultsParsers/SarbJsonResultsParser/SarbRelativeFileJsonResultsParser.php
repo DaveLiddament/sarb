@@ -17,7 +17,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
@@ -28,6 +27,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
 class SarbRelativeFileJsonResultsParser implements ResultsParser
 {
@@ -35,6 +35,7 @@ class SarbRelativeFileJsonResultsParser implements ResultsParser
     private const TYPE = 'type';
     private const FILE = 'relative_path';
     private const MESSAGE = 'message';
+    private const SEVERITY = 'severity';
 
     public function getIdentifier(): Identifier
     {
@@ -94,7 +95,7 @@ class SarbRelativeFileJsonResultsParser implements ResultsParser
             new Type($typeAsString),
             ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
             $analysisResultAsArray,
-            Severity::error()
+            SeverityReader::getOptionalSeverity($analysisResultAsArray, self::SEVERITY)
         );
     }
 }

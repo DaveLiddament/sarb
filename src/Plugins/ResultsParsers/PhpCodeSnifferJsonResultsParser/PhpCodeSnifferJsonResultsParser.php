@@ -17,7 +17,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathExcept
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
@@ -28,6 +27,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
 /**
  * Handles PHP Code Sniffers's JSON output.
@@ -92,15 +92,6 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $rawMessage = ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE);
         $rawSource = ArrayUtils::getStringValue($analysisResultAsArray, self::SOURCE);
-        $rawSeverity = ArrayUtils::getStringValue($analysisResultAsArray, self::SEVERITY);
-
-        if ('ERROR' === $rawSeverity) {
-            $severity = Severity::error();
-        } elseif ('WARNING' === $rawSeverity) {
-            $severity = Severity::warning();
-        } else {
-            throw new ArrayParseException("Unknown severity type: [$rawSeverity]");
-        }
 
         $location = Location::fromAbsoluteFileName(
             $absoluteFileName,
@@ -113,7 +104,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
             new Type($rawSource),
             $rawMessage,
             $analysisResultAsArray,
-            $severity
+            SeverityReader::getMandatorySeverity($analysisResultAsArray, self::SEVERITY)
         );
     }
 

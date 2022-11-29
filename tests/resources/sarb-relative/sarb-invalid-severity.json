@@ -10,7 +10,7 @@
     "type": "MixedAssignment",
     "message": "Cannot assign $asArray to a mixed type",
     "relative_path": "src\/Domain\/Utils\/JsonUtils.php",
-    "severity": "Error"
+    "severity": "boo"
   },
   {
     "line": 90,

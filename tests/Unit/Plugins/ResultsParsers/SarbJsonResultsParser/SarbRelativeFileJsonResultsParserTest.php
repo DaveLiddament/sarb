@@ -79,7 +79,7 @@ class SarbRelativeFileJsonResultsParserTest extends TestCase
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
-            Severity::error()
+            Severity::warning()
         );
     }
 
@@ -120,7 +120,7 @@ class SarbRelativeFileJsonResultsParserTest extends TestCase
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
-            Severity::error()
+            Severity::warning()
         );
     }
 
@@ -139,6 +139,7 @@ class SarbRelativeFileJsonResultsParserTest extends TestCase
             ['sarb-relative/sarb-invalid-missing-file.json', 2],
             ['sarb-relative/sarb-invalid-missing-line.json', 2],
             ['sarb-relative/sarb-invalid-missing-type.json', 3],
+            ['sarb-relative/sarb-invalid-severity.json', 2],
         ];
     }
 

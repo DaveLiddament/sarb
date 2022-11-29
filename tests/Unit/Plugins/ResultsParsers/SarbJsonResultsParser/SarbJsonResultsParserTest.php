@@ -75,7 +75,7 @@ class SarbJsonResultsParserTest extends TestCase
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
-            Severity::error()
+            Severity::warning()
         );
     }
 
@@ -94,6 +94,7 @@ class SarbJsonResultsParserTest extends TestCase
             ['sarb/sarb-invalid-missing-file.json', 2],
             ['sarb/sarb-invalid-missing-line.json', 2],
             ['sarb/sarb-invalid-missing-type.json', 3],
+            ['sarb/sarb-invalid-severity.json', 3],
         ];
     }
 
