@@ -49,8 +49,8 @@ abstract class AbstractOutputFormatterTest extends TestCase
             'MESSAGE_1',
             [
                 'column' => '10',
-                'type' => 'warning',
-            ]
+            ],
+            Severity::error(),
         );
         $this->addAnalysisResult(
             $analysisResultsBuilder,
@@ -60,8 +60,8 @@ abstract class AbstractOutputFormatterTest extends TestCase
             'MESSAGE_2',
             [
                 'column' => 'invalid',
-                'type' => false, // not a string, so ignored in junit formatter
-            ]
+            ],
+            Severity::error(),
         );
         $this->addAnalysisResult(
             $analysisResultsBuilder,
@@ -69,7 +69,8 @@ abstract class AbstractOutputFormatterTest extends TestCase
             0,
             self::TYPE_1,
             'MESSAGE_3',
-            []
+            [],
+            Severity::warning()
         );
 
         $this->assertOutput($expectedOutput, $analysisResultsBuilder->build());
@@ -89,14 +90,15 @@ abstract class AbstractOutputFormatterTest extends TestCase
         int $lineNumberAsInt,
         string $type,
         string $message,
-        array $data
+        array $data,
+        Severity $severity
     ): void {
         $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
         $absoluteFileName = new AbsoluteFileName($file);
         $lineNumber = new LineNumber($lineNumberAsInt);
         $location = Location::fromAbsoluteFileName($absoluteFileName, $projectRoot, $lineNumber);
 
-        $analysisResult = new AnalysisResult($location, new Type($type), $message, $data, Severity::error());
+        $analysisResult = new AnalysisResult($location, new Type($type), $message, $data, $severity);
 
         $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }

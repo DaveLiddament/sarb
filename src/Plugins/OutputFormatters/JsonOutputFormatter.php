@@ -22,6 +22,7 @@ class JsonOutputFormatter implements OutputFormatter
                 'line' => $location->getLineNumber()->getLineNumber(),
                 'type' => $analysisResult->getType()->getType(),
                 'message' => $analysisResult->getMessage(),
+                'severity' => $analysisResult->getSeverity()->getSeverity(),
             ];
         }
 

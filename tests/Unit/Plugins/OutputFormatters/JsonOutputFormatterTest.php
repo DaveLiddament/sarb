@@ -31,19 +31,22 @@ EOF;
         "file": "\/FILE_1",
         "line": 10,
         "type": "TYPE_1",
-        "message": "MESSAGE_1"
+        "message": "MESSAGE_1",
+        "severity": "error"
     },
     {
         "file": "\/FILE_1",
         "line": 12,
         "type": "TYPE_2",
-        "message": "MESSAGE_2"
+        "message": "MESSAGE_2",
+        "severity": "error"
     },
     {
         "file": "\/FILE_2",
         "line": 0,
         "type": "TYPE_1",
-        "message": "MESSAGE_3"
+        "message": "MESSAGE_3",
+        "severity": "warning"
     }
 ]
 EOF;

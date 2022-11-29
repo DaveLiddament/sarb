@@ -43,13 +43,6 @@ XML;
         foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
             $details = $analysisResult->getFullDetails();
 
-            /** @var mixed $type */
-            $type = $details['type'] ?? null;
-            if (!is_string($type)) {
-                $type = 'error';
-            }
-            $type = strtolower($type);
-
             /** @var mixed $column */
             $column = $details['column'] ?? null;
             if (is_numeric($column)) {
@@ -81,7 +74,7 @@ XML;
             $testcase = $testsuite->addChild('testcase');
             $testcase->addAttribute('name', $lineSprint);
             $failure = $testcase->addChild('failure');
-            $failure->addAttribute('type', $type);
+            $failure->addAttribute('type', $analysisResult->getSeverity()->getSeverity());
             $failure->addAttribute(
                 'message',
                 $analysisResult->getMessage()
