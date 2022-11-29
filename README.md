@@ -171,9 +171,19 @@ That's no problem there are 3 methods to [integrate a static analysis tool](docs
 The format for showing issues after the baseline is removed can be specified using `--output-format` option. 
 Possible values are: `table`, `text`, `json` or `github` (for Github actions).
 
+## Ignoring warnings
+
+Some static analysis tools (e.g. PHP Code Sniffer) classify issues wth a severity or either `error` or `warning`.
+By default, SARB will report all of these. If you wish to ignore warnings you can use the `--ignore-warnings` option.
+
+E.g.
+```shell
+vendor/bin/phpcs src --report=json | vendor/bin/sarb remove phpcs.baseline --ignore-warnings
+```
+
 ## SARB with Github Actions
 
-If you're using `actions/checkout@v2` to checkout your code you'll need to add set `fetch-depth` to `0`.
+If you're using `actions/checkout@v2` to check out your code you'll need to add set `fetch-depth` to `0`.
 By default `checkout` only gets that latest state of the code and none of the history. 
 SARB uses git, which needs the full git history, to track file changes since the baseline. 
 To get the full history checked out use this:

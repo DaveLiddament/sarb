@@ -12,7 +12,7 @@ There are 2 options:
 - Write a [Results Parser](NewResultsParser.md) that translates the tool's output into something SARB understands
 - Make the tool output data in the `sarb.json` format
 
-In most cases it is probably easier to add support for outputting the `sarb.json` to the static analysis tool rather then writing a Results Parser.
+In most cases it is probably easier to add support for outputting the `sarb.json` to the static analysis tool rather than writing a Results Parser.
 
 
 ## Format
@@ -23,6 +23,7 @@ The following information is needed for each issue the static analysis tool find
 - Line number of the issue. [integer]
 - Type (e.g. `MixedType`). [string]
 - Message (e.g. `Can not assign $asArray to a mixed type`). [string]
+- Severity either `error` or `warning`. This is optional, if not supplied then `error` is assumed. [string]
 
 It is very important `Type` must not have file name, class name, function or line number in it. 
 
@@ -33,7 +34,8 @@ It is very important `Type` must not have file name, class name, function or lin
     "file": "/home/johnsmith/project/Controller/HomeController.php",
     "line": 10,
     "type": "MixedType",
-    "message" : "Cannot assign $asArray to a mixed type"
+    "message" : "Cannot assign $asArray to a mixed type",
+    "severity": "error"
   },
   ... repeat for each issue ...   
 ]
