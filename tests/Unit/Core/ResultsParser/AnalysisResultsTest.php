@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\ResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use PHPUnit\Framework\TestCase;
@@ -48,7 +49,8 @@ class AnalysisResultsTest extends TestCase
             $this->projectRoot,
             self::FILE_A,
             self::LINE_1,
-            self::TYPE
+            self::TYPE,
+            Severity::error()
         );
         $this->analysisResultsBuilder->addAnalysisResult($analysisResult);
         $analysisResults = $this->analysisResultsBuilder->build();
@@ -59,9 +61,9 @@ class AnalysisResultsTest extends TestCase
 
     public function test3AnalysisResultsAreOrderedCorrectly(): void
     {
-        $analysisResult1 = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE);
-        $analysisResult2 = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_2, self::TYPE);
-        $analysisResult3 = $this->buildAnalysisResult($this->projectRoot, self::FILE_B, self::LINE_1, self::TYPE);
+        $analysisResult1 = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE, Severity::error());
+        $analysisResult2 = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_2, self::TYPE, Severity::error());
+        $analysisResult3 = $this->buildAnalysisResult($this->projectRoot, self::FILE_B, self::LINE_1, self::TYPE, Severity::error());
 
         // Add results in none expected order
         $this->analysisResultsBuilder->addAnalysisResult($analysisResult2);

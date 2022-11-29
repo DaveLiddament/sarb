@@ -228,10 +228,10 @@ EOF;
         ?Throwable $exception
     ): CommandTester {
         $baseLineResultsBuilder = new BaseLineResultsBuilder();
-        $baseLineResultsBuilder->add('file1', 1, 'type1');
-        $baseLineResultsBuilder->add('file2', 2, 'type2');
-        $baseLineResultsBuilder->add('file3', 3, 'type3');
-        $baseLineResultsBuilder->add('file4', 4, 'type4');
+        $baseLineResultsBuilder->add('file1', 1, 'type1', Severity::error());
+        $baseLineResultsBuilder->add('file2', 2, 'type2', Severity::error());
+        $baseLineResultsBuilder->add('file3', 3, 'type3', Severity::error());
+        $baseLineResultsBuilder->add('file4', 4, 'type4', Severity::error());
 
         $baseLine = new BaseLine(
             new HistoryFactoryStub(),

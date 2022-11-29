@@ -28,12 +28,16 @@ class BaseLineResultsRemover
     public function pruneBaseLine(
         AnalysisResults $latestAnalysisResults,
         HistoryAnalyser $historyAnalyser,
-        BaseLineAnalysisResults $baseLineAnalysisResults
+        BaseLineAnalysisResults $baseLineAnalysisResults,
+        bool $ignoreWarnings
     ): AnalysisResults {
         $prunedAnalysisResultsBuilder = new AnalysisResultsBuilder();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);
 
         foreach ($latestAnalysisResults->getAnalysisResults() as $analysisResult) {
+            if ($analysisResult->getSeverity()->isWarning() && $ignoreWarnings) {
+                continue;
+            }
             if (!$this->isInHistoricResults($analysisResult, $baseLineResultsComparator, $historyAnalyser)) {
                 $prunedAnalysisResultsBuilder->addAnalysisResult($analysisResult);
             }

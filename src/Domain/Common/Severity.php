@@ -50,4 +50,9 @@ class Severity
     {
         return in_array($severity, [self::ERROR, self::WARNING], true);
     }
+
+    public function isWarning(): bool
+    {
+        return self::WARNING === $this->severity;
+    }
 }
