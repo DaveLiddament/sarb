@@ -72,13 +72,13 @@ class BaseLineAnalysisResult
         LineNumber $lineNumber,
         Type $type,
         string $message,
-        Severity $severtiy
-        ) {
+        Severity $severity
+    ) {
         $this->fileName = $fileName;
         $this->lineNumber = $lineNumber;
         $this->type = $type;
         $this->message = $message;
-        $this->severity = $severtiy;
+        $this->severity = $severity;
     }
 
     public function getFileName(): RelativeFileName
