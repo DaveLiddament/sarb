@@ -126,6 +126,8 @@ class PhpCodeSnifferJsonResultsParserTest extends TestCase
             ['phpCodeSniffer/invalid-missing-line.json'],
             ['phpCodeSniffer/invalid-missing-message.json'],
             ['phpCodeSniffer/invalid-missing-type.json'],
+            ['phpCodeSniffer/invalid-missing-severity.json'],
+            ['phpCodeSniffer/invalid-severity.json'],
         ];
     }
 
