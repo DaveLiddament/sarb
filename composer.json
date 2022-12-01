@@ -26,14 +26,14 @@
     "friendsofphp/php-cs-fixer": "^2.18",
     "php-parallel-lint/php-parallel-lint": "~1.2.0",
     "php-parallel-lint/php-var-dump-check": "^v0.5",
-    "phpstan/phpstan": "^1.0",
-    "phpstan/phpstan-phpunit": "^1.0",
-    "phpstan/phpstan-strict-rules": "^1.0",
-    "phpstan/phpstan-webmozart-assert": "^1.0",
+    "phpstan/phpstan": "^1.9.2",
+    "phpstan/phpstan-phpunit": "^1.2.2",
+    "phpstan/phpstan-strict-rules": "^1.4.4",
+    "phpstan/phpstan-webmozart-assert": "^1.2.2",
     "phpunit/phpunit": "^9.5",
-    "psalm/plugin-phpunit": "^0.15.1",
+    "psalm/plugin-phpunit": "^0.15.2",
     "symfony/filesystem": "^4.4 || ^5.0 || ^6.0",
-    "vimeo/psalm": "^4.13"
+    "vimeo/psalm": "^4.30"
   },
   "bin" : ["sarb"],
   "autoload": {
