@@ -76,6 +76,35 @@ abstract class AbstractOutputFormatterTest extends TestCase
         $this->assertOutput($expectedOutput, $analysisResultsBuilder->build());
     }
 
+    protected function assertIssuesOutputWithWarningsIgnored(string $expectedOutput): void
+    {
+        $analysisResultsBuilder = new AnalysisResultsBuilder();
+        $this->addAnalysisResult(
+            $analysisResultsBuilder,
+            self::FILE_1,
+            10,
+            self::TYPE_1,
+            'MESSAGE_1',
+            [
+                'column' => '10',
+            ],
+            Severity::error(),
+        );
+        $this->addAnalysisResult(
+            $analysisResultsBuilder,
+            self::FILE_1,
+            12,
+            self::TYPE_2,
+            'MESSAGE_2',
+            [
+                'column' => 'invalid',
+            ],
+            Severity::error(),
+        );
+
+        $this->assertOutput($expectedOutput, $analysisResultsBuilder->build());
+    }
+
     private function assertOutput(string $expectedOutput, AnalysisResults $analysisResults): void
     {
         $outputFormatter = $this->getOutputFormatter();

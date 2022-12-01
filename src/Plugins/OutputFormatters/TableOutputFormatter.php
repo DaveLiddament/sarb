@@ -22,7 +22,11 @@ class TableOutputFormatter implements OutputFormatter
         }
 
         $bufferedOutput = new BufferedOutput();
-        $this->addIssuesInTable($bufferedOutput, $analysisResults);
+        $hasWarnings = $this->addIssuesInTable($bufferedOutput, $analysisResults);
+
+        if ($hasWarnings) {
+            $bufferedOutput->writeln("\nThese results include warnings. To exclude warnings from output use the --ignore-warnings flag.");
+        }
 
         return $bufferedOutput->fetch();
     }
@@ -32,8 +36,10 @@ class TableOutputFormatter implements OutputFormatter
         return self::CODE;
     }
 
-    private function addIssuesInTable(BufferedOutput $output, AnalysisResults $analysisResults): void
+    private function addIssuesInTable(BufferedOutput $output, AnalysisResults $analysisResults): bool
     {
+        $hasWarnings = false;
+
         /** @var string[] $headings */
         $headings = [
             'Line',
@@ -56,14 +62,24 @@ class TableOutputFormatter implements OutputFormatter
                 $currentTable->setHeaders($headings);
             }
 
+            $warning = $analysisResult->getSeverity()->isWarning();
+            if ($warning) {
+                $hasWarnings = true;
+                $prefix = 'WARNING: ';
+            } else {
+                $prefix = '';
+            }
+
             Assert::notNull($currentTable, 'No Table object');
             $currentTable->addRow([
                 $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
-                $analysisResult->getMessage(),
+                $prefix.$analysisResult->getMessage(),
             ]);
         }
 
         $this->renderTable($currentTable);
+
+        return $hasWarnings;
     }
 
     private function renderTable(?Table $table): void
