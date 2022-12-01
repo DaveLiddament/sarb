@@ -27,4 +27,11 @@ class ArrayParseException extends SarbException
 
         return new self($message);
     }
+
+    public static function invalidValue(string $key, string $value): self
+    {
+        $message = "Value [$value] for [$key] is not valid";
+
+        return new self($message);
+    }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExakatJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
@@ -52,23 +53,25 @@ class ExakatJsonResultsParserTest extends TestCase
         $result3 = $this->analysisResults->getAnalysisResults()[2];
 
         $this->assertMatch($result1,
-           'src/Domain/ResultsParser/AnalysisResults.php',
-           67,
-           'MismatchingDocblockParamType'
+            'src/Domain/ResultsParser/AnalysisResults.php',
+            67,
+            'MismatchingDocblockParamType',
+            Severity::error()
         );
         $this->assertSame('', $result1->getMessage());
 
         $this->assertMatch($result2,
             'src/Domain/Utils/JsonUtils.php',
             29,
-             'MixedAssignment'
+            'MixedAssignment',
+            Severity::error()
         );
 
         $this->assertMatch($result3,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
-            'MixedAssignment'
-        );
+            'MixedAssignment',
+            Severity::error());
     }
 
     public function testTypeGuesser(): void

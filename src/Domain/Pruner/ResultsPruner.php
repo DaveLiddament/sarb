@@ -48,7 +48,8 @@ class ResultsPruner implements ResultsPrunerInterface
     public function getPrunedResults(
         BaseLineFileName $baseLineFileName,
         string $analysisResults,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
+        bool $ignoreWarnings
     ): PrunedResults {
         $baseLine = $this->baseLineImporter->import($baseLineFileName);
         $resultsParser = $baseLine->getResultsParser();
@@ -60,7 +61,8 @@ class ResultsPruner implements ResultsPrunerInterface
         $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
             $inputAnalysisResults,
             $historyAnalyser,
-            $baseLine->getAnalysisResults()
+            $baseLine->getAnalysisResults(),
+            $ignoreWarnings
         );
 
         return new PrunedResults($baseLine, $outputAnalysisResults, $inputAnalysisResults);

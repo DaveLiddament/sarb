@@ -180,6 +180,7 @@ A valid implementation to do this would be this...
                 $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, 'line_from');
                 $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'type');
                 $message = ArrayUtils::getStringValue($analysisResultAsArray, 'message');
+                $severityAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'severity');
 
                 $location = Location::fromAbsoluteFileName(
                     new AbsoluteFileName($fileNameAsString),
@@ -187,11 +188,14 @@ A valid implementation to do this would be this...
                     new LineNumber($lineAsInt)
                 );
 
+                $severity = ($severityAsString === 'error') ? Severity::error() : Severity::warning();
+                
                 $analysisResult =  new AnalysisResult(
                     $location,
                     new Type($typeAsString),
                     $message,
-                    $analysisResultAsArray
+                    $analysisResultAsArray,
+                    $severity
                 );
 
                 $analysisResults->addAnalysisResult($analysisResult);
@@ -215,7 +219,7 @@ We can use SARB's `JsonUtils::toArray` method. This takes a string and returns a
 NOTE: If the file provided is not a JSON representation then `convertFromString` must throw an `InvalidContentTypeException`.
 SARB catches this and asks the user if they submitted the correct file.
 
-The that does this is:
+The code that does this is:
 
 ```php
     try {
@@ -276,19 +280,21 @@ SARB needs to pull out:
  - line number (`line_from` in Psalm's JSON output)
  - type (`type` in Psalm's JSON output)
  - message (`message` in Psalm's JSON output)
+ - severity (`severity` in Psalm's JSON output). NOTE: Report a severity of `error` if there is no concept of severity.
 
 **NOTES:** 
 
 1. `Type` must refer to the type of violation (e.g. `MissingConstructor`). See more about this at [How SARB works](HowSarbWorks.md)
 1. Ideally the file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path. If the static analysis tool does not provide an absoute path then a relative path can be used, see [using a relative path](#using-relative-paths).
-
-Here is a the code to pull the information from the array:
+2. 
+Here is the code to pull the information from the array:
 
 ```php
                 $fileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'file_path');
                 $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, 'line_from');
                 $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'type');
                 $message = ArrayUtils::getStringValue($analysisResultAsArray, 'message');
+                $severityAsString = ArrayUtils::getStringValue($analysisResultAsArray, 'severity');
 ```
 
 The final piece of information that SARB takes is an array containing all the data from the tool about the particular violation. 
@@ -303,12 +309,15 @@ SARB needs to capture all ths information and create an `AnalysisResult`.
                     $projectRoot,
                     new LineNumber($lineAsInt)
                 );
+                
+                $severity = ($severityAsString === 'error') ? Severity::error() : Severity::warning();
 
                 $analysisResult =  new AnalysisResult(
                     $location,
                     new Type($typeAsString),
                     $message,
-                    $analysisResultAsArray
+                    $analysisResultAsArray,
+                    $severity
                 );
 ```
 

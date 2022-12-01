@@ -15,6 +15,7 @@ interface ResultsPrunerInterface
     public function getPrunedResults(
         BaseLineFileName $baseLineFileName,
         string $analysisResults,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
+        bool $ignoreWarnings
     ): PrunedResults;
 }

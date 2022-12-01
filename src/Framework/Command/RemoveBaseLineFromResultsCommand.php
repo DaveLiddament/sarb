@@ -36,6 +36,7 @@ class RemoveBaseLineFromResultsCommand extends Command
 
     private const OUTPUT_FORMAT = 'output-format';
     private const SHOW_RANDOM_ERRORS = 'clean-up';
+    private const IGNORE_WARNINGS = 'ignore-warnings';
 
     /**
      * @var string|null
@@ -86,6 +87,13 @@ class RemoveBaseLineFromResultsCommand extends Command
         );
 
         $this->addOption(
+            self::IGNORE_WARNINGS,
+            null,
+            InputOption::VALUE_NONE,
+            "Ignore any issues with severity 'warning'."
+        );
+
+        $this->addOption(
             self::SHOW_RANDOM_ERRORS,
             null,
             InputOption::VALUE_NONE,
@@ -105,11 +113,13 @@ class RemoveBaseLineFromResultsCommand extends Command
             $baseLineFileName = BaseLineFileHelper::getBaselineFile($input);
             $inputAnalysisResultsAsString = CliConfigReader::getStdin($input);
             $showRandomIssues = CliConfigReader::getBooleanOption($input, self::SHOW_RANDOM_ERRORS);
+            $ignoreWarnings = CliConfigReader::getBooleanOption($input, self::IGNORE_WARNINGS);
 
             $prunedResults = $this->resultsPruner->getPrunedResults(
                 $baseLineFileName,
                 $inputAnalysisResultsAsString,
-                $projectRoot
+                $projectRoot,
+                $ignoreWarnings
             );
 
             $outputAnalysisResults = $prunedResults->getPrunedResults();

@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
@@ -33,6 +34,30 @@ class BaseLineAnalysisResultsTest extends TestCase
     }
 
     public function test1BaseLineResult(): void
+    {
+        $baseLineResults = BaseLineAnalysisResults::fromArray([
+            [
+                'fileName' => self::FILE_NAME_1,
+                'lineNumber' => self::LINE_NUMBER_1,
+                'type' => self::TYPE_1,
+                'message' => self::MESSAGE_1,
+                'severity' => Severity::ERROR,
+            ],
+        ]);
+
+        $this->assertSame(1, $baseLineResults->getCount());
+        $this->assertCount(1, $baseLineResults->getBaseLineAnalysisResults());
+        $this->assertCount(1, $baseLineResults->asArray());
+
+        $baseLineResult = $baseLineResults->getBaseLineAnalysisResults()[0];
+        $this->assertSame(self::FILE_NAME_1, $baseLineResult->getFileName()->getFileName());
+        $this->assertSame(self::LINE_NUMBER_1, $baseLineResult->getLineNumber()->getLineNumber());
+        $this->assertSame(self::TYPE_1, $baseLineResult->getType()->getType());
+        $this->assertSame(self::MESSAGE_1, $baseLineResult->getMessage());
+        $this->assertSame(Severity::ERROR, $baseLineResult->getSeverity()->getSeverity());
+    }
+
+    public function test1BaseLineResultNoSeverity(): void
     {
         $baseLineResults = BaseLineAnalysisResults::fromArray([
             [
@@ -107,7 +132,8 @@ class BaseLineAnalysisResultsTest extends TestCase
             $location,
             $type,
             self::MESSAGE_1,
-            []
+            [],
+            Severity::error()
         ));
 
         $baseLineResults = BaseLineAnalysisResults::fromAnalysisResults($analysisResultsBuilder->build());

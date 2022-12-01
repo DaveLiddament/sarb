@@ -27,6 +27,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
 /**
  * Handles PHP Code Sniffers's JSON output.
@@ -36,6 +37,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
     private const LINE = 'line';
     private const SOURCE = 'source';
     private const FILES = 'files';
+    private const SEVERITY = 'type';
     private const MESSAGES = 'messages';
     private const MESSAGE = 'message';
 
@@ -101,7 +103,8 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
             $location,
             new Type($rawSource),
             $rawMessage,
-            $analysisResultAsArray
+            $analysisResultAsArray,
+            SeverityReader::getMandatorySeverity($analysisResultAsArray, self::SEVERITY)
         );
     }
 

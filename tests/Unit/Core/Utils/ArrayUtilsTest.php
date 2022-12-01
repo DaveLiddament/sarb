@@ -124,4 +124,22 @@ class ArrayUtilsTest extends TestCase
         $this->expectException(ArrayParseException::class);
         ArrayUtils::getStringValue(self::TEST_ARRAY, self::INVALID_KEY);
     }
+
+    public function testGetOptionalStringWithStringValue(): void
+    {
+        $actual = ArrayUtils::getOptionalStringValue(self::TEST_ARRAY, self::NAME_KEY);
+        $this->assertEquals(self::NAME_VALUE, $actual);
+    }
+
+    public function testGetOptionalStringWithNoKey(): void
+    {
+        $actual = ArrayUtils::getOptionalStringValue(self::TEST_ARRAY, self::INVALID_KEY);
+        $this->assertNull($actual);
+    }
+
+    public function testGetOptionalStringWithIncorrectType(): void
+    {
+        $this->expectException(ArrayParseException::class);
+        ArrayUtils::getOptionalStringValue(self::TEST_ARRAY, self::AGE_KEY);
+    }
 }

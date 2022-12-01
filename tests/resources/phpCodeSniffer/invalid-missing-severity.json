@@ -1,0 +1,74 @@
+{
+  "totals": {
+    "errors": 4,
+    "warnings": 2,
+    "fixable": 1
+  },
+  "files": {
+    "/vagrant/src/Domain/Common/InvalidPathException.php": {
+      "errors": 3,
+      "warnings": 1,
+      "messages": [
+        {
+          "message": "Missing file doc comment",
+          "source": "Squiz.Commenting.FileComment.Missing",
+          "severity": 5,
+          "fixable": false,
+          "line": 2,
+          "column": 1
+        },
+        {
+          "message": "Missing doc comment for class InvalidPathException",
+          "source": "Squiz.Commenting.ClassComment.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "message": "Missing doc comment for function __construct()",
+          "source": "Squiz.Commenting.FunctionComment.Missing",
+          "severity": 5,
+          "fixable": false,
+          "type": "ERROR",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "message": "Line exceeds 85 characters; contains 109 characters",
+          "source": "Generic.Files.LineLength.TooLong",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 11,
+          "column": 1
+        }
+      ]
+    },
+    "/vagrant/src/Domain/BaseLiner/BaseLineImporter.php": {
+      "errors": 1,
+      "warnings": 1,
+      "messages": [
+        {
+          "message": "Line exceeds 85 characters; contains 113 characters",
+          "source": "Generic.Files.LineLength.TooLong",
+          "severity": 5,
+          "fixable": false,
+          "type": "WARNING",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "message": "Expected 18 spaces after parameter type; 1 found",
+          "source": "Squiz.WhiteSpace.FunctionSpacing.Before",
+          "severity": 5,
+          "fixable": true,
+          "type": "ERROR",
+          "line": 52,
+          "column": 1
+        }
+      ]
+    }
+  }
+}

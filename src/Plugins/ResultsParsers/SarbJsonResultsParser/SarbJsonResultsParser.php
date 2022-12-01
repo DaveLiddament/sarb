@@ -27,6 +27,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
 class SarbJsonResultsParser implements ResultsParser
 {
@@ -34,6 +35,7 @@ class SarbJsonResultsParser implements ResultsParser
     private const TYPE = 'type';
     private const FILE = 'file';
     private const MESSAGE = 'message';
+    private const SEVERITY = 'severity';
 
     public function getIdentifier(): Identifier
     {
@@ -92,7 +94,8 @@ class SarbJsonResultsParser implements ResultsParser
             $location,
             new Type($typeAsString),
             ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
-            $analysisResultAsArray
+            $analysisResultAsArray,
+            SeverityReader::getOptionalSeverity($analysisResultAsArray, self::SEVERITY)
         );
     }
 }

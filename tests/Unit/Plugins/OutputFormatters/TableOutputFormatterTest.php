@@ -36,15 +36,34 @@ FILE: /FILE_1
 +------+-------------+
 
 FILE: /FILE_2
-+------+-------------+
-| Line | Description |
-+------+-------------+
-| 0    | MESSAGE_3   |
-+------+-------------+
++------+--------------------+
+| Line | Description        |
++------+--------------------+
+| 0    | WARNING: MESSAGE_3 |
++------+--------------------+
+
+These results include warnings. To exclude warnings from output use the --ignore-warnings flag.
 
 EOF;
 
         $this->assertIssuesOutput($expectedOuput);
+    }
+
+    public function testWithIssuesAndWarningsIgnored(): void
+    {
+        $expectedOuput = <<<EOF
+
+FILE: /FILE_1
++------+-------------+
+| Line | Description |
++------+-------------+
+| 10   | MESSAGE_1   |
+| 12   | MESSAGE_2   |
++------+-------------+
+
+EOF;
+
+        $this->assertIssuesOutputWithWarningsIgnored($expectedOuput);
     }
 
     protected function getOutputFormatter(): OutputFormatter

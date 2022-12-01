@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpstanJsonResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
@@ -55,7 +56,8 @@ class PhpstanJsonResultsParserTest extends TestCase
         $this->assertMatch($result1,
             'src/Domain/BaseLiner/BaseLineImporter.php',
             89,
-            'Parameter #1 $array of static method expects int, array given.'
+            'Parameter #1 $array of static method expects int, array given.',
+            Severity::error()
         );
         $this->assertSame(
             'Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.',
@@ -65,13 +67,15 @@ class PhpstanJsonResultsParserTest extends TestCase
         $this->assertMatch($result2,
             'src/Domain/ResultsParser/AnalysisResults.php',
             0,
-            'Argument of an invalid type int supplied for foreach, only iterables are supported.'
+            'Argument of an invalid type int supplied for foreach, only iterables are supported.',
+            Severity::error()
         );
 
         $this->assertMatch($result3,
             'src/Domain/ResultsParser/AnalysisResults.php',
             73,
-            'PHPDoc tag @param for parameter $array with type array is incompatible with native type int'
+            'PHPDoc tag @param for parameter $array with type array is incompatible with native type int',
+            Severity::error()
         );
     }
 

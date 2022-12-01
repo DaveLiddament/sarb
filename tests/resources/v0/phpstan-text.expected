@@ -7,13 +7,15 @@
             "lineNumber": 0,
             "fileName": "static-analysis-baseliner\/src\/Employee.php",
             "type": "Class not found and could not be autoloaded.",
-            "message": "Class Demo\\Foo not found and could not be autoloaded."
+            "message": "Class Demo\\Foo not found and could not be autoloaded.",
+            "severity": "error"
         },
         {
             "lineNumber": 50,
             "fileName": "static-analysis-baseliner\/src\/Plugins\/PsalmTextResultsParser\/PsalmTextResultsParser.php",
             "type": "Call to an undefined method",
-            "message": "Call to an undefined method DaveLiddament\\StaticAnalysisResultsBaseliner\\Plugins\\PsalmTextResultsParser\\PsalmTextResultsParser::processLine()."
+            "message": "Call to an undefined method DaveLiddament\\StaticAnalysisResultsBaseliner\\Plugins\\PsalmTextResultsParser\\PsalmTextResultsParser::processLine().",
+            "severity": "error"
         }
     ]
 }

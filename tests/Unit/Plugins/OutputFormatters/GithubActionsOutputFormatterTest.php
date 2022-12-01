@@ -21,13 +21,13 @@ class GithubActionsOutputFormatterTest extends AbstractOutputFormatterTest
 
     public function testWithIssues(): void
     {
-        $expectedOuput = <<<EOF
+        $expectedOutput = <<<EOF
 ::error file=FILE_1,line=10::MESSAGE_1
 ::error file=FILE_1,line=12::MESSAGE_2
-::error file=FILE_2,line=0::MESSAGE_3
+::warning file=FILE_2,line=0::MESSAGE_3
 EOF;
 
-        $this->assertIssuesOutput($expectedOuput);
+        $this->assertIssuesOutput($expectedOutput);
     }
 
     protected function getOutputFormatter(): OutputFormatter

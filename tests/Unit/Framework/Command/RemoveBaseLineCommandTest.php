@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
@@ -227,10 +228,10 @@ EOF;
         ?Throwable $exception
     ): CommandTester {
         $baseLineResultsBuilder = new BaseLineResultsBuilder();
-        $baseLineResultsBuilder->add('file1', 1, 'type1');
-        $baseLineResultsBuilder->add('file2', 2, 'type2');
-        $baseLineResultsBuilder->add('file3', 3, 'type3');
-        $baseLineResultsBuilder->add('file4', 4, 'type4');
+        $baseLineResultsBuilder->add('file1', 1, 'type1', Severity::error());
+        $baseLineResultsBuilder->add('file2', 2, 'type2', Severity::error());
+        $baseLineResultsBuilder->add('file3', 3, 'type3', Severity::error());
+        $baseLineResultsBuilder->add('file4', 4, 'type4', Severity::error());
 
         $baseLine = new BaseLine(
             new HistoryFactoryStub(),
@@ -291,7 +292,8 @@ EOF;
                 ),
                 new Type("TYPE_$i"),
                 "MESSAGE_$i",
-                []
+                [],
+                Severity::error()
             );
             $analysisResultsBuilder->addAnalysisResult($analysisResult);
         }

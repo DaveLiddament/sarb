@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
@@ -22,9 +23,10 @@ trait AnalysisResultsAdderTrait
         ProjectRoot $projectRoot,
         string $absoluteFileName,
         int $lineNumber,
-        string $type
+        string $type,
+        Severity $severity
     ): void {
-        $analysisResult = $this->buildAnalysisResult($projectRoot, $absoluteFileName, $lineNumber, $type);
+        $analysisResult = $this->buildAnalysisResult($projectRoot, $absoluteFileName, $lineNumber, $type, $severity);
         $analysisResultsBuilder->addAnalysisResult($analysisResult);
     }
 
@@ -32,7 +34,8 @@ trait AnalysisResultsAdderTrait
         ProjectRoot $projectRoot,
         string $absoluteFileName,
         int $lineNumber,
-        string $type
+        string $type,
+        Severity $severity
     ): AnalysisResult {
         $message = "message-$type";
 
@@ -42,6 +45,6 @@ trait AnalysisResultsAdderTrait
             new LineNumber($lineNumber)
         );
 
-        return new AnalysisResult($location, new Type($type), $message, []);
+        return new AnalysisResult($location, new Type($type), $message, [], $severity);
     }
 }

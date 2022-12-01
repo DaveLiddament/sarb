@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpMagicNumberDetectorResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpMagicNumberDetectorResultsParser\PhpMagicNumberDetectorIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpMagicNumberDetectorResultsParser\PhpMagicNumberDetectorResultsParser;
@@ -51,7 +52,8 @@ class PhpMagicNumberResultsParserTest extends TestCase
         $this->assertMatch($result1,
             'src/File1.php',
             6,
-            '123'
+            '123',
+            Severity::error()
         );
         $this->assertSame(
             'Magic number 123',
@@ -61,13 +63,15 @@ class PhpMagicNumberResultsParserTest extends TestCase
         $this->assertMatch($result2,
             'src/foo/bar/File 2.php',
             11,
-            '1.7'
+            '1.7',
+            Severity::error()
         );
 
         $this->assertMatch($result3,
             'tests/MyTest1.php',
             16,
-            '10'
+            '10',
+            Severity::error()
         );
     }
 

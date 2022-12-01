@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Analyser\internal\BaseLi
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
@@ -34,10 +35,10 @@ class BaseLineResultsComparatorTest extends TestCase
     protected function setUp(): void
     {
         $baseLineResultsBuilder = new BaseLineResultsBuilder();
-        $baseLineResultsBuilder->add(self::FILE_1, self::LINE_1, self::TYPE_1);
-        $baseLineResultsBuilder->add(self::FILE_2, self::LINE_2, self::TYPE_2);
-        $baseLineResultsBuilder->add(self::FILE_4, self::LINE_2, self::TYPE_1);
-        $baseLineResultsBuilder->add(self::FILE_4, self::LINE_2, self::TYPE_2);
+        $baseLineResultsBuilder->add(self::FILE_1, self::LINE_1, self::TYPE_1, Severity::error());
+        $baseLineResultsBuilder->add(self::FILE_2, self::LINE_2, self::TYPE_2, Severity::error());
+        $baseLineResultsBuilder->add(self::FILE_4, self::LINE_2, self::TYPE_1, Severity::error());
+        $baseLineResultsBuilder->add(self::FILE_4, self::LINE_2, self::TYPE_2, Severity::error());
         $this->baseLineResultsComparator = new BaseLineResultsComparator($baseLineResultsBuilder->build());
     }
 

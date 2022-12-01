@@ -48,7 +48,8 @@ class MockResultsPruner implements ResultsPrunerInterface
     public function getPrunedResults(
         BaseLineFileName $baseLineFileName,
         string $analysisResults,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
+        bool $ignoreWarnings
     ): PrunedResults {
         if (null !== $this->throwable) {
             throw $this->throwable;
