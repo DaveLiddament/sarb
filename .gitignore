@@ -3,3 +3,4 @@
 vendor
 *.log
 .deptrac.cache
+.php-cs-fixer.cache
