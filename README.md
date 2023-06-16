@@ -1,6 +1,6 @@
 # Static Analysis Results Baseliner (SARB)
 
-[![PHP versions: 7.3 to 8.1](https://img.shields.io/badge/php-7.3|7.4|8.0|8.1-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
+[![PHP versions: 8.0|8.1|8.2](https://img.shields.io/badge/php-8.0|8.1|8.2-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
 [![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
 [![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://github.com/DaveLiddament/sarb/blob/master/LICENSE.md)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb/stats)
@@ -43,7 +43,7 @@ SARB should not be used on greenfield projects. If you're lucky enough to work o
 
 Currently, SARB only supports projects that use [git](https://git-scm.com/).
 
-SARB requires PHP >= 7.3 to run. The project being analysed does not need to run PHP 7.3 or even be a PHP project at all.
+SARB requires PHP >= 8.0 to run. The project being analysed does not need to run PHP 8.0 or even be a PHP project at all.
 
 ## Installing
 
