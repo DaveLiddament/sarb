@@ -61,7 +61,7 @@
       "@composer-validate",
       "@lint",
       "@var-dump-checker",
-      "@cs-8.1",
+      "@cs",
       "@test",
       "@phpstan",
       "@psalm-8.1"
@@ -70,15 +70,7 @@
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
     "cs" : "php-cs-fixer fix -v --dry-run",
-    "cs-8.1" : [
-      "@putenv PHP_CS_FIXER_IGNORE_ENV=true",
-      "php-cs-fixer fix -v --dry-run"
-    ],
     "cs-fix" : "php-cs-fixer fix -v",
-    "cs-fix-8.1" : [
-      "@putenv PHP_CS_FIXER_IGNORE_ENV=true",
-      "php-cs-fixer fix -v"
-    ],
     "psalm-8.0" : "psalm --php-version=8.0",
     "psalm-8.1" : "psalm --php-version=8.1 --shepherd",
     "phpstan" : "phpstan -n --no-progress  analyse",
