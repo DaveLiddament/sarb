@@ -27,7 +27,7 @@ jobs:
           - "8.0"
           - "8.1"
         operating-system:
-          - "ubuntu-18.04"
+          - "ubuntu-22.04"
 
     steps:
       - name: "Checkout"
@@ -77,9 +77,9 @@ jobs:
         dependencies:
           - "locked"
         php-version:
-          - "8.0"
+          - "8.1"
         operating-system:
-          - "ubuntu-18.04"
+          - "ubuntu-22.04"
 
     steps:
       - name: "Checkout"
