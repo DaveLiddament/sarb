@@ -84,6 +84,15 @@
       "@phpstan",
       "@psalm-8.1"
     ],
+    "ci-8.2" : [
+      "@composer-validate",
+      "@lint",
+      "@var-dump-checker",
+      "@cs-8.1",
+      "@test",
+      "@phpstan",
+      "@psalm-8.2"
+    ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
@@ -101,6 +110,7 @@
     "psalm-7.4" : "psalm --php-version=7.4",
     "psalm-8.0" : "psalm --php-version=8.0",
     "psalm-8.1" : "psalm --php-version=8.1 --shepherd",
+    "psalm-8.2" : "psalm --php-version=8.2",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
     "test" : [
