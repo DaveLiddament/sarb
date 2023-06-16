@@ -14,7 +14,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=8.0 <8.2",
+    "php": ">=8.0 <8.3",
     "symfony/config": "^5.4 || ^6.0",
     "symfony/console": "^5.4 || ^6.0",
     "symfony/dependency-injection": "^5.4 || ^6.0",
@@ -66,13 +66,23 @@
       "@phpstan",
       "@psalm-8.1"
     ],
+    "ci-8.2" : [
+      "@composer-validate",
+      "@lint",
+      "@var-dump-checker",
+      "@cs",
+      "@test",
+      "@phpstan",
+      "@psalm-8.2"
+    ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
     "cs" : "php-cs-fixer fix -v --dry-run",
     "cs-fix" : "php-cs-fixer fix -v",
     "psalm-8.0" : "psalm --php-version=8.0",
-    "psalm-8.1" : "psalm --php-version=8.1 --shepherd",
+    "psalm-8.1" : "psalm --php-version=8.1",
+    "psalm-8.2" : "psalm --php-version=8.2 --shepherd",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
     "test" : [
