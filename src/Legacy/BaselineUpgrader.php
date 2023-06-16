@@ -74,14 +74,14 @@ class BaselineUpgrader
 
             $baseline = new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
         } catch (
-            ArrayParseException |
-            InvalidResultsParserException |
-            InvalidHistoryFactoryException |
-            InvalidHistoryMarkerException |
-            InvalidContentTypeException |
+            ArrayParseException|
+            InvalidResultsParserException|
+            InvalidHistoryFactoryException|
+            InvalidHistoryMarkerException|
+            InvalidContentTypeException|
             ParseAtLocationException $e) {
-            throw BaseLineImportException::fromException($baseLineFileName, $e);
-        }
+                throw BaseLineImportException::fromException($baseLineFileName, $e);
+            }
         $this->baseLineExporter->export($baseline, $baseLineFileName);
 
         return $resultsParser->getIdentifier();

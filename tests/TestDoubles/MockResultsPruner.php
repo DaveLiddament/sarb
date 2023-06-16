@@ -10,7 +10,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\ResultsPrunerInterface;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\StringAssertionsTrait;
 use PHPUnit\Framework\Assert;
-use Throwable;
 
 class MockResultsPruner implements ResultsPrunerInterface
 {
@@ -29,7 +28,7 @@ class MockResultsPruner implements ResultsPrunerInterface
      */
     private $projectRoot;
     /**
-     * @var Throwable|null
+     * @var \Throwable|null
      */
     private $throwable;
 
@@ -37,7 +36,7 @@ class MockResultsPruner implements ResultsPrunerInterface
         string $expectedAnalysisResults,
         PrunedResults $prunedOutputResults,
         ?ProjectRoot $projectRoot,
-        ?Throwable $throwable
+        ?\Throwable $throwable
     ) {
         $this->expectedAnalysisResults = $expectedAnalysisResults;
         $this->prunedOutputResults = $prunedOutputResults;

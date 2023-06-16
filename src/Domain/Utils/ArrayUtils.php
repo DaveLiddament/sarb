@@ -18,6 +18,7 @@ class ArrayUtils
      * Gets string value for given key in the array.
      *
      * @throws ArrayParseException
+     *
      * @psalm-param array<mixed> $array
      */
     public static function getStringValue(array $array, string $key): string
@@ -33,6 +34,7 @@ class ArrayUtils
      * Gets int value for given key in the array.
      *
      * @throws ArrayParseException
+     *
      * @psalm-param array<mixed> $array
      */
     public static function getIntValue(array $array, string $key): int
@@ -86,7 +88,9 @@ class ArrayUtils
      * Gets array value for given key in the array.
      *
      * @throws ArrayParseException
+     *
      * @psalm-param array<mixed> $array
+     *
      * @psalm-return array<mixed> $array
      */
     public static function getArrayValue(array $array, string $key): array
@@ -100,6 +104,7 @@ class ArrayUtils
 
     /**
      * @throws ArrayParseException
+     *
      * @psalm-param array<mixed> $array
      */
     private static function assertArrayKeyExists(array $array, string $key): void
@@ -110,12 +115,11 @@ class ArrayUtils
     }
 
     /**
-     * @param mixed $entity
      * @psalm-assert array $entity
      *
      * @throws ArrayParseException
      */
-    public static function assertArray($entity): void
+    public static function assertArray(mixed $entity): void
     {
         if (!is_array($entity)) {
             throw ArrayParseException::invalidType('base level', 'array');

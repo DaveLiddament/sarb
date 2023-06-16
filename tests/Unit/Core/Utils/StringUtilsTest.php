@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class StringUtilsTest extends TestCase
@@ -32,7 +31,7 @@ class StringUtilsTest extends TestCase
 
     public function testRemoveFromStartExceptionWhenInvalidStart(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         StringUtils::removeFromStart('Bar', 'FooBar');
     }
 

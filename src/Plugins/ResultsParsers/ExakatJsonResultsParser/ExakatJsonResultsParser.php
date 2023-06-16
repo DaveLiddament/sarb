@@ -31,9 +31,9 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 
 class ExakatJsonResultsParser implements ResultsParser
 {
-    const LINE_FROM = 'line';
-    const TYPE = 'type';
-    const FILE = 'file';
+    public const LINE_FROM = 'line';
+    public const TYPE = 'type';
+    public const FILE = 'file';
 
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -50,7 +50,7 @@ class ExakatJsonResultsParser implements ResultsParser
                 ArrayUtils::assertArray($analysisResultAsArray);
                 $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
-            } catch (ArrayParseException | InvalidPathException $e) {
+            } catch (ArrayParseException|InvalidPathException $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
         }

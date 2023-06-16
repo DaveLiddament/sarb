@@ -10,11 +10,10 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
 use Symfony\Component\Console\Output\OutputInterface;
-use Throwable;
 
 class ErrorReporter
 {
-    public static function reportError(OutputInterface $output, Throwable $throwable): int
+    public static function reportError(OutputInterface $output, \Throwable $throwable): int
     {
         try {
             throw $throwable;
@@ -38,7 +37,7 @@ class ErrorReporter
             OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 15;
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
             OutputWriter::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}", true);
             OutputWriter::writeToStdError($output, $e->getTraceAsString(), true);

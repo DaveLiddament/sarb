@@ -62,7 +62,7 @@ class SarbJsonResultsParser implements ResultsParser
                 ArrayUtils::assertArray($analysisResultAsArray);
                 $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
-            } catch (ArrayParseException | InvalidPathException $e) {
+            } catch (ArrayParseException|InvalidPathException $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
         }

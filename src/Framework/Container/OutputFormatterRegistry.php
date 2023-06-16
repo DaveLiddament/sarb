@@ -21,6 +21,7 @@ class OutputFormatterRegistry implements OutputFormatterLookupService
 {
     /**
      * @var OutputFormatter[]
+     *
      * @psalm-var array<string, OutputFormatter>
      */
     private $outputFormatters;

@@ -7,7 +7,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\HistoryAn
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\FileMutation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\NewFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class FileMutationTest extends TestCase
@@ -17,7 +16,7 @@ class FileMutationTest extends TestCase
 
     public function testInvalidSetup(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         new FileMutation(null, null, []);
     }
 

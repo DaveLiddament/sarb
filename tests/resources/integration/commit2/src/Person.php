@@ -9,7 +9,7 @@ class Person
     /**
      * @var int
      */
-    const DEFAULT_AGE = 21;
+    public const DEFAULT_AGE = 21;
 
     private $age = self::DEFAULT_AGE;
 

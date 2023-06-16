@@ -21,7 +21,7 @@ class StringUtils
      */
     public static function startsWith(string $needle, string $haystack): bool
     {
-        return 0 === strpos($haystack, $needle);
+        return str_starts_with($haystack, $needle);
     }
 
     /**

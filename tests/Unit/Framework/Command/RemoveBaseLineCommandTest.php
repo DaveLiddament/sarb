@@ -27,10 +27,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBu
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\HistoryFactoryStub;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\MockResultsPruner;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\OutputFormatterStub;
-use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Throwable;
 
 class RemoveBaseLineCommandTest extends TestCase
 {
@@ -191,7 +189,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(1),
             null,
-            new Exception()
+            new \Exception()
         );
 
         $commandTester->execute([
@@ -225,7 +223,7 @@ EOF;
     private function createCommandTester(
         AnalysisResults $expectedAnalysisResults,
         ?ProjectRoot $projectRoot,
-        ?Throwable $exception
+        ?\Throwable $exception
     ): CommandTester {
         $baseLineResultsBuilder = new BaseLineResultsBuilder();
         $baseLineResultsBuilder->add('file1', 1, 'type1', Severity::error());

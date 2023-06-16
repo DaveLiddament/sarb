@@ -126,8 +126,8 @@ class BaseLineAnalysisResult
     public function isMatch(PreviousLocation $location, Type $type): bool
     {
         return
-            $this->fileName->isEqual($location->getRelativeFileName()) &&
-            $this->lineNumber->isEqual($location->getLineNumber()) &&
-            $this->type->isEqual($type);
+            $this->fileName->isEqual($location->getRelativeFileName())
+            && $this->lineNumber->isEqual($location->getLineNumber())
+            && $this->type->isEqual($type);
     }
 }

@@ -14,7 +14,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsPar
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\StringAssertionsTrait;
 use PHPUnit\Framework\Assert;
-use Throwable;
 
 class MockBaseLineCreator implements BaseLineCreatorInterface
 {
@@ -41,7 +40,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
      */
     private $expectedAnaylsisResultsAsString;
     /**
-     * @var Throwable|null
+     * @var \Throwable|null
      */
     private $throwable;
 
@@ -51,7 +50,7 @@ class MockBaseLineCreator implements BaseLineCreatorInterface
         BaseLineFileName $expectedBaseLineFileName,
         ?ProjectRoot $expectedProjectRoot,
         string $expectedAnaylsisResultsAsString,
-        ?Throwable $throwable
+        ?\Throwable $throwable
     ) {
         $this->expectedHistoryFactory = $expectedHistoryFactory;
         $this->expectedResultsParser = $expectedResultsParser;

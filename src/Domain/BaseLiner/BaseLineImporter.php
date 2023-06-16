@@ -80,13 +80,13 @@ class BaseLineImporter
 
             return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
         } catch (
-            ArrayParseException |
-            InvalidResultsParserException |
-            InvalidHistoryFactoryException |
-            InvalidHistoryMarkerException |
-            InvalidContentTypeException |
+            ArrayParseException|
+            InvalidResultsParserException|
+            InvalidHistoryFactoryException|
+            InvalidHistoryMarkerException|
+            InvalidContentTypeException|
             ParseAtLocationException $e) {
-            throw BaseLineImportException::fromException($fileName, $e);
-        }
+                throw BaseLineImportException::fromException($fileName, $e);
+            }
     }
 }

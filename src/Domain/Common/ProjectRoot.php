@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
-use LogicException;
 use Webmozart\Assert\Assert;
 
 /**
@@ -108,7 +107,7 @@ class ProjectRoot
         try {
             return new AbsoluteFileName($absoluteFileName);
         } catch (InvalidPathException $e) {
-            throw new LogicException("Invalid $absoluteFileName");
+            throw new \LogicException("Invalid $absoluteFileName");
         }
     }
 

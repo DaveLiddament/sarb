@@ -18,7 +18,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Legacy\BaselineUpgrader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Throwable;
 
 class UpgradeBaseLineCommand extends Command
 {
@@ -63,7 +62,7 @@ class UpgradeBaseLineCommand extends Command
             );
 
             return 0;
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             return ErrorReporter::reportError($output, $throwable);
         }
     }

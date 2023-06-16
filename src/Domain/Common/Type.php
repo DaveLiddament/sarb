@@ -37,8 +37,6 @@ class Type
 
     /**
      * Return true if equal.
-     *
-     * @param Type $type
      */
     public function isEqual(self $type): bool
     {

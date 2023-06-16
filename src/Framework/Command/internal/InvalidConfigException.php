@@ -12,12 +12,10 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\internal;
 
-use Exception;
-
 /**
  * Used for invalid user config provided.
  */
-class InvalidConfigException extends Exception
+class InvalidConfigException extends \Exception
 {
     /**
      * @param string[] $validOptions

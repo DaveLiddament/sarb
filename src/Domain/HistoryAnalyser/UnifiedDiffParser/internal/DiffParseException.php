@@ -12,9 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal;
 
-use Exception;
-
-class DiffParseException extends Exception
+class DiffParseException extends \Exception
 {
     public const END_OF_FILE = '<EOF>';
 

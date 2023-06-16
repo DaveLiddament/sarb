@@ -7,8 +7,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
-use DOMDocument;
-use SimpleXMLElement;
 
 class JunitOutputFormatter implements OutputFormatter
 {
@@ -35,7 +33,7 @@ XML;
         }
 
         $xml = $this->getXmlString($analysisResults->getCount());
-        $test = new SimpleXMLElement($xml);
+        $test = new \SimpleXMLElement($xml);
 
         $caseCount = 0;
         $previousRelativeFileName = null;
@@ -43,7 +41,7 @@ XML;
         foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
             $details = $analysisResult->getFullDetails();
 
-            /** @var mixed $column */
+            /** @psalm-suppress MixedAssignment */
             $column = $details['column'] ?? null;
             if (is_numeric($column)) {
                 $column = (string) ((int) $column);
@@ -84,7 +82,7 @@ XML;
 
         $this->addCounts($testsuite, $caseCount);
 
-        $dom = new DOMDocument('1.0');
+        $dom = new \DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $asXml = $test->asXML();
@@ -119,7 +117,7 @@ XML;
         return 'junit';
     }
 
-    private function addCounts(?SimpleXMLElement $testsuite, int $caseCount): void
+    private function addCounts(?\SimpleXMLElement $testsuite, int $caseCount): void
     {
         if (null !== $testsuite) {
             $testsuite->addAttribute('errors', '0');

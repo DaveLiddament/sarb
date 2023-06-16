@@ -11,6 +11,7 @@ class BaseLineResultsBuilder
 {
     /**
      * @var array
+     *
      * @psalm-var array<mixed>
      */
     private $results;

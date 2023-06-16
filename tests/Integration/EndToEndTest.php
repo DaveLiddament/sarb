@@ -197,7 +197,7 @@ class EndToEndTest extends TestCase
         $this->runStripBaseLineFromResultsCommand(
             self::COMMIT_3_RESULTS,
             0,
-        ''
+            ''
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -303,7 +303,7 @@ class EndToEndTest extends TestCase
         $this->gitWrapper->addAndCommit("Updating code to $directory", $this->projectRoot);
     }
 
-    private function runCreateBaseLineCommand(?string $relativePathToCode = null): void
+    private function runCreateBaseLineCommand(string $relativePathToCode = null): void
     {
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
@@ -326,7 +326,7 @@ class EndToEndTest extends TestCase
         string $psalmResults,
         int $expectedExitCode,
         string $expectedResultsJson,
-        ?string $relativePathToCode = null,
+        string $relativePathToCode = null,
         bool $ignoreWarnings = false
     ): void {
         $arguments = [

@@ -234,6 +234,7 @@ class DiffParserTest extends TestCase
 
     /**
      * @dataProvider dataProvider
+     *
      * @psalm-param array<int,array{0: OriginalFileName|null, 1: NewFileName, bool, bool, list<LineMutation>}> $expectedFileMutations
      */
     public function testDiffParser(string $inputFile, array $expectedFileMutations): void

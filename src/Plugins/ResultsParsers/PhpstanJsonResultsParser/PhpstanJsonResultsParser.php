@@ -83,7 +83,7 @@ class PhpstanJsonResultsParser implements ResultsParser
                     $analysisResult = $this->convertAnalysisResultFromArray($message, $absoluteFileName, $projectRoot);
                     $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 }
-            } catch (ArrayParseException | InvalidPathException $e) {
+            } catch (ArrayParseException|InvalidPathException $e) {
                 throw ParseAtLocationException::issueParsing($e, "Result [$absoluteFileNameAsString]");
             }
         }
