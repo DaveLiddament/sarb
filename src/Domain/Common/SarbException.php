@@ -17,6 +17,6 @@ use Exception;
 /**
  * Base exception for SARB.
  */
-class SarbException extends Exception
+class SarbException extends \Exception
 {
 }

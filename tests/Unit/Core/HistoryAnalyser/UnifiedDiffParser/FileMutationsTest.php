@@ -8,7 +8,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\FileMutations;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\NewFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class FileMutationsTest extends TestCase
@@ -52,7 +51,7 @@ class FileMutationsTest extends TestCase
             []
         );
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         new FileMutations([$fileMutation1, $fileMutation2]);
     }
 }

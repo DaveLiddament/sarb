@@ -58,7 +58,7 @@ class PhpmdJsonResultsParser implements ResultsParser
 
                 $this->processViolationsInFile($analysisResultsBuilder, $absoluteFileName, $projectRoot, $violations);
             }
-        } catch (ArrayParseException | InvalidPathException $e) {
+        } catch (ArrayParseException|InvalidPathException $e) {
             throw ParseAtLocationException::issueParsing($e, "Invalid file {$fileNumber}");
         }
 
@@ -84,7 +84,7 @@ class PhpmdJsonResultsParser implements ResultsParser
                 $analysisResult = $this->processViolation($absoluteFileName, $projectRoot, $violation);
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 ++$violationCount;
-            } catch (ArrayParseException | InvalidPathException $e) {
+            } catch (ArrayParseException|InvalidPathException $e) {
                 throw ParseAtLocationException::issueParsing($e, "File {$absoluteFileName->getFileName()}) violation {$violationCount}");
             }
         }

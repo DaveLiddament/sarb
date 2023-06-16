@@ -39,6 +39,7 @@ class AnalysisResult
 
     /**
      * @var array
+     *
      * @psalm-var array<mixed>
      */
     private $fullDetails;

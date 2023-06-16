@@ -153,6 +153,7 @@ class BaseLineAnalysisResultTest extends TestCase
 
     /**
      * @dataProvider invalidArrayDataProvider
+     *
      * @psalm-param array<mixed> $asArray
      */
     public function testInvalidArray(array $asArray): void

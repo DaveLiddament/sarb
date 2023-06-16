@@ -31,12 +31,12 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 
 class PsalmJsonResultsParser implements ResultsParser
 {
-    const LINE_FROM = 'line_from';
-    const TYPE = 'type';
-    const FILE = 'file_path';
-    const SEVERITY = 'severity';
-    const ERROR_SEVERITY_LEVEL = 'error';
-    const MESSAGE = 'message';
+    public const LINE_FROM = 'line_from';
+    public const TYPE = 'type';
+    public const FILE = 'file_path';
+    public const SEVERITY = 'severity';
+    public const ERROR_SEVERITY_LEVEL = 'error';
+    public const MESSAGE = 'message';
 
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -55,7 +55,7 @@ class PsalmJsonResultsParser implements ResultsParser
                     $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
                     $analysisResultsBuilder->addAnalysisResult($analysisResult);
                 }
-            } catch (ArrayParseException | InvalidPathException $e) {
+            } catch (ArrayParseException|InvalidPathException $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
         }

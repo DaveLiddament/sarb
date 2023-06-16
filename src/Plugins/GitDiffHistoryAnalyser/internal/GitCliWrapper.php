@@ -16,7 +16,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitException;
-use LogicException;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
@@ -34,7 +33,7 @@ class GitCliWrapper implements GitWrapper
             throw GitException::failedToGetSha($e);
         } catch (InvalidHistoryMarkerException $e) { // @codeCoverageIgnore
             // This should never happen as git SHA got from running git command will always return valid SHA.
-            throw new LogicException('Invalid git SHA '.$e->getMessage()); // @codeCoverageIgnore
+            throw new \LogicException('Invalid git SHA '.$e->getMessage()); // @codeCoverageIgnore
         }
     }
 

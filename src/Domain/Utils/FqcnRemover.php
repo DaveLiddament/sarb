@@ -18,7 +18,7 @@ class FqcnRemover
         $parts = explode(' ', $raw);
         $outputParts = [];
         foreach ($parts as $part) {
-            if (false === strpos($part, '\\')) {
+            if (!str_contains($part, '\\')) {
                 $outputParts[] = $part;
             }
         }

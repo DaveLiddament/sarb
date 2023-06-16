@@ -28,6 +28,7 @@ class BaseLineResultsComparator
      * Stores base line results. With file name as key.
      *
      * @var array
+     *
      * @psalm-var array<string, array<int,BaseLineAnalysisResult>>
      */
     private $baseLine;

@@ -20,7 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
  */
 class FindRenameToState implements State
 {
-    const RENAME_TO = 'rename to ';
+    public const RENAME_TO = 'rename to ';
 
     /**
      * @var FileMutationBuilder

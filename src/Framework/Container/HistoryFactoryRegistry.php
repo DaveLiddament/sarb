@@ -21,6 +21,7 @@ class HistoryFactoryRegistry implements HistoryFactoryLookupService
 {
     /**
      * @var HistoryFactory[]
+     *
      * @psalm-var array<string, HistoryFactory>
      */
     private $historyFactories;

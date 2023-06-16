@@ -20,7 +20,7 @@ class AnalysisResultsImporter
     ): AnalysisResults {
         try {
             return $resultsParser->convertFromString($analysisResultsAsString, $projectRoot);
-        } catch (InvalidContentTypeException | ParseAtLocationException $e) {
+        } catch (InvalidContentTypeException|ParseAtLocationException $e) {
             throw AnalysisResultsImportException::fromException($resultsParser->getIdentifier(), $e);
         }
     }

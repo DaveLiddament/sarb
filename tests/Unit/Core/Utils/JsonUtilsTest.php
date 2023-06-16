@@ -6,7 +6,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 
 class JsonUtilsTest extends TestCase
@@ -44,7 +43,7 @@ EOF;
 
     public function testToStringInvalidData(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         JsonUtils::toString([
             \INF,
         ]);

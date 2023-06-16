@@ -59,8 +59,6 @@ class LineMutation
 
     /**
      * Returns true if other LineMutation is the same.
-     *
-     * @param LineMutation|null $other
      */
     public function isEqual(?self $other): bool
     {

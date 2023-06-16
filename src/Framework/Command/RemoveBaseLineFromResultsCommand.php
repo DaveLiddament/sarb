@@ -28,7 +28,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Throwable;
 
 class RemoveBaseLineFromResultsCommand extends Command
 {
@@ -166,7 +165,7 @@ class RemoveBaseLineFromResultsCommand extends Command
             }
 
             return $returnCode;
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $returnCode = ErrorReporter::reportError($output, $throwable);
 
             return $returnCode;

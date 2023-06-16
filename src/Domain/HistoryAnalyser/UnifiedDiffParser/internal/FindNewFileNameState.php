@@ -22,7 +22,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
  */
 class FindNewFileNameState implements State
 {
-    const NEW_FILE = '+++ b/';
+    public const NEW_FILE = '+++ b/';
 
     /**
      * @var FileMutationBuilder

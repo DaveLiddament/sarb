@@ -14,7 +14,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\DiffParseException;
-use Throwable;
 
 class ParseException extends HistoryAnalyserException
 {
@@ -35,8 +34,6 @@ class ParseException extends HistoryAnalyserException
 
     /**
      * Create from DiffParseException.
-     *
-     * @return ParseException
      */
     public static function fromDiffParseException(string $location, DiffParseException $e): self
     {
@@ -46,7 +43,7 @@ class ParseException extends HistoryAnalyserException
     /**
      * ParseException constructor.
      */
-    public function __construct(string $location, string $reason, string $details, ?Throwable $previous)
+    public function __construct(string $location, string $reason, string $details, ?\Throwable $previous)
     {
         $message = "Error parsing diff. Line {$location}. Reason: {$reason}. Details: [$details]";
         parent::__construct($message, 0, $previous);

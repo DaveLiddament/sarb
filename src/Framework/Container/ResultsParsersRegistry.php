@@ -21,6 +21,7 @@ class ResultsParsersRegistry implements ResultsParserLookupService
 {
     /**
      * @var ResultsParser[]
+     *
      * @psalm-var array<string, ResultsParser>
      */
     private $resultsParsers;

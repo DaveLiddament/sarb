@@ -6,7 +6,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Cont
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidOutputFormatterException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\OutputFormatterRegistry;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class OutputFormatterRegistryTest extends TestCase
@@ -28,7 +27,7 @@ class OutputFormatterRegistryTest extends TestCase
 
     public function testDuplicateName(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         new OutputFormatterRegistry([
             new StubOutputFormatter1(),

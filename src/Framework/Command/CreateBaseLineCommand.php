@@ -30,7 +30,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Throwable;
 
 class CreateBaseLineCommand extends Command
 {
@@ -134,7 +133,7 @@ class CreateBaseLineCommand extends Command
             OutputWriter::writeToStdError($output, "Errors in baseline $errorsInBaseLine", false);
 
             return 0;
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             return ErrorReporter::reportError($output, $throwable);
         }
     }
