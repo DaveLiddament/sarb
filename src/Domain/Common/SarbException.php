@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
-use Exception;
-
 /**
  * Base exception for SARB.
  */
