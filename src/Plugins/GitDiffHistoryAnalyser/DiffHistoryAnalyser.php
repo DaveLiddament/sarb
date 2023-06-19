@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
