@@ -7,6 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
+use Webmozart\Assert\Assert;
 
 class JunitOutputFormatter implements OutputFormatter
 {
@@ -56,6 +57,7 @@ XML;
                 $this->addCounts($testsuite, $caseCount);
 
                 $testsuite = $test->addChild('testsuite');
+                Assert::notNull($testsuite, 'Can not add testsuite to XML');
                 $testsuite->addAttribute('name', $relativeFileName);
 
                 $previousRelativeFileName = $relativeFileName;
@@ -70,8 +72,10 @@ XML;
                 $column
             );
             $testcase = $testsuite->addChild('testcase');
+            Assert::notNull($testcase, 'Can not add testcase element to XML');
             $testcase->addAttribute('name', $lineSprint);
             $failure = $testcase->addChild('failure');
+            Assert::notNull($failure, 'Can not add failure element to XML');
             $failure->addAttribute('type', $analysisResult->getSeverity()->getSeverity());
             $failure->addAttribute(
                 'message',
@@ -87,7 +91,7 @@ XML;
         $dom->formatOutput = true;
         $asXml = $test->asXML();
 
-        if ((false !== $asXml) && ('' !== $asXml)) {
+        if (is_string($asXml) && ('' !== $asXml)) {
             $dom->loadXML($asXml);
         } else {
             throw new SarbException('xml could not be loaded'); // @codeCoverageIgnore
