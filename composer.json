@@ -14,7 +14,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=8.0 <8.3",
+    "php": ">=8.0 <8.4",
     "symfony/config": "^5.4 || ^6.0",
     "symfony/console": "^5.4 || ^6.0",
     "symfony/dependency-injection": "^5.4 || ^6.0",
