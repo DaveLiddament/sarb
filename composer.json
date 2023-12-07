@@ -31,9 +31,9 @@
     "phpstan/phpstan-strict-rules": "^1.5.1",
     "phpstan/phpstan-webmozart-assert": "^1.2.4",
     "phpunit/phpunit": "^9.6.9",
-    "psalm/plugin-phpunit": "^0.15.1",
+    "psalm/plugin-phpunit": "^0.18.4",
     "symfony/filesystem": "^5.4 || ^6.0",
-    "vimeo/psalm": "^4.30"
+    "vimeo/psalm": "^5.17.0"
   },
   "bin" : ["sarb"],
   "autoload": {
