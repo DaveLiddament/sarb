@@ -23,7 +23,7 @@
     "webmozart/assert": "^1.11"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^v3.17.0",
+    "friendsofphp/php-cs-fixer": "^v3.41.1",
     "php-parallel-lint/php-parallel-lint": "~1.2.0",
     "php-parallel-lint/php-var-dump-check": "^v0.5",
     "phpstan/phpstan": "^1.10.48",
