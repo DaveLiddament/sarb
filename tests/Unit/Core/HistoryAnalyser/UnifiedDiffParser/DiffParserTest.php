@@ -17,7 +17,7 @@ class DiffParserTest extends TestCase
     use ResourceLoaderTrait;
 
     /**
-     * @psalm-return array<string,array{string, array<int,array{0: OriginalFileName|null, 1: NewFileName, bool, bool, list<LineMutation>}>  }>
+     * @return array<string,array{string, array<int,array{0: OriginalFileName|null, 1: NewFileName, 2: bool, 3: bool, 4: list<LineMutation>}>}>
      */
     public function dataProvider()
     {
@@ -235,7 +235,7 @@ class DiffParserTest extends TestCase
     /**
      * @dataProvider dataProvider
      *
-     * @psalm-param array<int,array{0: OriginalFileName|null, 1: NewFileName, bool, bool, list<LineMutation>}> $expectedFileMutations
+     * @param array<int,array{0: OriginalFileName|null, 1: NewFileName, 2: bool, 3: bool, 4: list<LineMutation>}> $expectedFileMutations
      */
     public function testDiffParser(string $inputFile, array $expectedFileMutations): void
     {
