@@ -102,6 +102,8 @@ class PhpstanJsonResultsParserTest extends TestCase
             ['phpstan/phpstan-invalid-missing-file.json'],
             ['phpstan/phpstan-invalid-missing-files.json'],
             ['phpstan/phpstan-invalid-missing-line.json'],
+            ['phpstan/phpstan-invalid-missing-errors.json'],
+            ['phpstan/phpstan-invalid-errors-not-strings.json'],
         ];
     }
 

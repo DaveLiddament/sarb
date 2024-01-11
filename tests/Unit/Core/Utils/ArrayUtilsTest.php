@@ -142,4 +142,20 @@ class ArrayUtilsTest extends TestCase
         $this->expectException(ArrayParseException::class);
         ArrayUtils::getOptionalStringValue(self::TEST_ARRAY, self::AGE_KEY);
     }
+
+    public function testAssertArrayOfStringsOnArrayContainingNonStringValues(): void
+    {
+        $this->expectException(ArrayParseException::class);
+        ArrayUtils::assertArrayOfStrings(self::TEST_ARRAY);
+    }
+
+    /** @doesNotPerformAssertions  */
+    public function testAssertArrayOfStringsOnArrayContainingOnlyStrings(): void
+    {
+        $array = [
+            'foo',
+            'bar',
+        ];
+        ArrayUtils::assertArrayOfStrings($array);
+    }
 }
