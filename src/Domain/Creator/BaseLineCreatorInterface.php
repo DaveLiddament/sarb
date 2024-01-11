@@ -12,6 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 
 interface BaseLineCreatorInterface
@@ -21,6 +22,7 @@ interface BaseLineCreatorInterface
      * @throws BaseLineImportException
      * @throws AnalysisResultsImportException
      * @throws HistoryAnalyserException
+     * @throws ErrorReportedByStaticAnalysisTool
      */
     public function createBaseLine(
         HistoryFactory $historyFactory,
