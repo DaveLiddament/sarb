@@ -22,6 +22,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
@@ -42,6 +43,7 @@ class PhpstanJsonResultsParser implements ResultsParser
     private const TYPE = 'message';
     private const FILES = 'files';
     private const MESSAGES = 'messages';
+    private const ERRORS = 'errors';
 
     /**
      * @var FqcnRemover
@@ -58,6 +60,22 @@ class PhpstanJsonResultsParser implements ResultsParser
         $analysisResultsAsArray = JsonUtils::toArray($resultsAsString);
 
         $analysisResultsBuilder = new AnalysisResultsBuilder();
+
+        try {
+            $errors = ArrayUtils::getArrayValue($analysisResultsAsArray, self::ERRORS);
+        } catch (ArrayParseException $e) {
+            throw ParseAtLocationException::issueParsing($e, 'Root node');
+        }
+
+        if (count($errors) > 0) {
+            try {
+                ArrayUtils::assertArrayOfStrings($errors);
+            } catch (ArrayParseException $e) {
+                throw ParseAtLocationException::issueParsing($e, self::ERRORS);
+            }
+            $errorMessage = 'PHPStan failed with errors:'.\PHP_EOL.implode("\n", $errors);
+            throw new ErrorReportedByStaticAnalysisTool($errorMessage);
+        }
 
         try {
             $filesErrors = ArrayUtils::getArrayValue($analysisResultsAsArray, self::FILES);
