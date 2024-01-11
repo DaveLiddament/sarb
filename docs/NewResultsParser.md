@@ -368,3 +368,12 @@ If the relative paths are not relative then use the following code for creating 
             new LineNumber($lineAsInt)
         );
 ```
+
+## Passing on errors from the static analysis tool
+
+If the static analysis tool reports an error that means it could not run successfully, then throw the `ErrorReportedByStaticAnalysisTool` exception from the `convertFromString` method.
+
+This will cause SARB to report the error to the user and exit with a non-zero exit code. 
+See the [`PhpstanJsonResultsParser`](../src/Plugins/ResultsParsers/PhpstanJsonResultsParser/PhpstanJsonResultsParser.php) for an example of this.
+
+

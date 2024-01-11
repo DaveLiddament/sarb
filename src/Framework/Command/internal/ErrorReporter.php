@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ErrorReporter
@@ -37,6 +38,10 @@ class ErrorReporter
             OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 15;
+        } catch (ErrorReportedByStaticAnalysisTool $e) {
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
+
+            return 16;
         } catch (\Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
             OutputWriter::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}", true);

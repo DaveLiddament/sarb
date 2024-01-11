@@ -12,6 +12,7 @@ class AnalysisResultsImporter
 {
     /**
      * @throws AnalysisResultsImportException
+     * @throws ErrorReportedByStaticAnalysisTool
      */
     public function import(
         ResultsParser $resultsParser,

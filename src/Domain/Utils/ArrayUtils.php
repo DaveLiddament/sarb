@@ -127,6 +127,22 @@ class ArrayUtils
     }
 
     /**
+     * @psalm-assert array<array-key,string> $array
+     *
+     * @param array<mixed> $array
+     *
+     * @throws ArrayParseException
+     */
+    public static function assertArrayOfStrings(array $array): void
+    {
+        foreach ($array as $key => $value) {
+            if (!is_string($value)) {
+                throw ArrayParseException::invalidType((string) $key, 'string');
+            }
+        }
+    }
+
+    /**
      * Extracts a integer value from an array, however the integer is in string format.
      *
      * e.g. Assume the following code:

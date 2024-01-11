@@ -23,6 +23,7 @@ interface ResultsParser
      *
      * @throws ParseAtLocationException
      * @throws InvalidContentTypeException
+     * @throws ErrorReportedByStaticAnalysisTool
      */
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults;
 

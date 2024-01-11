@@ -7,6 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\Result
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpstanJsonResultsParser\PhpstanJsonResultsParser;
@@ -101,6 +102,8 @@ class PhpstanJsonResultsParserTest extends TestCase
             ['phpstan/phpstan-invalid-missing-file.json'],
             ['phpstan/phpstan-invalid-missing-files.json'],
             ['phpstan/phpstan-invalid-missing-line.json'],
+            ['phpstan/phpstan-invalid-missing-errors.json'],
+            ['phpstan/phpstan-invalid-errors-not-strings.json'],
         ];
     }
 
@@ -111,6 +114,14 @@ class PhpstanJsonResultsParserTest extends TestCase
     {
         $fileContents = $this->getResource($fileName);
         $this->expectException(ParseAtLocationException::class);
+        $this->phpstanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+    }
+
+    public function testPhpstanReportsErrors(): void
+    {
+        $fileContents = $this->getResource('phpstan/phpstan-with-errors.json');
+        $this->expectException(ErrorReportedByStaticAnalysisTool::class);
+        $this->expectExceptionMessage('PHPStan failed with errors:'.\PHP_EOL.'Error 1'.\PHP_EOL.'Error 2');
         $this->phpstanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
     }
 }

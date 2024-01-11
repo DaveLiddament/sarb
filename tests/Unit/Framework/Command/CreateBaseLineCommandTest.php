@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\HistoryFactoryRegistry;
@@ -222,6 +223,26 @@ EOF;
         ]);
 
         $this->assertReturnCode(100, $commandTester);
+    }
+
+    public function testSimulateStaticAnalysisToolFailed(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->historyFactoryStub,
+            $this->defaultResultsParser,
+            self::BASELINE_FILENAME,
+            null,
+            new ErrorReportedByStaticAnalysisTool('Tool failed'),
+        );
+
+        $commandTester->execute([
+            self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+            self::PROJECT_ROOT => '/tmp',
+        ]);
+
+        $this->assertReturnCode(16, $commandTester);
+        $this->assertResponseContains('Tool failed', $commandTester);
     }
 
     private function createCommandTester(
