@@ -18,6 +18,7 @@
 
     <issueHandlers>
         <LessSpecificReturnType errorLevel="info"/>
+        <MissingClassConstType errorLevel="info"/>
         <MissingThrowsDocblock>
             <errorLevel type="suppress">
                 <directory name="tests/"/>
