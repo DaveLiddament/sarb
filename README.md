@@ -1,6 +1,6 @@
 # Static Analysis Results Baseliner (SARB)
 
-[![PHP versions: 8.0|8.1|8.2](https://img.shields.io/badge/php-8.0|8.1|8.2-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
+[![PHP versions: 8.0|8.1|8.2|8.3](https://img.shields.io/badge/php-8.0|8.1|8.2|8.3-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
 [![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
 [![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://github.com/DaveLiddament/sarb/blob/master/LICENSE.md)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb/stats)
@@ -11,7 +11,6 @@
 [![Psalm level 1](https://img.shields.io/badge/Psalm-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/master/psalm.xml)
 [![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/master/phpstan.neon)
 [![Code Coverage](https://codecov.io/gh/DaveLiddament/sarb/branch/master/graph/badge.svg)](https://codecov.io/gh/DaveLiddament/sarb)
-[![Infection MSI](https://badge.stryker-mutator.io/github.com/DaveLiddament/sarb/master)](https://infection.github.io)
 
 * [Why SARB](#why-sarb)
 * [Requirements](#requirements)

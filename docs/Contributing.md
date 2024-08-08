@@ -18,10 +18,10 @@ SARB must support all PHP versions that are either in [active or security](https
 Support for out of date versions of PHP should only be dropped if it is too difficult to keep them.
 
 Please make sure that the code runs on the following PHP versions:
-- 7.3
-- 7.4
 - 8.0
 - 8.1
+- 8.2
+- 8.3
 
 
 ### Including new libraries
@@ -52,6 +52,5 @@ composer ci-8.1
 In addition to the above code coverage needs to 100%. 
 Documented usage of `@codeCoverageIgnore` is allowed for the cases for lines of code where it is impossible to get test coverage.
 
-Also attempt to keep Infection PHP's [Mutation Score Indicator](https://infection.github.io/guide/#Mutation-Score-Indicator-MSI) (MSI) above 90%.
 
 

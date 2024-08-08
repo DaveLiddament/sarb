@@ -68,7 +68,7 @@ jobs:
 
 
   one-version-only:
-    name: "Runs code coverage, infection and deptrac"
+    name: "Runs code coverage and deptrac"
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -90,7 +90,7 @@ jobs:
         with:
           coverage: Xdebug
           php-version: "${{ matrix.php-version }}"
-          tools: composer, infection, qossmic/deptrac-shim
+          tools: composer, qossmic/deptrac-shim
 
       - name: Get composer cache directory
         id: composercache
@@ -118,9 +118,4 @@ jobs:
 
       - name: "Run deptrack"
         run: composer deptrac
-
-      - name: "Run mutation tests with Xdebug and infection/infection"
-        env:
-          INFECTION_BADGE_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: "infection --configuration=infection.json.dist"
 

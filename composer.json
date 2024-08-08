@@ -94,7 +94,7 @@
     "cs-fix" : "php-cs-fixer fix -v",
     "psalm-8.0" : "psalm --php-version=8.0",
     "psalm-8.1" : "psalm --php-version=8.1",
-    "psalm-8.2" : "psalm --php-version=8.2 --shepherd",
+    "psalm-8.2" : "psalm --php-version=8.2",
     "psalm-8.3" : "psalm --php-version=8.3 --shepherd",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
