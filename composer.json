@@ -32,6 +32,7 @@
     "phpstan/phpstan-webmozart-assert": "^1.2.6",
     "phpunit/phpunit": "^9.6.15",
     "psalm/plugin-phpunit": "^0.18.4",
+    "rregeer/phpunit-coverage-check": "^0.3.1",
     "symfony/filesystem": "^5.4 || ^6.0.19 || ^7",
     "vimeo/psalm": "^5.24.0"
   },
@@ -83,7 +84,7 @@
       "@lint",
       "@var-dump-checker",
       "@cs",
-      "@test",
+      "@test-with-coverage-check",
       "@phpstan",
       "@psalm-8.3"
     ],
@@ -101,6 +102,11 @@
     "test" : [
       "@putenv XDEBUG_MODE=coverage",
       "phpunit --coverage-clover=reports/phpunit.xml"
+    ],
+    "test-with-coverage-check" : [
+      "@putenv XDEBUG_MODE=coverage",
+      "phpunit --coverage-clover=reports/phpunit.xml",
+      "coverage-check reports/phpunit.xml 100"
     ]
 
   }

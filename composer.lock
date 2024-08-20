@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb1f6fc45e68c456600e54806e67c602",
+    "content-hash": "ba9bf464009b992b602ad0fd317103d0",
     "packages": [
         {
             "name": "psr/container",
@@ -3479,6 +3479,52 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
             "time": "2021-07-14T16:46:02+00:00"
+        },
+        {
+            "name": "rregeer/phpunit-coverage-check",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardregeer/phpunit-coverage-check.git",
+                "reference": "9618fa74477fbc448c1b0599bef5153d170094bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardregeer/phpunit-coverage-check/zipball/9618fa74477fbc448c1b0599bef5153d170094bd",
+                "reference": "9618fa74477fbc448c1b0599bef5153d170094bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "bin": [
+                "bin/coverage-check"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Regeer",
+                    "email": "rich2309@gmail.com"
+                }
+            ],
+            "description": "Check the code coverage using the clover report of phpunit",
+            "keywords": [
+                "ci",
+                "code coverage",
+                "php",
+                "phpunit",
+                "testing",
+                "unittest"
+            ],
+            "support": {
+                "issues": "https://github.com/richardregeer/phpunit-coverage-check/issues",
+                "source": "https://github.com/richardregeer/phpunit-coverage-check/tree/0.3.1"
+            },
+            "time": "2019-10-14T07:04:13+00:00"
         },
         {
             "name": "sebastian/cli-parser",
