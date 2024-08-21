@@ -12,6 +12,9 @@
     <testsuite name="Application Test Suite">
       <directory>tests/</directory>
     </testsuite>
+    <testsuite name="rector">
+      <directory>utils/rector/tests</directory>
+    </testsuite>
   </testsuites>
   <logging>
     <junit outputFile="reports/coverage.xml"/>
