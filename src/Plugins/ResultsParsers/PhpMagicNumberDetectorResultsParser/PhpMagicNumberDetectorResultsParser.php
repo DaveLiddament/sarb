@@ -29,7 +29,7 @@ use Webmozart\Assert\Assert;
 /**
  * Handles PHPMND CLI output.
  */
-class PhpMagicNumberDetectorResultsParser implements ResultsParser
+final class PhpMagicNumberDetectorResultsParser implements ResultsParser
 {
     private const MAGIC_NUMBER_REGEX = "/^(.*):(\d+)\. Magic number: (.*)$/";
 
@@ -50,7 +50,7 @@ class PhpMagicNumberDetectorResultsParser implements ResultsParser
                 $location = Location::fromRelativeFileName(
                     new RelativeFileName($relativeFileName),
                     $projectRoot,
-                    new LineNumber($lineNumber)
+                    new LineNumber($lineNumber),
                 );
 
                 $analysisResult = new AnalysisResult(
@@ -58,7 +58,7 @@ class PhpMagicNumberDetectorResultsParser implements ResultsParser
                     new Type($magicNumber),
                     "Magic number {$magicNumber}",
                     [],
-                    Severity::error()
+                    Severity::error(),
                 );
 
                 $analysisResultsBuilder->addAnalysisResult($analysisResult);

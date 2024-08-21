@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 /**
  * Thrown if invalid name of HistoryAnalyser is supplied.
  */
-class InvalidHistoryFactoryException extends SarbException
+final class InvalidHistoryFactoryException extends SarbException
 {
     public static function invalidIdentifier(string $name): self
     {

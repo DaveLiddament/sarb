@@ -20,21 +20,16 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
  *
  * If this refers to either an added or deleted file then ignore the Change Hunks and scan for next File Diff.
  */
-class FindNewFileNameState implements State
+final class FindNewFileNameState implements State
 {
     public const NEW_FILE = '+++ b/';
 
     /**
-     * @var FileMutationBuilder
-     */
-    private $fileMutationBuilder;
-
-    /**
      * FindNewFileNameState constructor.
      */
-    public function __construct(FileMutationBuilder $fileMutationBuilder)
-    {
-        $this->fileMutationBuilder = $fileMutationBuilder;
+    public function __construct(
+        private FileMutationBuilder $fileMutationBuilder,
+    ) {
     }
 
     public function processLine(string $line): State

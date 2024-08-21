@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 
-class LineTypeDetector
+final class LineTypeDetector
 {
     private const FILE_DIFF_START = 'diff --git';
     private const CHANGE_HUNK_START = '@@';

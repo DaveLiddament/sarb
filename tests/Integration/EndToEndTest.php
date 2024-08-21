@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
 // TODO this is getting a bit big. Split into multiple files.
-class EndToEndTest extends TestCase
+final class EndToEndTest extends TestCase
 {
     use ResourceLoaderTrait;
     use TestDirectoryTrait;
@@ -80,7 +80,7 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             11,
-            self::COMMIT_1_RESULTS
+            self::COMMIT_1_RESULTS,
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -102,7 +102,7 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             13,
-            self::INVALID_RESULTS
+            self::INVALID_RESULTS,
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -124,7 +124,7 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             15,
-            self::COMMIT_1_RESULTS
+            self::COMMIT_1_RESULTS,
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -180,7 +180,7 @@ class EndToEndTest extends TestCase
         $this->runStripBaseLineFromResultsCommand(
             self::COMMIT_2_RESULTS,
             1,
-            $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS)
+            $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS),
         );
 
         // Check remove warnings works as expected
@@ -189,7 +189,7 @@ class EndToEndTest extends TestCase
             1,
             $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_NO_WARNINGS_EXPECTED_RESULTS),
             null,
-            true
+            true,
         );
 
         // Now create commit 3. This has errors that were only in the baseline.
@@ -197,7 +197,7 @@ class EndToEndTest extends TestCase
         $this->runStripBaseLineFromResultsCommand(
             self::COMMIT_3_RESULTS,
             0,
-            ''
+            '',
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -218,7 +218,7 @@ class EndToEndTest extends TestCase
             self::COMMIT_2_RESULTS,
             1,
             $this->getStaticAnalysisResultsAsString(self::COMMIT_2_BASELINE_REMOVED_EXPECTED_RESULTS),
-            'code'
+            'code',
         );
 
         // Now create commit 3. This has errors that were only in the baseline.
@@ -226,7 +226,7 @@ class EndToEndTest extends TestCase
         $this->runStripBaseLineFromResultsCommand(
             self::COMMIT_3_RESULTS,
             0,
-            ''
+            '',
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -249,7 +249,7 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             15,
-            self::COMMIT_1_RESULTS
+            self::COMMIT_1_RESULTS,
         );
 
         $this->removeTestDirectory();
@@ -272,7 +272,7 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             0,
-            self::COMMIT_1_RESULTS
+            self::COMMIT_1_RESULTS,
         );
 
         // Only delete test directory if tests passed. Keep to investigate test failures
@@ -318,7 +318,7 @@ class EndToEndTest extends TestCase
             CreateBaseLineCommand::COMMAND_NAME,
             $arguments,
             0,
-            self::COMMIT_1_RESULTS
+            self::COMMIT_1_RESULTS,
         );
     }
 
@@ -327,7 +327,7 @@ class EndToEndTest extends TestCase
         int $expectedExitCode,
         string $expectedResultsJson,
         ?string $relativePathToCode = null,
-        bool $ignoreWarnings = false
+        bool $ignoreWarnings = false,
     ): void {
         $arguments = [
             'baseline-file' => $this->getBaselineFilePath(),
@@ -347,7 +347,7 @@ class EndToEndTest extends TestCase
             RemoveBaseLineFromResultsCommand::COMMAND_NAME,
             $arguments,
             $expectedExitCode,
-            $psalmResults
+            $psalmResults,
         );
 
         $output = str_replace('\/', '/', $output);
@@ -362,7 +362,7 @@ class EndToEndTest extends TestCase
         string $commandName,
         array $arguments,
         int $expectedExitCode,
-        ?string $resourceContainStdinContents
+        ?string $resourceContainStdinContents,
     ): string {
         $command = $this->application->find($commandName);
         $commandTester = new CommandTester($command);

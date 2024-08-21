@@ -10,7 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
-class ProjectRootHelper
+final class ProjectRootHelper
 {
     private const PROJECT_ROOT = 'project-root';
     private const RELATIVE_PATH_TO_CODE = 'relative-path-to-code';
@@ -21,7 +21,7 @@ class ProjectRootHelper
             self::PROJECT_ROOT,
             null,
             InputOption::VALUE_REQUIRED,
-            'Path to the root of the project you are creating baseline for'
+            'Path to the root of the project you are creating baseline for',
         );
 
         $command->addOption(

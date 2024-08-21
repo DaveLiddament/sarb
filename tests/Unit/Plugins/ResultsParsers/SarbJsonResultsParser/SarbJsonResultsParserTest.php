@@ -15,7 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTra
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
 use PHPUnit\Framework\TestCase;
 
-class SarbJsonResultsParserTest extends TestCase
+final class SarbJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;
@@ -57,25 +57,25 @@ class SarbJsonResultsParserTest extends TestCase
             'src/Domain/ResultsParser/AnalysisResults.php',
             67,
             'MismatchingDocblockParamType',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame(
             "Parameter \$array has wrong type 'array<mixed, mixed>', should be 'int'",
-            $result1->getMessage()
+            $result1->getMessage(),
         );
 
         $this->assertMatch($result2,
             'src/Domain/Utils/JsonUtils.php',
             29,
             'MixedAssignment',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
-            Severity::warning()
+            Severity::warning(),
         );
     }
 

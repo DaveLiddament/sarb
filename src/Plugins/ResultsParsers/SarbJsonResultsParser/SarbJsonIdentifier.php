@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\Sa
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 
-class SarbJsonIdentifier implements Identifier
+final class SarbJsonIdentifier implements Identifier
 {
     public const CODE = 'sarb-json';
 

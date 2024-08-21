@@ -15,29 +15,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 
-class ResultsPruner implements ResultsPrunerInterface
+final class ResultsPruner implements ResultsPrunerInterface
 {
-    /**
-     * @var BaseLineImporter
-     */
-    private $baseLineImporter;
-    /**
-     * @var BaseLineResultsRemover
-     */
-    private $baseLineResultsRemover;
-    /**
-     * @var AnalysisResultsImporter
-     */
-    private $analysisResultsImporter;
-
     public function __construct(
-        BaseLineImporter $baseLineImporter,
-        BaseLineResultsRemover $baseLineResultsRemover,
-        AnalysisResultsImporter $analysisResultsImporter
+        private BaseLineImporter $baseLineImporter,
+        private BaseLineResultsRemover $baseLineResultsRemover,
+        private AnalysisResultsImporter $analysisResultsImporter,
     ) {
-        $this->baseLineImporter = $baseLineImporter;
-        $this->baseLineResultsRemover = $baseLineResultsRemover;
-        $this->analysisResultsImporter = $analysisResultsImporter;
     }
 
     /**
@@ -51,7 +35,7 @@ class ResultsPruner implements ResultsPrunerInterface
         BaseLineFileName $baseLineFileName,
         string $analysisResults,
         ProjectRoot $projectRoot,
-        bool $ignoreWarnings
+        bool $ignoreWarnings,
     ): PrunedResults {
         $baseLine = $this->baseLineImporter->import($baseLineFileName);
         $resultsParser = $baseLine->getResultsParser();
@@ -64,7 +48,7 @@ class ResultsPruner implements ResultsPrunerInterface
             $inputAnalysisResults,
             $historyAnalyser,
             $baseLine->getAnalysisResults(),
-            $ignoreWarnings
+            $ignoreWarnings,
         );
 
         return new PrunedResults($baseLine, $outputAnalysisResults, $inputAnalysisResults);

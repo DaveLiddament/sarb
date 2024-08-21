@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidO
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container\OutputFormatterRegistry;
 use PHPUnit\Framework\TestCase;
 
-class OutputFormatterRegistryTest extends TestCase
+final class OutputFormatterRegistryTest extends TestCase
 {
     public function testListIdentifiers(): void
     {

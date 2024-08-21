@@ -12,7 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class DiffParserTest extends TestCase
+final class DiffParserTest extends TestCase
 {
     use ResourceLoaderTrait;
 
@@ -250,7 +250,7 @@ class DiffParserTest extends TestCase
 
         $this->assertSame($expectedFileMutationsCount, $actualFileMutationsCount);
 
-        foreach ($expectedFileMutations as list($originalFileName, $newFileName, $isAdded, $isDeleted, $lineMutations)) {
+        foreach ($expectedFileMutations as [$originalFileName, $newFileName, $isAdded, $isDeleted, $lineMutations]) {
             $actualFileMutation = $fileMutations->getFileMutation($newFileName);
             $this->assertNotNull($actualFileMutation, "No FileMutation for [{$newFileName->getFileName()}]");
 
@@ -288,7 +288,7 @@ class DiffParserTest extends TestCase
     private function assertLineMutation(
         ?LineMutation $expectedLineMutation,
         ?LineMutation $actualLineMutation,
-        int $i
+        int $i,
     ): void {
         if (null === $expectedLineMutation) {
             $this->assertNull($actualLineMutation, "Error with line mutation [$i]");

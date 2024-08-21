@@ -13,7 +13,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use PHPUnit\Framework\TestCase;
 
-class FindNewFileNameStateTest extends TestCase
+final class FindNewFileNameStateTest extends TestCase
 {
     /**
      * @var OriginalFileName

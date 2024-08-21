@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFo
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatterLookupService;
 use Webmozart\Assert\Assert;
 
-class OutputFormatterRegistry implements OutputFormatterLookupService
+final class OutputFormatterRegistry implements OutputFormatterLookupService
 {
     /**
      * @var OutputFormatter[]
@@ -64,7 +64,7 @@ class OutputFormatterRegistry implements OutputFormatterLookupService
     {
         $identifier = $outputFormatter->getIdentifier();
         Assert::keyNotExists($this->outputFormatters, $identifier,
-            "Multiple OutputFormatters configured with the identifier [$identifier]"
+            "Multiple OutputFormatters configured with the identifier [$identifier]",
         );
 
         $this->outputFormatters[$identifier] = $outputFormatter;

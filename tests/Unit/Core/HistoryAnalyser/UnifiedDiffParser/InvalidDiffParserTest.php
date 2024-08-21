@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class InvalidDiffParserTest extends TestCase
+final class InvalidDiffParserTest extends TestCase
 {
     use ResourceLoaderTrait;
 

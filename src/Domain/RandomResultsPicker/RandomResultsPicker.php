@@ -8,18 +8,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\RandomNumberGenerator;
 
-class RandomResultsPicker
+final class RandomResultsPicker
 {
     private const RANDOM_ISSUES_TO_FIX = 5;
 
-    /**
-     * @var RandomNumberGenerator
-     */
-    private $randomNumberGenerator;
-
-    public function __construct(RandomNumberGenerator $randomNumberGenerator)
-    {
-        $this->randomNumberGenerator = $randomNumberGenerator;
+    public function __construct(
+        private RandomNumberGenerator $randomNumberGenerator,
+    ) {
     }
 
     /**

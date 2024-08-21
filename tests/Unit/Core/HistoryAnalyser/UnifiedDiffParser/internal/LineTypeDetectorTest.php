@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\HistoryAn
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\LineTypeDetector;
 use PHPUnit\Framework\TestCase;
 
-class LineTypeDetectorTest extends TestCase
+final class LineTypeDetectorTest extends TestCase
 {
     public function testMatchStartDiff(): void
     {

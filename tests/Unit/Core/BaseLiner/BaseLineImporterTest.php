@@ -19,7 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJson
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class BaseLineImporterTest extends TestCase
+final class BaseLineImporterTest extends TestCase
 {
     use ResourceLoaderTrait;
 

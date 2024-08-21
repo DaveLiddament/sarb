@@ -29,7 +29,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class ExakatJsonResultsParser implements ResultsParser
+final class ExakatJsonResultsParser implements ResultsParser
 {
     public const LINE_FROM = 'line';
     public const TYPE = 'type';
@@ -66,7 +66,7 @@ class ExakatJsonResultsParser implements ResultsParser
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
     ): AnalysisResult {
         $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE_FROM);
@@ -75,7 +75,7 @@ class ExakatJsonResultsParser implements ResultsParser
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName($absoluteFileNameAsString),
             $projectRoot,
-            new LineNumber($lineAsInt)
+            new LineNumber($lineAsInt),
         );
 
         return new AnalysisResult(

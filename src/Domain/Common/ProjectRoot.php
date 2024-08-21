@@ -16,13 +16,8 @@ use Webmozart\Assert\Assert;
  *
  * NOTE: Assuming the GitHistoryAnalyser is being used then the root directory contains the .git directory.
  */
-class ProjectRoot
+final class ProjectRoot
 {
-    /**
-     * @var string
-     */
-    private $rootDirectory;
-
     /**
      * @var string
      */
@@ -53,9 +48,9 @@ class ProjectRoot
         return new self($rootDirectory);
     }
 
-    private function __construct(string $rootDirectory)
-    {
-        $this->rootDirectory = $rootDirectory;
+    private function __construct(
+        private string $rootDirectory,
+    ) {
     }
 
     /**
@@ -106,7 +101,7 @@ class ProjectRoot
 
         try {
             return new AbsoluteFileName($absoluteFileName);
-        } catch (InvalidPathException $e) {
+        } catch (InvalidPathException) {
             throw new \LogicException("Invalid $absoluteFileName");
         }
     }

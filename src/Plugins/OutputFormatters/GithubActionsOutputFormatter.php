@@ -7,10 +7,10 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 
-class GithubActionsOutputFormatter implements OutputFormatter
+final class GithubActionsOutputFormatter implements OutputFormatter
 {
     public function outputResults(
-        AnalysisResults $analysisResults
+        AnalysisResults $analysisResults,
     ): string {
         $lines = [];
 

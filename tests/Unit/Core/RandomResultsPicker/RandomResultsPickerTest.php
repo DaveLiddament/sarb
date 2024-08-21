@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\RandomNumberGenera
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
-class RandomResultsPickerTest extends TestCase
+final class RandomResultsPickerTest extends TestCase
 {
     /**
      * @var ProjectRoot
@@ -101,7 +101,7 @@ class RandomResultsPickerTest extends TestCase
             new Type("Type-{$string}"),
             $string,
             [],
-            Severity::error()
+            Severity::error(),
         );
 
         $issuesBuilder->addAnalysisResult($analysisResult);

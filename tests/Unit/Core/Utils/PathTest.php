@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  * @author Bernhard Schussek <bschussek@gmail.com>
  * @author Thomas Schulz <mail@king2500.net>
  */
-class PathTest extends TestCase
+final class PathTest extends TestCase
 {
     /** @var array<string,string> */
     protected $storedEnv = [];

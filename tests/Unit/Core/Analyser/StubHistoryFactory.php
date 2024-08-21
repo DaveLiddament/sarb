@@ -14,19 +14,14 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitHistoryMarkerFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
 
-class StubHistoryFactory implements HistoryFactory
+final class StubHistoryFactory implements HistoryFactory
 {
-    /**
-     * @var FileMutations
-     */
-    private $fileMutations;
-
     /**
      * StubHistoryFactory constructor.
      */
-    public function __construct(FileMutations $fileMutations)
-    {
-        $this->fileMutations = $fileMutations;
+    public function __construct(
+        private FileMutations $fileMutations,
+    ) {
     }
 
     public function newHistoryAnalyser(HistoryMarker $baseLineHistoryMarker, ProjectRoot $projectRoot): HistoryAnalyser

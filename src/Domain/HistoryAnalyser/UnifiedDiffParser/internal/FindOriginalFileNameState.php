@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 
-class FindOriginalFileNameState implements State
+final class FindOriginalFileNameState implements State
 {
     private const RENAME_FROM = 'rename from ';
     private const ORIGINAL_FILE = '--- a/';

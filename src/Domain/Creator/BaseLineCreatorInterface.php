@@ -30,6 +30,6 @@ interface BaseLineCreatorInterface
         BaseLineFileName $baselineFile,
         ProjectRoot $projectRoot,
         string $analysisResultsAsString,
-        bool $forceBaselineCreation
+        bool $forceBaselineCreation,
     ): BaseLine;
 }

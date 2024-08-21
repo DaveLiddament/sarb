@@ -17,7 +17,7 @@ use Webmozart\Assert\Assert;
 /**
  * Holds FileMutation objects. Use the.
  */
-class FileMutations
+final class FileMutations
 {
     /**
      * @var FileMutation[]

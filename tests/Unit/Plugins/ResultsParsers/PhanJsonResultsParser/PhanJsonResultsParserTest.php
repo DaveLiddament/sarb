@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTra
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
 use PHPUnit\Framework\TestCase;
 
-class PhanJsonResultsParserTest extends TestCase
+final class PhanJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;
@@ -54,7 +54,7 @@ class PhanJsonResultsParserTest extends TestCase
             Severity::error());
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
-            $result1->getMessage()
+            $result1->getMessage(),
         );
         $this->assertSame(
             '/vagrant/static-analysis-baseliner/src/Domain/Analyser/BaseLineResultsRemover.php',
@@ -87,7 +87,7 @@ class PhanJsonResultsParserTest extends TestCase
             Severity::error());
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
-            $result1->getMessage()
+            $result1->getMessage(),
         );
         $this->assertSame(
             '/vagrant/static-analysis-baseliner/code/src/Domain/Analyser/BaseLineResultsRemover.php',

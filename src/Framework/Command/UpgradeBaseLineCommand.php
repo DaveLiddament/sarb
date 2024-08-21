@@ -19,7 +19,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UpgradeBaseLineCommand extends Command
+final class UpgradeBaseLineCommand extends Command
 {
     public const COMMAND_NAME = 'upgrade-from-version-0';
 
@@ -28,16 +28,10 @@ class UpgradeBaseLineCommand extends Command
      */
     protected static $defaultName = self::COMMAND_NAME;
 
-    /**
-     * @var BaselineUpgrader
-     */
-    private $baselineUpgrader;
-
     public function __construct(
-        BaselineUpgrader $baselineUpgrader
+        private BaselineUpgrader $baselineUpgrader,
     ) {
         parent::__construct(self::COMMAND_NAME);
-        $this->baselineUpgrader = $baselineUpgrader;
     }
 
     protected function configure(): void
@@ -57,8 +51,8 @@ class UpgradeBaseLineCommand extends Command
                 sprintf(
                     "Update the command to remove baseline results to:\n%s | sarb remove %s",
                     $identifier->getToolCommand(),
-                    $baselineFile->getFileName()
-                )
+                    $baselineFile->getFileName(),
+                ),
             );
 
             return 0;

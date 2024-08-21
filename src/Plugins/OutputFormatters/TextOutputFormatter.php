@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 
-class TextOutputFormatter implements OutputFormatter
+final class TextOutputFormatter implements OutputFormatter
 {
     public function outputResults(AnalysisResults $analysisResults): string
     {

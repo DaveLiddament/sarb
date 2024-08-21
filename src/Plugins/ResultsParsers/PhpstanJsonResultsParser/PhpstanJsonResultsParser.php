@@ -37,7 +37,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
  * NOTE: SARB only deals with errors that are attached to a particular line in a file.
  * PHPStan can report general errors (not specific to file). These are ignored by SARB.
  */
-class PhpstanJsonResultsParser implements ResultsParser
+final class PhpstanJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
     private const TYPE = 'message';
@@ -45,14 +45,9 @@ class PhpstanJsonResultsParser implements ResultsParser
     private const MESSAGES = 'messages';
     private const ERRORS = 'errors';
 
-    /**
-     * @var FqcnRemover
-     */
-    private $fqcnRemover;
-
-    public function __construct(FqcnRemover $fqcnRemover)
-    {
-        $this->fqcnRemover = $fqcnRemover;
+    public function __construct(
+        private FqcnRemover $fqcnRemover,
+    ) {
     }
 
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
@@ -118,7 +113,7 @@ class PhpstanJsonResultsParser implements ResultsParser
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
         AbsoluteFileName $absoluteFileName,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
     ): AnalysisResult {
         $lineAsInt = ArrayUtils::getIntOrNullValue($analysisResultAsArray, self::LINE);
 
@@ -133,7 +128,7 @@ class PhpstanJsonResultsParser implements ResultsParser
         $location = Location::fromAbsoluteFileName(
             $absoluteFileName,
             $projectRoot,
-            new LineNumber($lineAsInt)
+            new LineNumber($lineAsInt),
         );
 
         return new AnalysisResult(
@@ -141,7 +136,7 @@ class PhpstanJsonResultsParser implements ResultsParser
             new Type($type),
             $rawType,
             $analysisResultAsArray,
-            Severity::error()
+            Severity::error(),
         );
     }
 

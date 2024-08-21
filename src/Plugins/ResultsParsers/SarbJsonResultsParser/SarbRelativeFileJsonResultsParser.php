@@ -29,7 +29,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
-class SarbRelativeFileJsonResultsParser implements ResultsParser
+final class SarbRelativeFileJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
     private const TYPE = 'type';
@@ -78,7 +78,7 @@ class SarbRelativeFileJsonResultsParser implements ResultsParser
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
     ): AnalysisResult {
         $relativeFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
@@ -87,7 +87,7 @@ class SarbRelativeFileJsonResultsParser implements ResultsParser
         $location = Location::fromRelativeFileName(
             new RelativeFileName($relativeFileNameAsString),
             $projectRoot,
-            new LineNumber($lineAsInt)
+            new LineNumber($lineAsInt),
         );
 
         return new AnalysisResult(
@@ -95,7 +95,7 @@ class SarbRelativeFileJsonResultsParser implements ResultsParser
             new Type($typeAsString),
             ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
             $analysisResultAsArray,
-            SeverityReader::getOptionalSeverity($analysisResultAsArray, self::SEVERITY)
+            SeverityReader::getOptionalSeverity($analysisResultAsArray, self::SEVERITY),
         );
     }
 }

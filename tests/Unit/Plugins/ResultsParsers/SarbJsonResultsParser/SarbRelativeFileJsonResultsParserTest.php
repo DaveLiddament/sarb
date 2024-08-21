@@ -15,7 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTra
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
 use PHPUnit\Framework\TestCase;
 
-class SarbRelativeFileJsonResultsParserTest extends TestCase
+final class SarbRelativeFileJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;
@@ -57,29 +57,29 @@ class SarbRelativeFileJsonResultsParserTest extends TestCase
             'src/Domain/ResultsParser/AnalysisResults.php',
             67,
             'MismatchingDocblockParamType',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame(
             "Parameter \$array has wrong type 'array<mixed, mixed>', should be 'int'",
-            $result1->getMessage()
+            $result1->getMessage(),
         );
         $this->assertSame(
             '/vagrant/static-analysis-baseliner/src/Domain/ResultsParser/AnalysisResults.php',
-            $result1->getLocation()->getAbsoluteFileName()->getFileName()
+            $result1->getLocation()->getAbsoluteFileName()->getFileName(),
         );
 
         $this->assertMatch($result2,
             'src/Domain/Utils/JsonUtils.php',
             29,
             'MixedAssignment',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
-            Severity::warning()
+            Severity::warning(),
         );
     }
 
@@ -98,29 +98,29 @@ class SarbRelativeFileJsonResultsParserTest extends TestCase
             'src/Domain/ResultsParser/AnalysisResults.php',
             67,
             'MismatchingDocblockParamType',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame(
             "Parameter \$array has wrong type 'array<mixed, mixed>', should be 'int'",
-            $result1->getMessage()
+            $result1->getMessage(),
         );
         $this->assertSame(
             '/vagrant/static-analysis-baseliner/code/src/Domain/ResultsParser/AnalysisResults.php',
-            $result1->getLocation()->getAbsoluteFileName()->getFileName()
+            $result1->getLocation()->getAbsoluteFileName()->getFileName(),
         );
 
         $this->assertMatch($result2,
             'src/Domain/Utils/JsonUtils.php',
             29,
             'MixedAssignment',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
-            Severity::warning()
+            Severity::warning(),
         );
     }
 

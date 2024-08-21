@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAna
 /**
  * Holds current Original and New Line numbers.
  */
-class LineNumberMapper
+final class LineNumberMapper
 {
     /**
      * @var int

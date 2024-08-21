@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\Ph
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 
-class PhpstanJsonIdentifier implements Identifier
+final class PhpstanJsonIdentifier implements Identifier
 {
     public function getCode(): string
     {

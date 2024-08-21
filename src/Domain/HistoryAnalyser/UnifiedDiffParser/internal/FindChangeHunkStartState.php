@@ -17,19 +17,14 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
  * - start of a new Change Hunk
  * - start of a new File Diff.
  */
-class FindChangeHunkStartState implements State
+final class FindChangeHunkStartState implements State
 {
-    /**
-     * @var FileMutationBuilder
-     */
-    private $fileMutationBuilder;
-
     /**
      * FindChangeHunkStartState constructor.
      */
-    public function __construct(FileMutationBuilder $fileMutationBuilder)
-    {
-        $this->fileMutationBuilder = $fileMutationBuilder;
+    public function __construct(
+        private FileMutationBuilder $fileMutationBuilder,
+    ) {
     }
 
     public function processLine(string $line): State

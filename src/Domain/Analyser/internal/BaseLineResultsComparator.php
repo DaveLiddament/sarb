@@ -22,7 +22,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 /**
  * Checks if an AnalysisResult is in the baseline set of results.
  */
-class BaseLineResultsComparator
+final class BaseLineResultsComparator
 {
     /**
      * Stores base line results. With file name as key.

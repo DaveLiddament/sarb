@@ -9,13 +9,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class BaseLineAnalysisResults
+final class BaseLineAnalysisResults
 {
-    /**
-     * @var BaseLineAnalysisResult[]
-     */
-    private $baseLineAnalysisResults;
-
     /**
      * @psalm-param array<mixed> $array
      *
@@ -54,9 +49,9 @@ class BaseLineAnalysisResults
     /**
      * @param BaseLineAnalysisResult[] $baseLineAnalysisResults
      */
-    private function __construct(array $baseLineAnalysisResults)
-    {
-        $this->baseLineAnalysisResults = $baseLineAnalysisResults;
+    private function __construct(
+        private array $baseLineAnalysisResults,
+    ) {
     }
 
     public function getCount(): int

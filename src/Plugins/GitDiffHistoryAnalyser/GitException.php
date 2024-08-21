@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAna
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\CommandFailedException;
 
-class GitException extends HistoryAnalyserException
+final class GitException extends HistoryAnalyserException
 {
     public static function failedDiff(CommandFailedException $e): self
     {

@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Webmozart\Assert\Assert;
 
-class CliConfigReader
+final class CliConfigReader
 {
     public static function getArgument(InputInterface $input, string $argumentName): string
     {
@@ -51,7 +51,7 @@ class CliConfigReader
         $inputSteam = ($input instanceof StreamableInputInterface) ? $input->getStream() : null;
 
         // If nothing from input stream use STDIN instead.
-        $inputSteam = $inputSteam ?? \STDIN;
+        $inputSteam ??= \STDIN;
 
         $input = stream_get_contents($inputSteam);
 

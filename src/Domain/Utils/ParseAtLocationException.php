@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 /**
  * Holds a parsing exception along with details of where the parsing failed.
  */
-class ParseAtLocationException extends SarbException
+final class ParseAtLocationException extends SarbException
 {
     public static function issueAtPosition(SarbException $e, int $position): self
     {

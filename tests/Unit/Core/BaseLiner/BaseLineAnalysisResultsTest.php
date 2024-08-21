@@ -16,7 +16,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use PHPUnit\Framework\TestCase;
 
-class BaseLineAnalysisResultsTest extends TestCase
+final class BaseLineAnalysisResultsTest extends TestCase
 {
     private const PROJECT_ROOT = '/';
     private const ABSOLUTE_FILE_NAME_1 = '/fileName1';
@@ -126,7 +126,7 @@ class BaseLineAnalysisResultsTest extends TestCase
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName(self::ABSOLUTE_FILE_NAME_1),
             $projectRoot,
-            $lineNumber
+            $lineNumber,
         );
 
         $analysisResultsBuilder->addAnalysisResult(new AnalysisResult(
@@ -134,7 +134,7 @@ class BaseLineAnalysisResultsTest extends TestCase
             $type,
             self::MESSAGE_1,
             [],
-            Severity::error()
+            Severity::error(),
         ));
 
         $baseLineResults = BaseLineAnalysisResults::fromAnalysisResults($analysisResultsBuilder->build());

@@ -13,23 +13,12 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryF
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 
-class BaseLineCreator implements BaseLineCreatorInterface
+final class BaseLineCreator implements BaseLineCreatorInterface
 {
-    /**
-     * @var BaseLineExporter
-     */
-    private $exporter;
-    /**
-     * @var AnalysisResultsImporter
-     */
-    private $analysisResultsImporter;
-
     public function __construct(
-        BaseLineExporter $exporter,
-        AnalysisResultsImporter $analysisResultsImporter
+        private BaseLineExporter $exporter,
+        private AnalysisResultsImporter $analysisResultsImporter,
     ) {
-        $this->exporter = $exporter;
-        $this->analysisResultsImporter = $analysisResultsImporter;
     }
 
     public function createBaseLine(
@@ -38,7 +27,7 @@ class BaseLineCreator implements BaseLineCreatorInterface
         BaseLineFileName $baselineFile,
         ProjectRoot $projectRoot,
         string $analysisResultsAsString,
-        bool $forceBaselineCreation
+        bool $forceBaselineCreation,
     ): BaseLine {
         $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker($projectRoot, $forceBaselineCreation);
         $analysisResults = $this->analysisResultsImporter->import($resultsParser, $projectRoot, $analysisResultsAsString);

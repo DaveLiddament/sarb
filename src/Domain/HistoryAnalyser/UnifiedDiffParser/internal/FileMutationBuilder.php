@@ -18,13 +18,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use Webmozart\Assert\Assert;
 
-class FileMutationBuilder
+final class FileMutationBuilder
 {
-    /**
-     * @var FileMutationsBuilder
-     */
-    private $fileMutationsBuilder;
-
     /**
      * @var OriginalFileName|null
      */
@@ -45,9 +40,9 @@ class FileMutationBuilder
     /**
      * FileMutationBuilder constructor.
      */
-    public function __construct(FileMutationsBuilder $fileMutationsBuilder)
-    {
-        $this->fileMutationsBuilder = $fileMutationsBuilder;
+    public function __construct(
+        private FileMutationsBuilder $fileMutationsBuilder,
+    ) {
         $this->lineMutations = [];
         $this->newFileName = null;
         $this->originalFileName = null;

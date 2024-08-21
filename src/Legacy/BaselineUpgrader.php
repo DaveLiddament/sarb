@@ -21,35 +21,14 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class BaselineUpgrader
+final class BaselineUpgrader
 {
-    /**
-     * @var FileReader
-     */
-    private $fileReader;
-    /**
-     * @var LegacyResultsParserConverter
-     */
-    private $legacyResultsParserConverter;
-    /**
-     * @var HistoryFactoryLookupService
-     */
-    private $historyFactoryLookupService;
-    /**
-     * @var BaseLineExporter
-     */
-    private $baseLineExporter;
-
     public function __construct(
-        FileReader $fileReader,
-        LegacyResultsParserConverter $legacyResultsParserConverter,
-        HistoryFactoryLookupService $historyFactoryLookupService,
-        BaseLineExporter $baseLineExporter
+        private FileReader $fileReader,
+        private LegacyResultsParserConverter $legacyResultsParserConverter,
+        private HistoryFactoryLookupService $historyFactoryLookupService,
+        private BaseLineExporter $baseLineExporter,
     ) {
-        $this->fileReader = $fileReader;
-        $this->legacyResultsParserConverter = $legacyResultsParserConverter;
-        $this->historyFactoryLookupService = $historyFactoryLookupService;
-        $this->baseLineExporter = $baseLineExporter;
     }
 
     /**

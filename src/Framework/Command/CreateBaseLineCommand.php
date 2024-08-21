@@ -31,7 +31,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateBaseLineCommand extends Command
+final class CreateBaseLineCommand extends Command
 {
     public const COMMAND_NAME = 'create';
 
@@ -50,28 +50,11 @@ class CreateBaseLineCommand extends Command
      */
     protected static $defaultName = self::COMMAND_NAME;
 
-    /**
-     * @var ResultsParserLookupService
-     */
-    private $resultsParserLookupService;
-
-    /**
-     * @var HistoryFactoryLookupService
-     */
-    private $historyFactoryLookupService;
-    /**
-     * @var BaseLineCreatorInterface
-     */
-    private $baseLineCreator;
-
     public function __construct(
-        ResultsParserLookupService $resultsParsersLookupService,
-        HistoryFactoryLookupService $historyFactoryLookupService,
-        BaseLineCreatorInterface $baseLineCreator
+        private ResultsParserLookupService $resultsParserLookupService,
+        private HistoryFactoryLookupService $historyFactoryLookupService,
+        private BaseLineCreatorInterface $baseLineCreator,
     ) {
-        $this->resultsParserLookupService = $resultsParsersLookupService;
-        $this->historyFactoryLookupService = $historyFactoryLookupService;
-        $this->baseLineCreator = $baseLineCreator;
         parent::__construct(self::COMMAND_NAME);
     }
 
@@ -85,7 +68,7 @@ class CreateBaseLineCommand extends Command
             null,
             InputOption::VALUE_REQUIRED,
             sprintf('Static analysis tool. One of: %s', $staticAnalysisParserIdentifiers),
-            self::DEFAULT_STATIC_ANALYSIS_FORMAT
+            self::DEFAULT_STATIC_ANALYSIS_FORMAT,
         );
 
         $historyAnalyserIdentifiers = implode('|', $this->historyFactoryLookupService->getIdentifiers());
@@ -94,14 +77,14 @@ class CreateBaseLineCommand extends Command
             null,
             InputOption::VALUE_REQUIRED,
             sprintf('History analyser. One of: %s', $historyAnalyserIdentifiers),
-            self::DEFAULT_HISTORY_FACTORY_NAME
+            self::DEFAULT_HISTORY_FACTORY_NAME,
         );
 
         $this->addOption(
             self::FORCE,
             'f',
             InputOption::VALUE_NONE,
-            'Force creation of baseline'
+            'Force creation of baseline',
         );
 
         ProjectRootHelper::configureProjectRootOption($this);
@@ -125,7 +108,7 @@ class CreateBaseLineCommand extends Command
                 $baselineFile,
                 $projectRoot,
                 $analysisResultsAsString,
-                $force
+                $force,
             );
 
             $errorsInBaseLine = $baseLine->getAnalysisResults()->getCount();
@@ -147,7 +130,7 @@ class CreateBaseLineCommand extends Command
 
         try {
             $resultsParser = $this->resultsParserLookupService->getResultsParser($identifier);
-        } catch (InvalidResultsParserException $e) {
+        } catch (InvalidResultsParserException) {
             throw InvalidConfigException::invalidOptionValue(self::INPUT_FORMAT, $identifier, $this->resultsParserLookupService->getIdentifiers());
         }
 
@@ -168,7 +151,7 @@ class CreateBaseLineCommand extends Command
 
         try {
             $resultsParser = $this->historyFactoryLookupService->getHistoryFactory($identifier);
-        } catch (InvalidHistoryFactoryException $e) {
+        } catch (InvalidHistoryFactoryException) {
             throw InvalidConfigException::invalidOptionValue(self::HISTORY_ANALYSER, $identifier, $this->historyFactoryLookupService->getIdentifiers());
         }
 

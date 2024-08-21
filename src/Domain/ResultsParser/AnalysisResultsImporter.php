@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class AnalysisResultsImporter
+final class AnalysisResultsImporter
 {
     /**
      * @throws AnalysisResultsImportException
@@ -17,7 +17,7 @@ class AnalysisResultsImporter
     public function import(
         ResultsParser $resultsParser,
         ProjectRoot $projectRoot,
-        string $analysisResultsAsString
+        string $analysisResultsAsString,
     ): AnalysisResults {
         try {
             return $resultsParser->convertFromString($analysisResultsAsString, $projectRoot);

@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use PHPUnit\Framework\TestCase;
 
-class ArrayUtilsTest extends TestCase
+final class ArrayUtilsTest extends TestCase
 {
     private const TEST_ARRAY = [
         self::NAME_KEY => self::NAME_VALUE,

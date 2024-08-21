@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeE
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class FileReaderTest extends TestCase
+final class FileReaderTest extends TestCase
 {
     use ResourceLoaderTrait;
 

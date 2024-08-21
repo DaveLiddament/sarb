@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryF
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryFactoryException;
 use Webmozart\Assert\Assert;
 
-class HistoryFactoryRegistry implements HistoryFactoryLookupService
+final class HistoryFactoryRegistry implements HistoryFactoryLookupService
 {
     /**
      * @var HistoryFactory[]
@@ -57,7 +57,7 @@ class HistoryFactoryRegistry implements HistoryFactoryLookupService
     {
         $identifier = $historyFactory->getIdentifier();
         Assert::keyNotExists($this->historyFactories, $identifier,
-            "Multiple History Factories configured with the identifier [$identifier]"
+            "Multiple History Factories configured with the identifier [$identifier]",
         );
 
         $this->historyFactories[$identifier] = $historyFactory;

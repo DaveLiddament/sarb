@@ -30,7 +30,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\OutputFormatt
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class RemoveBaseLineCommandTest extends TestCase
+final class RemoveBaseLineCommandTest extends TestCase
 {
     private const INPUT_STRING_1 = <<<EOF
 This is
@@ -79,7 +79,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -97,7 +97,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(1),
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -113,7 +113,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -124,7 +124,7 @@ EOF;
         $this->assertReturnCode(0, $commandTester);
         $this->assertResponseContains(
             '[stub output formatter: Issues since baseline 0]',
-            $commandTester
+            $commandTester,
         );
     }
 
@@ -133,7 +133,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(8),
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -144,7 +144,7 @@ EOF;
         $this->assertReturnCode(1, $commandTester);
         $this->assertResponseContains(
             '[stub output formatter: Issues since baseline 8]',
-            $commandTester
+            $commandTester,
         );
     }
 
@@ -153,7 +153,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -164,7 +164,7 @@ EOF;
         $this->assertReturnCode(11, $commandTester);
         $this->assertResponseContains(
             'Invalid value [rubbish] for option [output-format]. Pick one of: table|stub',
-            $commandTester
+            $commandTester,
         );
     }
 
@@ -173,7 +173,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
             $this->projectRoot,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -189,7 +189,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(1),
             null,
-            new \Exception()
+            new \Exception(),
         );
 
         $commandTester->execute([
@@ -204,7 +204,7 @@ EOF;
         $commandTester = $this->createCommandTester(
             $this->getAnalysisResultsWithXResults(0),
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -223,7 +223,7 @@ EOF;
     private function createCommandTester(
         AnalysisResults $expectedAnalysisResults,
         ?ProjectRoot $projectRoot,
-        ?\Throwable $exception
+        ?\Throwable $exception,
     ): CommandTester {
         $baseLineResultsBuilder = new BaseLineResultsBuilder();
         $baseLineResultsBuilder->add('file1', 1, 'type1', Severity::error());
@@ -235,27 +235,27 @@ EOF;
             new HistoryFactoryStub(),
             $baseLineResultsBuilder->build(),
             new SarbJsonResultsParser(),
-            new GitCommit('fae40b3d596780ffd746dbd2300d05dcfbd09033')
+            new GitCommit('fae40b3d596780ffd746dbd2300d05dcfbd09033'),
         );
 
         $prunedResults = new PrunedResults(
             $baseLine,
             $expectedAnalysisResults,
-            $this->getAnalysisResultsWithXResults(2)
+            $this->getAnalysisResultsWithXResults(2),
         );
 
         $mockResultsPruner = new MockResultsPruner(
             self::INPUT_STRING_1,
             $prunedResults,
             $projectRoot,
-            $exception
+            $exception,
         );
 
         $command = new RemoveBaseLineFromResultsCommand(
             $mockResultsPruner,
             $this->outputFormatterRegistry,
             new TableOutputFormatter(),
-            new RandomResultsPicker(new RandomNumberGenerator())
+            new RandomResultsPicker(new RandomNumberGenerator()),
         );
 
         $commandTester = new CommandTester($command);
@@ -286,12 +286,12 @@ EOF;
                 Location::fromAbsoluteFileName(
                     new AbsoluteFileName("/FILE_$count"),
                     $projectRoot,
-                    new LineNumber($count)
+                    new LineNumber($count),
                 ),
                 new Type("TYPE_$i"),
                 "MESSAGE_$i",
                 [],
-                Severity::error()
+                Severity::error(),
             );
             $analysisResultsBuilder->addAnalysisResult($analysisResult);
         }

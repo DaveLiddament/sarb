@@ -25,7 +25,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class Container
+final class Container
 {
     public const COMMAND_TAG = 'console.command';
     public const RESULTS_PARSER_TAG = 'resultsParser';

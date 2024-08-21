@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\FindOriginalFileNameState;
 use PHPUnit\Framework\TestCase;
 
-class FindFileDiffStartStateTest extends TestCase
+final class FindFileDiffStartStateTest extends TestCase
 {
     /**
      * @var FindFileDiffStartState

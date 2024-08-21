@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
-class AnalysisResultsBuilder
+final class AnalysisResultsBuilder
 {
     /**
      * @var AnalysisResult[]

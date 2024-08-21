@@ -1,5 +1,7 @@
 <?php
 
+use PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer;
+
 $finder = PhpCsFixer\Finder::create()
     ->exclude('/tests/scratchpad')
     ->in(__DIR__ . '/src')
@@ -10,6 +12,7 @@ $finder = PhpCsFixer\Finder::create()
 $config = new PhpCsFixer\Config();
 return $config
     ->setRiskyAllowed(true)
+    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->setRules([
         '@PSR1' => true,
         '@PSR2' => true,
@@ -24,6 +27,8 @@ return $config
         'phpdoc_align' => false,
         'phpdoc_to_comment' => false,
         'native_function_invocation' => false,
+        MultilinePromotedPropertiesFixer::name() => true,
+        'trailing_comma_in_multiline' => ['elements' => ['arrays', 'arguments', 'parameters']],
     ])
     ->setFinder($finder)
 ;

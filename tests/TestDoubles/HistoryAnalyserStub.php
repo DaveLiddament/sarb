@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\PreviousLocation;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyser;
 
-class HistoryAnalyserStub implements HistoryAnalyser
+final class HistoryAnalyserStub implements HistoryAnalyser
 {
     public function getPreviousLocation(RelativeFileName $fileName, LineNumber $lineNumber): PreviousLocation
     {

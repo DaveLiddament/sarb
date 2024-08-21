@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use PHPUnit\Framework\TestCase;
 
-class FileMutationTest extends TestCase
+final class FileMutationTest extends TestCase
 {
     private const NEW_TXT = 'new.txt';
     private const ORIGINAL_TXT = 'original.txt';

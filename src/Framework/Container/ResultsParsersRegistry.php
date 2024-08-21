@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsPar
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParserLookupService;
 use Webmozart\Assert\Assert;
 
-class ResultsParsersRegistry implements ResultsParserLookupService
+final class ResultsParsersRegistry implements ResultsParserLookupService
 {
     /**
      * @var ResultsParser[]
@@ -62,7 +62,7 @@ class ResultsParsersRegistry implements ResultsParserLookupService
     {
         $identifier = $staticAnalysisResultsParser->getIdentifier()->getCode();
         Assert::keyNotExists($this->resultsParsers, $identifier,
-            "Multiple Static Analysis Results Parsers configured with the identifier [$identifier]"
+            "Multiple Static Analysis Results Parsers configured with the identifier [$identifier]",
         );
 
         $this->resultsParsers[$identifier] = $staticAnalysisResultsParser;

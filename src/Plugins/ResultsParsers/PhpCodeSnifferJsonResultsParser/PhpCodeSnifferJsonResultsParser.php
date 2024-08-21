@@ -32,7 +32,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 /**
  * Handles PHP Code Sniffers's JSON output.
  */
-class PhpCodeSnifferJsonResultsParser implements ResultsParser
+final class PhpCodeSnifferJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
     private const SOURCE = 'source';
@@ -87,7 +87,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
         AbsoluteFileName $absoluteFileName,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
     ): AnalysisResult {
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE);
         $rawMessage = ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE);
@@ -96,7 +96,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
         $location = Location::fromAbsoluteFileName(
             $absoluteFileName,
             $projectRoot,
-            new LineNumber($lineAsInt)
+            new LineNumber($lineAsInt),
         );
 
         return new AnalysisResult(
@@ -104,7 +104,7 @@ class PhpCodeSnifferJsonResultsParser implements ResultsParser
             new Type($rawSource),
             $rawMessage,
             $analysisResultAsArray,
-            SeverityReader::getMandatorySeverity($analysisResultAsArray, self::SEVERITY)
+            SeverityReader::getMandatorySeverity($analysisResultAsArray, self::SEVERITY),
         );
     }
 

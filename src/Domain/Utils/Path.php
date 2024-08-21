@@ -92,7 +92,7 @@ final class Path
 
         $path = str_replace('\\', '/', $path);
 
-        list($root, $pathWithoutRoot) = self::split($path);
+        [$root, $pathWithoutRoot] = self::split($path);
 
         $parts = explode('/', $pathWithoutRoot);
         $canonicalParts = [];
@@ -313,8 +313,8 @@ final class Path
         $path = static::canonicalize($path);
         $basePath = static::canonicalize($basePath);
 
-        list($root, $relativePath) = self::split($path);
-        list($baseRoot, $relativeBasePath) = self::split($basePath);
+        [$root, $relativePath] = self::split($path);
+        [$baseRoot, $relativeBasePath] = self::split($basePath);
 
         // If the base path is given as absolute path and the path is already
         // relative, consider it to be relative to the given absolute path

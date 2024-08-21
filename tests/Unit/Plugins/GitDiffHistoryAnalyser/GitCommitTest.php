@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidH
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 use PHPUnit\Framework\TestCase;
 
-class GitCommitTest extends TestCase
+final class GitCommitTest extends TestCase
 {
     /**
      * @psalm-return array<string,array{string}>

@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\interna
 /**
  * Used for invalid user config provided.
  */
-class InvalidConfigException extends \Exception
+final class InvalidConfigException extends \Exception
 {
     /**
      * @param string[] $validOptions
@@ -26,7 +26,7 @@ class InvalidConfigException extends \Exception
             'Invalid value [%s] for option [%s]. Pick one of: %s',
             $value,
             $option,
-            implode('|', $validOptions)
+            implode('|', $validOptions),
         );
 
         return new self($message);

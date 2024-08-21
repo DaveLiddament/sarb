@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Cont
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 
-class StubOutputFormatter1 implements OutputFormatter
+final class StubOutputFormatter1 implements OutputFormatter
 {
     public const OUTPUT_FORMATTER_NAME = 'OUTPUT_FORMATTER_1';
 

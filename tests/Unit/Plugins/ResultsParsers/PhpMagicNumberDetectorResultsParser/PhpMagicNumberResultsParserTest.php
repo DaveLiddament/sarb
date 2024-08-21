@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class PhpMagicNumberResultsParserTest extends TestCase
+final class PhpMagicNumberResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;
@@ -53,25 +53,25 @@ class PhpMagicNumberResultsParserTest extends TestCase
             'src/File1.php',
             6,
             '123',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame(
             'Magic number 123',
-            $result1->getMessage()
+            $result1->getMessage(),
         );
 
         $this->assertMatch($result2,
             'src/foo/bar/File 2.php',
             11,
             '1.7',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,
             'tests/MyTest1.php',
             16,
             '10',
-            Severity::error()
+            Severity::error(),
         );
     }
 
@@ -84,7 +84,7 @@ class PhpMagicNumberResultsParserTest extends TestCase
     {
         $this->assertEquals(
             new PhpMagicNumberDetectorIdentifier(),
-            $this->phpMagicNumberDetectorResultsParser->getIdentifier()
+            $this->phpMagicNumberDetectorResultsParser->getIdentifier(),
         );
     }
 }

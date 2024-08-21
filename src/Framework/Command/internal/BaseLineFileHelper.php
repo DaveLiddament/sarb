@@ -9,7 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 
-class BaseLineFileHelper
+final class BaseLineFileHelper
 {
     private const BASELINE_FILE = 'baseline-file';
 
@@ -17,7 +17,7 @@ class BaseLineFileHelper
     {
         $command->addArgument(
             self::BASELINE_FILE,
-            InputArgument::REQUIRED, 'Baseline file'
+            InputArgument::REQUIRED, 'Baseline file',
         );
     }
 

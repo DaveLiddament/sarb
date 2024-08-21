@@ -6,7 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
 
-class AbsoluteFileName extends FileName
+final class AbsoluteFileName extends FileName
 {
     /**
      * @throws InvalidPathException

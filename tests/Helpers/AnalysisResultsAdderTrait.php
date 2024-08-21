@@ -24,7 +24,7 @@ trait AnalysisResultsAdderTrait
         string $absoluteFileName,
         int $lineNumber,
         string $type,
-        Severity $severity
+        Severity $severity,
     ): void {
         $analysisResult = $this->buildAnalysisResult($projectRoot, $absoluteFileName, $lineNumber, $type, $severity);
         $analysisResultsBuilder->addAnalysisResult($analysisResult);
@@ -35,14 +35,14 @@ trait AnalysisResultsAdderTrait
         string $absoluteFileName,
         int $lineNumber,
         string $type,
-        Severity $severity
+        Severity $severity,
     ): AnalysisResult {
         $message = "message-$type";
 
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName($absoluteFileName),
             $projectRoot,
-            new LineNumber($lineNumber)
+            new LineNumber($lineNumber),
         );
 
         return new AnalysisResult($location, new Type($type), $message, [], $severity);

@@ -34,7 +34,7 @@ use PHPUnit\Framework\TestCase;
  * jason
  * rupert
  */
-class OriginalLineNameCalculatorTest extends TestCase
+final class OriginalLineNameCalculatorTest extends TestCase
 {
     /**
      * @var FileMutation

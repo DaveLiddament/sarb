@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
-class InvalidPathException extends SarbException
+final class InvalidPathException extends SarbException
 {
     public static function notInProjectRoot(string $path, string $projectRootBasePath): self
     {

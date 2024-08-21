@@ -23,7 +23,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAd
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
-class BaseLineResultsRemoveTest extends TestCase
+final class BaseLineResultsRemoveTest extends TestCase
 {
     use AnalysisResultsAdderTrait;
 
@@ -92,7 +92,7 @@ class BaseLineResultsRemoveTest extends TestCase
             $this->latestAnalysisResults,
             $this->historyAnalyser,
             $this->baselineAnalysisResults,
-            false
+            false,
         );
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();
@@ -120,7 +120,7 @@ class BaseLineResultsRemoveTest extends TestCase
             $this->latestAnalysisResults,
             $this->historyAnalyser,
             $this->baselineAnalysisResults,
-            true
+            true,
         );
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();

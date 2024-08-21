@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use PHPUnit\Framework\TestCase;
 
-class FileMutationsTest extends TestCase
+final class FileMutationsTest extends TestCase
 {
     private const FILE_1_NAME = 'foo/bar.php';
     private const FILE_2_NAME = 'foo/baz.php';
@@ -21,13 +21,13 @@ class FileMutationsTest extends TestCase
         $fileMutation1 = new FileMutation(
             new OriginalFileName(self::FILE_1_NAME),
             new NewFileName(self::FILE_1_NAME),
-            []
+            [],
         );
 
         $fileMutation2 = new FileMutation(
             new OriginalFileName(self::FILE_2_NAME),
             new NewFileName(self::FILE_2_NAME),
-            []
+            [],
         );
 
         $fileMutations = new FileMutations([$fileMutation1, $fileMutation2]);
@@ -42,13 +42,13 @@ class FileMutationsTest extends TestCase
         $fileMutation1 = new FileMutation(
             new OriginalFileName(self::FILE_1_NAME),
             new NewFileName(self::FILE_1_NAME),
-            []
+            [],
         );
 
         $fileMutation2 = new FileMutation(
             new OriginalFileName(self::FILE_1_NAME),
             new NewFileName(self::FILE_1_NAME),
-            []
+            [],
         );
 
         $this->expectException(\InvalidArgumentException::class);

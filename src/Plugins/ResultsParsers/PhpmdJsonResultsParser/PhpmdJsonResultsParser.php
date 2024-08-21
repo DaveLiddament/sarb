@@ -32,7 +32,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 /**
  * Handles PHPMD JSON output.
  */
-class PhpmdJsonResultsParser implements ResultsParser
+final class PhpmdJsonResultsParser implements ResultsParser
 {
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -74,7 +74,7 @@ class PhpmdJsonResultsParser implements ResultsParser
         AnalysisResultsBuilder $analysisResultsBuilder,
         AbsoluteFileName $absoluteFileName,
         ProjectRoot $projectRoot,
-        array $violations
+        array $violations,
     ): void {
         $violationCount = 1;
         /** @psalm-suppress MixedAssignment */
@@ -99,7 +99,7 @@ class PhpmdJsonResultsParser implements ResultsParser
     private function processViolation(
         AbsoluteFileName $aboluteFileName,
         ProjectRoot $projectRoot,
-        array $violation
+        array $violation,
     ): AnalysisResult {
         $typeAsString = ArrayUtils::getStringValue($violation, 'rule');
         $type = new Type($typeAsString);
@@ -111,7 +111,7 @@ class PhpmdJsonResultsParser implements ResultsParser
         $location = Location::fromAbsoluteFileName(
             $aboluteFileName,
             $projectRoot,
-            new LineNumber($lineAsInt)
+            new LineNumber($lineAsInt),
         );
 
         return new AnalysisResult(
@@ -119,7 +119,7 @@ class PhpmdJsonResultsParser implements ResultsParser
             $type,
             $message,
             $violation,
-            Severity::error()
+            Severity::error(),
         );
     }
 

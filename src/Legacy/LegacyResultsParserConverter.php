@@ -15,16 +15,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpstanJ
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PsalmJsonResultsParser\PsalmJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
 
-class LegacyResultsParserConverter
+final class LegacyResultsParserConverter
 {
-    /**
-     * @var FqcnRemover
-     */
-    private $fqcnRemover;
-
-    public function __construct(FqcnRemover $fqcnRemover)
-    {
-        $this->fqcnRemover = $fqcnRemover;
+    public function __construct(
+        private FqcnRemover $fqcnRemover,
+    ) {
     }
 
     /** @throws InvalidResultsParserException */

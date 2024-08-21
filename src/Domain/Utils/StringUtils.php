@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
 use Webmozart\Assert\Assert;
 
-class StringUtils
+final class StringUtils
 {
     /**
      * Returns true if $haystack starts with $needle.

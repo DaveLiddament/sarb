@@ -29,7 +29,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RemoveBaseLineFromResultsCommand extends Command
+final class RemoveBaseLineFromResultsCommand extends Command
 {
     public const COMMAND_NAME = 'remove-baseline-results';
 
@@ -42,34 +42,13 @@ class RemoveBaseLineFromResultsCommand extends Command
      */
     protected static $defaultName = self::COMMAND_NAME;
 
-    /**
-     * @var OutputFormatterLookupService
-     */
-    private $outputFormatterLookupService;
-    /**
-     * @var ResultsPrunerInterface
-     */
-    private $resultsPruner;
-    /**
-     * @var TableOutputFormatter
-     */
-    private $tableOutputFormatter;
-    /**
-     * @var RandomResultsPicker
-     */
-    private $randomResultsPicker;
-
     public function __construct(
-        ResultsPrunerInterface $resultsPruner,
-        OutputFormatterLookupService $outputFormatterLookupService,
-        TableOutputFormatter $tableOutputFormatter,
-        RandomResultsPicker $randomResultsPicker
+        private ResultsPrunerInterface $resultsPruner,
+        private OutputFormatterLookupService $outputFormatterLookupService,
+        private TableOutputFormatter $tableOutputFormatter,
+        private RandomResultsPicker $randomResultsPicker,
     ) {
-        $this->outputFormatterLookupService = $outputFormatterLookupService;
         parent::__construct(self::COMMAND_NAME);
-        $this->resultsPruner = $resultsPruner;
-        $this->tableOutputFormatter = $tableOutputFormatter;
-        $this->randomResultsPicker = $randomResultsPicker;
     }
 
     protected function configure(): void
@@ -82,21 +61,21 @@ class RemoveBaseLineFromResultsCommand extends Command
             null,
             InputOption::VALUE_REQUIRED,
             'Output format. One of: '.implode('|', $outputFormatters),
-            TableOutputFormatter::CODE
+            TableOutputFormatter::CODE,
         );
 
         $this->addOption(
             self::IGNORE_WARNINGS,
             null,
             InputOption::VALUE_NONE,
-            "Ignore any issues with severity 'warning'."
+            "Ignore any issues with severity 'warning'.",
         );
 
         $this->addOption(
             self::SHOW_RANDOM_ERRORS,
             null,
             InputOption::VALUE_NONE,
-            'Show a random 5 issues in the baseline to fix'
+            'Show a random 5 issues in the baseline to fix',
         );
 
         ProjectRootHelper::configureProjectRootOption($this);
@@ -118,7 +97,7 @@ class RemoveBaseLineFromResultsCommand extends Command
                 $baseLineFileName,
                 $inputAnalysisResultsAsString,
                 $projectRoot,
-                $ignoreWarnings
+                $ignoreWarnings,
             );
 
             $outputAnalysisResults = $prunedResults->getPrunedResults();
@@ -126,19 +105,19 @@ class RemoveBaseLineFromResultsCommand extends Command
             OutputWriter::writeToStdError(
                 $output,
                 "Latest analysis issue count: {$prunedResults->getInputAnalysisResults()->getCount()}",
-                false
+                false,
             );
 
             OutputWriter::writeToStdError(
                 $output,
                 "Baseline issue count: {$prunedResults->getBaseLine()->getAnalysisResults()->getCount()}",
-                false
+                false,
             );
 
             OutputWriter::writeToStdError(
                 $output,
                 "Issue count with baseline removed: {$outputAnalysisResults->getCount()}",
-                !$outputAnalysisResults->hasNoIssues()
+                !$outputAnalysisResults->hasNoIssues(),
             );
 
             $outputAsString = $outputFormatter->outputResults($outputAnalysisResults);
@@ -152,7 +131,7 @@ class RemoveBaseLineFromResultsCommand extends Command
                 OutputWriter::writeToStdError(
                     $output,
                     "\n\nRandom {$randomIssues->getCount()} issues in the baseline to fix...",
-                    false
+                    false,
                 );
 
                 $outputAsString = $this->tableOutputFormatter->outputResults($randomIssues);
@@ -160,7 +139,7 @@ class RemoveBaseLineFromResultsCommand extends Command
                 OutputWriter::writeToStdError(
                     $output,
                     $outputAsString,
-                    false
+                    false,
                 );
             }
 
@@ -181,7 +160,7 @@ class RemoveBaseLineFromResultsCommand extends Command
 
         try {
             return $this->outputFormatterLookupService->getOutputFormatter($identifier);
-        } catch (InvalidOutputFormatterException $e) {
+        } catch (InvalidOutputFormatterException) {
             throw InvalidConfigException::invalidOptionValue(self::OUTPUT_FORMAT, $identifier, $this->outputFormatterLookupService->getIdentifiers());
         }
     }

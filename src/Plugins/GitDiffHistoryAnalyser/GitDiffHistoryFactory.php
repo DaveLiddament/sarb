@@ -22,25 +22,15 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
 use Webmozart\Assert\Assert;
 
-class GitDiffHistoryFactory implements HistoryFactory
+final class GitDiffHistoryFactory implements HistoryFactory
 {
-    /**
-     * @var GitWrapper
-     */
-    private $gitCliWrapper;
-
-    /**
-     * @var Parser
-     */
-    private $parser;
-
     /**
      * GitDiffHistoryFactory constructor.
      */
-    public function __construct(GitWrapper $gitCliWrapper, Parser $parser)
-    {
-        $this->gitCliWrapper = $gitCliWrapper;
-        $this->parser = $parser;
+    public function __construct(
+        private GitWrapper $gitCliWrapper,
+        private Parser $parser,
+    ) {
     }
 
     /**

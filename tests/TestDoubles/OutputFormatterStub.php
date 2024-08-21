@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 
-class OutputFormatterStub implements OutputFormatter
+final class OutputFormatterStub implements OutputFormatter
 {
     public const CODE = 'stub';
 

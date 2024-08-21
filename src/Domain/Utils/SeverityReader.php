@@ -6,7 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 
-class SeverityReader
+final class SeverityReader
 {
     /**
      * @param array<mixed> $data

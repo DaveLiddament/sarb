@@ -6,11 +6,13 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
 /**
  * Wrapper for rand.
+ *
+ * @final
  */
 class RandomNumberGenerator
 {
     public function getRandomNumber(int $maxNumber): int
     {
-        return rand(0, $maxNumber);
+        return random_int(0, $maxNumber);
     }
 }

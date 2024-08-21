@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAd
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
-class BaseLineResultsComparatorTest extends TestCase
+final class BaseLineResultsComparatorTest extends TestCase
 {
     use AnalysisResultsAdderTrait;
 
@@ -131,7 +131,7 @@ class BaseLineResultsComparatorTest extends TestCase
     {
         $location = PreviousLocation::fromFileNameAndLineNumber(
             new RelativeFileName($fileName),
-            new LineNumber($lineNumber)
+            new LineNumber($lineNumber),
         );
 
         $actual = $this->baseLineResultsComparator->isInBaseLine($location, new Type($type));

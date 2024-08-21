@@ -15,7 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\DiffHistoryAnalyser;
 use PHPUnit\Framework\TestCase;
 
-class DiffHistoryAnalyserTest extends TestCase
+final class DiffHistoryAnalyserTest extends TestCase
 {
     private const FILE_1 = 'foo/one.txt';
     private const FILE_2 = 'bar/two.txt';
@@ -126,7 +126,7 @@ class DiffHistoryAnalyserTest extends TestCase
 
         return $diffHistoryAnalyser->getPreviousLocation(
             new RelativeFileName($fileName),
-            new LineNumber($lineNumber)
+            new LineNumber($lineNumber),
         );
     }
 

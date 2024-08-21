@@ -70,7 +70,7 @@ abstract class AbstractOutputFormatterTest extends TestCase
             self::TYPE_1,
             'MESSAGE_3',
             [],
-            Severity::warning()
+            Severity::warning(),
         );
 
         $this->assertOutput($expectedOutput, $analysisResultsBuilder->build());
@@ -120,7 +120,7 @@ abstract class AbstractOutputFormatterTest extends TestCase
         string $type,
         string $message,
         array $data,
-        Severity $severity
+        Severity $severity,
     ): void {
         $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
         $absoluteFileName = new AbsoluteFileName($file);

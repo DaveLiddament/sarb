@@ -20,35 +20,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 /**
  * Holds a single result from the static analysis results.
  */
-class AnalysisResult
+final class AnalysisResult
 {
-    /**
-     * @var Location
-     */
-    private $location;
-
-    /**
-     * @var Type
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $message;
-
-    /**
-     * @var array
-     *
-     * @psalm-var array<mixed>
-     */
-    private $fullDetails;
-
-    /**
-     * @var Severity
-     */
-    private $severity;
-
     /**
      * AnalysisResult constructor.
      *
@@ -59,13 +32,16 @@ class AnalysisResult
      *
      * @psalm-param array<mixed> $fullDetails
      */
-    public function __construct(Location $location, Type $type, string $message, array $fullDetails, Severity $severity)
-    {
-        $this->location = $location;
-        $this->type = $type;
-        $this->message = $message;
-        $this->fullDetails = $fullDetails;
-        $this->severity = $severity;
+    public function __construct(
+        private Location $location,
+        private Type $type,
+        private string $message,
+        /**
+         * @psalm-var array<mixed>
+         */
+        private array $fullDetails,
+        private Severity $severity,
+    ) {
     }
 
     public function getLocation(): Location
@@ -103,7 +79,7 @@ class AnalysisResult
             $this->location->getLineNumber(),
             $this->type,
             $this->message,
-            $this->severity
+            $this->severity,
         );
     }
 }

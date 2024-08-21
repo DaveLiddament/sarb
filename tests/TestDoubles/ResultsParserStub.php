@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 
-class ResultsParserStub implements ResultsParser
+final class ResultsParserStub implements ResultsParser
 {
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
