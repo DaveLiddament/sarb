@@ -3,12 +3,11 @@
 namespace Tools\Phpat;
 
 use PHPat\Selector\Selector;
-use PHPat\Test\PHPat;
 use PHPat\Test\Builder\Rule;
+use PHPat\Test\PHPat;
 
 final class LayerTest
 {
-
     private const DOMAIN_NAMESPACE = 'DaveLiddament\StaticAnalysisResultsBaseliner\Domain';
     private const PLUGIN_NAMESPACE = 'DaveLiddament\StaticAnalysisResultsBaseliner\Plugins';
     private const LEGACY_NAMESPACE = 'DaveLiddament\StaticAnalysisResultsBaseliner\Legacy';
@@ -23,7 +22,6 @@ final class LayerTest
                 Selector::inNamespace(self::PLUGIN_NAMESPACE),
                 Selector::inNamespace(self::LEGACY_NAMESPACE),
                 Selector::inNamespace(self::FRAMEWORK_NAMESPACE),
-
             )->because('Domain code should not depend on any other code')
         ;
     }
@@ -48,9 +46,6 @@ final class LayerTest
             ->classes(
                 Selector::inNamespace(self::FRAMEWORK_NAMESPACE),
             )->because('Legacy code should not depend on framework code')
-            ;
+        ;
     }
-
-
 }
-

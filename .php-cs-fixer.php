@@ -4,6 +4,7 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('/tests/scratchpad')
     ->in(__DIR__ . '/src')
     ->in(__DIR__ . '/tests')
+    ->in(__DIR__ . '/tools')
 ;
 
 $config = new PhpCsFixer\Config();
