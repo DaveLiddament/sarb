@@ -11,7 +11,7 @@ trait TestDirectoryTrait
     private function createTestDirectory(): void
     {
         $dateTimeFolderName = date('Ymd_His');
-        $random = rand(10000, 99999);
+        $random = random_int(10000, 99999);
         $testDirectory = __DIR__."/../scratchpad/{$dateTimeFolderName}{$random}";
         $this->fileSystem->mkdir($testDirectory);
         $cwd = getcwd();

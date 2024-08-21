@@ -130,7 +130,7 @@ class CreateBaseLineCommand extends Command
 
         try {
             $resultsParser = $this->resultsParserLookupService->getResultsParser($identifier);
-        } catch (InvalidResultsParserException $e) {
+        } catch (InvalidResultsParserException) {
             throw InvalidConfigException::invalidOptionValue(self::INPUT_FORMAT, $identifier, $this->resultsParserLookupService->getIdentifiers());
         }
 
@@ -151,7 +151,7 @@ class CreateBaseLineCommand extends Command
 
         try {
             $resultsParser = $this->historyFactoryLookupService->getHistoryFactory($identifier);
-        } catch (InvalidHistoryFactoryException $e) {
+        } catch (InvalidHistoryFactoryException) {
             throw InvalidConfigException::invalidOptionValue(self::HISTORY_ANALYSER, $identifier, $this->historyFactoryLookupService->getIdentifiers());
         }
 

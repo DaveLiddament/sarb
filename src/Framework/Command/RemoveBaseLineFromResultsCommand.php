@@ -160,7 +160,7 @@ class RemoveBaseLineFromResultsCommand extends Command
 
         try {
             return $this->outputFormatterLookupService->getOutputFormatter($identifier);
-        } catch (InvalidOutputFormatterException $e) {
+        } catch (InvalidOutputFormatterException) {
             throw InvalidConfigException::invalidOptionValue(self::OUTPUT_FORMAT, $identifier, $this->outputFormatterLookupService->getIdentifiers());
         }
     }

@@ -101,7 +101,7 @@ class ProjectRoot
 
         try {
             return new AbsoluteFileName($absoluteFileName);
-        } catch (InvalidPathException $e) {
+        } catch (InvalidPathException) {
             throw new \LogicException("Invalid $absoluteFileName");
         }
     }

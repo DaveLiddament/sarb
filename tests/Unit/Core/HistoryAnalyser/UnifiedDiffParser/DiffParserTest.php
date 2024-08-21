@@ -250,7 +250,7 @@ class DiffParserTest extends TestCase
 
         $this->assertSame($expectedFileMutationsCount, $actualFileMutationsCount);
 
-        foreach ($expectedFileMutations as list($originalFileName, $newFileName, $isAdded, $isDeleted, $lineMutations)) {
+        foreach ($expectedFileMutations as [$originalFileName, $newFileName, $isAdded, $isDeleted, $lineMutations]) {
             $actualFileMutation = $fileMutations->getFileMutation($newFileName);
             $this->assertNotNull($actualFileMutation, "No FileMutation for [{$newFileName->getFileName()}]");
 
