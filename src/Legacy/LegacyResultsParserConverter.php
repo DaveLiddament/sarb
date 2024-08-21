@@ -17,14 +17,9 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJson
 
 class LegacyResultsParserConverter
 {
-    /**
-     * @var FqcnRemover
-     */
-    private $fqcnRemover;
-
-    public function __construct(FqcnRemover $fqcnRemover)
-    {
-        $this->fqcnRemover = $fqcnRemover;
+    public function __construct(
+        private FqcnRemover $fqcnRemover,
+    ) {
     }
 
     /** @throws InvalidResultsParserException */

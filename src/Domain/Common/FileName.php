@@ -17,14 +17,9 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
  */
 class FileName
 {
-    /**
-     * @var string
-     */
-    private $fileName;
-
-    protected function __construct(string $fileName)
-    {
-        $this->fileName = $fileName;
+    protected function __construct(
+        private string $fileName,
+    ) {
     }
 
     public function getFileName(): string

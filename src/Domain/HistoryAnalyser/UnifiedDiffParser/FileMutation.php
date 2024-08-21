@@ -17,37 +17,15 @@ use Webmozart\Assert\Assert;
 class FileMutation
 {
     /**
-     * @var OriginalFileName|null
+     * @param list<LineMutation> $lineMutations
      */
-    private $originalFileName;
-
-    /**
-     * @var NewFileName|null
-     */
-    private $newFileName;
-
-    /**
-     * @psalm-var list<LineMutation>
-     *
-     * @var LineMutation[]
-     */
-    private $lineMutations;
-
-    /**
-     * FileMutation constructor.
-     *
-     * @psalm-param list<LineMutation> $lineMutations
-     *
-     * @param LineMutation[] $lineMutations
-     */
-    public function __construct(?OriginalFileName $originalFileName, ?NewFileName $newFileName, array $lineMutations)
-    {
+    public function __construct(
+        private ?OriginalFileName $originalFileName,
+        private ?NewFileName $newFileName,
+        private array $lineMutations,
+    ) {
         $oneFileSupplied = (null !== $originalFileName) || (null !== $newFileName);
         Assert::true($oneFileSupplied, 'At least 1 originalFileName or newFileName must be supplied');
-
-        $this->originalFileName = $originalFileName;
-        $this->newFileName = $newFileName;
-        $this->lineMutations = $lineMutations;
     }
 
     public function getOriginalFileName(): OriginalFileName

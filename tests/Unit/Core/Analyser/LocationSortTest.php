@@ -50,7 +50,7 @@ class LocationSortTest extends TestCase
         return Location::fromAbsoluteFileName(
             new AbsoluteFileName($fileName),
             $projectRoot,
-            new LineNumber($lineNumber)
+            new LineNumber($lineNumber),
         );
     }
 }

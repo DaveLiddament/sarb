@@ -15,26 +15,12 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 class Location
 {
     /**
-     * @var RelativeFileName
-     */
-    private $relativeFileName;
-
-    /**
-     * @var LineNumber
-     */
-    private $lineNumber;
-    /**
-     * @var AbsoluteFileName
-     */
-    private $absoluteFileName;
-
-    /**
      * @throws InvalidPathException
      */
     public static function fromAbsoluteFileName(
         AbsoluteFileName $absoluteFileName,
         ProjectRoot $projectRoot,
-        LineNumber $lineNumber
+        LineNumber $lineNumber,
     ): self {
         $relativeFileName = $projectRoot->getPathRelativeToRootDirectory($absoluteFileName);
 
@@ -47,7 +33,7 @@ class Location
     public static function fromRelativeFileName(
         RelativeFileName $relativeFileName,
         ProjectRoot $projectRoot,
-        LineNumber $lineNumber
+        LineNumber $lineNumber,
     ): self {
         $absoluteFileName = $projectRoot->getAbsoluteFileName($relativeFileName);
 
@@ -55,13 +41,10 @@ class Location
     }
 
     private function __construct(
-        AbsoluteFileName $absoluteFileName,
-        RelativeFileName $relativeFileName,
-        LineNumber $lineNumber
+        private AbsoluteFileName $absoluteFileName,
+        private RelativeFileName $relativeFileName,
+        private LineNumber $lineNumber,
     ) {
-        $this->relativeFileName = $relativeFileName;
-        $this->lineNumber = $lineNumber;
-        $this->absoluteFileName = $absoluteFileName;
     }
 
     public function getRelativeFileName(): RelativeFileName

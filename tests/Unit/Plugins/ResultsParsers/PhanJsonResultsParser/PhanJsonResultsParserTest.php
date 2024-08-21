@@ -54,7 +54,7 @@ class PhanJsonResultsParserTest extends TestCase
             Severity::error());
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
-            $result1->getMessage()
+            $result1->getMessage(),
         );
         $this->assertSame(
             '/vagrant/static-analysis-baseliner/src/Domain/Analyser/BaseLineResultsRemover.php',
@@ -87,7 +87,7 @@ class PhanJsonResultsParserTest extends TestCase
             Severity::error());
         $this->assertSame(
             'NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace BaseLine (\DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine)',
-            $result1->getMessage()
+            $result1->getMessage(),
         );
         $this->assertSame(
             '/vagrant/static-analysis-baseliner/code/src/Domain/Analyser/BaseLineResultsRemover.php',

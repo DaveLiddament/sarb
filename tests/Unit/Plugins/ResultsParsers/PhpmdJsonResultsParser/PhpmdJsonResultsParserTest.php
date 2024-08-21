@@ -53,25 +53,25 @@ class PhpmdJsonResultsParserTest extends TestCase
             'src/Domain/Analyser/BaseLineResultsRemover.php',
             28,
             'LongVariable',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame(
             'Avoid excessively long variable names like $latestAnalysisResults. Keep variable name length under 20.',
-            $result1->getMessage()
+            $result1->getMessage(),
         );
 
         $this->assertMatch($result2,
             'src/Domain/Analyser/BaseLineResultsRemover.php',
             30,
             'LongVariable',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,
             'src/Domain/Analyser/internal/BaseLineResultsComparator.php',
             36,
             'LongVariable',
-            Severity::error()
+            Severity::error(),
         );
     }
 

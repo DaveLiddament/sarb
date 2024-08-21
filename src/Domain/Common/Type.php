@@ -18,16 +18,11 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 class Type
 {
     /**
-     * @var string
-     */
-    private $type;
-
-    /**
      * Type constructor.
      */
-    public function __construct(string $type)
-    {
-        $this->type = $type;
+    public function __construct(
+        private string $type,
+    ) {
     }
 
     public function getType(): string

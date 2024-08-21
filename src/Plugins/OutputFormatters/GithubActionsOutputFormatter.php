@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 class GithubActionsOutputFormatter implements OutputFormatter
 {
     public function outputResults(
-        AnalysisResults $analysisResults
+        AnalysisResults $analysisResults,
     ): string {
         $lines = [];
 

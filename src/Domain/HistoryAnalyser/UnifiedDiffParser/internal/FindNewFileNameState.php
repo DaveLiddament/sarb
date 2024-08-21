@@ -25,16 +25,11 @@ class FindNewFileNameState implements State
     public const NEW_FILE = '+++ b/';
 
     /**
-     * @var FileMutationBuilder
-     */
-    private $fileMutationBuilder;
-
-    /**
      * FindNewFileNameState constructor.
      */
-    public function __construct(FileMutationBuilder $fileMutationBuilder)
-    {
-        $this->fileMutationBuilder = $fileMutationBuilder;
+    public function __construct(
+        private FileMutationBuilder $fileMutationBuilder,
+    ) {
     }
 
     public function processLine(string $line): State

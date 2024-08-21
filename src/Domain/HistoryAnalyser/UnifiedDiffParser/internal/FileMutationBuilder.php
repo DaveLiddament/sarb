@@ -21,11 +21,6 @@ use Webmozart\Assert\Assert;
 class FileMutationBuilder
 {
     /**
-     * @var FileMutationsBuilder
-     */
-    private $fileMutationsBuilder;
-
-    /**
      * @var OriginalFileName|null
      */
     private $originalFileName;
@@ -45,9 +40,9 @@ class FileMutationBuilder
     /**
      * FileMutationBuilder constructor.
      */
-    public function __construct(FileMutationsBuilder $fileMutationsBuilder)
-    {
-        $this->fileMutationsBuilder = $fileMutationsBuilder;
+    public function __construct(
+        private FileMutationsBuilder $fileMutationsBuilder,
+    ) {
         $this->lineMutations = [];
         $this->newFileName = null;
         $this->originalFileName = null;

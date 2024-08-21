@@ -92,7 +92,7 @@ EOF;
             $this->defaultResultsParser,
             self::BASELINE_FILENAME,
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -110,7 +110,7 @@ EOF;
             $this->resultsParser2,
             self::BASELINE_FILENAME,
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -121,7 +121,7 @@ EOF;
         $this->assertReturnCode(0, $commandTester);
         $this->assertResponseContains(
             '[results-parser-stub] guesses the classification of violations. This means results might not be 100% accurate.',
-            $commandTester
+            $commandTester,
         );
     }
 
@@ -132,7 +132,7 @@ EOF;
             $this->defaultResultsParser,
             self::BASELINE_FILENAME,
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -150,7 +150,7 @@ EOF;
             $this->defaultResultsParser,
             self::BASELINE_FILENAME,
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -161,7 +161,7 @@ EOF;
         $this->assertReturnCode(11, $commandTester);
         $this->assertResponseContains(
             'Invalid value [rubbish] for option [input-format]. Pick one of: sarb-json|results-parser-stub',
-            $commandTester
+            $commandTester,
         );
     }
 
@@ -172,7 +172,7 @@ EOF;
             $this->defaultResultsParser,
             self::BASELINE_FILENAME,
             null,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -183,7 +183,7 @@ EOF;
         $this->assertReturnCode(11, $commandTester);
         $this->assertResponseContains(
             'Invalid value [rubbish] for option [history-analyser]. Pick one of: git|history-factory-stub',
-            $commandTester
+            $commandTester,
         );
     }
 
@@ -194,7 +194,7 @@ EOF;
             $this->defaultResultsParser,
             self::BASELINE_FILENAME,
             $this->projectRoot,
-            null
+            null,
         );
 
         $commandTester->execute([
@@ -213,7 +213,7 @@ EOF;
             $this->defaultResultsParser,
             self::BASELINE_FILENAME,
             null,
-            new \Exception()
+            new \Exception(),
         );
 
         $commandTester->execute([
@@ -250,7 +250,7 @@ EOF;
         ResultsParser $expectedResultsParser,
         string $baselineFileName,
         ?ProjectRoot $projectRoot,
-        ?\Throwable $exception
+        ?\Throwable $exception,
     ): CommandTester {
         $mockBaseLineCreator = new MockBaseLineCreator(
             $expectedHistoryFactory,
@@ -258,13 +258,13 @@ EOF;
             new BaseLineFileName($baselineFileName),
             $projectRoot,
             self::INPUT_STRING_1, // CommandTest adds line end
-            $exception
+            $exception,
         );
 
         $command = new CreateBaseLineCommand(
             $this->resultsParserRegistry,
             $this->historyFactoryRegistry,
-            $mockBaseLineCreator
+            $mockBaseLineCreator,
         );
 
         $commandTester = new CommandTester($command);

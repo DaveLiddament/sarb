@@ -15,16 +15,11 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 class FindFileDiffStartState implements State
 {
     /**
-     * @var FileMutationsBuilder
-     */
-    private $fileMutationsBuilder;
-
-    /**
      * FindFileDiffStartState constructor.
      */
-    public function __construct(FileMutationsBuilder $fileMutationsBuilder)
-    {
-        $this->fileMutationsBuilder = $fileMutationsBuilder;
+    public function __construct(
+        private FileMutationsBuilder $fileMutationsBuilder,
+    ) {
     }
 
     public function processLine(string $line): State

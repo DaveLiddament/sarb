@@ -21,11 +21,6 @@ class ProjectRoot
     /**
      * @var string
      */
-    private $rootDirectory;
-
-    /**
-     * @var string
-     */
     private $relativePath = '';
 
     /**
@@ -53,9 +48,9 @@ class ProjectRoot
         return new self($rootDirectory);
     }
 
-    private function __construct(string $rootDirectory)
-    {
-        $this->rootDirectory = $rootDirectory;
+    private function __construct(
+        private string $rootDirectory,
+    ) {
     }
 
     /**

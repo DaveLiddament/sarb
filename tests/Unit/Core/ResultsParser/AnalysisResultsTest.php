@@ -50,7 +50,7 @@ class AnalysisResultsTest extends TestCase
             self::FILE_A,
             self::LINE_1,
             self::TYPE,
-            Severity::error()
+            Severity::error(),
         );
         $this->analysisResultsBuilder->addAnalysisResult($analysisResult);
         $analysisResults = $this->analysisResultsBuilder->build();

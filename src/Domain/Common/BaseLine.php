@@ -26,38 +26,14 @@ class BaseLine
     public const BASE_LINE = 'SARB BaseLine';
 
     /**
-     * @var HistoryFactory
-     */
-    private $historyFactory;
-
-    /**
-     * @var BaseLineAnalysisResults
-     */
-    private $baseLineAnalysisResults;
-
-    /**
-     * @var ResultsParser
-     */
-    private $resultsParser;
-
-    /**
-     * @var HistoryMarker
-     */
-    private $historyMarker;
-
-    /**
      * BaseLine constructor.
      */
     public function __construct(
-        HistoryFactory $historyFactory,
-        BaseLineAnalysisResults $baseLineAnalysisResults,
-        ResultsParser $resultsParser,
-        HistoryMarker $historyMarker
+        private HistoryFactory $historyFactory,
+        private BaseLineAnalysisResults $baseLineAnalysisResults,
+        private ResultsParser $resultsParser,
+        private HistoryMarker $historyMarker,
     ) {
-        $this->historyFactory = $historyFactory;
-        $this->baseLineAnalysisResults = $baseLineAnalysisResults;
-        $this->resultsParser = $resultsParser;
-        $this->historyMarker = $historyMarker;
     }
 
     public function getHistoryFactory(): HistoryFactory

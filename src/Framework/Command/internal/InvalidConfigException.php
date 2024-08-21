@@ -26,7 +26,7 @@ class InvalidConfigException extends \Exception
             'Invalid value [%s] for option [%s]. Pick one of: %s',
             $value,
             $option,
-            implode('|', $validOptions)
+            implode('|', $validOptions),
         );
 
         return new self($message);

@@ -21,13 +21,13 @@ class FileMutationsTest extends TestCase
         $fileMutation1 = new FileMutation(
             new OriginalFileName(self::FILE_1_NAME),
             new NewFileName(self::FILE_1_NAME),
-            []
+            [],
         );
 
         $fileMutation2 = new FileMutation(
             new OriginalFileName(self::FILE_2_NAME),
             new NewFileName(self::FILE_2_NAME),
-            []
+            [],
         );
 
         $fileMutations = new FileMutations([$fileMutation1, $fileMutation2]);
@@ -42,13 +42,13 @@ class FileMutationsTest extends TestCase
         $fileMutation1 = new FileMutation(
             new OriginalFileName(self::FILE_1_NAME),
             new NewFileName(self::FILE_1_NAME),
-            []
+            [],
         );
 
         $fileMutation2 = new FileMutation(
             new OriginalFileName(self::FILE_1_NAME),
             new NewFileName(self::FILE_1_NAME),
-            []
+            [],
         );
 
         $this->expectException(\InvalidArgumentException::class);

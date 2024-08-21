@@ -92,7 +92,7 @@ class BaseLineResultsRemoveTest extends TestCase
             $this->latestAnalysisResults,
             $this->historyAnalyser,
             $this->baselineAnalysisResults,
-            false
+            false,
         );
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();
@@ -120,7 +120,7 @@ class BaseLineResultsRemoveTest extends TestCase
             $this->latestAnalysisResults,
             $this->historyAnalyser,
             $this->baselineAnalysisResults,
-            true
+            true,
         );
 
         $actualResults = $prunedAnalysisResults->getAnalysisResults();

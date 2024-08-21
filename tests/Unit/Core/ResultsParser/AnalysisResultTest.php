@@ -30,7 +30,7 @@ class AnalysisResultTest extends TestCase
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName(self::FILE_NAME),
             $projectRoot,
-            new LineNumber(self::LINE_NUMBER)
+            new LineNumber(self::LINE_NUMBER),
         );
 
         $analysisResult = new AnalysisResult(
@@ -38,7 +38,7 @@ class AnalysisResultTest extends TestCase
             new Type(self::TYPE),
             self::MESSAGE,
             self::FULL_DETAILS,
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertSame(self::FILE_NAME, $analysisResult->getLocation()->getAbsoluteFileName()->getFileName());

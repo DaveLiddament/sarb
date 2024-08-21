@@ -15,40 +15,19 @@ class MockResultsPruner implements ResultsPrunerInterface
 {
     use StringAssertionsTrait;
 
-    /**
-     * @var string
-     */
-    private $expectedAnalysisResults;
-    /**
-     * @var PrunedResults
-     */
-    private $prunedOutputResults;
-    /**
-     * @var ProjectRoot|null
-     */
-    private $projectRoot;
-    /**
-     * @var \Throwable|null
-     */
-    private $throwable;
-
     public function __construct(
-        string $expectedAnalysisResults,
-        PrunedResults $prunedOutputResults,
-        ?ProjectRoot $projectRoot,
-        ?\Throwable $throwable
+        private string $expectedAnalysisResults,
+        private PrunedResults $prunedOutputResults,
+        private ?ProjectRoot $projectRoot,
+        private ?\Throwable $throwable,
     ) {
-        $this->expectedAnalysisResults = $expectedAnalysisResults;
-        $this->prunedOutputResults = $prunedOutputResults;
-        $this->projectRoot = $projectRoot;
-        $this->throwable = $throwable;
     }
 
     public function getPrunedResults(
         BaseLineFileName $baseLineFileName,
         string $analysisResults,
         ProjectRoot $projectRoot,
-        bool $ignoreWarnings
+        bool $ignoreWarnings,
     ): PrunedResults {
         if (null !== $this->throwable) {
             throw $this->throwable;

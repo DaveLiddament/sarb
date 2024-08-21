@@ -99,7 +99,7 @@ class BaseLineAnalysisResultTest extends TestCase
         $baseLineAnalysisResult = $this->createBaseLineResult();
         $previousLocation = PreviousLocation::fromFileNameAndLineNumber(
             new RelativeFileName(self::FILE_NAME_2),
-            $this->lineNumber
+            $this->lineNumber,
         );
         $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
     }
@@ -109,7 +109,7 @@ class BaseLineAnalysisResultTest extends TestCase
         $baseLineAnalysisResult = $this->createBaseLineResult();
         $previousLocation = PreviousLocation::fromFileNameAndLineNumber(
             $this->relativeFileName,
-            new LineNumber(self::LINE_NUMBER_2)
+            new LineNumber(self::LINE_NUMBER_2),
         );
         $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
     }
@@ -169,7 +169,7 @@ class BaseLineAnalysisResultTest extends TestCase
             $this->lineNumber,
             $this->type,
             self::MESSAGE_1,
-            $this->severity
+            $this->severity,
         );
 
         return $baseLineAnalysisResult;

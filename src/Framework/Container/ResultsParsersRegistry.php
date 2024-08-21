@@ -62,7 +62,7 @@ class ResultsParsersRegistry implements ResultsParserLookupService
     {
         $identifier = $staticAnalysisResultsParser->getIdentifier()->getCode();
         Assert::keyNotExists($this->resultsParsers, $identifier,
-            "Multiple Static Analysis Results Parsers configured with the identifier [$identifier]"
+            "Multiple Static Analysis Results Parsers configured with the identifier [$identifier]",
         );
 
         $this->resultsParsers[$identifier] = $staticAnalysisResultsParser;

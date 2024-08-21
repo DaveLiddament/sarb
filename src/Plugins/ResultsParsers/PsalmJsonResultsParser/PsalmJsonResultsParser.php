@@ -71,7 +71,7 @@ class PsalmJsonResultsParser implements ResultsParser
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
     ): AnalysisResult {
         $absoluteFileNameAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::FILE);
         $lineAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::LINE_FROM);
@@ -80,7 +80,7 @@ class PsalmJsonResultsParser implements ResultsParser
         $location = Location::fromAbsoluteFileName(
             new AbsoluteFileName($absoluteFileNameAsString),
             $projectRoot,
-            new LineNumber($lineAsInt)
+            new LineNumber($lineAsInt),
         );
 
         return new AnalysisResult(
@@ -88,7 +88,7 @@ class PsalmJsonResultsParser implements ResultsParser
             new Type($typeAsString),
             ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
             $analysisResultAsArray,
-            Severity::error()
+            Severity::error(),
         );
     }
 

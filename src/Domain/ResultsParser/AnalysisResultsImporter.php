@@ -17,7 +17,7 @@ class AnalysisResultsImporter
     public function import(
         ResultsParser $resultsParser,
         ProjectRoot $projectRoot,
-        string $analysisResultsAsString
+        string $analysisResultsAsString,
     ): AnalysisResults {
         try {
             return $resultsParser->convertFromString($analysisResultsAsString, $projectRoot);

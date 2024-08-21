@@ -23,16 +23,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 class DiffHistoryAnalyser implements HistoryAnalyser
 {
     /**
-     * @var FileMutations
-     */
-    private $fileMutations;
-
-    /**
      * DiffHistoryAnalyser constructor.
      */
-    public function __construct(FileMutations $fileMutations)
-    {
-        $this->fileMutations = $fileMutations;
+    public function __construct(
+        private FileMutations $fileMutations,
+    ) {
     }
 
     /**
@@ -56,7 +51,7 @@ class DiffHistoryAnalyser implements HistoryAnalyser
 
         $originalLineNumber = OriginalLineNumberCalculator::calculateOriginalLineNumber(
             $fileMutation,
-            $lineNumber->getLineNumber()
+            $lineNumber->getLineNumber(),
         );
 
         if (null === $originalLineNumber) {
@@ -65,7 +60,7 @@ class DiffHistoryAnalyser implements HistoryAnalyser
 
         return PreviousLocation::fromFileNameAndLineNumber(
             $fileMutation->getOriginalFileName(),
-            new LineNumber($originalLineNumber)
+            new LineNumber($originalLineNumber),
         );
     }
 }

@@ -12,11 +12,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 class BaseLineAnalysisResults
 {
     /**
-     * @var BaseLineAnalysisResult[]
-     */
-    private $baseLineAnalysisResults;
-
-    /**
      * @psalm-param array<mixed> $array
      *
      * @throws ParseAtLocationException
@@ -54,9 +49,9 @@ class BaseLineAnalysisResults
     /**
      * @param BaseLineAnalysisResult[] $baseLineAnalysisResults
      */
-    private function __construct(array $baseLineAnalysisResults)
-    {
-        $this->baseLineAnalysisResults = $baseLineAnalysisResults;
+    private function __construct(
+        private array $baseLineAnalysisResults,
+    ) {
     }
 
     public function getCount(): int

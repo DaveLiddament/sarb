@@ -16,15 +16,6 @@ use Webmozart\Assert\Assert;
 
 class PreviousLocation
 {
-    /**
-     * @var RelativeFileName|null
-     */
-    private $relativeFileName;
-    /**
-     * @var LineNumber|null
-     */
-    private $lineNumber;
-
     public static function noPreviousLocation(): self
     {
         return new self(null, null);
@@ -35,10 +26,10 @@ class PreviousLocation
         return new self($relativeFileName, $lineNumber);
     }
 
-    private function __construct(?RelativeFileName $relativeFileName, ?LineNumber $lineNumber)
-    {
-        $this->relativeFileName = $relativeFileName;
-        $this->lineNumber = $lineNumber;
+    private function __construct(
+        private ?RelativeFileName $relativeFileName,
+        private ?LineNumber $lineNumber,
+    ) {
     }
 
     public function isNoPreviousLocation(): bool

@@ -31,29 +31,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
  */
 class BaseLineImporter
 {
-    /**
-     * @var FileReader
-     */
-    private $fileReader;
-
-    /**
-     * @var HistoryFactoryLookupService
-     */
-    private $historyFactoryLookupService;
-
-    /**
-     * @var ResultsParserLookupService
-     */
-    private $resultsParserLookupService;
-
     public function __construct(
-        FileReader $fileReader,
-        ResultsParserLookupService $resultsParserLookupService,
-        HistoryFactoryLookupService $historyFactoryLookupService
+        private FileReader $fileReader,
+        private ResultsParserLookupService $resultsParserLookupService,
+        private HistoryFactoryLookupService $historyFactoryLookupService,
     ) {
-        $this->fileReader = $fileReader;
-        $this->resultsParserLookupService = $resultsParserLookupService;
-        $this->historyFactoryLookupService = $historyFactoryLookupService;
     }
 
     /**

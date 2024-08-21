@@ -29,7 +29,7 @@ class BaseLineResultsRemover
         AnalysisResults $latestAnalysisResults,
         HistoryAnalyser $historyAnalyser,
         BaseLineAnalysisResults $baseLineAnalysisResults,
-        bool $ignoreWarnings
+        bool $ignoreWarnings,
     ): AnalysisResults {
         $prunedAnalysisResultsBuilder = new AnalysisResultsBuilder();
         $baseLineResultsComparator = new BaseLineResultsComparator($baseLineAnalysisResults);
@@ -49,7 +49,7 @@ class BaseLineResultsRemover
     private function isInHistoricResults(
         AnalysisResult $analysisResult,
         BaseLineResultsComparator $baseLineResultsComparator,
-        HistoryAnalyser $historyAnalyser
+        HistoryAnalyser $historyAnalyser,
     ): bool {
         $location = $analysisResult->getLocation();
         $previousLocation = $historyAnalyser->getPreviousLocation($location->getRelativeFileName(), $location->getLineNumber());

@@ -58,25 +58,25 @@ class PhpstanJsonResultsParserTest extends TestCase
             'src/Domain/BaseLiner/BaseLineImporter.php',
             89,
             'Parameter #1 $array of static method expects int, array given.',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame(
             'Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.',
-            $result1->getMessage()
+            $result1->getMessage(),
         );
 
         $this->assertMatch($result2,
             'src/Domain/ResultsParser/AnalysisResults.php',
             0,
             'Argument of an invalid type int supplied for foreach, only iterables are supported.',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,
             'src/Domain/ResultsParser/AnalysisResults.php',
             73,
             'PHPDoc tag @param for parameter $array with type array is incompatible with native type int',
-            Severity::error()
+            Severity::error(),
         );
     }
 

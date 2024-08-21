@@ -20,16 +20,11 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 class GitHistoryMarkerFactory implements HistoryMarkerFactory
 {
     /**
-     * @var GitWrapper
-     */
-    private $gitCliWrapper;
-
-    /**
      * GitHistoryMarkerFactory constructor.
      */
-    public function __construct(GitWrapper $gitCliWrapper)
-    {
-        $this->gitCliWrapper = $gitCliWrapper;
+    public function __construct(
+        private GitWrapper $gitCliWrapper,
+    ) {
     }
 
     public function newHistoryMarker(string $historyMarkerAsString): HistoryMarker

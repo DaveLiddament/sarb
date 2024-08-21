@@ -17,7 +17,7 @@ class BaseLineFileHelper
     {
         $command->addArgument(
             self::BASELINE_FILE,
-            InputArgument::REQUIRED, 'Baseline file'
+            InputArgument::REQUIRED, 'Baseline file',
         );
     }
 

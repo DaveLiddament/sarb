@@ -69,7 +69,7 @@ XML;
                 $analysisResult->getType()->getType(),
                 $analysisResult->getLocation()->getAbsoluteFileName()->getFileName(),
                 $analysisResult->getLocation()->getLineNumber()->getLineNumber(),
-                $column
+                $column,
             );
             $testcase = $testsuite->addChild('testcase');
             Assert::notNull($testcase, 'Can not add testcase element to XML');
@@ -79,7 +79,7 @@ XML;
             $failure->addAttribute('type', $analysisResult->getSeverity()->getSeverity());
             $failure->addAttribute(
                 'message',
-                $analysisResult->getMessage()
+                $analysisResult->getMessage(),
             );
             ++$caseCount;
         }

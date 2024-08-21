@@ -56,7 +56,7 @@ class ExakatJsonResultsParserTest extends TestCase
             'src/Domain/ResultsParser/AnalysisResults.php',
             67,
             'MismatchingDocblockParamType',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame('', $result1->getMessage());
 
@@ -64,7 +64,7 @@ class ExakatJsonResultsParserTest extends TestCase
             'src/Domain/Utils/JsonUtils.php',
             29,
             'MixedAssignment',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,

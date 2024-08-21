@@ -16,16 +16,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 
 class LineMutation
 {
-    /**
-     * @var LineNumber|null
-     */
-    private $newLine;
-
-    /**
-     * @var LineNumber|null
-     */
-    private $originalLine;
-
     public static function originalLineNumber(LineNumber $lineNumber): self
     {
         return new self($lineNumber, null);
@@ -36,10 +26,10 @@ class LineMutation
         return new self(null, $lineNumber);
     }
 
-    private function __construct(?LineNumber $originalLine, ?LineNumber $newLine)
-    {
-        $this->newLine = $newLine;
-        $this->originalLine = $originalLine;
+    private function __construct(
+        private ?LineNumber $originalLine,
+        private ?LineNumber $newLine,
+    ) {
     }
 
     public function getNewLine(): ?LineNumber

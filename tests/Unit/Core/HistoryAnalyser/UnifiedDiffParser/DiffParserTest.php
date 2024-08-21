@@ -288,7 +288,7 @@ class DiffParserTest extends TestCase
     private function assertLineMutation(
         ?LineMutation $expectedLineMutation,
         ?LineMutation $actualLineMutation,
-        int $i
+        int $i,
     ): void {
         if (null === $expectedLineMutation) {
             $this->assertNull($actualLineMutation, "Error with line mutation [$i]");

@@ -59,25 +59,25 @@ class PsalmJsonResultsParserTest extends TestCase
             'src/Domain/ResultsParser/AnalysisResults.php',
             67,
             'MismatchingDocblockParamType',
-            Severity::error()
+            Severity::error(),
         );
         $this->assertSame(
             "Parameter \$array has wrong type 'array<mixed, mixed>', should be 'int'",
-            $result1->getMessage()
+            $result1->getMessage(),
         );
 
         $this->assertMatch($result2,
             'src/Domain/Utils/JsonUtils.php',
             29,
             'MixedAssignment',
-            Severity::error()
+            Severity::error(),
         );
 
         $this->assertMatch($result3,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
-            Severity::error()
+            Severity::error(),
         );
     }
 

@@ -11,7 +11,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 class JsonOutputFormatter implements OutputFormatter
 {
     public function outputResults(
-        AnalysisResults $analysisResults
+        AnalysisResults $analysisResults,
     ): string {
         $results = [];
 

@@ -23,16 +23,11 @@ class FindRenameToState implements State
     public const RENAME_TO = 'rename to ';
 
     /**
-     * @var FileMutationBuilder
-     */
-    private $fileMutationBuilder;
-
-    /**
      * FindRenameToState constructor.
      */
-    public function __construct(FileMutationBuilder $fileMutationBuilder)
-    {
-        $this->fileMutationBuilder = $fileMutationBuilder;
+    public function __construct(
+        private FileMutationBuilder $fileMutationBuilder,
+    ) {
     }
 
     public function processLine(string $line): State

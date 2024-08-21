@@ -27,17 +27,12 @@ class ListHistoryAnalysersCommand extends Command
     protected static $defaultName = self::COMMAND_NAME;
 
     /**
-     * @var HistoryFactoryRegistry
-     */
-    private $historyFactoryRegistry;
-
-    /**
      * Constructor.
      */
-    public function __construct(HistoryFactoryRegistry $historyFactoryRegistry)
-    {
+    public function __construct(
+        private HistoryFactoryRegistry $historyFactoryRegistry,
+    ) {
         parent::__construct(self::COMMAND_NAME);
-        $this->historyFactoryRegistry = $historyFactoryRegistry;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

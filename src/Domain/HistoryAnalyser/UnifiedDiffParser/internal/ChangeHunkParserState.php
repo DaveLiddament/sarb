@@ -32,19 +32,15 @@ class ChangeHunkParserState implements State
     private $newFileLine;
 
     /**
-     * @var FileMutationBuilder
-     */
-    private $fileMutationBuilder;
-
-    /**
      * ChangeHunkParserState constructor.
      *
      * @throws DiffParseException
      */
-    public function __construct(FileMutationBuilder $fileMutationBuilder, string $rangeInformationAsString)
-    {
+    public function __construct(
+        private FileMutationBuilder $fileMutationBuilder,
+        string $rangeInformationAsString,
+    ) {
         $rangeInformation = new RangeInformation($rangeInformationAsString);
-        $this->fileMutationBuilder = $fileMutationBuilder;
         $this->originalFileLine = $rangeInformation->getOriginalFileStartLine();
         $this->newFileLine = $rangeInformation->getNewFileStartLine();
     }

@@ -22,14 +22,9 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
  */
 class BaseLineExporter
 {
-    /**
-     * @var FileWriter
-     */
-    private $fileWriter;
-
-    public function __construct(FileWriter $fileWriter)
-    {
-        $this->fileWriter = $fileWriter;
+    public function __construct(
+        private FileWriter $fileWriter,
+    ) {
     }
 
     /**

@@ -64,7 +64,7 @@ class OutputFormatterRegistry implements OutputFormatterLookupService
     {
         $identifier = $outputFormatter->getIdentifier();
         Assert::keyNotExists($this->outputFormatters, $identifier,
-            "Multiple OutputFormatters configured with the identifier [$identifier]"
+            "Multiple OutputFormatters configured with the identifier [$identifier]",
         );
 
         $this->outputFormatters[$identifier] = $outputFormatter;

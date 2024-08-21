@@ -71,7 +71,7 @@ class PhanJsonResultsParser implements ResultsParser
      */
     private function convertAnalysisResultFromArray(
         array $analysisResultAsArray,
-        ProjectRoot $projectRoot
+        ProjectRoot $projectRoot,
     ): AnalysisResult {
         $typeAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
         $type = new Type($typeAsString);
@@ -89,7 +89,7 @@ class PhanJsonResultsParser implements ResultsParser
         $location = Location::fromRelativeFileName(
             $relativeFileName,
             $projectRoot,
-            new LineNumber($lineAsInt)
+            new LineNumber($lineAsInt),
         );
 
         return new AnalysisResult(
@@ -97,7 +97,7 @@ class PhanJsonResultsParser implements ResultsParser
             $type,
             $message,
             $analysisResultAsArray,
-            Severity::error()
+            Severity::error(),
         );
     }
 

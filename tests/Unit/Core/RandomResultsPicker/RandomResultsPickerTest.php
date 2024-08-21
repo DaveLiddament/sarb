@@ -101,7 +101,7 @@ class RandomResultsPickerTest extends TestCase
             new Type("Type-{$string}"),
             $string,
             [],
-            Severity::error()
+            Severity::error(),
         );
 
         $issuesBuilder->addAnalysisResult($analysisResult);

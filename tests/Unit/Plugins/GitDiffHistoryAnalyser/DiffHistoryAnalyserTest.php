@@ -126,7 +126,7 @@ class DiffHistoryAnalyserTest extends TestCase
 
         return $diffHistoryAnalyser->getPreviousLocation(
             new RelativeFileName($fileName),
-            new LineNumber($lineNumber)
+            new LineNumber($lineNumber),
         );
     }
 

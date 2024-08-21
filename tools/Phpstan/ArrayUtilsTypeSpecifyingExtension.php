@@ -31,7 +31,7 @@ class ArrayUtilsTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExt
     public function isStaticMethodSupported(
         MethodReflection $staticMethodReflection,
         StaticCall $node,
-        TypeSpecifierContext $context
+        TypeSpecifierContext $context,
     ): bool {
         return 'assertArray' === $staticMethodReflection->getName()
             && isset($node->getArgs()[0])
@@ -42,7 +42,7 @@ class ArrayUtilsTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExt
         MethodReflection $staticMethodReflection,
         StaticCall $node,
         Scope $scope,
-        TypeSpecifierContext $context
+        TypeSpecifierContext $context,
     ): SpecifiedTypes {
         return $this->typeSpecifier->create(
             $node->getArgs()[0]->value,

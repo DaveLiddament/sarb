@@ -27,17 +27,12 @@ class ListResultsParsesCommand extends Command
     protected static $defaultName = self::COMMAND_NAME;
 
     /**
-     * @var ResultsParsersRegistry
-     */
-    private $staticAnalysisResultsParsersRegistry;
-
-    /**
      * Constructor.
      */
-    public function __construct(ResultsParsersRegistry $resultsParsersRegistry)
-    {
+    public function __construct(
+        private ResultsParsersRegistry $staticAnalysisResultsParsersRegistry,
+    ) {
         parent::__construct(self::COMMAND_NAME);
-        $this->staticAnalysisResultsParsersRegistry = $resultsParsersRegistry;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -50,23 +45,23 @@ class ListResultsParsesCommand extends Command
                 sprintf(
                     '[<info>%s</info>] %s',
                     $identifier->getCode(),
-                    $identifier->getDescription()
-                )
+                    $identifier->getDescription(),
+                ),
             );
 
             $output->writeln(
                 sprintf(
                     '    Create baseline:         <info>%s | sarb create --input-format="%s"</info>',
                     $identifier->getToolCommand(),
-                    $identifier->getCode()
-                )
+                    $identifier->getCode(),
+                ),
             );
 
             $output->writeln(
                 sprintf(
                     '    Remove baseline results: <info>%s | sarb remove</info>',
-                    $identifier->getToolCommand()
-                )
+                    $identifier->getToolCommand(),
+                ),
             );
         }
 

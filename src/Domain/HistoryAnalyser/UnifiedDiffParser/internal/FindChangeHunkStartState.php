@@ -20,16 +20,11 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 class FindChangeHunkStartState implements State
 {
     /**
-     * @var FileMutationBuilder
-     */
-    private $fileMutationBuilder;
-
-    /**
      * FindChangeHunkStartState constructor.
      */
-    public function __construct(FileMutationBuilder $fileMutationBuilder)
-    {
-        $this->fileMutationBuilder = $fileMutationBuilder;
+    public function __construct(
+        private FileMutationBuilder $fileMutationBuilder,
+    ) {
     }
 
     public function processLine(string $line): State

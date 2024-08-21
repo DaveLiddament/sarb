@@ -21,7 +21,7 @@ class ProjectRootHelper
             self::PROJECT_ROOT,
             null,
             InputOption::VALUE_REQUIRED,
-            'Path to the root of the project you are creating baseline for'
+            'Path to the root of the project you are creating baseline for',
         );
 
         $command->addOption(

@@ -12,7 +12,7 @@ class CommandFailedException extends \Exception
             '%s. Return code [%s] Error: %s',
             $context,
             null === $exitCode ? 'null' : (string) $exitCode,
-            $errorMessage
+            $errorMessage,
         );
 
         return new self($errorMessage);

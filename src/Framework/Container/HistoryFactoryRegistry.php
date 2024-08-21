@@ -57,7 +57,7 @@ class HistoryFactoryRegistry implements HistoryFactoryLookupService
     {
         $identifier = $historyFactory->getIdentifier();
         Assert::keyNotExists($this->historyFactories, $identifier,
-            "Multiple History Factories configured with the identifier [$identifier]"
+            "Multiple History Factories configured with the identifier [$identifier]",
         );
 
         $this->historyFactories[$identifier] = $historyFactory;

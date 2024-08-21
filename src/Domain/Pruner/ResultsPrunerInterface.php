@@ -16,6 +16,6 @@ interface ResultsPrunerInterface
         BaseLineFileName $baseLineFileName,
         string $analysisResults,
         ProjectRoot $projectRoot,
-        bool $ignoreWarnings
+        bool $ignoreWarnings,
     ): PrunedResults;
 }

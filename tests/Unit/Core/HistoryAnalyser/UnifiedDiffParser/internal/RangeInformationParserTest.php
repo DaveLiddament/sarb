@@ -36,7 +36,7 @@ class RangeInformationParserTest extends TestCase
         int $originalStartLine,
         int $originalHunkSize,
         int $newStartLine,
-        int $newHunkSize
+        int $newHunkSize,
     ): void {
         $rangeInformation = new RangeInformation($rangeInformationAsString);
         $this->assertEquals($originalStartLine, $rangeInformation->getOriginalFileStartLine());

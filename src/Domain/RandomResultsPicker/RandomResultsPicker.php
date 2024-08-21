@@ -12,14 +12,9 @@ class RandomResultsPicker
 {
     private const RANDOM_ISSUES_TO_FIX = 5;
 
-    /**
-     * @var RandomNumberGenerator
-     */
-    private $randomNumberGenerator;
-
-    public function __construct(RandomNumberGenerator $randomNumberGenerator)
-    {
-        $this->randomNumberGenerator = $randomNumberGenerator;
+    public function __construct(
+        private RandomNumberGenerator $randomNumberGenerator,
+    ) {
     }
 
     /**

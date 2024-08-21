@@ -21,27 +21,6 @@ class BaseLineAnalysisResult
     private const SEVERITY = 'severity';
 
     /**
-     * @var RelativeFileName
-     */
-    private $fileName;
-    /**
-     * @var LineNumber
-     */
-    private $lineNumber;
-    /**
-     * @var Type
-     */
-    private $type;
-    /**
-     * @var string
-     */
-    private $message;
-    /**
-     * @var Severity
-     */
-    private $severity;
-
-    /**
      * @psalm-param array<mixed> $array
      *
      * @throws ArrayParseException
@@ -62,23 +41,18 @@ class BaseLineAnalysisResult
         LineNumber $lineNumber,
         Type $type,
         string $message,
-        Severity $severity
+        Severity $severity,
     ): self {
         return new self($fileName, $lineNumber, $type, $message, $severity);
     }
 
     private function __construct(
-        RelativeFileName $fileName,
-        LineNumber $lineNumber,
-        Type $type,
-        string $message,
-        Severity $severity
+        private RelativeFileName $fileName,
+        private LineNumber $lineNumber,
+        private Type $type,
+        private string $message,
+        private Severity $severity,
     ) {
-        $this->fileName = $fileName;
-        $this->lineNumber = $lineNumber;
-        $this->type = $type;
-        $this->message = $message;
-        $this->severity = $severity;
     }
 
     public function getFileName(): RelativeFileName
