@@ -49,7 +49,7 @@
   "autoload-dev": {
     "psr-4": {
       "DaveLiddament\\StaticAnalysisResultsBaseliner\\Tests\\" : "tests/",
-      "Tools\\Phpstan\\" : "tools/Phpstan/"
+      "Tools\\" : "tools/"
     }
   },
   "scripts": {
