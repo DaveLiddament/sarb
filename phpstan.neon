@@ -3,6 +3,7 @@ parameters:
     paths:
     - src
     - tests
+    - tools
     excludePaths:
     - tests/resources
     - tests/scratchpad
@@ -13,8 +14,16 @@ services:
         class: Tools\Phpstan\ArrayUtilsTypeSpecifyingExtension
         tags:
         - phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
+
+    -
+        class: Tools\Phpat\LayerTest
+        tags:
+        - phpat.test
 includes:
 - vendor/phpstan/phpstan-webmozart-assert/extension.neon
 - vendor/phpstan/phpstan-strict-rules/rules.neon
 - vendor/phpstan/phpstan-phpunit/extension.neon
 - vendor/phpstan/phpstan-phpunit/rules.neon
+- vendor/phpat/phpat/extension.neon
+
+
