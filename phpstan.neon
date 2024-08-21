@@ -3,6 +3,7 @@ parameters:
     paths:
     - src
     - tests
+    - tools
     excludePaths:
     - tests/resources
     - tests/scratchpad
