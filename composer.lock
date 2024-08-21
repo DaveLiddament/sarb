@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba9bf464009b992b602ad0fd317103d0",
+    "content-hash": "a28aa2cdded04ab1d2dbb25c4c2e4e36",
     "packages": [
         {
             "name": "psr/container",
@@ -2472,6 +2472,63 @@
                 "source": "https://github.com/php-parallel-lint/PHP-Var-Dump-Check/tree/master"
             },
             "time": "2020-08-17T12:12:52+00:00"
+        },
+        {
+            "name": "phpat/phpat",
+            "version": "0.10.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/carlosas/phpat.git",
+                "reference": "4c29e330fb306876bca3174aa4b097d0d8611964"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/carlosas/phpat/zipball/4c29e330fb306876bca3174aa4b097d0d8611964",
+                "reference": "4c29e330fb306876bca3174aa4b097d0d8611964",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0",
+                "phpstan/phpstan": "^1.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.46",
+                "kubawerlos/php-cs-fixer-custom-fixers": "3.18",
+                "phpunit/phpunit": "^9.0 || ^10.0",
+                "vimeo/psalm": "^5.0"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
+                "psr-4": {
+                    "PHPat\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Carlos Alandete Sastre",
+                    "email": "carlos.alandete@gmail.com"
+                }
+            ],
+            "description": "PHP Architecture Tester",
+            "support": {
+                "issues": "https://github.com/carlosas/phpat/issues",
+                "source": "https://github.com/carlosas/phpat/tree/0.10.18"
+            },
+            "time": "2024-07-05T14:56:19+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
