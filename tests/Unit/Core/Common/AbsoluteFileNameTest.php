@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\AbsoluteFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use PHPUnit\Framework\TestCase;
 
-class AbsoluteFileNameTest extends TestCase
+final class AbsoluteFileNameTest extends TestCase
 {
     private const ABSOLUTE_FILENAME = '/tmp/file.php';
 

@@ -6,7 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 use Webmozart\Assert\Assert;
 
-class Severity
+final class Severity
 {
     public const WARNING = 'warning';
     public const ERROR = 'error';

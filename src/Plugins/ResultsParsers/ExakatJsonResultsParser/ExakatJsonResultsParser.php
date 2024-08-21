@@ -29,7 +29,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class ExakatJsonResultsParser implements ResultsParser
+final class ExakatJsonResultsParser implements ResultsParser
 {
     public const LINE_FROM = 'line';
     public const TYPE = 'type';

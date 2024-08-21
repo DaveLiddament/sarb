@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use PHPUnit\Framework\TestCase;
 
-class AnalysisResultsTest extends TestCase
+final class AnalysisResultsTest extends TestCase
 {
     use AnalysisResultsAdderTrait;
     private const FILE_A = '/FILE_A';

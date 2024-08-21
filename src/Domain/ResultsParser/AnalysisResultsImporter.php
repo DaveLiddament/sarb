@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class AnalysisResultsImporter
+final class AnalysisResultsImporter
 {
     /**
      * @throws AnalysisResultsImportException

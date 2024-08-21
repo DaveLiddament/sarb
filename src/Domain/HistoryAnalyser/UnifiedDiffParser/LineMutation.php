@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 
-class LineMutation
+final class LineMutation
 {
     public static function originalLineNumber(LineNumber $lineNumber): self
     {

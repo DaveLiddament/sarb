@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\FileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 
-class FileAccessException extends SarbException
+final class FileAccessException extends SarbException
 {
     public static function readFileException(FileName $fileName): self
     {

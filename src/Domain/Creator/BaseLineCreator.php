@@ -13,7 +13,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryF
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImporter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 
-class BaseLineCreator implements BaseLineCreatorInterface
+final class BaseLineCreator implements BaseLineCreatorInterface
 {
     public function __construct(
         private BaseLineExporter $exporter,

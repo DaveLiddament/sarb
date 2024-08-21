@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryM
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarkerFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
 
-class GitHistoryMarkerFactory implements HistoryMarkerFactory
+final class GitHistoryMarkerFactory implements HistoryMarkerFactory
 {
     /**
      * GitHistoryMarkerFactory constructor.

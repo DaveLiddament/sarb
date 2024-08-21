@@ -21,7 +21,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class BaselineUpgrader
+final class BaselineUpgrader
 {
     public function __construct(
         private FileReader $fileReader,

@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryM
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarkerFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
 
-class HistoryMarkerFactoryStub implements HistoryMarkerFactory
+final class HistoryMarkerFactoryStub implements HistoryMarkerFactory
 {
     public function newHistoryMarker(string $historyMarkerAsString): HistoryMarker
     {

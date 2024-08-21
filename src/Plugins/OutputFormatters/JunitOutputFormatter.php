@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFo
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use Webmozart\Assert\Assert;
 
-class JunitOutputFormatter implements OutputFormatter
+final class JunitOutputFormatter implements OutputFormatter
 {
     /**
      * @throws SarbException

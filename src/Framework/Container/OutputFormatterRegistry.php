@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFo
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatterLookupService;
 use Webmozart\Assert\Assert;
 
-class OutputFormatterRegistry implements OutputFormatterLookupService
+final class OutputFormatterRegistry implements OutputFormatterLookupService
 {
     /**
      * @var OutputFormatter[]

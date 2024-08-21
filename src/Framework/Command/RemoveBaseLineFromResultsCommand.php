@@ -29,7 +29,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RemoveBaseLineFromResultsCommand extends Command
+final class RemoveBaseLineFromResultsCommand extends Command
 {
     public const COMMAND_NAME = 'remove-baseline-results';
 

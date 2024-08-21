@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Common;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use PHPUnit\Framework\TestCase;
 
-class LineNumberTest extends TestCase
+final class LineNumberTest extends TestCase
 {
     public function testHappyPath(): void
     {

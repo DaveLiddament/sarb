@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use PHPUnit\Framework\TestCase;
 
-class FileMutationsTest extends TestCase
+final class FileMutationsTest extends TestCase
 {
     private const FILE_1_NAME = 'foo/bar.php';
     private const FILE_2_NAME = 'foo/baz.php';

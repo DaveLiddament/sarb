@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryF
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryMarker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
 
-class BaseLine
+final class BaseLine
 {
     public const HISTORY_MARKER = 'historyMarker';
     public const HISTORY_ANALYSER = 'historyAnalyser';

@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\LineMutation;
 use PHPUnit\Framework\TestCase;
 
-class LineMutationTest extends TestCase
+final class LineMutationTest extends TestCase
 {
     private const LINE_NUMBER_1 = 1;
     private const LINE_NUMBER_2 = 2;

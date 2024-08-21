@@ -37,7 +37,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
  * NOTE: SARB only deals with errors that are attached to a particular line in a file.
  * PHPStan can report general errors (not specific to file). These are ignored by SARB.
  */
-class PhpstanJsonResultsParser implements ResultsParser
+final class PhpstanJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
     private const TYPE = 'message';

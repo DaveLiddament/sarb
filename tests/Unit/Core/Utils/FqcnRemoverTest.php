@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
 use PHPUnit\Framework\TestCase;
 
-class FqcnRemoverTest extends TestCase
+final class FqcnRemoverTest extends TestCase
 {
     /**
      * @psalm-return array<string,array{string,string}>

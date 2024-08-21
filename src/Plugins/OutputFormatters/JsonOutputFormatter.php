@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFo
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 
-class JsonOutputFormatter implements OutputFormatter
+final class JsonOutputFormatter implements OutputFormatter
 {
     public function outputResults(
         AnalysisResults $analysisResults,

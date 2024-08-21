@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\Ex
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 
-class ExakatJsonIdentifier implements Identifier
+final class ExakatJsonIdentifier implements Identifier
 {
     public function getCode(): string
     {

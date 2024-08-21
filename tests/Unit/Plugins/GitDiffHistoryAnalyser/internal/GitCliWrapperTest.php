@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitCliWrapper;
 use PHPUnit\Framework\TestCase;
 
-class GitCliWrapperTest extends TestCase
+final class GitCliWrapperTest extends TestCase
 {
     public function testGitDiffCommandFails(): void
     {

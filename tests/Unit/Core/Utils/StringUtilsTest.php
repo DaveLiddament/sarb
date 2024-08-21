@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 use PHPUnit\Framework\TestCase;
 
-class StringUtilsTest extends TestCase
+final class StringUtilsTest extends TestCase
 {
     public function testDoesStartWith(): void
     {

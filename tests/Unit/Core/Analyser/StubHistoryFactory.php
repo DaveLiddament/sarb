@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitHistoryMarkerFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
 
-class StubHistoryFactory implements HistoryFactory
+final class StubHistoryFactory implements HistoryFactory
 {
     /**
      * StubHistoryFactory constructor.

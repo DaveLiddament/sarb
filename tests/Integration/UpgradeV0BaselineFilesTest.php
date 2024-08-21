@@ -25,7 +25,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
-class UpgradeV0BaselineFilesTest extends TestCase
+final class UpgradeV0BaselineFilesTest extends TestCase
 {
     use ResourceLoaderTrait;
     use TestDirectoryTrait;

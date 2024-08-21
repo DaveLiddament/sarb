@@ -17,7 +17,7 @@ use Webmozart\Assert\Assert;
 /**
  * Represents a line number (in a file).
  */
-class LineNumber
+final class LineNumber
 {
     /**
      * @var int

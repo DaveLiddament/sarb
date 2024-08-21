@@ -19,7 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
-class GitCliWrapper implements GitWrapper
+final class GitCliWrapper implements GitWrapper
 {
     public function getCurrentSha(ProjectRoot $projectRoot): GitCommit
     {

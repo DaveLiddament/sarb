@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 
-class ArrayParseException extends SarbException
+final class ArrayParseException extends SarbException
 {
     public static function missingKey(string $key): self
     {

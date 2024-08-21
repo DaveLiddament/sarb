@@ -16,7 +16,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class PhpstanJsonResultsParserTest extends TestCase
+final class PhpstanJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;

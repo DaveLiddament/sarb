@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\RandomNumberGenerator;
 
-class RandomResultsPicker
+final class RandomResultsPicker
 {
     private const RANDOM_ISSUES_TO_FIX = 5;
 

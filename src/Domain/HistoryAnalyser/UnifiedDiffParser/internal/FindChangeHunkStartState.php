@@ -17,7 +17,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
  * - start of a new Change Hunk
  * - start of a new File Diff.
  */
-class FindChangeHunkStartState implements State
+final class FindChangeHunkStartState implements State
 {
     /**
      * FindChangeHunkStartState constructor.

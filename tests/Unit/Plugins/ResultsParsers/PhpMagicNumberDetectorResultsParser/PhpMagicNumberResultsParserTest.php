@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class PhpMagicNumberResultsParserTest extends TestCase
+final class PhpMagicNumberResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;

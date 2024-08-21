@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 /**
  * Thrown if invalid ResultsParser is given.
  */
-class InvalidResultsParserException extends SarbException
+final class InvalidResultsParserException extends SarbException
 {
     public static function invalidIdentifier(string $identifier): self
     {

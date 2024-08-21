@@ -29,7 +29,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class PsalmJsonResultsParser implements ResultsParser
+final class PsalmJsonResultsParser implements ResultsParser
 {
     public const LINE_FROM = 'line_from';
     public const TYPE = 'type';

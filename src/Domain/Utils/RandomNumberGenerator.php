@@ -6,6 +6,8 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
 /**
  * Wrapper for rand.
+ *
+ * @final
  */
 class RandomNumberGenerator
 {

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
-class Location
+final class Location
 {
     /**
      * @throws InvalidPathException

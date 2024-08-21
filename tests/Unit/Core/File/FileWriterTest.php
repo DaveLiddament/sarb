@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
 use PHPUnit\Framework\TestCase;
 
-class FileWriterTest extends TestCase
+final class FileWriterTest extends TestCase
 {
     /**
      * @var FileWriter

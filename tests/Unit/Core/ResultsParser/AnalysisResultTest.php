@@ -13,7 +13,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use PHPUnit\Framework\TestCase;
 
-class AnalysisResultTest extends TestCase
+final class AnalysisResultTest extends TestCase
 {
     private const FILE_NAME = '/tmp/foo.php';
     private const LINE_NUMBER = 10;

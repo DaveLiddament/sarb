@@ -16,7 +16,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use PHPUnit\Framework\TestCase;
 
-class BaseLineAnalysisResultsTest extends TestCase
+final class BaseLineAnalysisResultsTest extends TestCase
 {
     private const PROJECT_ROOT = '/';
     private const ABSOLUTE_FILE_NAME_1 = '/fileName1';

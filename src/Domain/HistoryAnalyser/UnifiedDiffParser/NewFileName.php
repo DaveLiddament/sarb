@@ -17,6 +17,6 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 /**
  * Wrapper class to reduce the chance of mixing Original and New FileNames.
  */
-class NewFileName extends RelativeFileName
+final class NewFileName extends RelativeFileName
 {
 }

@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\RangeInformation;
 use PHPUnit\Framework\TestCase;
 
-class RangeInformationParserTest extends TestCase
+final class RangeInformationParserTest extends TestCase
 {
     /**
      * @psalm-return array<int,array{string,int,int,int,int}>

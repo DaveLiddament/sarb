@@ -6,7 +6,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAna
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
 
-class GitNotCleanException extends HistoryAnalyserException
+final class GitNotCleanException extends HistoryAnalyserException
 {
     private const MESSAGE = <<<TEXT
 There are modified or new files. To see them run:

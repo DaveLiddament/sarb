@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAd
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
-class BaseLineResultsComparatorTest extends TestCase
+final class BaseLineResultsComparatorTest extends TestCase
 {
     use AnalysisResultsAdderTrait;
 

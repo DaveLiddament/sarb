@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
 // TODO this is getting a bit big. Split into multiple files.
-class EndToEndTest extends TestCase
+final class EndToEndTest extends TestCase
 {
     use ResourceLoaderTrait;
     use TestDirectoryTrait;

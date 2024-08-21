@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
-class ArrayUtils
+final class ArrayUtils
 {
     /**
      * Gets string value for given key in the array.

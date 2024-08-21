@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\Output
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\GithubActionsOutputFormatter;
 
-class GithubActionsOutputFormatterTest extends AbstractOutputFormatterTest
+final class GithubActionsOutputFormatterTest extends AbstractOutputFormatterTest
 {
     public function testName(): void
     {

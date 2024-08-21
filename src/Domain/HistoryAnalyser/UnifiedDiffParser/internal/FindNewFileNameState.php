@@ -20,7 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
  *
  * If this refers to either an added or deleted file then ignore the Change Hunks and scan for next File Diff.
  */
-class FindNewFileNameState implements State
+final class FindNewFileNameState implements State
 {
     public const NEW_FILE = '+++ b/';
 

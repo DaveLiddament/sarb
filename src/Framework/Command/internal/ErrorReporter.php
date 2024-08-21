@@ -12,7 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ErrorReporter
+final class ErrorReporter
 {
     public static function reportError(OutputInterface $output, \Throwable $throwable): int
     {

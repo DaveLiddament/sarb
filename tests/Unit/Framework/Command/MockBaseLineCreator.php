@@ -15,7 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\StringAssertionsTrait;
 use PHPUnit\Framework\Assert;
 
-class MockBaseLineCreator implements BaseLineCreatorInterface
+final class MockBaseLineCreator implements BaseLineCreatorInterface
 {
     use StringAssertionsTrait;
 

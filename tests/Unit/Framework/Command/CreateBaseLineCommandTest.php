@@ -22,7 +22,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHisto
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class CreateBaseLineCommandTest extends TestCase
+final class CreateBaseLineCommandTest extends TestCase
 {
     private const INPUT_STRING_1 = <<<EOF
 This is

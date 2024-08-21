@@ -19,7 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
  *
  * E.g. JSON was expected, but representation of data could not be converted to JSON.
  */
-class InvalidContentTypeException extends SarbException
+final class InvalidContentTypeException extends SarbException
 {
     public static function notJson(): self
     {

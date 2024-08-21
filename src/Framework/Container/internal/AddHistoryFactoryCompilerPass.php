@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class AddHistoryFactoryCompilerPass implements CompilerPassInterface
+final class AddHistoryFactoryCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

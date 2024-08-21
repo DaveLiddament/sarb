@@ -32,7 +32,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 /**
  * Handles PHPMD JSON output.
  */
-class PhpmdJsonResultsParser implements ResultsParser
+final class PhpmdJsonResultsParser implements ResultsParser
 {
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {

@@ -22,7 +22,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitWrapper;
 use Webmozart\Assert\Assert;
 
-class GitDiffHistoryFactory implements HistoryFactory
+final class GitDiffHistoryFactory implements HistoryFactory
 {
     /**
      * GitDiffHistoryFactory constructor.

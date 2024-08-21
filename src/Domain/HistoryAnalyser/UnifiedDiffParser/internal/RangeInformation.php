@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 
-class RangeInformation
+final class RangeInformation
 {
     /**
      * @var int

@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StreamableInputInterface;
 use Webmozart\Assert\Assert;
 
-class CliConfigReader
+final class CliConfigReader
 {
     public static function getArgument(InputInterface $input, string $argumentName): string
     {

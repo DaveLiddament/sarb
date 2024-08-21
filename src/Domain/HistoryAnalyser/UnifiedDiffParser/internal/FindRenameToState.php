@@ -18,7 +18,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 /**
  * Previous line in diff was renaming a file from Original Name. This is looking for the New Name.
  */
-class FindRenameToState implements State
+final class FindRenameToState implements State
 {
     public const RENAME_TO = 'rename to ';
 

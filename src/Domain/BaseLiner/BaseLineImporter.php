@@ -29,7 +29,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 /**
  * Imports a baseline from the file.
  */
-class BaseLineImporter
+final class BaseLineImporter
 {
     public function __construct(
         private FileReader $fileReader,

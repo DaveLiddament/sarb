@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAna
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\FileMutation;
 use Webmozart\Assert\Assert;
 
-class OriginalLineNumberCalculator
+final class OriginalLineNumberCalculator
 {
     /**
      * Returns original line number or null if the line was added in the mutation given the file mutations.

@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTra
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
 use PHPUnit\Framework\TestCase;
 
-class PhanJsonResultsParserTest extends TestCase
+final class PhanJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;

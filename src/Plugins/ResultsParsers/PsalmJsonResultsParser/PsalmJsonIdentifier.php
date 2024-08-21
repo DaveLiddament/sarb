@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\Ps
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 
-class PsalmJsonIdentifier implements Identifier
+final class PsalmJsonIdentifier implements Identifier
 {
     public function getCode(): string
     {

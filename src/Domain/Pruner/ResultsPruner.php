@@ -15,7 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 
-class ResultsPruner implements ResultsPrunerInterface
+final class ResultsPruner implements ResultsPrunerInterface
 {
     public function __construct(
         private BaseLineImporter $baseLineImporter,

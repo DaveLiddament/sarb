@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\interna
 /**
  * Used for invalid user config provided.
  */
-class InvalidConfigException extends \Exception
+final class InvalidConfigException extends \Exception
 {
     /**
      * @param string[] $validOptions

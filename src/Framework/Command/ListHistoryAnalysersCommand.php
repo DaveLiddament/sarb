@@ -17,7 +17,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ListHistoryAnalysersCommand extends Command
+final class ListHistoryAnalysersCommand extends Command
 {
     public const COMMAND_NAME = 'list-history-analysers';
 

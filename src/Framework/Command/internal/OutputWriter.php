@@ -7,7 +7,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\interna
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class OutputWriter
+final class OutputWriter
 {
     /**
      * All information output is written to StdErr using this method.

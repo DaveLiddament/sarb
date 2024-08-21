@@ -20,7 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileWriter;
 /**
  * Exports a BaseLine to a file.
  */
-class BaseLineExporter
+final class BaseLineExporter
 {
     public function __construct(
         private FileWriter $fileWriter,

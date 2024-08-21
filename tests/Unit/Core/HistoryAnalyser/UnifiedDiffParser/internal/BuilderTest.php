@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests to check the FileMutationsBuilder and FileMutationBuilder both work.
  */
-class BuilderTest extends TestCase
+final class BuilderTest extends TestCase
 {
     private const FILE_1_NAME = 'foo/bar.php';
     private const FILE_2_NAME = 'foo/baz.php';

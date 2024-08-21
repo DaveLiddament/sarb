@@ -12,7 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
 
-class DiffParserTest extends TestCase
+final class DiffParserTest extends TestCase
 {
     use ResourceLoaderTrait;
 

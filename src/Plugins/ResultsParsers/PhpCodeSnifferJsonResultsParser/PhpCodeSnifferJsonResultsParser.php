@@ -32,7 +32,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 /**
  * Handles PHP Code Sniffers's JSON output.
  */
-class PhpCodeSnifferJsonResultsParser implements ResultsParser
+final class PhpCodeSnifferJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
     private const SOURCE = 'source';

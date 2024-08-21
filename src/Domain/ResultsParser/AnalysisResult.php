@@ -20,7 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 /**
  * Holds a single result from the static analysis results.
  */
-class AnalysisResult
+final class AnalysisResult
 {
     /**
      * AnalysisResult constructor.

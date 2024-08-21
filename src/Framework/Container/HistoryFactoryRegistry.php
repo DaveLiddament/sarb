@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryF
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryFactoryException;
 use Webmozart\Assert\Assert;
 
-class HistoryFactoryRegistry implements HistoryFactoryLookupService
+final class HistoryFactoryRegistry implements HistoryFactoryLookupService
 {
     /**
      * @var HistoryFactory[]

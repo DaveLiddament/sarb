@@ -20,7 +20,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\NewFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\OriginalLineNumberCalculator;
 
-class DiffHistoryAnalyser implements HistoryAnalyser
+final class DiffHistoryAnalyser implements HistoryAnalyser
 {
     /**
      * DiffHistoryAnalyser constructor.

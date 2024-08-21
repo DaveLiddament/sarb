@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal;
 
-class CommandFailedException extends \Exception
+final class CommandFailedException extends \Exception
 {
     public static function newInstance(string $context, ?int $exitCode, string $errorMessage): self
     {

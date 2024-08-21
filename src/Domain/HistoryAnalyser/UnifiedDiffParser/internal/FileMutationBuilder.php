@@ -18,7 +18,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use Webmozart\Assert\Assert;
 
-class FileMutationBuilder
+final class FileMutationBuilder
 {
     /**
      * @var OriginalFileName|null

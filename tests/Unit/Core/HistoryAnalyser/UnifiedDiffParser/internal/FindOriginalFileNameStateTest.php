@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\FindRenameToState;
 use PHPUnit\Framework\TestCase;
 
-class FindOriginalFileNameStateTest extends TestCase
+final class FindOriginalFileNameStateTest extends TestCase
 {
     /**
      * @var FindOriginalFileNameState

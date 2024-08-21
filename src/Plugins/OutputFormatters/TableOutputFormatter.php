@@ -11,7 +11,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Webmozart\Assert\Assert;
 
-class TableOutputFormatter implements OutputFormatter
+final class TableOutputFormatter implements OutputFormatter
 {
     public const CODE = 'table';
 

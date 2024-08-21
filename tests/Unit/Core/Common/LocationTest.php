@@ -11,7 +11,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use PHPUnit\Framework\TestCase;
 
-class LocationTest extends TestCase
+final class LocationTest extends TestCase
 {
     public function testCreateFromAbsolutePath(): void
     {

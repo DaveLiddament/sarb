@@ -13,7 +13,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Assertions\AssertGitCommi
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDiffHistoryAnalyser\internal\StubGitWrapper;
 use PHPUnit\Framework\TestCase;
 
-class GitDiffHistoryFactoryTest extends TestCase
+final class GitDiffHistoryFactoryTest extends TestCase
 {
     use AssertGitCommit;
 

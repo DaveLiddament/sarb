@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal;
 
-class FindFileDiffStartState implements State
+final class FindFileDiffStartState implements State
 {
     /**
      * FindFileDiffStartState constructor.

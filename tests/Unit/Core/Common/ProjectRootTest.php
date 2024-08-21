@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use PHPUnit\Framework\TestCase;
 
-class ProjectRootTest extends TestCase
+final class ProjectRootTest extends TestCase
 {
     private const CURRENT_WORKING_DIRECTORY = '/home/sarb';
     private const RELATIVE_PATH = 'foo/bar';

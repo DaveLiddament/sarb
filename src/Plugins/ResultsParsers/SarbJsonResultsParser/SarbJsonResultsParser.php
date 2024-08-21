@@ -29,7 +29,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
-class SarbJsonResultsParser implements ResultsParser
+final class SarbJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
     private const TYPE = 'type';

@@ -19,7 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 /**
  * Parses a Unified Diff (see docs folder).
  */
-class Parser
+final class Parser
 {
     /**
      * @throws ParseException

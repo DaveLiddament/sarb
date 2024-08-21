@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 
-class JsonUtils
+final class JsonUtils
 {
     /**
      * Returns JSON string as an associative array representation.

@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 /**
  * Used to for when importing a BaseLine file fails.
  */
-class BaseLineImportException extends SarbException
+final class BaseLineImportException extends SarbException
 {
     public static function fromException(BaseLineFileName $baseLineFile, \Exception $e): self
     {

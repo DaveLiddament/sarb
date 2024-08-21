@@ -8,7 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeE
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\JsonUtils;
 use PHPUnit\Framework\TestCase;
 
-class JsonUtilsTest extends TestCase
+final class JsonUtilsTest extends TestCase
 {
     public function testToArrayHappyPath(): void
     {

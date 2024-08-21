@@ -13,7 +13,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use PHPUnit\Framework\TestCase;
 
-class BaseLineAnalysisResultTest extends TestCase
+final class BaseLineAnalysisResultTest extends TestCase
 {
     private const FILE_NAME_1 = 'fileName1';
     private const FILE_NAME_2 = 'fileName2';

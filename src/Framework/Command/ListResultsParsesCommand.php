@@ -17,7 +17,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ListResultsParsesCommand extends Command
+final class ListResultsParsesCommand extends Command
 {
     public const COMMAND_NAME = 'list-static-analysis-tools';
 

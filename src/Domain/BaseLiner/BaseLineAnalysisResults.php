@@ -9,7 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseExceptio
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 
-class BaseLineAnalysisResults
+final class BaseLineAnalysisResults
 {
     /**
      * @psalm-param array<mixed> $array

@@ -32,7 +32,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 /**
  * Handles Phan's JSON output.
  */
-class PhanJsonResultsParser implements ResultsParser
+final class PhanJsonResultsParser implements ResultsParser
 {
     private const LOCATION = 'location';
     private const LINES = 'lines';

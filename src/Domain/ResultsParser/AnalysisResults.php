@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 /**
  * Holds all results from a run of the static analysis results.
  */
-class AnalysisResults
+final class AnalysisResults
 {
     /**
      * @var AnalysisResult[]

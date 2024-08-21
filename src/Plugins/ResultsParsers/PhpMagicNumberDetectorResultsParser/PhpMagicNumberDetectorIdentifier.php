@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\Ph
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\Identifier;
 
-class PhpMagicNumberDetectorIdentifier implements Identifier
+final class PhpMagicNumberDetectorIdentifier implements Identifier
 {
     public function getCode(): string
     {

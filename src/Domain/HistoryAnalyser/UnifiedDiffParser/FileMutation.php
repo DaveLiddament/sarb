@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 
 use Webmozart\Assert\Assert;
 
-class FileMutation
+final class FileMutation
 {
     /**
      * @param list<LineMutation> $lineMutations

@@ -30,7 +30,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles\OutputFormatt
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class RemoveBaseLineCommandTest extends TestCase
+final class RemoveBaseLineCommandTest extends TestCase
 {
     private const INPUT_STRING_1 = <<<EOF
 This is

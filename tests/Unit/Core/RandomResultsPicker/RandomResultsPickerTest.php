@@ -17,7 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\RandomNumberGenera
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
-class RandomResultsPickerTest extends TestCase
+final class RandomResultsPickerTest extends TestCase
 {
     /**
      * @var ProjectRoot

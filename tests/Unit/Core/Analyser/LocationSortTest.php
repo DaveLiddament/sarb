@@ -10,7 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use PHPUnit\Framework\TestCase;
 
-class LocationSortTest extends TestCase
+final class LocationSortTest extends TestCase
 {
     public function testCompareTo(): void
     {

@@ -11,7 +11,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\ResultsPrunerInte
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\StringAssertionsTrait;
 use PHPUnit\Framework\Assert;
 
-class MockResultsPruner implements ResultsPrunerInterface
+final class MockResultsPruner implements ResultsPrunerInterface
 {
     use StringAssertionsTrait;
 

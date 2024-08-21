@@ -19,7 +19,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 /**
  * Used when currently parsing a Change Hunk.
  */
-class ChangeHunkParserState implements State
+final class ChangeHunkParserState implements State
 {
     /**
      * @var int

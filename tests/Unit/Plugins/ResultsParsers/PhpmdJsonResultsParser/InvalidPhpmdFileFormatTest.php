@@ -12,7 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTra
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
-class InvalidPhpmdFileFormatTest extends TestCase
+final class InvalidPhpmdFileFormatTest extends TestCase
 {
     use ResourceLoaderTrait;
 

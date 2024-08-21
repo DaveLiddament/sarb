@@ -14,7 +14,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 use Webmozart\Assert\Assert;
 
-class PreviousLocation
+final class PreviousLocation
 {
     public static function noPreviousLocation(): self
     {

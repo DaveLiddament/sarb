@@ -12,7 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
 
-class BaseLineAnalysisResult
+final class BaseLineAnalysisResult
 {
     private const LINE_NUMBER = 'lineNumber';
     private const FILE_NAME = 'fileName';

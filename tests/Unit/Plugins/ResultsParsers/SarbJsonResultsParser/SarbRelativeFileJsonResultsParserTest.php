@@ -15,7 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTra
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
 use PHPUnit\Framework\TestCase;
 
-class SarbRelativeFileJsonResultsParserTest extends TestCase
+final class SarbRelativeFileJsonResultsParserTest extends TestCase
 {
     use AssertFileContentsSameTrait;
     use AssertResultMatch;

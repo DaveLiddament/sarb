@@ -11,7 +11,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class GitCliWrapperTest extends TestCase
+final class GitCliWrapperTest extends TestCase
 {
     use TestDirectoryTrait;
 

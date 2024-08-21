@@ -29,7 +29,7 @@ use Webmozart\Assert\Assert;
 /**
  * Handles PHPMND CLI output.
  */
-class PhpMagicNumberDetectorResultsParser implements ResultsParser
+final class PhpMagicNumberDetectorResultsParser implements ResultsParser
 {
     private const MAGIC_NUMBER_REGEX = "/^(.*):(\d+)\. Magic number: (.*)$/";
 

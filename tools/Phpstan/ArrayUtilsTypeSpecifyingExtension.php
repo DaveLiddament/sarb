@@ -16,7 +16,7 @@ use PHPStan\Type\ArrayType;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\StaticMethodTypeSpecifyingExtension;
 
-class ArrayUtilsTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
+final class ArrayUtilsTypeSpecifyingExtension implements StaticMethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     /**
      * @var TypeSpecifier

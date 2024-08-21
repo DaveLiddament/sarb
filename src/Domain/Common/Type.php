@@ -15,7 +15,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 /**
  * Represents type of static analysis violation.
  */
-class Type
+final class Type
 {
     /**
      * Type constructor.
