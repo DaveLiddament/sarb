@@ -24,6 +24,7 @@ return $config
         'phpdoc_align' => false,
         'phpdoc_to_comment' => false,
         'native_function_invocation' => false,
+        'trailing_comma_in_multiline' => ['elements' => ['arrays', 'arguments', 'parameters']],
     ])
     ->setFinder($finder)
 ;
