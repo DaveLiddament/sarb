@@ -9,6 +9,7 @@ parameters:
     - tests/scratchpad
     ignoreErrors:
     - '#Dynamic call to static method PHPUnit\\Framework\\.*#'
+    treatPhpDocTypesAsCertain: false
 services:
     -
         class: Tools\Phpstan\ArrayUtilsTypeSpecifyingExtension
