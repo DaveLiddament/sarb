@@ -55,40 +55,32 @@
   },
   "scripts": {
     "ci-8.0" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan",
+      "@ci-common",
       "@psalm-8.0"
     ],
     "ci-8.1" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan",
+      "@ci-common",
       "@psalm-8.1"
     ],
     "ci-8.2" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan",
+      "@ci-common",
       "@psalm-8.2"
     ],
     "ci-8.3" : [
+      "@ci-common",
+      "@psalm-8.3"
+    ],
+    "ci-8.4" : [
+      "@ci-common",
+      "@psalm-8.4"
+    ],
+    "ci-common": [
       "@composer-validate",
       "@lint",
       "@var-dump-checker",
       "@cs",
       "@test-with-coverage-check",
-      "@phpstan",
-      "@psalm-8.3"
+      "@phpstan"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
@@ -99,6 +91,7 @@
     "psalm-8.1" : "psalm --php-version=8.1",
     "psalm-8.2" : "psalm --php-version=8.2",
     "psalm-8.3" : "psalm --php-version=8.3 --shepherd",
+    "psalm-8.4" : "psalm --php-version=8.4",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
     "test" : [
