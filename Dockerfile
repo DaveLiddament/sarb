@@ -1,6 +1,9 @@
 ARG PHP_VERSION
 FROM php:${PHP_VERSION}cli
 
+# Increase memory limit
+RUN echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+
 # install Composer
 COPY ./docker/composer.sh /root/
 
