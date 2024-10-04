@@ -52,5 +52,35 @@ composer ci-8.1
 In addition to the above code coverage needs to 100%. 
 Documented usage of `@codeCoverageIgnore` is allowed for the cases for lines of code where it is impossible to get test coverage.
 
+## Docker 
 
+A docker file has been provided to help with development. 
+
+#### Build
+Build the image: 
+
+```shell
+docker compose build
+```
+
+#### Run the services
+
+Start the services 
+```shell
+docker compose up -d
+```
+
+You can run composer command. E.g. To run `composer cs-fix` on PHP 8.2
+
+```shell
+docker compose exec php82 composer cs-fix 
+```
+
+See the composer scripts section for all scripts available.
+
+You can also get shell access. E.g. to get shell access on PHP 8.3:
+
+```shell
+docker compose exec php82 bash 
+```
 
