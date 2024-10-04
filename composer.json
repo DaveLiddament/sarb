@@ -14,7 +14,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=8.0 <8.4",
+    "php": "8.0.*|8.1.*|8.2.*|8.3.*|8.4.*",
     "symfony/config": "^5.4 || ^6.0.19 || ^7",
     "symfony/console": "^5.4 || ^6.0.19 || ^7",
     "symfony/dependency-injection": "^5.4 || ^6.0.20 || ^7",
@@ -35,8 +35,7 @@
     "phpunit/phpunit": "^9.6.21",
     "psalm/plugin-phpunit": "^0.18.4",
     "rregeer/phpunit-coverage-check": "^0.3.1",
-    "symfony/filesystem": "^5.4 || ^6.0.19 || ^7",
-    "vimeo/psalm": "^5.26.1"
+    "symfony/filesystem": "^5.4 || ^6.0.19 || ^7"
   },
   "conflict": {
     "nikic/php-parser": "<4.18"
@@ -55,40 +54,27 @@
   },
   "scripts": {
     "ci-8.0" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan",
-      "@psalm-8.0"
+      "@ci-common"
     ],
     "ci-8.1" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan",
-      "@psalm-8.1"
+      "@ci-common"
     ],
     "ci-8.2" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan",
-      "@psalm-8.2"
+      "@ci-common"
     ],
     "ci-8.3" : [
+      "@ci-common"
+    ],
+    "ci-8.4" : [
+      "@ci-common"
+    ],
+    "ci-common": [
       "@composer-validate",
       "@lint",
       "@var-dump-checker",
       "@cs",
       "@test-with-coverage-check",
-      "@phpstan",
-      "@psalm-8.3"
+      "@phpstan"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
@@ -99,6 +85,7 @@
     "psalm-8.1" : "psalm --php-version=8.1",
     "psalm-8.2" : "psalm --php-version=8.2",
     "psalm-8.3" : "psalm --php-version=8.3 --shepherd",
+    "psalm-8.4" : "psalm --php-version=8.4",
     "phpstan" : "phpstan -n --no-progress  analyse",
     "deptrac" : "deptrac",
     "test" : [
