@@ -90,11 +90,27 @@
       "@phpstan",
       "@psalm-8.3"
     ],
+    "ci-8.4" : [
+      "@composer-validate",
+      "@lint",
+      "@var-dump-checker",
+      "@cs-8.4",
+      "@test-with-coverage-check",
+      "@phpstan"
+    ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
     "cs" : "php-cs-fixer fix -v --dry-run",
     "cs-fix" : "php-cs-fixer fix -v",
+    "cs-8.4" : [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+      "php-cs-fixer fix -v --dry-run"
+    ],
+    "cs-fix-8.4" : [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+      "php-cs-fixer fix -v"
+    ],
     "psalm-8.0" : "psalm --php-version=8.0",
     "psalm-8.1" : "psalm --php-version=8.1",
     "psalm-8.2" : "psalm --php-version=8.2",
