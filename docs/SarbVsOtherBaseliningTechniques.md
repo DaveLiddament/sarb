@@ -120,7 +120,7 @@ Rerunning PHPStan with its baseline gives only the newly introduced issues:
 
 SARB highlights the same issues:
 
-**SARB ouput**
+**SARB output**
 ```
 Latest analysis issue count: 4
 Baseline issue count: 2

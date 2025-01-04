@@ -47,7 +47,7 @@ final class GitDiffHistoryFactoryTest extends TestCase
         $this->assertInstanceOf(DiffHistoryAnalyser::class, $diffHistoryAnalyser);
     }
 
-    public function testGetIdentifer(): void
+    public function testGetIdentifier(): void
     {
         $this->assertSame('git', $this->gitDiffHistoryFactory->getIdentifier());
     }

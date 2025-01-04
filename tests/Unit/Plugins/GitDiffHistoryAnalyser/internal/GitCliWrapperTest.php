@@ -16,9 +16,9 @@ final class GitCliWrapperTest extends TestCase
     {
         $projectRoot = ProjectRoot::fromCurrentWorkingDirectory(__DIR__);
         $gitCliWrapper = new GitCliWrapper();
-        $nonExistantGitSha = new GitCommit('0000000000000000000000000000000000000000');
+        $nonExistentGitSha = new GitCommit('0000000000000000000000000000000000000000');
         $this->expectException(GitException::class);
-        $gitCliWrapper->getGitDiff($projectRoot, $nonExistantGitSha);
+        $gitCliWrapper->getGitDiff($projectRoot, $nonExistentGitSha);
     }
 
     public function testGetGitShaCommandFails(): void

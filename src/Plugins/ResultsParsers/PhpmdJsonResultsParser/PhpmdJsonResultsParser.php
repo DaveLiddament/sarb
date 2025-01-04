@@ -97,7 +97,7 @@ final class PhpmdJsonResultsParser implements ResultsParser
      * @throws InvalidPathException
      */
     private function processViolation(
-        AbsoluteFileName $aboluteFileName,
+        AbsoluteFileName $absoluteFileName,
         ProjectRoot $projectRoot,
         array $violation,
     ): AnalysisResult {
@@ -109,7 +109,7 @@ final class PhpmdJsonResultsParser implements ResultsParser
         $lineAsInt = ArrayUtils::getIntValue($violation, 'beginLine');
 
         $location = Location::fromAbsoluteFileName(
-            $aboluteFileName,
+            $absoluteFileName,
             $projectRoot,
             new LineNumber($lineAsInt),
         );

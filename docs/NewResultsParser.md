@@ -84,7 +84,7 @@ The next thing to do is to create an implementation of a ResultsParser. The exam
 
 #### Method: getIdentifier
 
-The first method to implement is `getIdentifer` this just returns an instance of the relevant `Identifer`class.
+The first method to implement is `getIdentifier` this just returns an instance of the relevant `Identifier`class.
 
 ```php
 declare(strict_types=1);
@@ -99,7 +99,7 @@ class PsalmJsonResultsParser implements ResultsParser
 
     public function getIdentifier(): Identifier
     {
-        return new PsalmJsonIdetifier();
+        return new PsalmJsonIdentifier();
     }
 
 }
@@ -285,7 +285,7 @@ SARB needs to pull out:
 **NOTES:** 
 
 1. `Type` must refer to the type of violation (e.g. `MissingConstructor`). See more about this at [How SARB works](HowSarbWorks.md)
-1. Ideally the file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path. If the static analysis tool does not provide an absoute path then a relative path can be used, see [using a relative path](#using-relative-paths).
+1. Ideally the file path should be the absolute path. SARB stores the relative path in the baseline file, but the HistoryAnalyser needs the absolute path. If the static analysis tool does not provide an absolute path then a relative path can be used, see [using a relative path](#using-relative-paths).
 2. 
 Here is the code to pull the information from the array:
 
@@ -302,14 +302,14 @@ This allows tool specific output formatters to be written to output additional i
 E.g. PHP-CS gives additional fields e.g. is_fixable. If this data needs to be shown to end user then a custom output formatter could be written to give all this additional information.
 
 
-SARB needs to capture all ths information and create an `AnalysisResult`.
+SARB needs to capture all this information and create an `AnalysisResult`.
 ```php
                 $location = new Location(
                     new AbsoluteFileName($fileNameAsString),
                     $projectRoot,
                     new LineNumber($lineAsInt)
                 );
-                
+
                 $severity = ($severityAsString === 'error') ? Severity::error() : Severity::warning();
 
                 $analysisResult =  new AnalysisResult(

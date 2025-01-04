@@ -25,7 +25,7 @@ EOF;
 
     public function testWithIssues(): void
     {
-        $expectedOuput = <<<EOF
+        $expectedOutput = <<<EOF
 
 FILE: /FILE_1
 +------+-------------+
@@ -46,12 +46,12 @@ These results include warnings. To exclude warnings from output use the --ignore
 
 EOF;
 
-        $this->assertIssuesOutput($expectedOuput);
+        $this->assertIssuesOutput($expectedOutput);
     }
 
     public function testWithIssuesAndWarningsIgnored(): void
     {
-        $expectedOuput = <<<EOF
+        $expectedOutput = <<<EOF
 
 FILE: /FILE_1
 +------+-------------+
@@ -63,7 +63,7 @@ FILE: /FILE_1
 
 EOF;
 
-        $this->assertIssuesOutputWithWarningsIgnored($expectedOuput);
+        $this->assertIssuesOutputWithWarningsIgnored($expectedOutput);
     }
 
     protected function getOutputFormatter(): OutputFormatter

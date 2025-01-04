@@ -114,7 +114,7 @@ final class BaseLineResultsRemoveTest extends TestCase
         $this->assertTrue($expectedType->isEqual($actualAnalysisResult->getType()));
     }
 
-    public function testRemoveBaseLineResultsIngnoringWarnings(): void
+    public function testRemoveBaseLineResultsIgnoringWarnings(): void
     {
         $prunedAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
             $this->latestAnalysisResults,
