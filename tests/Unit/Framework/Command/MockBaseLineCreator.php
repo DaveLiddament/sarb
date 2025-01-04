@@ -24,7 +24,7 @@ final class MockBaseLineCreator implements BaseLineCreatorInterface
         private ResultsParser $expectedResultsParser,
         private BaseLineFileName $expectedBaseLineFileName,
         private ?ProjectRoot $expectedProjectRoot,
-        private string $expectedAnaylsisResultsAsString,
+        private string $expectedAnalysisResultsAsString,
         private ?\Throwable $throwable,
     ) {
     }
@@ -47,7 +47,7 @@ final class MockBaseLineCreator implements BaseLineCreatorInterface
             );
         }
 
-        $this->assertSameAllowingExtraNewLine($this->expectedAnaylsisResultsAsString, $analysisResultsAsString);
+        $this->assertSameAllowingExtraNewLine($this->expectedAnalysisResultsAsString, $analysisResultsAsString);
 
         if (null !== $this->throwable) {
             throw $this->throwable;

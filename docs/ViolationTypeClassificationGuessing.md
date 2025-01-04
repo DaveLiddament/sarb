@@ -11,7 +11,7 @@ E.g.
  - Message: `Demo\Employee has an uninitialized variable $this->age, but no constructor`
 
 Sometimes static analysis tools only provide a message and no classification.
-The problem with using the message is that between builds the mesage might change
+The problem with using the message is that between builds the message might change
 but the fundamental violation remains the same.
 
 E.g. Assume `Demo\Employee` was renamed to `Demo\Person` between builds.

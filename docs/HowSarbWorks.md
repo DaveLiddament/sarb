@@ -3,7 +3,7 @@
 SARB does 2 main tasks.
 
  - Create baseline.
- - Remove baseline results from static analysis results run after tha baseline.
+ - Remove baseline results from static analysis results run after the baseline.
 
 SARB with the help of an SCM (by default git) tracks the lines of code between the baseline and the current commit.
 

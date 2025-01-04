@@ -32,7 +32,7 @@ XML;
 
     public function testWithIssues(): void
     {
-        $expectedOuput = <<<XML
+        $expectedOutput = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites name="SARB" tests="3" failures="3">
   <testsuite name="FILE_1" errors="0" tests="2" failures="2">
@@ -51,7 +51,7 @@ XML;
 </testsuites>
 
 XML;
-        $this->assertIssuesOutput($expectedOuput);
+        $this->assertIssuesOutput($expectedOutput);
     }
 
     protected function getOutputFormatter(): OutputFormatter

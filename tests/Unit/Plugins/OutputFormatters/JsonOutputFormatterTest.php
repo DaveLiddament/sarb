@@ -25,7 +25,7 @@ EOF;
 
     public function testWithIssues(): void
     {
-        $expectedOuput = <<<EOF
+        $expectedOutput = <<<EOF
 [
     {
         "file": "\/FILE_1",
@@ -51,7 +51,7 @@ EOF;
 ]
 EOF;
 
-        $this->assertIssuesOutput($expectedOuput);
+        $this->assertIssuesOutput($expectedOutput);
     }
 
     protected function getOutputFormatter(): OutputFormatter

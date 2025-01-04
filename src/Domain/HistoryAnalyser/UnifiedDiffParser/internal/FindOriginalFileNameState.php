@@ -52,8 +52,8 @@ final class FindOriginalFileNameState implements State
 
     private function processAsRename(string $line): State
     {
-        $orginalFileName = StringUtils::removeFromStart(self::RENAME_FROM, $line);
-        $this->fileMutationBuilder->setOriginalFileName(new OriginalFileName($orginalFileName));
+        $originalFileName = StringUtils::removeFromStart(self::RENAME_FROM, $line);
+        $this->fileMutationBuilder->setOriginalFileName(new OriginalFileName($originalFileName));
 
         return new FindRenameToState($this->fileMutationBuilder);
     }

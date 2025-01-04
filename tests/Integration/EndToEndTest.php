@@ -204,7 +204,7 @@ final class EndToEndTest extends TestCase
         $this->removeTestDirectory();
     }
 
-    public function testRelativePathFlagHasNoAffectWhenUsingAbsolutPaths(): void
+    public function testRelativePathFlagHasNoAffectWhenUsingAbsolutePaths(): void
     {
         $this->createTestDirectory();
         $this->gitWrapper->init($this->projectRoot);

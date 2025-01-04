@@ -42,7 +42,7 @@ final class FileReaderTest extends TestCase
 
     public function testReadInvalidFile(): void
     {
-        $fileName = $this->getFileName('none-existant-file.json');
+        $fileName = $this->getFileName('non-existent-file.json');
         $this->expectException(FileAccessException::class);
         $this->fileReader->readJsonFile($fileName);
     }

@@ -55,7 +55,7 @@ EOF;
     /**
      * @var OutputFormatter
      */
-    private $defaultOutputFormater;
+    private $defaultOutputFormatter;
     /**
      * @var OutputFormatter
      */
@@ -63,11 +63,11 @@ EOF;
 
     protected function setUp(): void
     {
-        $this->defaultOutputFormater = new TableOutputFormatter();
+        $this->defaultOutputFormatter = new TableOutputFormatter();
         $this->stubOutputFormatter = new OutputFormatterStub();
 
         $this->outputFormatterRegistry = new OutputFormatterRegistry([
-            $this->defaultOutputFormater,
+            $this->defaultOutputFormatter,
             $this->stubOutputFormatter,
         ]);
 
