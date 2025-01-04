@@ -1,14 +1,12 @@
 # Static Analysis Results Baseliner (SARB)
 
-[![PHP versions: 8.0|8.1|8.2|8.3](https://img.shields.io/badge/php-8.0|8.1|8.2|8.3-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
+[![PHP versions: 8.0|8.1|8.2|8.3|8.4](https://img.shields.io/badge/php-8.0|8.1|8.2|8.3|8.4-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
 [![Latest Stable Version](https://poser.pugx.org/dave-liddament/sarb/v/stable)](https://packagist.org/packages/dave-liddament/sarb)
 [![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://github.com/DaveLiddament/sarb/blob/master/LICENSE.md)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb/stats)
 
 [![Continuous Integration](https://github.com/DaveLiddament/sarb/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/sarb/actions) 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
-[![Type coverage](https://shepherd.dev/github/DaveLiddament/sarb/coverage.svg)](https://shepherd.dev/github/DaveLiddament/sarb)
-[![Psalm level 1](https://img.shields.io/badge/Psalm-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/master/psalm.xml)
 [![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/master/phpstan.neon)
 [![Code Coverage](https://img.shields.io/badge/Code%20coverage-100%25-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/f2db1404c8f2acb0f813c7fb49624fe21e42a302/composer.json#L109)
 
