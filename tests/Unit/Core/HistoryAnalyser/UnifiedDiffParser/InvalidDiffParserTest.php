@@ -14,7 +14,7 @@ final class InvalidDiffParserTest extends TestCase
     use ResourceLoaderTrait;
 
     /**
-     * @psalm-return array<string,array{string,string,string}>
+     * @return array<string,array{string,string,string}>
      */
     public function dataProvider()
     {

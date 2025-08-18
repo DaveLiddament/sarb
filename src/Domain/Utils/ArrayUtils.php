@@ -19,7 +19,7 @@ final class ArrayUtils
      *
      * @throws ArrayParseException
      *
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      */
     public static function getStringValue(array $array, string $key): string
     {
@@ -35,7 +35,7 @@ final class ArrayUtils
      *
      * @throws ArrayParseException
      *
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      */
     public static function getIntValue(array $array, string $key): int
     {
@@ -51,7 +51,7 @@ final class ArrayUtils
      *
      * @throws ArrayParseException
      *
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      */
     public static function getIntOrNullValue(array $array, string $key): ?int
     {
@@ -70,7 +70,7 @@ final class ArrayUtils
      *
      * @throws ArrayParseException
      *
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      */
     public static function getOptionalStringValue(array $array, string $key): ?string
     {
@@ -89,9 +89,9 @@ final class ArrayUtils
      *
      * @throws ArrayParseException
      *
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      *
-     * @psalm-return array<mixed> $array
+     * @return array<mixed> $array
      */
     public static function getArrayValue(array $array, string $key): array
     {
@@ -105,7 +105,7 @@ final class ArrayUtils
     /**
      * @throws ArrayParseException
      *
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      */
     private static function assertArrayKeyExists(array $array, string $key): void
     {
@@ -152,7 +152,7 @@ final class ArrayUtils
      *
      * $age would be the integer value 21.
      *
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      *
      * @throws ArrayParseException
      */

@@ -20,7 +20,7 @@ final class FileWriter
     /**
      * Write $contents to the file.
      *
-     * @psalm-param array<mixed> $contents
+     * @param array<mixed> $contents
      *
      * @throws FileAccessException
      */

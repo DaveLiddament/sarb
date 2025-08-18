@@ -37,7 +37,7 @@ final class FileReader
     /**
      * Returns array representing the contents of the file. Assumes the file must be JSON.
      *
-     * @psalm-return array<mixed>
+     * @return array<mixed>
      *
      * @throws FileAccessException
      * @throws InvalidContentTypeException

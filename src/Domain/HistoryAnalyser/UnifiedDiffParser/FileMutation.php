@@ -43,7 +43,7 @@ final class FileMutation
     }
 
     /**
-     * @psalm-return list<LineMutation>
+     * @return list<LineMutation>
      *
      * @return LineMutation[]
      */

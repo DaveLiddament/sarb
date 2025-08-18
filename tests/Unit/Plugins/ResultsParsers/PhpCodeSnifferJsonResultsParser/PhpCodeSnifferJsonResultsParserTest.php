@@ -116,7 +116,7 @@ final class PhpCodeSnifferJsonResultsParserTest extends TestCase
     }
 
     /**
-     * @psalm-return array<int,array{string}>
+     * @return array<int,array{string}>
      */
     public function invalidFileProvider(): array
     {

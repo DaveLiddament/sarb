@@ -30,7 +30,7 @@ final class AnalysisResult
      * E.g. PHP-CS gives additional fields e.g. is_fixable. If this data needs to be shown to end user then
      * then a custom output formatter could be written to give all this additional information.
      *
-     * @psalm-param array<mixed> $fullDetails
+     * @param array<mixed> $fullDetails
      */
     public function __construct(
         private Location $location,
@@ -55,7 +55,7 @@ final class AnalysisResult
     }
 
     /**
-     * @psalm-return array<mixed>
+     * @return array<mixed>
      */
     public function getFullDetails(): array
     {

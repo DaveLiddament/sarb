@@ -21,7 +21,7 @@ final class BaseLineAnalysisResult
     private const SEVERITY = 'severity';
 
     /**
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      *
      * @throws ArrayParseException
      */
@@ -81,7 +81,7 @@ final class BaseLineAnalysisResult
     }
 
     /**
-     * @psalm-return array<string,string|int>
+     * @return array<string,string|int>
      */
     public function asArray(): array
     {

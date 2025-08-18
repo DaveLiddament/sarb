@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 final class RangeInformationParserTest extends TestCase
 {
     /**
-     * @psalm-return array<int,array{string,int,int,int,int}>
+     * @return array<int,array{string,int,int,int,int}>
      */
     public function dataProvider(): array
     {
@@ -46,7 +46,7 @@ final class RangeInformationParserTest extends TestCase
     }
 
     /**
-     * @psalm-return array<int,array{string}>
+     * @return array<int,array{string}>
      */
     public function invalidDataProvider(): array
     {

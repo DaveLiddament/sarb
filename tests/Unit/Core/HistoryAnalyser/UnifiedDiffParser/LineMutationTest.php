@@ -32,7 +32,7 @@ final class LineMutationTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string,array{LineMutation,LineMutation|null}>
+     * @return array<string,array{LineMutation,LineMutation|null}>
      */
     public function notEqualDataProvider(): array
     {
@@ -65,7 +65,7 @@ final class LineMutationTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string,array{LineMutation,LineMutation}>
+     * @return array<string,array{LineMutation,LineMutation}>
      */
     public function equalDataProvider(): array
     {

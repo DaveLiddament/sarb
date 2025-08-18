@@ -43,7 +43,7 @@ final class BaseLineResultsComparatorTest extends TestCase
     }
 
     /**
-     * @psalm-return array<int,array{bool,string,int,string}>
+     * @return array<int,array{bool,string,int,string}>
      */
     public function dataProvider(): array
     {

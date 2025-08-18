@@ -21,7 +21,7 @@ final class JsonUtils
      *
      * @throws InvalidContentTypeException
      *
-     * @psalm-return array<mixed>
+     * @return array<mixed>
      */
     public static function toArray(string $jsonAsString): array
     {
@@ -37,7 +37,7 @@ final class JsonUtils
     /**
      * Converts array to a JSON representation in a string.
      *
-     * @psalm-param array<mixed> $data
+     * @param array<mixed> $data
      */
     public static function toString(array $data): string
     {

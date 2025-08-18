@@ -80,7 +80,7 @@ final class ExakatJsonResultsParserTest extends TestCase
     }
 
     /**
-     * @psalm-return array<int,array{string}>
+     * @return array<int,array{string}>
      */
     public function invalidFileProvider(): array
     {

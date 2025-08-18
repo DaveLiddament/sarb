@@ -85,7 +85,7 @@ final class SarbJsonResultsParserTest extends TestCase
     }
 
     /**
-     * @psalm-return array<int,array{string, int}>
+     * @return array<int,array{string, int}>
      */
     public function invalidFileProvider(): array
     {

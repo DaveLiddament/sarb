@@ -66,7 +66,7 @@ final class PhpmdJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @psalm-param array<mixed> $violations
+     * @param array<mixed> $violations
      *
      * @throws ParseAtLocationException
      */
@@ -91,7 +91,7 @@ final class PhpmdJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @psalm-param array<mixed> $violation
+     * @param array<mixed> $violation
      *
      * @throws ArrayParseException
      * @throws InvalidPathException

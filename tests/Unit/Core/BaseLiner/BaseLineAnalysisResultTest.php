@@ -115,7 +115,7 @@ final class BaseLineAnalysisResultTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string,array{array<mixed>}>
+     * @return array<string,array{array<mixed>}>
      */
     public function invalidArrayDataProvider(): array
     {
@@ -154,7 +154,7 @@ final class BaseLineAnalysisResultTest extends TestCase
     /**
      * @dataProvider invalidArrayDataProvider
      *
-     * @psalm-param array<mixed> $asArray
+     * @param array<mixed> $asArray
      */
     public function testInvalidArray(array $asArray): void
     {
