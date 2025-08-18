@@ -44,8 +44,6 @@ final class FileMutation
 
     /**
      * @return list<LineMutation>
-     *
-     * @return LineMutation[]
      */
     public function getLineMutations(): array
     {
