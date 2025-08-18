@@ -10,14 +10,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use PHPUnit\Framework\TestCase;
-use Throwable;
 
 final class InvalidPhpmdFileFormatTest extends TestCase
 {
     use ResourceLoaderTrait;
 
     /**
-     * @psalm-return array<int,array{string}>
+     * @return array<int,array{string}>
      */
     public function filenameDataProvider(): array
     {
@@ -51,7 +50,7 @@ final class InvalidPhpmdFileFormatTest extends TestCase
     }
 
     /**
-     * @psalm-param class-string<Throwable> $exceptionType
+     * @param class-string<\Throwable> $exceptionType
      */
     private function assertExceptionThrown(string $exceptionType, string $fileName): void
     {

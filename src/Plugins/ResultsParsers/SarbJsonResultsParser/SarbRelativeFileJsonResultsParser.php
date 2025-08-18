@@ -71,7 +71,7 @@ final class SarbRelativeFileJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @psalm-param array<mixed> $analysisResultAsArray
+     * @param array<mixed> $analysisResultAsArray
      *
      * @throws InvalidPathException
      * @throws ArrayParseException

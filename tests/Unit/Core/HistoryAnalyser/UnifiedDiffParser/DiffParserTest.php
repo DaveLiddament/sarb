@@ -273,8 +273,8 @@ final class DiffParserTest extends TestCase
     }
 
     /**
-     * @psalm-param list<LineMutation> $expectedLineMutations
-     * @psalm-param list<LineMutation> $actualLineMutations
+     * @param list<LineMutation> $expectedLineMutations
+     * @param list<LineMutation> $actualLineMutations
      */
     private function assertLineMutations(array $expectedLineMutations, array $actualLineMutations): void
     {

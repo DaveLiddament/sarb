@@ -79,7 +79,7 @@ final class PhpCodeSnifferJsonResultsParser implements ResultsParser
     }
 
     /**
-     * @psalm-param array<mixed> $analysisResultAsArray
+     * @param array<mixed> $analysisResultAsArray
      *
      * @throws ArrayParseException
      * @throws InvalidPathException

@@ -43,9 +43,7 @@ final class FileMutation
     }
 
     /**
-     * @psalm-return list<LineMutation>
-     *
-     * @return LineMutation[]
+     * @return list<LineMutation>
      */
     public function getLineMutations(): array
     {

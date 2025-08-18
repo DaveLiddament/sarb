@@ -57,7 +57,7 @@ final class OriginalLineNameCalculatorTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string,array{int,int|null}>
+     * @return array<string,array{int,int|null}>
      */
     public function dataProvider(): array
     {

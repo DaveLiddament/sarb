@@ -12,7 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 final class BaseLineAnalysisResults
 {
     /**
-     * @psalm-param array<mixed> $array
+     * @param array<mixed> $array
      *
      * @throws ParseAtLocationException
      */
@@ -70,7 +70,7 @@ final class BaseLineAnalysisResults
     /**
      * Return as an array of arrays (ready for storing in a file).
      *
-     * @psalm-return array<int, array<string,int|string>>
+     * @return array<int, array<string,int|string>>
      */
     public function asArray(): array
     {
