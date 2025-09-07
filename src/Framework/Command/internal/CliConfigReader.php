@@ -60,6 +60,12 @@ final class CliConfigReader
             throw new SarbException('Can not read input stream'); // @codeCoverageIgnore
         }
 
+        // Remove trailing EOT character, if it exists.
+        // This issue has been introduced by https://github.com/symfony/symfony/pull/61501
+        if (str_ends_with(haystack: $input, needle: "\x04")) {
+            $input = substr($input, 0, -1); // @codeCoverageIgnore
+        }
+
         return $input;
     }
 
