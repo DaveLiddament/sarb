@@ -31,4 +31,7 @@ if [ $XDEBUG_ENABLED -eq 1 ]; then
 fi
 EOF
 
+# Sort out git
+RUN git config --global --add safe.directory /app
+
 WORKDIR /app/
