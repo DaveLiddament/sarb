@@ -20,11 +20,9 @@ use Webmozart\Assert\Assert;
 final class HistoryFactoryRegistry implements HistoryFactoryLookupService
 {
     /**
-     * @var HistoryFactory[]
-     *
-     * @psalm-var array<string, HistoryFactory>
+     * @var array<string, HistoryFactory>
      */
-    private $historyFactories;
+    private array $historyFactories;
 
     /**
      * HistoryFactoryRegistry constructor.
