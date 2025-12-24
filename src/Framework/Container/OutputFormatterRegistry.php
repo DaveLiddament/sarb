@@ -20,11 +20,9 @@ use Webmozart\Assert\Assert;
 final class OutputFormatterRegistry implements OutputFormatterLookupService
 {
     /**
-     * @var OutputFormatter[]
-     *
-     * @psalm-var array<string, OutputFormatter>
+     * @var array<string, OutputFormatter>
      */
-    private $outputFormatters;
+    private array $outputFormatters;
 
     /**
      * OutputFormatterRegistry constructor.

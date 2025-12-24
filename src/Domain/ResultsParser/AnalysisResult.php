@@ -37,7 +37,7 @@ final class AnalysisResult
         private Type $type,
         private string $message,
         /**
-         * @psalm-var array<mixed>
+         * @var array<mixed>
          */
         private array $fullDetails,
         private Severity $severity,
