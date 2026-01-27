@@ -378,7 +378,7 @@ final class PathTest extends TestCase
     /** @return array<int,array{string,string, string}> */
     public function provideMakeRelativeTests(): array
     {
-        $paths = array_map(function (array $arguments) {
+        $paths = array_map(static function (array $arguments) {
             return [$arguments[2], $arguments[1], $arguments[0]];
         }, $this->providePathTests());
 
