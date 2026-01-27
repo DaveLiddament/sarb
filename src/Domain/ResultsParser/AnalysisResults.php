@@ -27,7 +27,7 @@ final class AnalysisResults
      */
     public function __construct(array $analysisResults)
     {
-        usort($analysisResults, function (AnalysisResult $a, AnalysisResult $b): int {
+        usort($analysisResults, static function (AnalysisResult $a, AnalysisResult $b): int {
             return $a->getLocation()->compareTo($b->getLocation());
         });
 

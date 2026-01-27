@@ -36,7 +36,7 @@ final class LocationSortTest extends TestCase
             $foo16,
         ];
 
-        usort($list, function (Location $a, Location $b): int {
+        usort($list, static function (Location $a, Location $b): int {
             return $a->compareTo($b);
         });
 
