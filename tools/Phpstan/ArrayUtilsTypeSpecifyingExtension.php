@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Tools\Phpstan;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;

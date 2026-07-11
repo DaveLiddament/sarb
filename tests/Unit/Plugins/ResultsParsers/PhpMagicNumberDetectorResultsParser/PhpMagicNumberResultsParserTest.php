@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\PhpMagicNumberDetectorResultsParser;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;

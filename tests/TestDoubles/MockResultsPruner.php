@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\TestDoubles;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
