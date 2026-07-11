@@ -169,7 +169,9 @@ That's no problem there are 3 methods to [integrate a static analysis tool](docs
 ## Output formats 
 
 The format for showing issues after the baseline is removed can be specified using `--output-format` option. 
-Possible values are: `table`, `text`, `json` or `github` (for GitHub actions).
+Possible values are: `table`, `text`, `json`, `junit`, `github` (for GitHub actions) or `toon`.
+
+`toon` emits [Token-Oriented Object Notation](https://github.com/toon-format/spec), a compact tabular format designed for feeding static analysis results into LLMs with significantly fewer tokens than JSON.
 
 ## Ignoring warnings
 
