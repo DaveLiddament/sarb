@@ -113,7 +113,7 @@ final class ArrayUtils
     }
 
     /**
-     * @psalm-assert array $entity
+     * @phpstan-assert array<mixed> $entity
      *
      * @throws ArrayParseException
      */
@@ -125,7 +125,7 @@ final class ArrayUtils
     }
 
     /**
-     * @psalm-assert array<array-key,string> $array
+     * @phpstan-assert array<array-key, string> $array
      *
      * @param array<mixed> $array
      *

@@ -44,7 +44,7 @@ final class TableOutputFormatter implements OutputFormatter
             'Description',
         ];
 
-        /** @var AbsoluteFileName $currentFileName */
+        /** @var AbsoluteFileName|null $currentFileName */
         $currentFileName = null;
         /** @var Table|null $currentTable */
         $currentTable = null;
