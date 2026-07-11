@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;

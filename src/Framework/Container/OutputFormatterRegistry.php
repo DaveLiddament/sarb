@@ -8,8 +8,6 @@
  * For the full copyright and licence information please view the LICENSE file distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Container;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\InvalidOutputFormatterException;
@@ -20,11 +18,9 @@ use Webmozart\Assert\Assert;
 final class OutputFormatterRegistry implements OutputFormatterLookupService
 {
     /**
-     * @var OutputFormatter[]
-     *
-     * @psalm-var array<string, OutputFormatter>
+     * @var array<string, OutputFormatter>
      */
-    private $outputFormatters;
+    private array $outputFormatters;
 
     /**
      * OutputFormatterRegistry constructor.

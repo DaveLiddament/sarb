@@ -22,6 +22,7 @@ Please make sure that the code runs on the following PHP versions:
 - 8.1
 - 8.2
 - 8.3
+- 8.4
 
 
 ### Including new libraries
@@ -54,33 +55,39 @@ Documented usage of `@codeCoverageIgnore` is allowed for the cases for lines of 
 
 ## Docker 
 
-A docker file has been provided to help with development. 
+A Dockerfile is provided to help with development.
+There is a service for each supported PHP version: `php80`, `php81`, `php82`, `php83`, `php84`.
 
-#### Build
-Build the image: 
+Use `docker compose run --rm <service> <command>` to run a one-off command on a given PHP version.
 
-```shell
-docker compose build
-```
-
-#### Run the services
-
-Start the services 
-```shell
-docker compose up -d
-```
-
-You can run composer command. E.g. To run `composer cs-fix` on PHP 8.2
+E.g. to run `composer cs-fix` on PHP 8.2:
 
 ```shell
-docker compose exec php82 composer cs-fix 
+docker compose run --rm php82 composer cs-fix
 ```
 
 See the composer scripts section for all scripts available.
-
-You can also get shell access. E.g. to get shell access on PHP 8.3:
+E.g. to run the full CI checks on PHP 8.3:
 
 ```shell
-docker compose exec php82 bash 
+docker compose run --rm php83 composer ci-8.3
 ```
 
+You can also get shell access. E.g. to get a shell on PHP 8.3:
+
+```shell
+docker compose run --rm php83 bash
+```
+
+If you change the `Dockerfile`, force a rebuild with `docker compose build` (or add `--build` to the `run` command).
+
+
+To check for all environments run the following:
+
+```shell
+docker compose run --rm php80 composer ci-8.0
+docker compose run --rm php81 composer ci-8.1
+docker compose run --rm php82 composer ci-8.2
+docker compose run --rm php83 composer ci-8.3
+docker compose run --rm php84 composer ci-8.4
+```
