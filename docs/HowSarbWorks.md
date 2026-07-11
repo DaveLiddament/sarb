@@ -20,6 +20,10 @@ For each violation it records:
  - type (e.g. PossibleNullValue)
  - serialised version of the violation (to include all other information about violation)
 
+NOTE: The type is ideally supplied by the static analysis tool (e.g. Psalm's issue type or
+PHPStan's [error identifier](https://phpstan.org/error-identifiers)). For tools that don't supply
+one, SARB [guesses the type from the violation message](ViolationTypeClassificationGuessing.md).
+
 
 Assume we have the following code that we run through [Psalm](https://getpsalm.org/r/23e7f1edb2) at it's most strict level.
 

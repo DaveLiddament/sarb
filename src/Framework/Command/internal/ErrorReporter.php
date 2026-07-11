@@ -6,6 +6,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineImport
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryAnalyserException;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\InputMissingTypeIdentifiersException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsImportException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,6 +41,10 @@ final class ErrorReporter
             OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 16;
+        } catch (InputMissingTypeIdentifiersException $e) {
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
+
+            return 17;
         } catch (\Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
             OutputWriter::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}", true);

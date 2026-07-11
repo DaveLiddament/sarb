@@ -28,6 +28,11 @@ final class AnalysisResult
      * E.g. PHP-CS gives additional fields e.g. is_fixable. If this data needs to be shown to end user then
      * then a custom output formatter could be written to give all this additional information.
      *
+     * NOTE: $legacyType should only be set when $type came from an identifier provided by the static
+     * analysis tool. It holds the type as previous versions of the ResultsParser would have derived it
+     * (e.g. guessed from the violation message), and is used to match results against baselines created
+     * before the tool provided identifiers.
+     *
      * @param array<mixed> $fullDetails
      */
     public function __construct(
@@ -39,6 +44,7 @@ final class AnalysisResult
          */
         private array $fullDetails,
         private Severity $severity,
+        private ?Type $legacyType = null,
     ) {
     }
 
@@ -68,6 +74,11 @@ final class AnalysisResult
     public function getSeverity(): Severity
     {
         return $this->severity;
+    }
+
+    public function getLegacyType(): ?Type
+    {
+        return $this->legacyType;
     }
 
     public function asBaseLineAnalysisResult(): BaseLineAnalysisResult

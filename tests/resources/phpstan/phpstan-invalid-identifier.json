@@ -1,0 +1,21 @@
+{
+  "totals": {
+    "errors": 0,
+    "file_errors": 1
+  },
+  "files": {
+    "/vagrant/static-analysis-baseliner/src/Domain/BaseLiner/BaseLineImporter.php": {
+      "errors": 1,
+      "messages": [
+        {
+          "message": "Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.",
+          "line": 89,
+          "ignorable": true,
+          "identifier": 123,
+          "relativePath": "Domain/BaseLiner/BaseLineImporter.php"
+        }
+      ]
+    }
+  },
+  "errors": []
+}

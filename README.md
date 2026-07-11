@@ -151,6 +151,14 @@ NOTE: Checkout Psalm's built in [baseline feature](https://psalm.dev/docs/runnin
 vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
 vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb remove phpstan.baseline
 ```
+NOTE: PHPStan (from version 1.11) attaches an [error identifier](https://phpstan.org/error-identifiers) (e.g. `argument.type`)
+to each error. When identifiers are present SARB uses them as the violation type, which makes baselines robust against
+PHPStan rewording messages between releases. Baselines created before identifiers were available still work
+(SARB falls back to the old behaviour of [guessing the type](docs/ViolationTypeClassificationGuessing.md) from the message),
+but SARB will suggest regenerating the baseline so it uses the identifiers.
+If a baseline built from identifiers is used with results that contain none (e.g. after downgrading PHPStan),
+SARB stops with an error (exit code 17), since none of the baselined issues could be matched.
+
 NOTE: Checkout PHPStan's built in [baseline feature](https://phpstan.org/user-guide/baseline). Learn how [it differs from SARB](docs/SarbVsOtherBaseliningTechniques.md).
 
 #### [PHP Magic Number Detector](https://github.com/povils/phpmnd)

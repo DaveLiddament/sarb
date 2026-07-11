@@ -4,6 +4,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Framework\Comm
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\TypeIdentifiersUsage;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ErrorReportedByStaticAnalysisTool;
@@ -121,6 +122,46 @@ EOF;
             '[results-parser-stub] guesses the classification of violations. This means results might not be 100% accurate.',
             $commandTester,
         );
+    }
+
+    public function testNoTypeGuessingWarningWhenAllTypesFromToolIdentifiers(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->defaultHistoryFactory,
+            $this->resultsParser2,
+            self::BASELINE_FILENAME,
+            null,
+            null,
+            TypeIdentifiersUsage::all(),
+        );
+
+        $commandTester->execute([
+            self::INPUT_FORMAT_OPTION => ResultsParserStubIdentifier::CODE,
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+        ]);
+
+        $this->assertReturnCode(0, $commandTester);
+        $this->assertResponseDoesNotContain('guesses the classification of violations', $commandTester);
+    }
+
+    public function testTypeGuessingWarningShownWhenOnlySomeTypesFromToolIdentifiers(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->defaultHistoryFactory,
+            $this->resultsParser2,
+            self::BASELINE_FILENAME,
+            null,
+            null,
+            TypeIdentifiersUsage::some(),
+        );
+
+        $commandTester->execute([
+            self::INPUT_FORMAT_OPTION => ResultsParserStubIdentifier::CODE,
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+        ]);
+
+        $this->assertReturnCode(0, $commandTester);
+        $this->assertResponseContains('guesses the classification of violations', $commandTester);
     }
 
     public function testPickNonDefaultHistoryAnalyser(): void
@@ -249,6 +290,7 @@ EOF;
         string $baselineFileName,
         ?ProjectRoot $projectRoot,
         ?\Throwable $exception,
+        ?TypeIdentifiersUsage $typeIdentifiersUsage = null,
     ): CommandTester {
         $mockBaseLineCreator = new MockBaseLineCreator(
             $expectedHistoryFactory,
@@ -257,6 +299,7 @@ EOF;
             $projectRoot,
             self::INPUT_STRING_1, // CommandTest adds line end
             $exception,
+            $typeIdentifiersUsage,
         );
 
         $command = new CreateBaseLineCommand(
@@ -281,5 +324,11 @@ EOF;
         $output = $commandTester->getDisplay();
         $position = strpos($output, $expectedMessage);
         $this->assertNotFalse($position, "Can't find message [$expectedMessage] in [$output]");
+    }
+
+    private function assertResponseDoesNotContain(string $unexpectedMessage, CommandTester $commandTester): void
+    {
+        $output = $commandTester->getDisplay();
+        $this->assertStringNotContainsString($unexpectedMessage, $output);
     }
 }

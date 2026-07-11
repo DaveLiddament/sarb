@@ -6,6 +6,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner\BaseLineAnalys
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\TypeIdentifiersUsage;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Creator\BaseLineCreatorInterface;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\HistoryFactory;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\ResultsParser;
@@ -24,6 +25,7 @@ final class MockBaseLineCreator implements BaseLineCreatorInterface
         private ?ProjectRoot $expectedProjectRoot,
         private string $expectedAnalysisResultsAsString,
         private ?\Throwable $throwable,
+        private ?TypeIdentifiersUsage $typeIdentifiersUsage = null,
     ) {
     }
 
@@ -54,6 +56,6 @@ final class MockBaseLineCreator implements BaseLineCreatorInterface
         $analysisResults = BaseLineAnalysisResults::fromArray([]);
         $historyMarker = new GitCommit('9cf13d75cdf3addb82f507b68f4990725748d7af');
 
-        return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
+        return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker, $this->typeIdentifiersUsage);
     }
 }

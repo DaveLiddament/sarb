@@ -30,7 +30,13 @@ final class BaseLineCreator implements BaseLineCreatorInterface
         $historyMarker = $historyFactory->newHistoryMarkerFactory()->newCurrentHistoryMarker($projectRoot, $forceBaselineCreation);
         $analysisResults = $this->analysisResultsImporter->import($resultsParser, $projectRoot, $analysisResultsAsString);
         $baseLineAnalysisResults = BaseLineAnalysisResults::fromAnalysisResults($analysisResults);
-        $baseline = new BaseLine($historyFactory, $baseLineAnalysisResults, $resultsParser, $historyMarker);
+        $baseline = new BaseLine(
+            $historyFactory,
+            $baseLineAnalysisResults,
+            $resultsParser,
+            $historyMarker,
+            $analysisResults->getTypeIdentifiersUsage(),
+        );
         $this->exporter->export($baseline, $baselineFile);
 
         return $baseline;

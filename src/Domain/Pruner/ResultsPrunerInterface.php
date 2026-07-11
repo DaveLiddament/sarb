@@ -9,6 +9,9 @@ interface ResultsPrunerInterface
 {
     /**
      * Returns results with the baseline issues removed from them.
+     *
+     * @throws InputMissingTypeIdentifiersException if the baseline holds types from tool provided
+     *                                              identifiers but the supplied results contain none
      */
     public function getPrunedResults(
         BaseLineFileName $baseLineFileName,

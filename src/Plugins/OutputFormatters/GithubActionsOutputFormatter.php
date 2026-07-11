@@ -17,10 +17,11 @@ final class GithubActionsOutputFormatter implements OutputFormatter
 
             $message = str_replace("\n", '%0A', $analysisResult->getMessage());
             $lines[] = sprintf(
-                '::%s file=%s,line=%d::%s',
+                '::%s file=%s,line=%d,title=%s::%s',
                 $analysisResult->getSeverity()->getSeverity(),
                 $location->getRelativeFileName()->getFileName(),
                 $location->getLineNumber()->getLineNumber(),
+                $this->escapeProperty($analysisResult->getType()->getType()),
                 $message,
             );
         }
@@ -31,5 +32,18 @@ final class GithubActionsOutputFormatter implements OutputFormatter
     public function getIdentifier(): string
     {
         return 'github';
+    }
+
+    /**
+     * Escapes a workflow command property value. Unlike the message, property values must also
+     * have ':' and ',' escaped, otherwise they would terminate the property list.
+     */
+    private function escapeProperty(string $value): string
+    {
+        return str_replace(
+            ['%', "\r", "\n", ':', ','],
+            ['%25', '%0D', '%0A', '%3A', '%2C'],
+            $value,
+        );
     }
 }
