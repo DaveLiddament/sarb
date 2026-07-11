@@ -6,6 +6,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 
 final class FileReaderTest extends TestCase
@@ -22,9 +23,7 @@ final class FileReaderTest extends TestCase
         $this->fileReader = new FileReader();
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testReadJsonFile(): void
     {
         $fileName = $this->getFileName('valid-json.json');

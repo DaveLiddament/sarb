@@ -10,6 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContent
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\ResultsParsers\ExpectParseExceptionWithResultTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class PhanJsonResultsParserTest extends TestCase
@@ -107,7 +108,7 @@ final class PhanJsonResultsParserTest extends TestCase
     /**
      * @return array<int,array{string, int}>
      */
-    public function invalidFileProvider(): array
+    public static function invalidFileProvider(): array
     {
         return [
             ['phan/phan-invalid-missing-check_name.json', 1],
@@ -117,9 +118,7 @@ final class PhanJsonResultsParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidFileProvider
-     */
+    #[DataProvider('invalidFileProvider')]
     public function testInvalidFileFormat(string $fileName, int $resultWithIssue): void
     {
         $fileContents = $this->getResource($fileName);

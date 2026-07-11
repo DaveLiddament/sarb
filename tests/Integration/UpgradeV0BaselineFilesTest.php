@@ -17,6 +17,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpstanJ
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PsalmJsonResultsParser\PsalmJsonIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonIdentifier;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -70,7 +71,7 @@ final class UpgradeV0BaselineFilesTest extends TestCase
     }
 
     /** @return array<int,array{string,Identifier}> */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             ['phan', new PhanJsonIdentifier()],
@@ -85,9 +86,7 @@ final class UpgradeV0BaselineFilesTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testUpgrade(string $file, Identifier $identifier): void
     {
         $this->createOriginalBaselineFile($file);

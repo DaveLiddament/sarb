@@ -4,6 +4,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\HistoryAn
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\LineMutation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class LineMutationTest extends TestCase
@@ -13,50 +14,48 @@ final class LineMutationTest extends TestCase
 
     public function testNewLineNumberSet(): void
     {
-        $lineMutation = LineMutation::newLineNumber($this->getLineNumber1());
+        $lineMutation = LineMutation::newLineNumber(self::getLineNumber1());
         $this->assertNull($lineMutation->getOriginalLine());
         $this->assertNotNull($lineMutation->getNewLine());
         /** @psalm-suppress PossiblyNullArgument */
-        $this->assertLineNumber($this->getLineNumber1(), $lineMutation->getNewLine());
+        $this->assertLineNumber(self::getLineNumber1(), $lineMutation->getNewLine());
     }
 
     public function testOriginalLineNumberSet(): void
     {
-        $lineMutation = LineMutation::originalLineNumber($this->getLineNumber1());
+        $lineMutation = LineMutation::originalLineNumber(self::getLineNumber1());
         $this->assertNull($lineMutation->getNewLine());
         $this->assertNotNull($lineMutation->getOriginalLine());
         /** @psalm-suppress PossiblyNullArgument */
-        $this->assertLineNumber($this->getLineNumber1(), $lineMutation->getOriginalLine());
+        $this->assertLineNumber(self::getLineNumber1(), $lineMutation->getOriginalLine());
     }
 
     /**
      * @return array<string,array{LineMutation,LineMutation|null}>
      */
-    public function notEqualDataProvider(): array
+    public static function notEqualDataProvider(): array
     {
         return [
             'compareWithNull' => [
-                LineMutation::originalLineNumber($this->getLineNumber1()),
+                LineMutation::originalLineNumber(self::getLineNumber1()),
                 null,
             ],
             'bothOriginalLineNumberDifferentLineNumbers' => [
-                LineMutation::originalLineNumber($this->getLineNumber1()),
-                LineMutation::originalLineNumber($this->getLineNumber2()),
+                LineMutation::originalLineNumber(self::getLineNumber1()),
+                LineMutation::originalLineNumber(self::getLineNumber2()),
             ],
             'bothNewLineNumberDifferentLineNumbers' => [
-                LineMutation::newLineNumber($this->getLineNumber1()),
-                LineMutation::newLineNumber($this->getLineNumber2()),
+                LineMutation::newLineNumber(self::getLineNumber1()),
+                LineMutation::newLineNumber(self::getLineNumber2()),
             ],
             'bothSameLineNumberForOriginalAndNew' => [
-                LineMutation::newLineNumber($this->getLineNumber1()),
-                LineMutation::originalLineNumber($this->getLineNumber2()),
+                LineMutation::newLineNumber(self::getLineNumber1()),
+                LineMutation::originalLineNumber(self::getLineNumber2()),
             ],
         ];
     }
 
-    /**
-     * @dataProvider notEqualDataProvider
-     */
+    #[DataProvider('notEqualDataProvider')]
     public function testNotEqual(LineMutation $a, ?LineMutation $b): void
     {
         $this->assertFalse($a->isEqual($b));
@@ -65,34 +64,32 @@ final class LineMutationTest extends TestCase
     /**
      * @return array<string,array{LineMutation,LineMutation}>
      */
-    public function equalDataProvider(): array
+    public static function equalDataProvider(): array
     {
         return [
             'sameOriginalLineNumber' => [
-                LineMutation::originalLineNumber($this->getLineNumber1()),
-                LineMutation::originalLineNumber($this->getLineNumber1()),
+                LineMutation::originalLineNumber(self::getLineNumber1()),
+                LineMutation::originalLineNumber(self::getLineNumber1()),
             ],
             'sameNewLineNumber' => [
-                LineMutation::newLineNumber($this->getLineNumber1()),
-                LineMutation::newLineNumber($this->getLineNumber1()),
+                LineMutation::newLineNumber(self::getLineNumber1()),
+                LineMutation::newLineNumber(self::getLineNumber1()),
             ],
         ];
     }
 
-    /**
-     * @dataProvider equalDataProvider
-     */
+    #[DataProvider('equalDataProvider')]
     public function testEqual(LineMutation $a, LineMutation $b): void
     {
         $this->assertTrue($a->isEqual($b));
     }
 
-    private function getLineNumber1(): LineNumber
+    private static function getLineNumber1(): LineNumber
     {
         return new LineNumber(self::LINE_NUMBER_1);
     }
 
-    private function getLineNumber2(): LineNumber
+    private static function getLineNumber2(): LineNumber
     {
         return new LineNumber(self::LINE_NUMBER_2);
     }

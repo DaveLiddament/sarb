@@ -7,6 +7,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeE
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpmdJsonResultsParser\PhpmdJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class InvalidPhpmdFileFormatTest extends TestCase
@@ -16,7 +17,7 @@ final class InvalidPhpmdFileFormatTest extends TestCase
     /**
      * @return array<int,array{string}>
      */
-    public function filenameDataProvider(): array
+    public static function filenameDataProvider(): array
     {
         return [
             [
@@ -34,9 +35,7 @@ final class InvalidPhpmdFileFormatTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider filenameDataProvider
-     */
+    #[DataProvider('filenameDataProvider')]
     public function testInvalidFileFormat(string $fileName): void
     {
         $this->assertExceptionThrown(ParseAtLocationException::class, $fileName);

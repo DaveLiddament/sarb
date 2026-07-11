@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BaseLineAnalysisResultTest extends TestCase
@@ -115,7 +116,7 @@ final class BaseLineAnalysisResultTest extends TestCase
     /**
      * @return array<string,array{array<mixed>}>
      */
-    public function invalidArrayDataProvider(): array
+    public static function invalidArrayDataProvider(): array
     {
         return [
             'missingLineNumber' => [
@@ -150,10 +151,9 @@ final class BaseLineAnalysisResultTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidArrayDataProvider
-     *
      * @param array<mixed> $asArray
      */
+    #[DataProvider('invalidArrayDataProvider')]
     public function testInvalidArray(array $asArray): void
     {
         $this->expectException(ArrayParseException::class);

@@ -5,7 +5,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\Output
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\JunitOutputFormatter;
 
-final class JunitOutputFormatterTest extends AbstractOutputFormatterTest
+final class JunitOutputFormatterTest extends AbstractOutputFormatterTestCase
 {
     public function testName(): void
     {

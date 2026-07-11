@@ -4,6 +4,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\HistoryAn
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\DiffParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\internal\RangeInformation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class RangeInformationParserTest extends TestCase
@@ -11,7 +12,7 @@ final class RangeInformationParserTest extends TestCase
     /**
      * @return array<int,array{string,int,int,int,int}>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             ['@@ -3,5 +3,5 @@', 3, 5, 3, 5],
@@ -25,10 +26,9 @@ final class RangeInformationParserTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProvider
-     *
      * @throws DiffParseException
      */
+    #[DataProvider('dataProvider')]
     public function testHappyPath(
         string $rangeInformationAsString,
         int $originalStartLine,
@@ -46,7 +46,7 @@ final class RangeInformationParserTest extends TestCase
     /**
      * @return array<int,array{string}>
      */
-    public function invalidDataProvider(): array
+    public static function invalidDataProvider(): array
     {
         return [
             ['@@ 3,5 10,2 @@'],
@@ -54,9 +54,7 @@ final class RangeInformationParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidDataProvider
-     */
+    #[DataProvider('invalidDataProvider')]
     public function testInvalidData(string $rangeInformationString): void
     {
         try {

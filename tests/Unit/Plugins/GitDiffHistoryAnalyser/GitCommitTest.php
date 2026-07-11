@@ -4,6 +4,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\GitDif
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\InvalidHistoryMarkerException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\GitCommit;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class GitCommitTest extends TestCase
@@ -11,7 +12,7 @@ final class GitCommitTest extends TestCase
     /**
      * @return array<string,array{string}>
      */
-    public function invalidGitCommitDataProvider(): array
+    public static function invalidGitCommitDataProvider(): array
     {
         return [
             'tooShort' => [
@@ -28,17 +29,13 @@ final class GitCommitTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidGitCommitDataProvider
-     */
+    #[DataProvider('invalidGitCommitDataProvider')]
     public function testValidateInvalidGitCommit(string $invalidCommit): void
     {
         $this->assertFalse(GitCommit::validateGitSha($invalidCommit));
     }
 
-    /**
-     * @dataProvider invalidGitCommitDataProvider
-     */
+    #[DataProvider('invalidGitCommitDataProvider')]
     public function testInvalidGitCommit(string $invalidCommit): void
     {
         $this->expectException(InvalidHistoryMarkerException::class);
@@ -48,7 +45,7 @@ final class GitCommitTest extends TestCase
     /**
      * @return array<int,array{string}>
      */
-    public function validGitCommitDataProvider(): array
+    public static function validGitCommitDataProvider(): array
     {
         return [
             [
@@ -60,17 +57,13 @@ final class GitCommitTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validGitCommitDataProvider
-     */
+    #[DataProvider('validGitCommitDataProvider')]
     public function testValidateValidGitCommit(string $commit): void
     {
         $this->assertTrue(GitCommit::validateGitSha($commit));
     }
 
-    /**
-     * @dataProvider validGitCommitDataProvider
-     */
+    #[DataProvider('validGitCommitDataProvider')]
     public function testValidGitCommit(string $commit): void
     {
         $gitCommit = new GitCommit($commit);

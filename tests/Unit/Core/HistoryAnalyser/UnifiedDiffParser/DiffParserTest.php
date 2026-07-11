@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class DiffParserTest extends TestCase
@@ -17,7 +18,7 @@ final class DiffParserTest extends TestCase
     /**
      * @return array<string,array{string, array<int,array{0: OriginalFileName|null, 1: NewFileName, 2: bool, 3: bool, 4: list<LineMutation>}>}>
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             'fileChanged' => [
@@ -231,10 +232,9 @@ final class DiffParserTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProvider
-     *
      * @param array<int,array{0: OriginalFileName|null, 1: NewFileName, 2: bool, 3: bool, 4: list<LineMutation>}> $expectedFileMutations
      */
+    #[DataProvider('dataProvider')]
     public function testDiffParser(string $inputFile, array $expectedFileMutations): void
     {
         $diffAsString = $this->getResource("validDiffs/$inputFile");
