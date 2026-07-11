@@ -58,8 +58,7 @@
       "@var-dump-checker",
       "@cs",
       "@test",
-      "@phpstan",
-      "@psalm-8.0"
+      "@phpstan"
     ],
     "ci-8.1" : [
       "@composer-validate",
@@ -67,8 +66,7 @@
       "@var-dump-checker",
       "@cs",
       "@test",
-      "@phpstan",
-      "@psalm-8.1"
+      "@phpstan"
     ],
     "ci-8.2" : [
       "@composer-validate",
@@ -76,8 +74,7 @@
       "@var-dump-checker",
       "@cs",
       "@test",
-      "@phpstan",
-      "@psalm-8.2"
+      "@phpstan"
     ],
     "ci-8.3" : [
       "@composer-validate",
@@ -85,8 +82,7 @@
       "@var-dump-checker",
       "@cs",
       "@test-with-coverage-check",
-      "@phpstan",
-      "@psalm-8.3"
+      "@phpstan"
     ],
     "ci-8.4" : [
       "@composer-validate",
