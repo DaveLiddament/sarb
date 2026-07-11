@@ -21,7 +21,10 @@ final class BaseLine
     public const HISTORY_ANALYSER = 'historyAnalyser';
     public const ANALYSIS_RESULTS = 'analysisResults';
     public const RESULTS_PARSER = 'resultsParser';
+    public const TYPES_FROM_TOOL_IDENTIFIERS = 'typesFromToolIdentifiers';
     public const BASE_LINE = 'SARB BaseLine';
+
+    private TypeIdentifiersUsage $typeIdentifiersUsage;
 
     /**
      * BaseLine constructor.
@@ -31,7 +34,9 @@ final class BaseLine
         private BaseLineAnalysisResults $baseLineAnalysisResults,
         private ResultsParser $resultsParser,
         private HistoryMarker $historyMarker,
+        ?TypeIdentifiersUsage $typeIdentifiersUsage = null,
     ) {
+        $this->typeIdentifiersUsage = $typeIdentifiersUsage ?? TypeIdentifiersUsage::none();
     }
 
     public function getHistoryFactory(): HistoryFactory
@@ -52,5 +57,10 @@ final class BaseLine
     public function getHistoryMarker(): HistoryMarker
     {
         return $this->historyMarker;
+    }
+
+    public function getTypeIdentifiersUsage(): TypeIdentifiersUsage
+    {
+        return $this->typeIdentifiersUsage;
     }
 }

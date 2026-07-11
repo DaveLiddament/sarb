@@ -100,6 +100,14 @@ final class RemoveBaseLineFromResultsCommand extends Command
 
             $outputAnalysisResults = $prunedResults->getPrunedResults();
 
+            if ($prunedResults->shouldRecommendRegeneratingBaseLine()) {
+                OutputWriter::writeToStdError(
+                    $output,
+                    'The results now contain type identifiers provided by the static analysis tool, but the baseline was created before these were available (violation types were guessed from the messages). Regenerate the baseline so it uses the type identifiers.',
+                    false,
+                );
+            }
+
             OutputWriter::writeToStdError(
                 $output,
                 "Latest analysis issue count: {$prunedResults->getInputAnalysisResults()->getCount()}",

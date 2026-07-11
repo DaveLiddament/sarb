@@ -95,7 +95,7 @@ final class CreateBaseLineCommand extends Command
         try {
             $projectRoot = ProjectRootHelper::getProjectRoot($input);
             $historyFactory = $this->getHistoryFactory($input);
-            $resultsParser = $this->getResultsParser($input, $output);
+            $resultsParser = $this->getResultsParser($input);
             $baselineFile = BaseLineFileHelper::getBaselineFile($input);
             $force = CliConfigReader::getBooleanOption($input, self::FORCE);
             $analysisResultsAsString = CliConfigReader::getStdin($input);
@@ -108,6 +108,14 @@ final class CreateBaseLineCommand extends Command
                 $analysisResultsAsString,
                 $force,
             );
+
+            // No warning needed if every result's type came from an identifier provided by the tool.
+            if ($resultsParser->showTypeGuessingWarning()
+                && !$baseLine->getTypeIdentifiersUsage()->isAllFromToolIdentifiers()
+            ) {
+                $warning = '[%s] guesses the classification of violations. This means results might not be 100%% accurate. See %s for more details.';
+                $output->writeln(sprintf($warning, $resultsParser->getIdentifier()->getCode(), self::DOC_URL));
+            }
 
             $errorsInBaseLine = $baseLine->getAnalysisResults()->getCount();
             OutputWriter::writeToStdError($output, 'Baseline created', false);
@@ -122,22 +130,15 @@ final class CreateBaseLineCommand extends Command
     /**
      * @throws InvalidConfigException
      */
-    private function getResultsParser(InputInterface $input, OutputInterface $output): ResultsParser
+    private function getResultsParser(InputInterface $input): ResultsParser
     {
         $identifier = CliConfigReader::getOptionWithDefaultValue($input, self::INPUT_FORMAT);
 
         try {
-            $resultsParser = $this->resultsParserLookupService->getResultsParser($identifier);
+            return $this->resultsParserLookupService->getResultsParser($identifier);
         } catch (InvalidResultsParserException) {
             throw InvalidConfigException::invalidOptionValue(self::INPUT_FORMAT, $identifier, $this->resultsParserLookupService->getIdentifiers());
         }
-
-        if ($resultsParser->showTypeGuessingWarning()) {
-            $warning = '[%s] guesses the classification of violations. This means results might not be 100%% accurate. See %s for more details.';
-            $output->writeln(sprintf($warning, $identifier, self::DOC_URL));
-        }
-
-        return $resultsParser;
     }
 
     /**

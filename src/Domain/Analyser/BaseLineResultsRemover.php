@@ -52,6 +52,6 @@ final class BaseLineResultsRemover
         $location = $analysisResult->getLocation();
         $previousLocation = $historyAnalyser->getPreviousLocation($location->getRelativeFileName(), $location->getLineNumber());
 
-        return $baseLineResultsComparator->isInBaseLine($previousLocation, $analysisResult->getType());
+        return $baseLineResultsComparator->isInBaseLine($previousLocation, $analysisResult->getType(), $analysisResult->getLegacyType());
     }
 }

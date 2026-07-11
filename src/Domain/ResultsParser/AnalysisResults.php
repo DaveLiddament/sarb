@@ -10,6 +10,8 @@
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser;
 
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\TypeIdentifiersUsage;
+
 /**
  * Holds all results from a run of the static analysis results.
  */
@@ -50,5 +52,25 @@ final class AnalysisResults
     public function hasNoIssues(): bool
     {
         return 0 === $this->getCount();
+    }
+
+    public function getTypeIdentifiersUsage(): TypeIdentifiersUsage
+    {
+        $resultsWithTypeIdentifierCount = 0;
+        foreach ($this->analysisResults as $analysisResult) {
+            if (null !== $analysisResult->getLegacyType()) {
+                ++$resultsWithTypeIdentifierCount;
+            }
+        }
+
+        if (0 === $resultsWithTypeIdentifierCount) {
+            return TypeIdentifiersUsage::none();
+        }
+
+        if ($resultsWithTypeIdentifierCount === $this->getCount()) {
+            return TypeIdentifiersUsage::all();
+        }
+
+        return TypeIdentifiersUsage::some();
     }
 }

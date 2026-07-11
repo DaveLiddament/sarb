@@ -12,6 +12,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\BaseLiner;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLineFileName;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\TypeIdentifiersUsage;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileAccessException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\FileReader;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\File\InvalidContentTypeException;
@@ -51,6 +52,9 @@ final class BaseLineImporter
             $analysisResultsAsArray = ArrayUtils::getArrayValue($baseLineData, BaseLine::ANALYSIS_RESULTS);
             $resultsParserName = ArrayUtils::getStringValue($baseLineData, BaseLine::RESULTS_PARSER);
             $historyAnalyserName = ArrayUtils::getStringValue($baseLineData, BaseLine::HISTORY_ANALYSER);
+            $typeIdentifiersUsage = TypeIdentifiersUsage::fromStringOrNull(
+                ArrayUtils::getOptionalStringValue($baseLineData, BaseLine::TYPES_FROM_TOOL_IDENTIFIERS),
+            );
 
             $resultsParser = $this->resultsParserLookupService->getResultsParser($resultsParserName);
             $historyFactory = $this->historyFactoryLookupService->getHistoryFactory($historyAnalyserName);
@@ -58,7 +62,7 @@ final class BaseLineImporter
             $historyMarker = $historyFactory->newHistoryMarkerFactory()->newHistoryMarker($historyMarkerAsString);
             $analysisResults = BaseLineAnalysisResults::fromArray($analysisResultsAsArray);
 
-            return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker);
+            return new BaseLine($historyFactory, $analysisResults, $resultsParser, $historyMarker, $typeIdentifiersUsage);
         } catch (
             ArrayParseException|
             InvalidResultsParserException|

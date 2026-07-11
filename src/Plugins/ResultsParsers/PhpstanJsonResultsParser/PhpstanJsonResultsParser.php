@@ -38,7 +38,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
 final class PhpstanJsonResultsParser implements ResultsParser
 {
     private const LINE = 'line';
-    private const TYPE = 'message';
+    private const MESSAGE = 'message';
+    private const IDENTIFIER = 'identifier';
     private const FILES = 'files';
     private const MESSAGES = 'messages';
     private const ERRORS = 'errors';
@@ -120,8 +121,19 @@ final class PhpstanJsonResultsParser implements ResultsParser
             $lineAsInt = 0;
         }
 
-        $rawType = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
-        $type = $this->fqcnRemover->removeRqcn($rawType);
+        $message = ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE);
+        $identifier = ArrayUtils::getOptionalStringValue($analysisResultAsArray, self::IDENTIFIER);
+        $guessedType = $this->fqcnRemover->removeRqcn($message);
+
+        if (null !== $identifier && '' !== $identifier) {
+            // PHPStan supplies an identifier (e.g. argument.type). Use it as the type. Keep the guessed
+            // type so results can be matched against baselines created before identifiers were used.
+            $type = new Type($identifier);
+            $legacyType = new Type($guessedType);
+        } else {
+            $type = new Type($guessedType);
+            $legacyType = null;
+        }
 
         $location = Location::fromAbsoluteFileName(
             $absoluteFileName,
@@ -131,10 +143,11 @@ final class PhpstanJsonResultsParser implements ResultsParser
 
         return new AnalysisResult(
             $location,
-            new Type($type),
-            $rawType,
+            $type,
+            $message,
             $analysisResultAsArray,
             Severity::error(),
+            $legacyType,
         );
     }
 

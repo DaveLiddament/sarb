@@ -113,6 +113,30 @@ final class BaseLineAnalysisResultTest extends TestCase
         $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_1)));
     }
 
+    public function testIsMatchViaLegacyType(): void
+    {
+        $baseLineAnalysisResult = $this->createBaseLineResult();
+        $location = PreviousLocation::fromFileNameAndLineNumber($this->relativeFileName, $this->lineNumber);
+        $this->assertTrue($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_2), new Type(self::TYPE_1)));
+    }
+
+    public function testIsMatchNeitherTypeNorLegacyTypeMatch(): void
+    {
+        $baseLineAnalysisResult = $this->createBaseLineResult();
+        $location = PreviousLocation::fromFileNameAndLineNumber($this->relativeFileName, $this->lineNumber);
+        $this->assertFalse($baseLineAnalysisResult->isMatch($location, new Type(self::TYPE_2), new Type(self::TYPE_2)));
+    }
+
+    public function testIsMatchLegacyTypeWithDifferentLineNumber(): void
+    {
+        $baseLineAnalysisResult = $this->createBaseLineResult();
+        $previousLocation = PreviousLocation::fromFileNameAndLineNumber(
+            $this->relativeFileName,
+            new LineNumber(self::LINE_NUMBER_2),
+        );
+        $this->assertFalse($baseLineAnalysisResult->isMatch($previousLocation, new Type(self::TYPE_2), new Type(self::TYPE_1)));
+    }
+
     /**
      * @return array<string,array{array<mixed>}>
      */
