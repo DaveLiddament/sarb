@@ -14,7 +14,7 @@ use Webmozart\Assert\Assert;
  *
  * NOTE: Assuming the GitHistoryAnalyser is being used then the root directory contains the .git directory.
  */
-final class ProjectRoot
+final class ProjectRoot implements \Stringable
 {
     /**
      * @var string
