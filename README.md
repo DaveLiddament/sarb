@@ -59,6 +59,9 @@ composer global require dave-liddament/sarb
 If you install globally make sure the composer bin directory is in your path.
 
 
+If SARB's dependencies clash with your projects then investigate using [composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin).
+
+
 ## Using SARB
 
 If you're using version 0.x see the [old documentation](docs/version0/README.md) and how to [upgrade](docs/version0/UpgradingToVersion1.md). 
