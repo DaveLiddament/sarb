@@ -5,7 +5,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Plugins\Output
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\OutputFormatters\TableOutputFormatter;
 
-final class TableOutputFormatterTest extends AbstractOutputFormatterTest
+final class TableOutputFormatterTest extends AbstractOutputFormatterTestCase
 {
     public function testName(): void
     {

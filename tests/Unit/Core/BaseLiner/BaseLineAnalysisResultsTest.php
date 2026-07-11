@@ -12,6 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BaseLineAnalysisResultsTest extends TestCase
@@ -80,7 +81,7 @@ final class BaseLineAnalysisResultsTest extends TestCase
     /**
      * @return array<string,array{string,array<mixed>}>
      */
-    public function invalidDataProvider(): array
+    public static function invalidDataProvider(): array
     {
         return [
             'notArray' => [
@@ -103,10 +104,9 @@ final class BaseLineAnalysisResultsTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidDataProvider
-     *
      * @param array<mixed> $array
      */
+    #[DataProvider('invalidDataProvider')]
     public function testInvalidArrayData(string $exceptionMessage, array $array): void
     {
         $this->expectException(ParseAtLocationException::class);

@@ -4,6 +4,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 
 final class ArrayUtilsTest extends TestCase
@@ -103,9 +104,7 @@ final class ArrayUtilsTest extends TestCase
         ArrayUtils::getIntAsStringValue(self::TEST_ARRAY, self::INVALID_KEY);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testAssertArrayWithArray(): void
     {
         ArrayUtils::assertArray(self::TEST_ARRAY); // @phpstan-ignore staticMethod.alreadyNarrowedType
@@ -147,7 +146,7 @@ final class ArrayUtilsTest extends TestCase
         ArrayUtils::assertArrayOfStrings(self::TEST_ARRAY);
     }
 
-    /** @doesNotPerformAssertions  */
+    #[DoesNotPerformAssertions]
     public function testAssertArrayOfStringsOnArrayContainingOnlyStrings(): void
     {
         $array = [

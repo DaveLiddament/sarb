@@ -3,6 +3,7 @@
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\FqcnRemover;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class FqcnRemoverTest extends TestCase
@@ -10,7 +11,7 @@ final class FqcnRemoverTest extends TestCase
     /**
      * @return array<string,array{string,string}>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'FQCN with method name' => [
@@ -28,9 +29,7 @@ final class FqcnRemoverTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testFqcnRemover(string $input, string $expected): void
     {
         $fqcnRemove = new FqcnRemover();

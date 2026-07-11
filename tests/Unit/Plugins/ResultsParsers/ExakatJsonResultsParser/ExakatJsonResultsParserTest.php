@@ -11,6 +11,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\ExakatJs
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ExakatJsonResultsParserTest extends TestCase
@@ -80,7 +81,7 @@ final class ExakatJsonResultsParserTest extends TestCase
     /**
      * @return array<int,array{string}>
      */
-    public function invalidFileProvider(): array
+    public static function invalidFileProvider(): array
     {
         return [
             ['exakat/exakat-invalid-missing-type.json'],
@@ -89,9 +90,7 @@ final class ExakatJsonResultsParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidFileProvider
-     */
+    #[DataProvider('invalidFileProvider')]
     public function testInvalidFileFormat(string $fileName): void
     {
         $fileContents = $this->getResource($fileName);

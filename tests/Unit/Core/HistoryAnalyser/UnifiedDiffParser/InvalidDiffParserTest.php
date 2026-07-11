@@ -5,6 +5,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\HistoryAn
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\ParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\Parser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class InvalidDiffParserTest extends TestCase
@@ -14,7 +15,7 @@ final class InvalidDiffParserTest extends TestCase
     /**
      * @return array<string,array{string,string,string}>
      */
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             'missingRenameTo' => [
@@ -37,9 +38,7 @@ final class InvalidDiffParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testInvalidDiff(string $inputFile, string $location, string $reason): void
     {
         $diffAsString = $this->getResource("invalidDiffs/$inputFile");

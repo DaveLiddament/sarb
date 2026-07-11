@@ -12,6 +12,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\PhpstanJ
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertFileContentsSameTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AssertResultMatch;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class PhpstanJsonResultsParserTest extends TestCase
@@ -93,7 +94,7 @@ final class PhpstanJsonResultsParserTest extends TestCase
     /**
      * @return array<int,array{string}>
      */
-    public function invalidFileProvider(): array
+    public static function invalidFileProvider(): array
     {
         return [
             ['phpstan/phpstan-invalid-missing-description.json'],
@@ -105,9 +106,7 @@ final class PhpstanJsonResultsParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidFileProvider
-     */
+    #[DataProvider('invalidFileProvider')]
     public function testInvalidFileFormat(string $fileName): void
     {
         $fileContents = $this->getResource($fileName);

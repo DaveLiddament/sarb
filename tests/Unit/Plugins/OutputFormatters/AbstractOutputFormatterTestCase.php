@@ -14,7 +14,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisRe
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResultsBuilder;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractOutputFormatterTest extends TestCase
+abstract class AbstractOutputFormatterTestCase extends TestCase
 {
     private const FILE_1 = '/FILE_1';
     private const FILE_2 = '/FILE_2';

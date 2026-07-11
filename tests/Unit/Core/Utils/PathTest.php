@@ -13,12 +13,9 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Unit\Core\Utils;
 
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\InvalidPathException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @author Bernhard Schussek <bschussek@gmail.com>
- * @author Thomas Schulz <mail@king2500.net>
- */
 final class PathTest extends TestCase
 {
     /** @var array<string,string> */
@@ -53,7 +50,7 @@ final class PathTest extends TestCase
     }
 
     /** @return array<int,array{string,string}> */
-    public function provideCanonicalizationTests(): array
+    public static function provideCanonicalizationTests(): array
     {
         return [
             // relative paths (forward slash)
@@ -178,16 +175,14 @@ final class PathTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCanonicalizationTests
-     */
+    #[DataProvider('provideCanonicalizationTests')]
     public function testCanonicalize(string $path, string $canonicalized): void
     {
         $this->assertSame($canonicalized, Path::canonicalize($path));
     }
 
     /** @return array<int,array{string,bool}> */
-    public function provideIsAbsolutePathTests(): array
+    public static function provideIsAbsolutePathTests(): array
     {
         return [
             ['/css/style.css', true],
@@ -216,16 +211,14 @@ final class PathTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideIsAbsolutePathTests
-     */
+    #[DataProvider('provideIsAbsolutePathTests')]
     public function testIsAbsolute(string $path, bool $isAbsolute): void
     {
         $this->assertSame($isAbsolute, Path::isAbsolute($path));
     }
 
     /** @return array<int,array{string,string,string}> */
-    public function providePathTests(): array
+    public static function providePathTests(): array
     {
         return [
             // relative to absolute path
@@ -247,9 +240,9 @@ final class PathTest extends TestCase
     }
 
     /** @return array<int,array{string,string,string}> */
-    public function provideMakeAbsoluteTests(): array
+    public static function provideMakeAbsoluteTests(): array
     {
-        return array_merge($this->providePathTests(), [
+        return array_merge(self::providePathTests(), [
             // collapse dots
             ['css/./style.css', '/webmozart/puli', '/webmozart/puli/css/style.css'],
             ['css/../style.css', '/webmozart/puli', '/webmozart/puli/style.css'],
@@ -314,16 +307,14 @@ final class PathTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider provideMakeAbsoluteTests
-     */
+    #[DataProvider('provideMakeAbsoluteTests')]
     public function testMakeAbsolute(string $relativePath, string $basePath, string $absolutePath): void
     {
         $this->assertSame($absolutePath, Path::makeAbsolute($relativePath, $basePath));
     }
 
     /** @return array<int,array{string,string}> */
-    public function provideAbsolutePathsWithDifferentRoots(): array
+    public static function provideAbsolutePathsWithDifferentRoots(): array
     {
         return [
             ['C:/css/style.css', '/webmozart/puli'],
@@ -351,9 +342,7 @@ final class PathTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAbsolutePathsWithDifferentRoots
-     */
+    #[DataProvider('provideAbsolutePathsWithDifferentRoots')]
     public function testMakeAbsoluteDoesNotFailIfDifferentRoot(string $basePath, string $absolutePath): void
     {
         // If a path in partition D: is passed, but $basePath is in partition
@@ -376,11 +365,11 @@ final class PathTest extends TestCase
     }
 
     /** @return array<int,array{string,string, string}> */
-    public function provideMakeRelativeTests(): array
+    public static function provideMakeRelativeTests(): array
     {
         $paths = array_map(static function (array $arguments) {
             return [$arguments[2], $arguments[1], $arguments[0]];
-        }, $this->providePathTests());
+        }, self::providePathTests());
 
         return array_merge($paths, [
             ['/webmozart/puli/./css/style.css', '/webmozart/puli', 'css/style.css'],
@@ -471,9 +460,7 @@ final class PathTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider provideMakeRelativeTests
-     */
+    #[DataProvider('provideMakeRelativeTests')]
     public function testMakeRelative(string $absolutePath, string $basePath, string $relativePath): void
     {
         $this->assertSame($relativePath, Path::makeRelative($absolutePath, $basePath));
@@ -493,9 +480,7 @@ final class PathTest extends TestCase
         Path::makeRelative('/webmozart/puli/css/style.css', '');
     }
 
-    /**
-     * @dataProvider provideAbsolutePathsWithDifferentRoots
-     */
+    #[DataProvider('provideAbsolutePathsWithDifferentRoots')]
     public function testMakeRelativeFailsIfDifferentRoot(string $absolutePath, string $basePath): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -515,7 +500,7 @@ final class PathTest extends TestCase
     }
 
     /** @return array<int,array{string,string, bool}> */
-    public function provideIsBasePathTests(): array
+    public static function provideIsBasePathTests(): array
     {
         return [
             // same paths
@@ -598,16 +583,14 @@ final class PathTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideIsBasePathTests
-     */
+    #[DataProvider('provideIsBasePathTests')]
     public function testIsBasePath(string $path, string $ofPath, bool $result): void
     {
         $this->assertSame($result, Path::isBasePath($path, $ofPath));
     }
 
     /** @return array<int,array{string, string, string}> */
-    public function provideJoinTests(): array
+    public static function provideJoinTests(): array
     {
         return [
             ['', '', ''],
@@ -669,9 +652,7 @@ final class PathTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideJoinTests
-     */
+    #[DataProvider('provideJoinTests')]
     public function testJoin(string $path1, string $path2, string $result): void
     {
         $this->assertSame($result, Path::join([$path1, $path2]));

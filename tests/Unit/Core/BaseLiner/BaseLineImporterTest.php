@@ -15,6 +15,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\GitCliWrapper;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\ResultsParsers\SarbJsonResultsParser\SarbJsonResultsParser;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\ResourceLoaderTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BaseLineImporterTest extends TestCase
@@ -54,7 +55,7 @@ final class BaseLineImporterTest extends TestCase
     /**
      * @return array<int,array{string}>
      */
-    public function invalidFileDataProvider(): array
+    public static function invalidFileDataProvider(): array
     {
         return [
             ['invalid-json.json'],
@@ -69,9 +70,7 @@ final class BaseLineImporterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidFileDataProvider
-     */
+    #[DataProvider('invalidFileDataProvider')]
     public function testInvalidFileFormat(string $relativeFileName): void
     {
         $this->expectException(BaseLineImportException::class);

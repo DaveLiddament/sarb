@@ -10,6 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\AnalysisResultsAdderTrait;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Helpers\BaseLineResultsBuilder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BaseLineResultsComparatorTest extends TestCase
@@ -43,7 +44,7 @@ final class BaseLineResultsComparatorTest extends TestCase
     /**
      * @return array<int,array{bool,string,int,string}>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             // [<expected result>, <file>, <line>, <type>]
@@ -122,9 +123,7 @@ final class BaseLineResultsComparatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testInBaseLine(bool $expected, string $fileName, int $lineNumber, string $type): void
     {
         $location = PreviousLocation::fromFileNameAndLineNumber(

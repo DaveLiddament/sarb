@@ -8,6 +8,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedD
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\NewFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\UnifiedDiffParser\OriginalFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Plugins\GitDiffHistoryAnalyser\internal\OriginalLineNumberCalculator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -57,7 +58,7 @@ final class OriginalLineNameCalculatorTest extends TestCase
     /**
      * @return array<string,array{int,int|null}>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'dave' => [1, 1],
@@ -71,9 +72,7 @@ final class OriginalLineNameCalculatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testCalculateOriginalLine(int $newLineNumber, ?int $expectedOriginalLineNumber): void
     {
         $originalLineNumber = OriginalLineNumberCalculator::calculateOriginalLineNumber($this->fileMutation, $newLineNumber);
