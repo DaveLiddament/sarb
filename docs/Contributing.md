@@ -18,8 +18,6 @@ SARB must support all PHP versions that are either in [active or security](https
 Support for out of date versions of PHP should only be dropped if it is too difficult to keep them.
 
 Please make sure that the code runs on the following PHP versions:
-- 8.0
-- 8.1
 - 8.2
 - 8.3
 - 8.4
@@ -47,7 +45,7 @@ Check all the CI tasks would run. NOTE you'll need to download the deptrac PHAR,
 composer ci-<php version>
 
 # e.g.
-composer ci-8.1
+composer ci-8.2
 ```
 
 In addition to the above code coverage needs to 100%. 
@@ -56,7 +54,7 @@ Documented usage of `@codeCoverageIgnore` is allowed for the cases for lines of 
 ## Docker 
 
 A Dockerfile is provided to help with development.
-There is a service for each supported PHP version: `php80`, `php81`, `php82`, `php83`, `php84`.
+There is a service for each supported PHP version: `php82`, `php83`, `php84`.
 
 Use `docker compose run --rm <service> <command>` to run a one-off command on a given PHP version.
 
@@ -85,8 +83,6 @@ If you change the `Dockerfile`, force a rebuild with `docker compose build` (or 
 To check for all environments run the following:
 
 ```shell
-docker compose run --rm php80 composer ci-8.0
-docker compose run --rm php81 composer ci-8.1
 docker compose run --rm php82 composer ci-8.2
 docker compose run --rm php83 composer ci-8.3
 docker compose run --rm php84 composer ci-8.4

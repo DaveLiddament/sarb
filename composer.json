@@ -14,7 +14,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=8.0 <8.5",
+    "php": ">=8.2 <8.5",
     "symfony/config": "^5.4 || ^6.0.19 || ^7",
     "symfony/console": "^5.4 || ^6.0.19 || ^7",
     "symfony/dependency-injection": "^5.4 || ^6.0.20 || ^7",
@@ -52,22 +52,6 @@
     }
   },
   "scripts": {
-    "ci-8.0" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan"
-    ],
-    "ci-8.1" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test",
-      "@phpstan"
-    ],
     "ci-8.2" : [
       "@composer-validate",
       "@lint",
