@@ -109,6 +109,6 @@ final class RandomResultsPickerTest extends TestCase
 
     private function setRandomNumbers(int ...$numbers): void
     {
-        $this->randomNumberGenerator->method('getRandomNumber')->willReturnOnConsecutiveCalls(...$numbers);
+        $this->randomNumberGenerator->method('getRandomNumber')->willReturnOnConsecutiveCalls(...array_values($numbers));
     }
 }

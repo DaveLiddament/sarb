@@ -108,13 +108,13 @@ final class ArrayUtilsTest extends TestCase
      */
     public function testAssertArrayWithArray(): void
     {
-        ArrayUtils::assertArray(self::TEST_ARRAY);
+        ArrayUtils::assertArray(self::TEST_ARRAY); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     public function testAssertArrayOnNoneArray(): void
     {
         $this->expectException(ArrayParseException::class);
-        ArrayUtils::assertArray(self::AGE_VALUE);
+        ArrayUtils::assertArray(self::AGE_VALUE); // @phpstan-ignore staticMethod.impossibleType
     }
 
     public function testInvalidArrayKey(): void
@@ -154,6 +154,6 @@ final class ArrayUtilsTest extends TestCase
             'foo',
             'bar',
         ];
-        ArrayUtils::assertArrayOfStrings($array);
+        ArrayUtils::assertArrayOfStrings($array); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 }
