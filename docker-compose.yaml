@@ -22,6 +22,5 @@ services:
     build:
       args:
         PHP_VERSION: "8.4-"
-        XDEBUG_ENABLED: 0
     extends:
       service: latest
