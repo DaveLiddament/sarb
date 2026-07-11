@@ -43,10 +43,7 @@ composer cs-fix
 
 Check all the CI tasks would run:
 ```
-composer ci-<php version>
-
-# e.g.
-composer ci-8.2
+composer ci
 ```
 
 In addition to the above code coverage needs to 100%. 
@@ -69,7 +66,7 @@ See the composer scripts section for all scripts available.
 E.g. to run the full CI checks on PHP 8.3:
 
 ```shell
-docker compose run --rm php83 composer ci-8.3
+docker compose run --rm php83 composer ci
 ```
 
 You can also get shell access. E.g. to get a shell on PHP 8.3:
@@ -84,8 +81,8 @@ If you change the `Dockerfile`, force a rebuild with `docker compose build` (or 
 To check for all environments run the following:
 
 ```shell
-docker compose run --rm php82 composer ci-8.2
-docker compose run --rm php83 composer ci-8.3
-docker compose run --rm php84 composer ci-8.4
-docker compose run --rm php85 composer ci-8.5
+docker compose run --rm php82 composer ci
+docker compose run --rm php83 composer ci
+docker compose run --rm php84 composer ci
+docker compose run --rm php85 composer ci
 ```

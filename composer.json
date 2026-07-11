@@ -52,56 +52,22 @@
     }
   },
   "scripts": {
-    "ci-8.2" : [
+    "ci" : [
       "@composer-validate",
       "@lint",
       "@var-dump-checker",
       "@cs",
-      "@test",
-      "@phpstan"
-    ],
-    "ci-8.3" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs",
-      "@test-with-coverage-check",
-      "@phpstan"
-    ],
-    "ci-8.4" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs-8.4",
-      "@test-with-coverage-check",
-      "@phpstan"
-    ],
-    "ci-8.5" : [
-      "@composer-validate",
-      "@lint",
-      "@var-dump-checker",
-      "@cs-8.5",
       "@test-with-coverage-check",
       "@phpstan"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
-    "cs" : "php-cs-fixer fix -v --dry-run",
-    "cs-fix" : "php-cs-fixer fix -v",
-    "cs-8.4" : [
+    "cs" : [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
       "php-cs-fixer fix -v --dry-run"
     ],
-    "cs-fix-8.4" : [
-      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-      "php-cs-fixer fix -v"
-    ],
-    "cs-8.5" : [
-      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-      "php-cs-fixer fix -v --dry-run"
-    ],
-    "cs-fix-8.5" : [
+    "cs-fix" : [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
       "php-cs-fixer fix -v"
     ],
