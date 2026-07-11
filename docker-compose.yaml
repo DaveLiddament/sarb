@@ -24,3 +24,9 @@ services:
         PHP_VERSION: "8.4-"
     extends:
       service: latest
+  php85:
+    build:
+      args:
+        PHP_VERSION: "8.5-"
+    extends:
+      service: latest

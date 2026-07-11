@@ -14,7 +14,7 @@
     "sort-packages": true
   },
   "require": {
-    "php": ">=8.2 <8.5",
+    "php": ">=8.2 <8.6",
     "symfony/config": "^6.4 || ^7",
     "symfony/console": "^6.4 || ^7",
     "symfony/dependency-injection": "^6.4 || ^7",
@@ -76,6 +76,14 @@
       "@test-with-coverage-check",
       "@phpstan"
     ],
+    "ci-8.5" : [
+      "@composer-validate",
+      "@lint",
+      "@var-dump-checker",
+      "@cs-8.5",
+      "@test-with-coverage-check",
+      "@phpstan"
+    ],
     "composer-validate" : "@composer validate --no-check-all --strict",
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
@@ -89,8 +97,15 @@
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
       "php-cs-fixer fix -v"
     ],
+    "cs-8.5" : [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+      "php-cs-fixer fix -v --dry-run"
+    ],
+    "cs-fix-8.5" : [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+      "php-cs-fixer fix -v"
+    ],
     "phpstan" : "phpstan -n --no-progress  analyse",
-    "deptrac" : "deptrac",
     "test" : [
       "@putenv XDEBUG_MODE=coverage",
       "phpunit --coverage-clover=reports/phpunit.xml"

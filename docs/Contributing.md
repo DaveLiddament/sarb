@@ -21,6 +21,7 @@ Please make sure that the code runs on the following PHP versions:
 - 8.2
 - 8.3
 - 8.4
+- 8.5
 
 
 ### Including new libraries
@@ -40,7 +41,7 @@ composer cs-fix
 ```
 
 
-Check all the CI tasks would run. NOTE you'll need to download the deptrac PHAR, see [instructions](https://github.com/qossmic/deptrac#installation):
+Check all the CI tasks would run:
 ```
 composer ci-<php version>
 
@@ -54,7 +55,7 @@ Documented usage of `@codeCoverageIgnore` is allowed for the cases for lines of 
 ## Docker 
 
 A Dockerfile is provided to help with development.
-There is a service for each supported PHP version: `php82`, `php83`, `php84`.
+There is a service for each supported PHP version: `php82`, `php83`, `php84`, `php85`.
 
 Use `docker compose run --rm <service> <command>` to run a one-off command on a given PHP version.
 
@@ -86,4 +87,5 @@ To check for all environments run the following:
 docker compose run --rm php82 composer ci-8.2
 docker compose run --rm php83 composer ci-8.3
 docker compose run --rm php84 composer ci-8.4
+docker compose run --rm php85 composer ci-8.5
 ```
