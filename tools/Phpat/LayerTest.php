@@ -26,6 +26,16 @@ final class LayerTest
         ;
     }
 
+    public function testDomainDoesNotDependOnSymfony(): Rule
+    {
+        return PHPat::rule()
+            ->classes(Selector::inNamespace(self::DOMAIN_NAMESPACE))
+            ->shouldNotDependOn()
+            ->classes(Selector::inNamespace('Symfony'))
+            ->because('Domain code should not depend on the framework')
+        ;
+    }
+
     public function testsPluginDoesNotDependOnFrameworkLayer(): Rule
     {
         return PHPat::rule()

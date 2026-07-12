@@ -5,7 +5,6 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Tests\Integration;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\RelativeFileName;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\Path;
-use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\StringUtils;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\CreateBaseLineCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListHistoryAnalysersCommand;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Framework\Command\ListResultsParsesCommand;
@@ -406,7 +405,7 @@ final class EndToEndTest extends TestCase
         $files = scandir($directory);
         $this->assertNotFalse($files);
         foreach ($files as $file) {
-            if (StringUtils::endsWith('.json', $file)) {
+            if (str_ends_with($file, '.json')) {
                 $fullPath = Path::makeAbsolute($file, $directory);
                 $contents = file_get_contents($fullPath);
                 $this->assertNotFalse($contents);

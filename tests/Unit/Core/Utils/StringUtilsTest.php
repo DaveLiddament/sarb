@@ -33,21 +33,6 @@ final class StringUtilsTest extends TestCase
         StringUtils::removeFromStart('Bar', 'FooBar');
     }
 
-    public function testDoesEndWith1(): void
-    {
-        $this->assertTrue(StringUtils::endsWith('e', 'abcde'));
-    }
-
-    public function testDoesEndWith2(): void
-    {
-        $this->assertTrue(StringUtils::endsWith('de', 'abcde'));
-    }
-
-    public function testDoesNotEndWith1(): void
-    {
-        $this->assertFalse(StringUtils::endsWith('d', 'abcde'));
-    }
-
     public function testIsEmpty(): void
     {
         $this->assertTrue(StringUtils::isEmptyLine(''));

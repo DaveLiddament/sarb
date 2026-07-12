@@ -6,3 +6,8 @@ services:
 
   DaveLiddament\StaticAnalysisResultsBaseliner\:
     resource: '../src/*'
+    # Value objects and exceptions are not services. Excluding them means a newly type hinted
+    # value object fails at container compile time rather than at runtime.
+    exclude:
+      - '../src/**/*Exception.php'
+      - '../src/Domain/Common/*'

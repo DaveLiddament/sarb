@@ -53,6 +53,11 @@ final class RemoveBaseLineFromResultsCommand extends Command
     {
         $this->setDescription('Shows issues created since the baseline');
 
+        // The documentation tells users to run "sarb remove". That currently works because
+        // Symfony matches unambiguous abbreviations, but a real alias means adding another
+        // remove-* command in the future can not silently break every user's CI.
+        $this->setAliases(['remove']);
+
         $outputFormatters = $this->outputFormatterLookupService->getIdentifiers();
         $this->addOption(
             self::OUTPUT_FORMAT,
@@ -123,8 +128,9 @@ final class RemoveBaseLineFromResultsCommand extends Command
 
             $returnCode = $outputAnalysisResults->hasNoIssues() ? 0 : 1;
 
-            if ($showRandomIssues && !$prunedResults->getInputAnalysisResults()->hasNoIssues()) {
-                $randomIssues = $this->randomResultsPicker->getRandomResultsToFix($prunedResults->getInputAnalysisResults());
+            $baseLinedResults = $prunedResults->getBaseLinedResults();
+            if ($showRandomIssues && !$baseLinedResults->hasNoIssues()) {
+                $randomIssues = $this->randomResultsPicker->getRandomResultsToFix($baseLinedResults);
 
                 OutputWriter::writeToStdError(
                     $output,
