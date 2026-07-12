@@ -32,6 +32,6 @@ fi
 EOF
 
 # Sort out git
-RUN git config --global --add safe.directory /app
+RUN git config --system --add safe.directory /app
 
 WORKDIR /app/
