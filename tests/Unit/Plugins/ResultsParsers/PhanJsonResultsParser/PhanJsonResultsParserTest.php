@@ -79,8 +79,10 @@ final class PhanJsonResultsParserTest extends TestCase
         $result1 = $analysisResults->getAnalysisResults()[0];
         $result2 = $analysisResults->getAnalysisResults()[1];
 
+        // The relative file names are relative to the project root (not the code directory),
+        // so that they match the paths in git diff output.
         $this->assertMatch($result1,
-            'src/Domain/Analyser/BaseLineResultsRemover.php',
+            'code/src/Domain/Analyser/BaseLineResultsRemover.php',
             16,
             'PhanUnreferencedUseNormal',
             Severity::error());
@@ -94,7 +96,7 @@ final class PhanJsonResultsParserTest extends TestCase
         );
 
         $this->assertMatch($result2,
-            'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
+            'code/src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             107,
             'PhanPossiblyNullTypeArgument',
             Severity::error());

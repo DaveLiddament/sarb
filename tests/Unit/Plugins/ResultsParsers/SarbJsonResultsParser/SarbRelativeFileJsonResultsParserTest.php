@@ -93,8 +93,10 @@ final class SarbRelativeFileJsonResultsParserTest extends TestCase
         $result2 = $this->analysisResults->getAnalysisResults()[1];
         $result3 = $this->analysisResults->getAnalysisResults()[2];
 
+        // The relative file names are relative to the project root (not the code directory),
+        // so that they match the paths in git diff output.
         $this->assertMatch($result1,
-            'src/Domain/ResultsParser/AnalysisResults.php',
+            'code/src/Domain/ResultsParser/AnalysisResults.php',
             67,
             'MismatchingDocblockParamType',
             Severity::error(),
@@ -109,14 +111,14 @@ final class SarbRelativeFileJsonResultsParserTest extends TestCase
         );
 
         $this->assertMatch($result2,
-            'src/Domain/Utils/JsonUtils.php',
+            'code/src/Domain/Utils/JsonUtils.php',
             29,
             'MixedAssignment',
             Severity::error(),
         );
 
         $this->assertMatch($result3,
-            'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
+            'code/src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
             Severity::warning(),
