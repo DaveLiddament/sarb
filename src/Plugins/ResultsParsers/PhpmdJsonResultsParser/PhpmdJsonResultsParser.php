@@ -32,6 +32,13 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
  */
 final class PhpmdJsonResultsParser implements ResultsParser
 {
+    /**
+     * Violations with a priority of this value or lower (i.e. numerically greater) are treated
+     * as warnings. PHPMD priorities range from 1 (highest) to 5 (lowest); most rules default to
+     * priority 3.
+     */
+    private const LOWEST_PRIORITY_TREATED_AS_ERROR = 4;
+
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
         $analysisResultsAsArray = JsonUtils::toArray($resultsAsString);
@@ -40,7 +47,7 @@ final class PhpmdJsonResultsParser implements ResultsParser
         try {
             $filesWithProblems = ArrayUtils::getArrayValue($analysisResultsAsArray, 'files');
         } catch (ArrayParseException $e) {
-            throw ParseAtLocationException::issueParsingWithMessage("Missing 'files' key", 'root level of JSON structure');
+            throw ParseAtLocationException::issueParsing($e, 'root level of JSON structure');
         }
 
         $fileNumber = 0;
@@ -112,12 +119,16 @@ final class PhpmdJsonResultsParser implements ResultsParser
             new LineNumber($lineAsInt),
         );
 
+        // PHPMD rule priorities range from 1 (highest) to 5 (lowest)
+        $priority = ArrayUtils::getIntValue($violation, 'priority');
+        $severity = $priority >= self::LOWEST_PRIORITY_TREATED_AS_ERROR ? Severity::warning() : Severity::error();
+
         return new AnalysisResult(
             $location,
             $type,
             $message,
             $violation,
-            Severity::error(),
+            $severity,
         );
     }
 

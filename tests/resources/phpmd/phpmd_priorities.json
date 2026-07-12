@@ -1,0 +1,44 @@
+{
+  "version": "@project.version@",
+  "package": "phpmd",
+  "timestamp": "2020-07-27T22:11:44+00:00",
+  "files": [
+    {
+      "file": "\/vagrant\/static-analysis-baseliner\/src\/Foo.php",
+      "violations": [
+        {
+          "beginLine": 10,
+          "endLine": 10,
+          "description": "High priority issue.",
+          "rule": "HighPriorityRule",
+          "ruleSet": "Some Rules",
+          "priority": 1
+        },
+        {
+          "beginLine": 20,
+          "endLine": 20,
+          "description": "Normal priority issue.",
+          "rule": "NormalPriorityRule",
+          "ruleSet": "Some Rules",
+          "priority": 3
+        },
+        {
+          "beginLine": 30,
+          "endLine": 30,
+          "description": "Low priority issue.",
+          "rule": "LowPriorityRule",
+          "ruleSet": "Some Rules",
+          "priority": 4
+        },
+        {
+          "beginLine": 40,
+          "endLine": 40,
+          "description": "Information only issue.",
+          "rule": "InformationRule",
+          "ruleSet": "Some Rules",
+          "priority": 5
+        }
+      ]
+    }
+  ]
+}
