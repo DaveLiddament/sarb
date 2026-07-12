@@ -100,6 +100,31 @@ final class PhanJsonResultsParserTest extends TestCase
             Severity::error());
     }
 
+    public function testSeverityMapping(): void
+    {
+        $fileContents = $this->getResource('phan/phan-severities.json');
+        $analysisResults = $this->phanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+
+        $this->assertCount(2, $analysisResults->getAnalysisResults());
+
+        $result1 = $analysisResults->getAnalysisResults()[0];
+        $result2 = $analysisResults->getAnalysisResults()[1];
+
+        // Phan severity 10 (critical) is imported as error
+        $this->assertMatch($result1,
+            'src/Critical.php',
+            9,
+            'PhanUndeclaredClass',
+            Severity::error());
+
+        // Phan severity 0 (low) is imported as warning
+        $this->assertMatch($result2,
+            'src/Low.php',
+            5,
+            'PhanUnreferencedUseNormal',
+            Severity::warning());
+    }
+
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phanJsonResultsParser->showTypeGuessingWarning());

@@ -38,6 +38,12 @@ final class PhanJsonResultsParser implements ResultsParser
     private const TYPE = 'check_name';
     private const MESSAGE = 'description';
     private const FILE_PATH = 'path';
+    private const SEVERITY = 'severity';
+
+    /**
+     * Phan severities: 0 (low), 5 (normal), 10 (critical).
+     */
+    private const SEVERITY_LOW = 0;
 
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
@@ -90,12 +96,15 @@ final class PhanJsonResultsParser implements ResultsParser
             new LineNumber($lineAsInt),
         );
 
+        $severityAsInt = ArrayUtils::getIntValue($analysisResultAsArray, self::SEVERITY);
+        $severity = self::SEVERITY_LOW === $severityAsInt ? Severity::warning() : Severity::error();
+
         return new AnalysisResult(
             $location,
             $type,
             $message,
             $analysisResultAsArray,
-            Severity::error(),
+            $severity,
         );
     }
 
