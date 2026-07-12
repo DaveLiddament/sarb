@@ -40,6 +40,10 @@ final class ErrorReporter
             OutputWriter::writeToStdError($output, $e->getMessage(), true);
 
             return 16;
+        } catch (SarbException $e) {
+            OutputWriter::writeToStdError($output, $e->getMessage(), true);
+
+            return 18;
         } catch (\Throwable $e) {
             // This should never happen. All exceptions should extend SarbException
             OutputWriter::writeToStdError($output, "Unexpected critical error: {$e->getMessage()}", true);
