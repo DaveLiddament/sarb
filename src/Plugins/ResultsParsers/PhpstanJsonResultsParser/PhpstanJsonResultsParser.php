@@ -33,7 +33,8 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ParseAtLocationExc
  * Handles PHPStan's JSON output.
  *
  * NOTE: SARB only deals with errors that are attached to a particular line in a file.
- * PHPStan can report general errors (not specific to file). These are ignored by SARB.
+ * PHPStan can report general errors (not specific to a file). If any of these are present SARB
+ * stops with an error, as they normally indicate the PHPStan run itself failed.
  */
 final class PhpstanJsonResultsParser implements ResultsParser
 {
@@ -121,7 +122,7 @@ final class PhpstanJsonResultsParser implements ResultsParser
         }
 
         $rawType = ArrayUtils::getStringValue($analysisResultAsArray, self::TYPE);
-        $type = $this->fqcnRemover->removeRqcn($rawType);
+        $type = $this->fqcnRemover->removeFqcn($rawType);
 
         $location = Location::fromAbsoluteFileName(
             $absoluteFileName,

@@ -34,16 +34,6 @@ final class StringUtils
     }
 
     /**
-     * Returns true if $haystack ends with $needle.
-     */
-    public static function endsWith(string $needle, string $haystack): bool
-    {
-        $length = strlen($needle);
-
-        return substr($haystack, -$length) === $needle;
-    }
-
-    /**
      * Returns true if line is empty (or contains only white space).
      */
     public static function isEmptyLine(string $line): bool

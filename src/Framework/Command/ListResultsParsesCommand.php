@@ -49,7 +49,7 @@ final class ListResultsParsesCommand extends Command
 
             $output->writeln(
                 sprintf(
-                    '    Create baseline:         <info>%s | sarb create --input-format="%s"</info>',
+                    '    Create baseline:         <info>%s | sarb create --input-format="%s" <baseline-file></info>',
                     $identifier->getToolCommand(),
                     $identifier->getCode(),
                 ),
@@ -57,7 +57,7 @@ final class ListResultsParsesCommand extends Command
 
             $output->writeln(
                 sprintf(
-                    '    Remove baseline results: <info>%s | sarb remove</info>',
+                    '    Remove baseline results: <info>%s | sarb remove <baseline-file></info>',
                     $identifier->getToolCommand(),
                 ),
             );

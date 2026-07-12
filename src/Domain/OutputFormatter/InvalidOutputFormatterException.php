@@ -2,6 +2,8 @@
 
 namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter;
 
-final class InvalidOutputFormatterException extends \Exception
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
+
+final class InvalidOutputFormatterException extends SarbException
 {
 }
