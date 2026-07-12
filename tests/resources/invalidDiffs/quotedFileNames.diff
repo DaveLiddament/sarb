@@ -1,0 +1,10 @@
+diff --git "a/src/Caf\303\251.php" "b/src/Caf\303\251.php"
+index 81ee914..a7005b2 100644
+--- "a/src/Caf\303\251.php"
++++ "b/src/Caf\303\251.php"
+@@ -15,6 +15,7 @@ class Person
+     private $name;
+
+     /**
++     * @var bool
+      */
