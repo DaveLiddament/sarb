@@ -8,7 +8,7 @@
 [![Continuous Integration](https://github.com/DaveLiddament/sarb/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/sarb/actions) 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
 [![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/master/phpstan.neon)
-[![Code Coverage](https://img.shields.io/badge/Code%20coverage-100%25-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/f2db1404c8f2acb0f813c7fb49624fe21e42a302/composer.json#L109)
+[![Code Coverage](https://img.shields.io/badge/Code%20coverage-100%25-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/master/composer.json)
 
 * [Why SARB](#why-sarb)
 * [Requirements](#requirements)
@@ -169,7 +169,24 @@ That's no problem there are 3 methods to [integrate a static analysis tool](docs
 ## Output formats 
 
 The format for showing issues after the baseline is removed can be specified using `--output-format` option. 
-Possible values are: `table`, `text`, `json` or `github` (for GitHub actions).
+Possible values are: `table`, `text`, `json`, `junit` or `github` (for GitHub actions).
+
+## Exit codes
+
+`sarb remove` exits with code `0` when no issues have been introduced since the baseline, and `1` when new issues
+are found. This makes it suitable as a CI gate. `sarb create` exits with code `0` on success.
+
+Both commands report failures with the following exit codes:
+
+| Exit code | Meaning |
+|-----------|---------|
+| 11 | Invalid configuration (e.g. unknown input or output format) |
+| 12 | Failed to import the baseline file |
+| 13 | Failed to parse the static analysis results |
+| 14 | File access error (e.g. baseline file can not be read or written) |
+| 15 | History analyser error (e.g. problem running git or parsing the diff) |
+| 16 | The static analysis tool reported errors |
+| 100 | Unexpected error |
 
 ## Ignoring warnings
 
@@ -183,12 +200,12 @@ vendor/bin/phpcs src --report=json | vendor/bin/sarb remove phpcs.baseline --ign
 
 ## SARB with GitHub Actions
 
-If you're using `actions/checkout@v2` to check out your code you'll need to add set `fetch-depth` to `0`.
-By default `checkout` only gets that latest state of the code and none of the history. 
+If you're using `actions/checkout` to check out your code you'll need to set `fetch-depth` to `0`.
+By default `checkout` only gets the latest state of the code and none of the history. 
 SARB uses git, which needs the full git history, to track file changes since the baseline. 
 To get the full history checked out use this:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v4
   with:
     fetch-depth: 0
 ```
