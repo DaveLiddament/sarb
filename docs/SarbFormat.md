@@ -1,7 +1,12 @@
 # SARB format
 
 This document defines the `sarb.json` file format. If a static analysis tool provides an output in this format
-it will work directly with SARB.
+it will work directly with SARB, using the input format `sarb-json`:
+
+```shell
+<static analysis tool> | vendor/bin/sarb create --input-format="sarb-json" tool.baseline
+<static analysis tool> | vendor/bin/sarb remove tool.baseline
+```
 
 
 ## Motivation
@@ -40,4 +45,26 @@ It is very important `Type` must not have file name, class name, function or lin
   ... repeat for each issue ...   
 ]
 ```
+
+
+## Relative path variant
+
+If the static analysis tool reports paths relative to the project root (instead of absolute paths), use the
+input format `sarb-relative-json`. The format is the same except each issue has a `relative_path` key instead
+of `file`:
+
+```json
+[
+  {
+    "relative_path": "Controller/HomeController.php",
+    "line": 10,
+    "type": "MixedType",
+    "message" : "Cannot assign $asArray to a mixed type",
+    "severity": "error"
+  },
+  ... repeat for each issue ...   
+]
+```
+
+See also [notes on results with relative paths](ResultsWithRelativePaths.md).
 
