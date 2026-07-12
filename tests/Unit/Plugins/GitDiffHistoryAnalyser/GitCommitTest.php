@@ -26,6 +26,14 @@ final class GitCommitTest extends TestCase
             'invalidCharacters' => [
                 '43462550d5644312b6757bb89ac85aa8d9590c2x',
             ],
+
+            'sha256TooShort' => [
+                'dccf9c8b8f2977cea0c1a1474d20531d9482a1c825b1a0d55163d54e29a3343',
+            ],
+
+            'sha256TooLong' => [
+                'dccf9c8b8f2977cea0c1a1474d20531d9482a1c825b1a0d55163d54e29a3343a1',
+            ],
         ];
     }
 
@@ -53,6 +61,10 @@ final class GitCommitTest extends TestCase
             ],
             [
                 '30b68f53df4e590657ba5184b1c6013e9a8dad5c',
+            ],
+            [
+                // SHA-256 object format
+                'dccf9c8b8f2977cea0c1a1474d20531d9482a1c825b1a0d55163d54e29a3343a',
             ],
         ];
     }

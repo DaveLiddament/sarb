@@ -53,6 +53,11 @@ final class ChangeHunkParserState implements State
             return $this->processNewChangeHunk($line);
         }
 
+        if (StringUtils::startsWith('\\', $line)) {
+            // Metadata (e.g. "\ No newline at end of file"), not a line of the file
+            return $this;
+        }
+
         if (StringUtils::startsWith('+', $line)) {
             $this->processAddLine();
 
