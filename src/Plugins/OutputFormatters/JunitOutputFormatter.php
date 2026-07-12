@@ -56,7 +56,7 @@ XML;
 
                 $testsuite = $test->addChild('testsuite');
                 Assert::notNull($testsuite, 'Can not add testsuite to XML');
-                $testsuite->addAttribute('name', $relativeFileName);
+                $testsuite->addAttribute('name', $this->sanitiseForXml($relativeFileName));
 
                 $previousRelativeFileName = $relativeFileName;
                 $caseCount = 0;
@@ -71,13 +71,13 @@ XML;
             );
             $testcase = $testsuite->addChild('testcase');
             Assert::notNull($testcase, 'Can not add testcase element to XML');
-            $testcase->addAttribute('name', $lineSprint);
+            $testcase->addAttribute('name', $this->sanitiseForXml($lineSprint));
             $failure = $testcase->addChild('failure');
             Assert::notNull($failure, 'Can not add failure element to XML');
             $failure->addAttribute('type', $analysisResult->getSeverity()->getSeverity());
             $failure->addAttribute(
                 'message',
-                $analysisResult->getMessage(),
+                $this->sanitiseForXml($analysisResult->getMessage()),
             );
             ++$caseCount;
         }
@@ -90,7 +90,9 @@ XML;
         $asXml = $test->asXML();
 
         if (is_string($asXml) && ('' !== $asXml)) {
-            $dom->loadXML($asXml);
+            if (!$dom->loadXML($asXml)) {
+                throw new SarbException('xml could not be parsed'); // @codeCoverageIgnore
+            }
         } else {
             throw new SarbException('xml could not be loaded'); // @codeCoverageIgnore
         }
@@ -126,5 +128,26 @@ XML;
             $testsuite->addAttribute('tests', (string) $caseCount);
             $testsuite->addAttribute('failures', (string) $caseCount);
         }
+    }
+
+    /**
+     * Removes characters that are not valid in an XML 1.0 document (e.g. most control
+     * characters). SimpleXML would write them to the attribute unescaped, producing a document
+     * that can not be parsed.
+     */
+    private function sanitiseForXml(string $value): string
+    {
+        $sanitised = preg_replace(
+            '/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u',
+            '',
+            $value,
+        );
+
+        if (null === $sanitised) {
+            // Value is not valid UTF-8. Keep printable ASCII characters only.
+            $sanitised = (string) preg_replace('/[^\x09\x0A\x0D\x20-\x7E]/', '', $value);
+        }
+
+        return $sanitised;
     }
 }
