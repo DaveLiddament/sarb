@@ -15,13 +15,12 @@ final class GithubActionsOutputFormatter implements OutputFormatter
         foreach ($analysisResults->getAnalysisResults() as $analysisResult) {
             $location = $analysisResult->getLocation();
 
-            $message = str_replace("\n", '%0A', $analysisResult->getMessage());
             $lines[] = sprintf(
                 '::%s file=%s,line=%d::%s',
                 $analysisResult->getSeverity()->getSeverity(),
-                $location->getRelativeFileName()->getFileName(),
+                $this->escapeProperty($location->getRelativeFileName()->getFileName()),
                 $location->getLineNumber()->getLineNumber(),
-                $message,
+                $this->escapeData($analysisResult->getMessage()),
             );
         }
 
@@ -31,5 +30,23 @@ final class GithubActionsOutputFormatter implements OutputFormatter
     public function getIdentifier(): string
     {
         return 'github';
+    }
+
+    /**
+     * Escapes a workflow command message. The GitHub Actions runner URL decodes these sequences,
+     * so a literal '%' must be escaped too, otherwise it corrupts the annotation.
+     */
+    private function escapeData(string $value): string
+    {
+        return str_replace(['%', "\r", "\n"], ['%25', '%0D', '%0A'], $value);
+    }
+
+    /**
+     * Escapes a workflow command property value. Unlike the message, property values must also
+     * have ':' and ',' escaped, otherwise they would terminate the property list.
+     */
+    private function escapeProperty(string $value): string
+    {
+        return str_replace(['%', "\r", "\n", ':', ','], ['%25', '%0D', '%0A', '%3A', '%2C'], $value);
     }
 }
