@@ -33,7 +33,7 @@ final class FqcnRemoverTest extends TestCase
     public function testFqcnRemover(string $input, string $expected): void
     {
         $fqcnRemove = new FqcnRemover();
-        $actual = $fqcnRemove->removeRqcn($input);
+        $actual = $fqcnRemove->removeFqcn($input);
         $this->assertEquals($expected, $actual);
     }
 }
