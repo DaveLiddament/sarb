@@ -47,7 +47,9 @@ final class LocationTest extends TestCase
         $location = Location::fromRelativeFileName($relativeFileName, $projectRoot, $lineNumber);
 
         $this->assertSame($lineNumber, $location->getLineNumber());
-        $this->assertSame('src/File.php', $location->getRelativeFileName()->getFileName());
+        // The Location's relative file name is relative to the project root (not the code directory),
+        // so that it matches the paths in git diff output.
+        $this->assertSame('code/src/File.php', $location->getRelativeFileName()->getFileName());
         $this->assertSame('/sarb/root/code/src/File.php', $location->getAbsoluteFileName()->getFileName());
     }
 }

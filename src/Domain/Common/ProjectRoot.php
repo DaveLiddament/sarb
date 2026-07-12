@@ -17,11 +17,6 @@ use Webmozart\Assert\Assert;
 final class ProjectRoot implements \Stringable
 {
     /**
-     * @var string
-     */
-    private $relativePath = '';
-
-    /**
      * @throws InvalidPathException
      */
     public static function fromCurrentWorkingDirectory(string $currentWorkingDirectory): self
@@ -48,6 +43,7 @@ final class ProjectRoot implements \Stringable
 
     private function __construct(
         private string $rootDirectory,
+        private string $relativePath = '',
     ) {
     }
 
@@ -56,10 +52,22 @@ final class ProjectRoot implements \Stringable
      */
     public function withRelativePath(string $relativePath): self
     {
-        $projectRoot = new self($this->rootDirectory);
-        $projectRoot->relativePath = $relativePath;
+        return new self($this->rootDirectory, $relativePath);
+    }
 
-        return $projectRoot;
+    /**
+     * Converts a path relative to the directory holding the code being analysed into a path
+     * relative to the project root.
+     *
+     * These are the same unless a relativePath is configured (the --relative-path-to-code option).
+     */
+    public function prependRelativePath(RelativeFileName $relativeFileName): RelativeFileName
+    {
+        if ('' === $this->relativePath) {
+            return $relativeFileName;
+        }
+
+        return new RelativeFileName(Path::join([$this->relativePath, $relativeFileName->getFileName()]));
     }
 
     /**
