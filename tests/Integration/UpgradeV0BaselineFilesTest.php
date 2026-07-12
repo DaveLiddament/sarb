@@ -110,8 +110,6 @@ final class UpgradeV0BaselineFilesTest extends TestCase
         $updatedBaselineContents = trim($fileReader->readFile($this->baseLineFileName));
         $expectedBaselineContents = trim($this->getResource("v0/{$file}.expected"));
         $this->assertSame($expectedBaselineContents, $updatedBaselineContents);
-
-        $this->removeTestDirectory();
     }
 
     public function testUpgradeFails(): void
@@ -127,7 +125,6 @@ final class UpgradeV0BaselineFilesTest extends TestCase
         $actualExitCode = $commandTester->execute($arguments);
 
         $this->assertSame(12, $actualExitCode);
-        $this->removeTestDirectory();
     }
 
     private function createOriginalBaselineFile(string $file): void
