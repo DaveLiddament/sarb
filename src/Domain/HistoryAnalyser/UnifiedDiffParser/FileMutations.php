@@ -13,7 +13,7 @@ namespace DaveLiddament\StaticAnalysisResultsBaseliner\Domain\HistoryAnalyser\Un
 use Webmozart\Assert\Assert;
 
 /**
- * Holds FileMutation objects. Use the.
+ * Holds FileMutation objects, keyed by new file name.
  */
 final class FileMutations
 {
