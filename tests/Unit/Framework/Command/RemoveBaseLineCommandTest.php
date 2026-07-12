@@ -82,12 +82,13 @@ EOF;
 
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
-        $this->assertResponseContains('Latest analysis issue count: 2', $commandTester);
-        $this->assertResponseContains('Baseline issue count: 4', $commandTester);
-        $this->assertResponseContains('Issue count with baseline removed: 0', $commandTester);
+        $this->assertStdErrContains('Latest analysis issue count: 2', $commandTester);
+        $this->assertStdErrContains('Baseline issue count: 4', $commandTester);
+        $this->assertStdErrContains('Issue count with baseline removed: 0', $commandTester);
+        $this->assertStdOut("No issues\n", $commandTester);
     }
 
     public function test1NewIssues(): void
@@ -100,10 +101,10 @@ EOF;
 
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(1, $commandTester);
-        $this->assertResponseContains('Issue count with baseline removed: 1', $commandTester);
+        $this->assertStdErrContains('Issue count with baseline removed: 1', $commandTester);
     }
 
     public function testPickNonDefaultOutputFormatter(): void
@@ -117,13 +118,10 @@ EOF;
         $commandTester->execute([
             self::OUTPUT_FORMAT_OPTION => OutputFormatterStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
-        $this->assertResponseContains(
-            '[stub output formatter: Issues since baseline 0]',
-            $commandTester,
-        );
+        $this->assertStdOut("[stub output formatter: Issues since baseline 0]\n", $commandTester);
     }
 
     public function testPickNonDefaultOutputFormatterWithIssues(): void
@@ -137,13 +135,10 @@ EOF;
         $commandTester->execute([
             self::OUTPUT_FORMAT_OPTION => OutputFormatterStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(1, $commandTester);
-        $this->assertResponseContains(
-            '[stub output formatter: Issues since baseline 8]',
-            $commandTester,
-        );
+        $this->assertStdOut("[stub output formatter: Issues since baseline 8]\n", $commandTester);
     }
 
     public function testInvalidResultsParser(): void
@@ -157,10 +152,10 @@ EOF;
         $commandTester->execute([
             self::OUTPUT_FORMAT_OPTION => 'rubbish',
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(11, $commandTester);
-        $this->assertResponseContains(
+        $this->assertStdErrContains(
             'Invalid value [rubbish] for option [output-format]. Pick one of: table|stub',
             $commandTester,
         );
@@ -177,7 +172,7 @@ EOF;
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
             self::PROJECT_ROOT => '/tmp',
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
     }
@@ -192,7 +187,7 @@ EOF;
 
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(100, $commandTester);
     }
@@ -208,14 +203,14 @@ EOF;
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
             self::CLEAN_UP => true,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
 
-        $this->assertResponseContains('Random 2 issues in the baseline to fix...', $commandTester);
-        $this->assertResponseContains('FILE: /FILE_2', $commandTester);
-        $this->assertResponseContains('| 2    | MESSAGE_1   |', $commandTester);
-        $this->assertResponseContains('| 2    | MESSAGE_0   |', $commandTester);
+        $this->assertStdErrContains('Random 2 issues in the baseline to fix...', $commandTester);
+        $this->assertStdErrContains('FILE: /FILE_2', $commandTester);
+        $this->assertStdErrContains('| 2    | MESSAGE_1   |', $commandTester);
+        $this->assertStdErrContains('| 2    | MESSAGE_0   |', $commandTester);
     }
 
     private function createCommandTester(
@@ -264,14 +259,26 @@ EOF;
 
     private function assertReturnCode(int $expectedReturnCode, CommandTester $commandTester): void
     {
-        $this->assertSame($expectedReturnCode, $commandTester->getStatusCode(), $commandTester->getDisplay());
+        $output = "STDOUT:\n{$commandTester->getDisplay()}\nSTDERR:\n{$commandTester->getErrorOutput()}";
+        $this->assertSame($expectedReturnCode, $commandTester->getStatusCode(), $output);
     }
 
-    private function assertResponseContains(string $expectedMessage, CommandTester $commandTester): void
+    /**
+     * Results (and nothing else) are written to stdout, so `sarb remove ... | consumer` works.
+     */
+    private function assertStdOut(string $expectedOutput, CommandTester $commandTester): void
     {
-        $output = $commandTester->getDisplay();
+        $this->assertSame($expectedOutput, $commandTester->getDisplay());
+    }
+
+    /**
+     * Informational messages and errors are written to stderr.
+     */
+    private function assertStdErrContains(string $expectedMessage, CommandTester $commandTester): void
+    {
+        $output = $commandTester->getErrorOutput();
         $position = strpos($output, $expectedMessage);
-        $this->assertNotFalse($position, "Can't find message [$expectedMessage] in [$output]");
+        $this->assertNotFalse($position, "Can't find message [$expectedMessage] in stderr [$output]");
     }
 
     private function getAnalysisResultsWithXResults(int $count): AnalysisResults
