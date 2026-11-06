@@ -6,7 +6,6 @@
 [![Total Downloads](https://poser.pugx.org/dave-liddament/sarb/downloads)](https://packagist.org/packages/dave-liddament/sarb/stats)
 
 [![Continuous Integration](https://github.com/DaveLiddament/sarb/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/sarb/actions) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DaveLiddament/sarb/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DaveLiddament/sarb/?branch=master)
 [![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/master/phpstan.neon)
 [![Code Coverage](https://img.shields.io/badge/Code%20coverage-100%25-brightgreen.svg)](https://github.com/DaveLiddament/sarb/blob/f2db1404c8f2acb0f813c7fb49624fe21e42a302/composer.json#L109)
 
