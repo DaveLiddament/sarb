@@ -37,8 +37,18 @@ final class GitCliWrapper implements GitWrapper
 
     public function getGitDiff(ProjectRoot $projectRoot, GitCommit $originalCommit): string
     {
+        // Pin the diff output format. The parser relies on "--- a/" and "+++ b/" prefixes and
+        // unquoted paths, all of which users can change via their git configuration
+        // (e.g. diff.noprefix, diff.mnemonicPrefix, core.quotePath).
         $arguments = [
+            '-c', 'core.quotePath=false',
+            '-c', 'diff.noprefix=false',
+            '-c', 'diff.mnemonicPrefix=false',
+            '-c', 'diff.srcPrefix=a/',
+            '-c', 'diff.dstPrefix=b/',
             'diff',
+            '--no-color',
+            '--no-ext-diff',
             '-w',
             '-M',
             '-l0',

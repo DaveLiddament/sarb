@@ -45,6 +45,13 @@ final class FindOriginalFileNameState implements State
             return $this->processAsChange($line);
         }
 
+        // A change hunk can only appear after the file names. Reaching one whilst still looking
+        // for the original file name means the diff is in a format that was not recognised
+        // (e.g. quoted paths or non standard prefixes). Fail rather than silently skip the file.
+        if (LineTypeDetector::isStartOfChangeHunk($line)) {
+            throw DiffParseException::unrecognisedFileDiffFormat($line);
+        }
+
         return $this;
     }
 
