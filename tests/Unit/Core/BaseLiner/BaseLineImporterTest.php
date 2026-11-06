@@ -67,6 +67,7 @@ final class BaseLineImporterTest extends TestCase
             ['baseline/invalid-results-parser.json'],
             ['baseline/invalid-history-analyser.json'],
             ['baseline/invalid-history-marker.json'],
+            ['baseline/invalid-negative-line-number.json'],
         ];
     }
 

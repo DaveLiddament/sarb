@@ -12,7 +12,7 @@ final class AnalysisResultsImportException extends SarbException
     public static function fromException(Identifier $identifier, \Exception $e): self
     {
         $message = <<<EOF
-Failed to parse analysis results. Have you supplied the data for format [{$identifier->getCode()}].
+Failed to parse analysis results. Have you supplied the data for format [{$identifier->getCode()}]?
 {$e->getMessage()}
 EOF;
 

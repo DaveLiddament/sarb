@@ -9,6 +9,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayParseException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\ArrayUtils;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Utils\SeverityReader;
 
 final class BaseLineAnalysisResult
 {
@@ -25,10 +26,17 @@ final class BaseLineAnalysisResult
      */
     public static function fromArray(array $array): self
     {
-        $lineNumber = new LineNumber(ArrayUtils::getIntValue($array, self::LINE_NUMBER));
+        // Validate values before constructing value objects, so that invalid data in a baseline
+        // file surfaces as a parse error rather than an unexpected critical error.
+        $lineNumberAsInt = ArrayUtils::getIntValue($array, self::LINE_NUMBER);
+        if ($lineNumberAsInt < 0) {
+            throw ArrayParseException::invalidValue(self::LINE_NUMBER, (string) $lineNumberAsInt);
+        }
+
+        $lineNumber = new LineNumber($lineNumberAsInt);
         $fileName = new RelativeFileName(ArrayUtils::getStringValue($array, self::FILE_NAME));
         $type = new Type(ArrayUtils::getStringValue($array, self::TYPE));
-        $severity = Severity::fromStringOrNull(ArrayUtils::getOptionalStringValue($array, self::SEVERITY));
+        $severity = SeverityReader::getOptionalSeverity($array, self::SEVERITY);
         $message = ArrayUtils::getStringValue($array, self::MESSAGE);
 
         return new self($fileName, $lineNumber, $type, $message, $severity);
