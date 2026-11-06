@@ -11,7 +11,7 @@ final class FqcnRemover
     /**
      * Removes anything that looks like a FQCN from the string.
      */
-    public function removeRqcn(string $raw): string
+    public function removeFqcn(string $raw): string
     {
         $parts = explode(' ', $raw);
         $outputParts = [];
