@@ -95,10 +95,10 @@ EOF;
 
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
-        $this->assertResponseContains('Baseline created', $commandTester);
+        $this->assertStdErrContains('Baseline created', $commandTester);
     }
 
     public function testPickNonDefaultResultsParserWithGuessTypesSet(): void
@@ -114,10 +114,10 @@ EOF;
         $commandTester->execute([
             self::INPUT_FORMAT_OPTION => ResultsParserStubIdentifier::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
-        $this->assertResponseContains(
+        $this->assertStdOutContains(
             '[results-parser-stub] guesses the classification of violations. This means results might not be 100% accurate.',
             $commandTester,
         );
@@ -136,7 +136,7 @@ EOF;
         $commandTester->execute([
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
             self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
     }
@@ -154,10 +154,10 @@ EOF;
         $commandTester->execute([
             self::INPUT_FORMAT_OPTION => 'rubbish',
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(11, $commandTester);
-        $this->assertResponseContains(
+        $this->assertStdErrContains(
             'Invalid value [rubbish] for option [input-format]. Pick one of: sarb-json|results-parser-stub',
             $commandTester,
         );
@@ -176,10 +176,10 @@ EOF;
         $commandTester->execute([
             self::HISTORY_ANALYSER => 'rubbish',
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(11, $commandTester);
-        $this->assertResponseContains(
+        $this->assertStdErrContains(
             'Invalid value [rubbish] for option [history-analyser]. Pick one of: git|history-factory-stub',
             $commandTester,
         );
@@ -199,7 +199,7 @@ EOF;
             self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
             self::PROJECT_ROOT => '/tmp',
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(0, $commandTester);
     }
@@ -218,7 +218,7 @@ EOF;
             self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
             self::PROJECT_ROOT => '/tmp',
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(100, $commandTester);
     }
@@ -237,10 +237,10 @@ EOF;
             self::HISTORY_ANALYSER => HistoryFactoryStub::CODE,
             self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
             self::PROJECT_ROOT => '/tmp',
-        ]);
+        ], ['capture_stderr_separately' => true]);
 
         $this->assertReturnCode(16, $commandTester);
-        $this->assertResponseContains('Tool failed', $commandTester);
+        $this->assertStdErrContains('Tool failed', $commandTester);
     }
 
     private function createCommandTester(
@@ -273,13 +273,27 @@ EOF;
 
     private function assertReturnCode(int $expectedReturnCode, CommandTester $commandTester): void
     {
-        $this->assertSame($expectedReturnCode, $commandTester->getStatusCode(), $commandTester->getDisplay());
+        $output = "STDOUT:\n{$commandTester->getDisplay()}\nSTDERR:\n{$commandTester->getErrorOutput()}";
+        $this->assertSame($expectedReturnCode, $commandTester->getStatusCode(), $output);
     }
 
-    private function assertResponseContains(string $expectedMessage, CommandTester $commandTester): void
+    /**
+     * Informational messages and errors are written to stderr.
+     */
+    private function assertStdErrContains(string $expectedMessage, CommandTester $commandTester): void
+    {
+        $output = $commandTester->getErrorOutput();
+        $position = strpos($output, $expectedMessage);
+        $this->assertNotFalse($position, "Can't find message [$expectedMessage] in stderr [$output]");
+    }
+
+    /**
+     * NOTE: the type guessing warning is currently written to stdout.
+     */
+    private function assertStdOutContains(string $expectedMessage, CommandTester $commandTester): void
     {
         $output = $commandTester->getDisplay();
         $position = strpos($output, $expectedMessage);
-        $this->assertNotFalse($position, "Can't find message [$expectedMessage] in [$output]");
+        $this->assertNotFalse($position, "Can't find message [$expectedMessage] in stdout [$output]");
     }
 }
