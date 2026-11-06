@@ -48,11 +48,8 @@ final class PsalmJsonResultsParser implements ResultsParser
             ++$resultsCount;
             try {
                 ArrayUtils::assertArray($analysisResultAsArray);
-                $severity = ArrayUtils::getStringValue($analysisResultAsArray, self::SEVERITY);
-                if (self::ERROR_SEVERITY_LEVEL === $severity) {
-                    $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
-                    $analysisResultsBuilder->addAnalysisResult($analysisResult);
-                }
+                $analysisResult = $this->convertAnalysisResultFromArray($analysisResultAsArray, $projectRoot);
+                $analysisResultsBuilder->addAnalysisResult($analysisResult);
             } catch (ArrayParseException|InvalidPathException $e) {
                 throw ParseAtLocationException::issueAtPosition($e, $resultsCount);
             }
@@ -81,12 +78,16 @@ final class PsalmJsonResultsParser implements ResultsParser
             new LineNumber($lineAsInt),
         );
 
+        // Psalm reports issues below the errorLevel threshold with severity "info"
+        $severityAsString = ArrayUtils::getStringValue($analysisResultAsArray, self::SEVERITY);
+        $severity = self::ERROR_SEVERITY_LEVEL === $severityAsString ? Severity::error() : Severity::warning();
+
         return new AnalysisResult(
             $location,
             new Type($typeAsString),
             ArrayUtils::getStringValue($analysisResultAsArray, self::MESSAGE),
             $analysisResultAsArray,
-            Severity::error(),
+            $severity,
         );
     }
 

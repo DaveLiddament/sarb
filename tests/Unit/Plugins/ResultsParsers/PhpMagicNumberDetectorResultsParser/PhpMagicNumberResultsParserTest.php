@@ -73,6 +73,24 @@ final class PhpMagicNumberResultsParserTest extends TestCase
         );
     }
 
+    public function testCrlfLineEndings(): void
+    {
+        $projectRoot = ProjectRoot::fromProjectRoot('/vagrant/static-analysis-baseliner', '/home');
+
+        // Tool output line endings depend on the OS the tool ran on
+        $original = "src/File1.php:6. Magic number: 123\r\nsrc/File3.php:8. Magic number: 42\r\n";
+        $analysisResults = $this->phpMagicNumberDetectorResultsParser->convertFromString($original, $projectRoot);
+
+        $this->assertCount(2, $analysisResults->getAnalysisResults());
+
+        $result1 = $analysisResults->getAnalysisResults()[0];
+        $result2 = $analysisResults->getAnalysisResults()[1];
+
+        // The magic number (used as the type) must not include the carriage return
+        $this->assertMatch($result1, 'src/File1.php', 6, '123', Severity::error());
+        $this->assertMatch($result2, 'src/File3.php', 8, '42', Severity::error());
+    }
+
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phpMagicNumberDetectorResultsParser->showTypeGuessingWarning());

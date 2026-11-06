@@ -1,0 +1,30 @@
+[
+  {
+    "type": "issue",
+    "type_id": 6022,
+    "check_name": "PhanUnreferencedUseNormal",
+    "description": "NOOPError PhanUnreferencedUseNormal Possibly zero references to use statement",
+    "severity": 0,
+    "location": {
+      "path": "src/Low.php",
+      "lines": {
+        "begin": 5,
+        "end": 5
+      }
+    }
+  },
+  {
+    "type": "issue",
+    "type_id": 10056,
+    "check_name": "PhanUndeclaredClass",
+    "description": "CRITICAL PhanUndeclaredClass Reference to undeclared class",
+    "severity": 10,
+    "location": {
+      "path": "src/Critical.php",
+      "lines": {
+        "begin": 9,
+        "end": 9
+      }
+    }
+  }
+]
