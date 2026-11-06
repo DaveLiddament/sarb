@@ -331,6 +331,18 @@ Finally each individual `AnalysisResult` should be added to the `AnalysisResults
 
 And that's it!
 
+#### Tools that used to guess the type
+
+`AnalysisResult`'s constructor takes an optional final argument `$legacyType`.
+This is only needed by parsers for tools that used to guess the violation type
+(see [Violation type classification guessing](ViolationTypeClassificationGuessing.md))
+and now provide a proper type (e.g. PHPStan's error identifiers).
+
+If the tool provides a proper type then pass it as the `Type` and pass the type as it
+would previously have been guessed as `$legacyType`. SARB uses the legacy type to match
+results against baselines created before the tool provided types, and to prompt the user
+to regenerate their baseline. See `PhpstanJsonResultsParser` for an example.
+
 
 #### Method: showTypeGuessingWarning
 

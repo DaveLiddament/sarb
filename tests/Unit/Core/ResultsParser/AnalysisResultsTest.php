@@ -57,6 +57,36 @@ final class AnalysisResultsTest extends TestCase
         $this->assertSame([$analysisResult], $analysisResults->getAnalysisResults());
     }
 
+    public function testTypeIdentifiersUsageWithNoResults(): void
+    {
+        $analysisResults = $this->analysisResultsBuilder->build();
+        $this->assertNull($analysisResults->getTypeIdentifiersUsage()->asStringOrNull());
+    }
+
+    public function testTypeIdentifiersUsageWithNoLegacyTypes(): void
+    {
+        $this->addAnalysisResult($this->analysisResultsBuilder, $this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE, Severity::error());
+        $this->addAnalysisResult($this->analysisResultsBuilder, $this->projectRoot, self::FILE_A, self::LINE_2, self::TYPE, Severity::error());
+        $analysisResults = $this->analysisResultsBuilder->build();
+        $this->assertNull($analysisResults->getTypeIdentifiersUsage()->asStringOrNull());
+    }
+
+    public function testTypeIdentifiersUsageWithSomeLegacyTypes(): void
+    {
+        $this->addAnalysisResult($this->analysisResultsBuilder, $this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE, Severity::error(), 'LEGACY_TYPE');
+        $this->addAnalysisResult($this->analysisResultsBuilder, $this->projectRoot, self::FILE_A, self::LINE_2, self::TYPE, Severity::error());
+        $analysisResults = $this->analysisResultsBuilder->build();
+        $this->assertSame('some', $analysisResults->getTypeIdentifiersUsage()->asStringOrNull());
+    }
+
+    public function testTypeIdentifiersUsageWithAllLegacyTypes(): void
+    {
+        $this->addAnalysisResult($this->analysisResultsBuilder, $this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE, Severity::error(), 'LEGACY_TYPE');
+        $this->addAnalysisResult($this->analysisResultsBuilder, $this->projectRoot, self::FILE_A, self::LINE_2, self::TYPE, Severity::error(), 'LEGACY_TYPE');
+        $analysisResults = $this->analysisResultsBuilder->build();
+        $this->assertSame('all', $analysisResults->getTypeIdentifiersUsage()->asStringOrNull());
+    }
+
     public function test3AnalysisResultsAreOrderedCorrectly(): void
     {
         $analysisResult1 = $this->buildAnalysisResult($this->projectRoot, self::FILE_A, self::LINE_1, self::TYPE, Severity::error());

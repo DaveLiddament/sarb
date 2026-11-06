@@ -26,19 +26,19 @@ EOF;
         $expectedOutput = <<<EOF
 
 FILE: /FILE_1
-+------+-------------+
-| Line | Description |
-+------+-------------+
-| 10   | MESSAGE_1   |
-| 12   | MESSAGE_2   |
-+------+-------------+
++------+--------+-------------+
+| Line | Type   | Description |
++------+--------+-------------+
+| 10   | TYPE_1 | MESSAGE_1   |
+| 12   | TYPE_2 | MESSAGE_2   |
++------+--------+-------------+
 
 FILE: /FILE_2
-+------+--------------------+
-| Line | Description        |
-+------+--------------------+
-| 0    | WARNING: MESSAGE_3 |
-+------+--------------------+
++------+--------+--------------------+
+| Line | Type   | Description        |
++------+--------+--------------------+
+| 0    | TYPE_1 | WARNING: MESSAGE_3 |
++------+--------+--------------------+
 
 These results include warnings. To exclude warnings from output use the --ignore-warnings flag.
 
@@ -52,12 +52,12 @@ EOF;
         $expectedOutput = <<<EOF
 
 FILE: /FILE_1
-+------+-------------+
-| Line | Description |
-+------+-------------+
-| 10   | MESSAGE_1   |
-| 12   | MESSAGE_2   |
-+------+-------------+
++------+--------+-------------+
+| Line | Type   | Description |
++------+--------+-------------+
+| 10   | TYPE_1 | MESSAGE_1   |
+| 12   | TYPE_2 | MESSAGE_2   |
++------+--------+-------------+
 
 EOF;
 

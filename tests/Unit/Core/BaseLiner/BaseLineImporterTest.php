@@ -67,6 +67,7 @@ final class BaseLineImporterTest extends TestCase
             ['baseline/invalid-results-parser.json'],
             ['baseline/invalid-history-analyser.json'],
             ['baseline/invalid-history-marker.json'],
+            ['baseline/invalid-types-from-identifiers.json'],
         ];
     }
 
@@ -94,6 +95,24 @@ final class BaseLineImporterTest extends TestCase
     {
         $baseLine = $this->getBaseLine('baseline/baseline.json');
         $this->assertCount(1, $baseLine->getAnalysisResults()->asArray());
+
+        // Baseline predates types from tool identifiers
+        $this->assertNull($baseLine->getTypeIdentifiersUsage()->asStringOrNull());
+    }
+
+    public function testBaseLineWithAllTypesFromToolIdentifiers(): void
+    {
+        $baseLine = $this->getBaseLine('baseline/baseline-types-from-identifiers-all.json');
+        $this->assertSame('all', $baseLine->getTypeIdentifiersUsage()->asStringOrNull());
+        $this->assertTrue($baseLine->getTypeIdentifiersUsage()->isAllFromToolIdentifiers());
+    }
+
+    public function testBaseLineWithSomeTypesFromToolIdentifiers(): void
+    {
+        $baseLine = $this->getBaseLine('baseline/baseline-types-from-identifiers-some.json');
+        $this->assertSame('some', $baseLine->getTypeIdentifiersUsage()->asStringOrNull());
+        $this->assertTrue($baseLine->getTypeIdentifiersUsage()->isFromToolIdentifiers());
+        $this->assertFalse($baseLine->getTypeIdentifiersUsage()->isAllFromToolIdentifiers());
     }
 
     private function getBaseLine(string $relativeFileName): BaseLine

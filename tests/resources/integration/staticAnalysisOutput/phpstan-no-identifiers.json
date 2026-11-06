@@ -1,0 +1,29 @@
+{
+  "totals": {
+    "errors": 0,
+    "file_errors": 2
+  },
+  "files": {
+    "__SCRATCH_PAD_PATH__/src/Person.php": {
+      "errors": 1,
+      "messages": [
+        {
+          "message": "Property DaveLiddament\\DummyProject\\Person::$name has no type specified.",
+          "line": 15,
+          "ignorable": true
+        }
+      ]
+    },
+    "__SCRATCH_PAD_PATH__/src/PersonFinder.php": {
+      "errors": 1,
+      "messages": [
+        {
+          "message": "Method DaveLiddament\\DummyProject\\PersonFinder::find() has parameter $name with no type specified.",
+          "line": 15,
+          "ignorable": true
+        }
+      ]
+    }
+  },
+  "errors": []
+}

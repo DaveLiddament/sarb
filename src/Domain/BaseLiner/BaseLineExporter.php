@@ -36,8 +36,16 @@ final class BaseLineExporter
             BaseLine::HISTORY_ANALYSER => $baseLine->getHistoryFactory()->getIdentifier(),
             BaseLine::HISTORY_MARKER => $baseLine->getHistoryMarker()->asString(),
             BaseLine::RESULTS_PARSER => $baseLine->getResultsParser()->getIdentifier()->getCode(),
-            BaseLine::ANALYSIS_RESULTS => $baseLine->getAnalysisResults()->asArray(),
         ];
+
+        // Key omitted when no types came from tool identifiers, keeping the baseline identical to
+        // those produced by previous versions of SARB.
+        $typeIdentifiersUsageAsString = $baseLine->getTypeIdentifiersUsage()->asStringOrNull();
+        if (null !== $typeIdentifiersUsageAsString) {
+            $asArray[BaseLine::TYPES_FROM_TOOL_IDENTIFIERS] = $typeIdentifiersUsageAsString;
+        }
+
+        $asArray[BaseLine::ANALYSIS_RESULTS] = $baseLine->getAnalysisResults()->asArray();
 
         $this->fileWriter->writeArrayToFile($fileName, $asArray);
     }

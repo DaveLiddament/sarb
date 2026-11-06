@@ -1,0 +1,22 @@
+{
+  "historyMarker": "9be6101dc6848d67b5958a5762494060062e42ec",
+  "historyAnalyser": "git",
+  "resultsParser": "sarb-json",
+  "typesFromToolIdentifiers": "some",
+  "analysisResults": [
+    {
+      "lineNumber": 10,
+      "fileName": "FILE_1",
+      "type": "identifier.type",
+      "message": "MESSAGE_1",
+      "severity": "error"
+    },
+    {
+      "lineNumber": 12,
+      "fileName": "FILE_1",
+      "type": "TYPE_2",
+      "message": "MESSAGE_2",
+      "severity": "error"
+    }
+  ]
+}

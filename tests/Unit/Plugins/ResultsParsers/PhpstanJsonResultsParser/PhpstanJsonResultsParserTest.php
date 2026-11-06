@@ -77,6 +77,93 @@ final class PhpstanJsonResultsParserTest extends TestCase
             'PHPDoc tag @param for parameter $array with type array is incompatible with native type int',
             Severity::error(),
         );
+
+        // No identifiers in the results, so no legacy types
+        $this->assertNull($result1->getLegacyType());
+        $this->assertNull($result2->getLegacyType());
+        $this->assertNull($result3->getLegacyType());
+    }
+
+    public function testConversionFromStringWithIdentifiers(): void
+    {
+        $fileContents = $this->getResource('phpstan/phpstan-with-identifiers.json');
+        $analysisResults = $this->phpstanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+
+        $this->assertCount(3, $analysisResults->getAnalysisResults());
+
+        $result1 = $analysisResults->getAnalysisResults()[0];
+        $result2 = $analysisResults->getAnalysisResults()[1];
+        $result3 = $analysisResults->getAnalysisResults()[2];
+
+        // Type comes from the identifier supplied by PHPStan
+        $this->assertMatch($result1,
+            'src/Domain/BaseLiner/BaseLineImporter.php',
+            89,
+            'argument.type',
+            Severity::error(),
+        );
+
+        // The message is still the full message
+        $this->assertSame(
+            'Parameter #1 $array of static method DaveLiddament\\StaticAnalysisResultsBaseliner\\Domain\\ResultsParser\\AnalysisResults::fromArray() expects int, array given.',
+            $result1->getMessage(),
+        );
+
+        // The legacy type is the type as guessed from the message (used to match old baselines)
+        $legacyType1 = $result1->getLegacyType();
+        $this->assertNotNull($legacyType1);
+        $this->assertSame(
+            'Parameter #1 $array of static method expects int, array given.',
+            $legacyType1->getType(),
+        );
+
+        $this->assertMatch($result2,
+            'src/Domain/ResultsParser/AnalysisResults.php',
+            0,
+            'foreach.nonIterable',
+            Severity::error(),
+        );
+
+        $this->assertMatch($result3,
+            'src/Domain/ResultsParser/AnalysisResults.php',
+            73,
+            'parameter.phpDocType',
+            Severity::error(),
+        );
+
+        $this->assertSame('all', $analysisResults->getTypeIdentifiersUsage()->asStringOrNull());
+    }
+
+    public function testConversionFromStringWithMixedIdentifiers(): void
+    {
+        $fileContents = $this->getResource('phpstan/phpstan-mixed-identifiers.json');
+        $analysisResults = $this->phpstanJsonResultsParser->convertFromString($fileContents, $this->projectRoot);
+
+        $this->assertCount(3, $analysisResults->getAnalysisResults());
+
+        $result1 = $analysisResults->getAnalysisResults()[0];
+        $result2 = $analysisResults->getAnalysisResults()[1];
+        $result3 = $analysisResults->getAnalysisResults()[2];
+
+        // Identifier supplied
+        $this->assertSame('argument.type', $result1->getType()->getType());
+        $this->assertNotNull($result1->getLegacyType());
+
+        // Empty identifier: treated as if no identifier supplied
+        $this->assertSame(
+            'Argument of an invalid type int supplied for foreach, only iterables are supported.',
+            $result2->getType()->getType(),
+        );
+        $this->assertNull($result2->getLegacyType());
+
+        // No identifier: type guessed from the message
+        $this->assertSame(
+            'PHPDoc tag @param for parameter $array with type array is incompatible with native type int',
+            $result3->getType()->getType(),
+        );
+        $this->assertNull($result3->getLegacyType());
+
+        $this->assertSame('some', $analysisResults->getTypeIdentifiersUsage()->asStringOrNull());
     }
 
     public function testTypeGuesser(): void
@@ -103,6 +190,7 @@ final class PhpstanJsonResultsParserTest extends TestCase
             ['phpstan/phpstan-invalid-missing-line.json'],
             ['phpstan/phpstan-invalid-missing-errors.json'],
             ['phpstan/phpstan-invalid-errors-not-strings.json'],
+            ['phpstan/phpstan-invalid-identifier.json'],
         ];
     }
 

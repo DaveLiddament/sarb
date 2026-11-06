@@ -28,6 +28,7 @@ final class ResultsPruner implements ResultsPrunerInterface
      * @throws AnalysisResultsImportException
      * @throws HistoryAnalyserException
      * @throws ErrorReportedByStaticAnalysisTool
+     * @throws InputMissingTypeIdentifiersException
      */
     public function getPrunedResults(
         BaseLineFileName $baseLineFileName,
@@ -41,6 +42,13 @@ final class ResultsPruner implements ResultsPrunerInterface
 
         $historyAnalyser = $historyFactory->newHistoryAnalyser($baseLine->getHistoryMarker(), $projectRoot);
         $inputAnalysisResults = $this->analysisResultsImporter->import($resultsParser, $projectRoot, $analysisResults);
+
+        if ($baseLine->getTypeIdentifiersUsage()->isFromToolIdentifiers()
+            && !$inputAnalysisResults->hasNoIssues()
+            && !$inputAnalysisResults->getTypeIdentifiersUsage()->isFromToolIdentifiers()
+        ) {
+            throw InputMissingTypeIdentifiersException::baseLineBuiltFromTypeIdentifiers();
+        }
 
         $outputAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
             $inputAnalysisResults,

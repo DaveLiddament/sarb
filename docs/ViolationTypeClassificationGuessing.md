@@ -50,3 +50,21 @@ of each violation it finds. If the tool you use doesn't then please
 encourage the authors (maybe by supplying a PR) to add this to the output from
 their tools.
 
+## PHPStan error identifiers
+
+PHPStan (from version 1.11) attaches an [error identifier](https://phpstan.org/error-identifiers)
+(e.g. `argument.type`) to each error. When identifiers are present SARB uses them as the
+violation type instead of guessing it from the message.
+
+Baselines created from results containing identifiers record this with a
+`typesFromToolIdentifiers` entry in the baseline file.
+
+For backwards compatibility, results that contain identifiers can still be matched against a
+baseline created before identifiers were available: alongside the identifier SARB keeps the type
+it would previously have guessed, and matches baseline entries against either. When this happens
+SARB recommends regenerating the baseline (with `sarb create`) so it uses the identifiers.
+
+If a baseline built from identifiers is used with results that contain none (e.g. the results
+were produced by an older version of PHPStan), then none of the baselined issues could be
+matched, so SARB stops with an error (exit code 17).
+

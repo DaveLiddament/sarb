@@ -125,4 +125,32 @@ final class BaseLineResultsRemoveTest extends TestCase
 
         $this->assertCount(0, $actualResults);
     }
+
+    public function testRemoveBaseLineResultsMatchedViaLegacyType(): void
+    {
+        $projectRoot = ProjectRoot::fromCurrentWorkingDirectory(self::PROJECT_ROOT_PATH);
+
+        // This issue is in the baseline as TYPE_1 (at line 10 at baseline time, now at line 11).
+        // The tool now provides a type identifier (so the type differs from the baseline entry),
+        // but the legacy type matches the baseline entry.
+        $latestAnalysisResultsBuilder = new AnalysisResultsBuilder();
+        $this->addAnalysisResult(
+            $latestAnalysisResultsBuilder,
+            $projectRoot,
+            self::FILE_1_FULL_PATH,
+            self::LINE_11,
+            'identifier.type',
+            Severity::error(),
+            self::TYPE_1,
+        );
+
+        $prunedAnalysisResults = $this->baseLineResultsRemover->pruneBaseLine(
+            $latestAnalysisResultsBuilder->build(),
+            $this->historyAnalyser,
+            $this->baselineAnalysisResults,
+            false,
+        );
+
+        $this->assertCount(0, $prunedAnalysisResults->getAnalysisResults());
+    }
 }

@@ -94,12 +94,19 @@ final class BaseLineAnalysisResult
 
     /**
      * Return true if this matches given FileName, LineNumber and type.
+     *
+     * If $legacyType is given then it is accepted as an alternative to $type. This allows results
+     * from tools that now provide type identifiers to match baselines created before identifiers
+     * were available.
      */
-    public function isMatch(PreviousLocation $location, Type $type): bool
+    public function isMatch(PreviousLocation $location, Type $type, ?Type $legacyType = null): bool
     {
-        return
-            $this->fileName->isEqual($location->getRelativeFileName())
-            && $this->lineNumber->isEqual($location->getLineNumber())
-            && $this->type->isEqual($type);
+        if (!$this->fileName->isEqual($location->getRelativeFileName())
+            || !$this->lineNumber->isEqual($location->getLineNumber())) {
+            return false;
+        }
+
+        return $this->type->isEqual($type)
+            || (null !== $legacyType && $this->type->isEqual($legacyType));
     }
 }

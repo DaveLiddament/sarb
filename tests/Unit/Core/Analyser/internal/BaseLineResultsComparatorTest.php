@@ -134,4 +134,26 @@ final class BaseLineResultsComparatorTest extends TestCase
         $actual = $this->baseLineResultsComparator->isInBaseLine($location, new Type($type));
         $this->assertSame($expected, $actual);
     }
+
+    public function testInBaseLineViaLegacyType(): void
+    {
+        $location = PreviousLocation::fromFileNameAndLineNumber(
+            new RelativeFileName(self::FILE_1),
+            new LineNumber(self::LINE_1),
+        );
+
+        $actual = $this->baseLineResultsComparator->isInBaseLine($location, new Type('IDENTIFIER_TYPE'), new Type(self::TYPE_1));
+        $this->assertTrue($actual);
+    }
+
+    public function testNotInBaseLineWhenNeitherTypeNorLegacyTypeMatch(): void
+    {
+        $location = PreviousLocation::fromFileNameAndLineNumber(
+            new RelativeFileName(self::FILE_1),
+            new LineNumber(self::LINE_1),
+        );
+
+        $actual = $this->baseLineResultsComparator->isInBaseLine($location, new Type('IDENTIFIER_TYPE'), new Type(self::TYPE_2));
+        $this->assertFalse($actual);
+    }
 }

@@ -46,9 +46,9 @@ final class BaseLineResultsComparator
     }
 
     /**
-     * Returns true if an AnalysisResult of the same Type and Location exists in the BaseLine.
+     * Returns true if an AnalysisResult of the same Type (or legacy Type) and Location exists in the BaseLine.
      */
-    public function isInBaseLine(PreviousLocation $previousLocation, Type $type): bool
+    public function isInBaseLine(PreviousLocation $previousLocation, Type $type, ?Type $legacyType = null): bool
     {
         // Analysis result refers to a Location not in the BaseLine, then this is not an historic analysis result.
         if ($previousLocation->isNoPreviousLocation()) {
@@ -63,7 +63,7 @@ final class BaseLineResultsComparator
         }
 
         foreach ($this->baseLine[$fileNameAsString] as $baseLineResult) {
-            if ($baseLineResult->isMatch($previousLocation, $type)) {
+            if ($baseLineResult->isMatch($previousLocation, $type, $legacyType)) {
                 return true;
             }
         }

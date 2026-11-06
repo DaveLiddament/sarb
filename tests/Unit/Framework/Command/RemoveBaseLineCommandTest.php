@@ -10,6 +10,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\InputMissingTypeIdentifiersException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Pruner\PrunedResults;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\RandomResultsPicker\RandomResultsPicker;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\ResultsParser\AnalysisResult;
@@ -88,6 +89,40 @@ EOF;
         $this->assertResponseContains('Latest analysis issue count: 2', $commandTester);
         $this->assertResponseContains('Baseline issue count: 4', $commandTester);
         $this->assertResponseContains('Issue count with baseline removed: 0', $commandTester);
+        $this->assertResponseDoesNotContain('Regenerate the baseline', $commandTester);
+    }
+
+    public function testRecommendRegeneratingBaseLineWhenInputContainsTypeIdentifiers(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->getAnalysisResultsWithXResults(0),
+            null,
+            null,
+            $this->getAnalysisResultsWithXResults(2, true),
+        );
+
+        $commandTester->execute([
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+        ]);
+
+        $this->assertReturnCode(0, $commandTester);
+        $this->assertResponseContains('Regenerate the baseline', $commandTester);
+    }
+
+    public function testInputMissingTypeIdentifiers(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->getAnalysisResultsWithXResults(1),
+            null,
+            InputMissingTypeIdentifiersException::baseLineBuiltFromTypeIdentifiers(),
+        );
+
+        $commandTester->execute([
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+        ]);
+
+        $this->assertReturnCode(17, $commandTester);
+        $this->assertResponseContains('The baseline was created from results that contained type identifiers', $commandTester);
     }
 
     public function test1NewIssues(): void
@@ -214,14 +249,15 @@ EOF;
 
         $this->assertResponseContains('Random 2 issues in the baseline to fix...', $commandTester);
         $this->assertResponseContains('FILE: /FILE_2', $commandTester);
-        $this->assertResponseContains('| 2    | MESSAGE_1   |', $commandTester);
-        $this->assertResponseContains('| 2    | MESSAGE_0   |', $commandTester);
+        $this->assertResponseContains('| 2    | TYPE_1 | MESSAGE_1   |', $commandTester);
+        $this->assertResponseContains('| 2    | TYPE_0 | MESSAGE_0   |', $commandTester);
     }
 
     private function createCommandTester(
         AnalysisResults $expectedAnalysisResults,
         ?ProjectRoot $projectRoot,
         ?\Throwable $exception,
+        ?AnalysisResults $inputAnalysisResults = null,
     ): CommandTester {
         $baseLineResultsBuilder = new BaseLineResultsBuilder();
         $baseLineResultsBuilder->add('file1', 1, 'type1', Severity::error());
@@ -239,7 +275,7 @@ EOF;
         $prunedResults = new PrunedResults(
             $baseLine,
             $expectedAnalysisResults,
-            $this->getAnalysisResultsWithXResults(2),
+            $inputAnalysisResults ?? $this->getAnalysisResultsWithXResults(2),
         );
 
         $mockResultsPruner = new MockResultsPruner(
@@ -274,7 +310,13 @@ EOF;
         $this->assertNotFalse($position, "Can't find message [$expectedMessage] in [$output]");
     }
 
-    private function getAnalysisResultsWithXResults(int $count): AnalysisResults
+    private function assertResponseDoesNotContain(string $unexpectedMessage, CommandTester $commandTester): void
+    {
+        $output = $commandTester->getDisplay();
+        $this->assertStringNotContainsString($unexpectedMessage, $output);
+    }
+
+    private function getAnalysisResultsWithXResults(int $count, bool $withLegacyTypes = false): AnalysisResults
     {
         $projectRoot = ProjectRoot::fromCurrentWorkingDirectory('/');
 
@@ -290,6 +332,7 @@ EOF;
                 "MESSAGE_$i",
                 [],
                 Severity::error(),
+                $withLegacyTypes ? new Type("LEGACY_TYPE_$i") : null,
             );
             $analysisResultsBuilder->addAnalysisResult($analysisResult);
         }
