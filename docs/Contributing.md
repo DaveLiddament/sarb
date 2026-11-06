@@ -49,6 +49,22 @@ composer ci
 In addition to the above code coverage needs to 100%. 
 Documented usage of `@codeCoverageIgnore` is allowed for the cases for lines of code where it is impossible to get test coverage.
 
+## Amp orbs
+
+`.agents/setup` installs Debian 12's PHP 8.2, the required extensions, Xdebug,
+Composer, and development dependencies from `composer.lock`. Amp snapshots this
+environment for reuse by fresh orbs. Repeated setup runs reuse installed packages
+and let Composer check whether dependencies need updating.
+
+Setup disables Git commit signing only inside disposable `tests/scratchpad/`
+repositories, whose commits use a test identity. SARB's own commits retain the
+orb's signing settings.
+
+Run `composer ci` directly in the orb; Docker is not required. This checks PHP 8.2
+with locked dependencies; GitHub Actions still covers the full PHP/dependency matrix.
+`.agents/resume` checks the restored dependencies without reinstalling anything.
+No secrets, databases, or background services are needed.
+
 ## Docker 
 
 A Dockerfile is provided to help with development.

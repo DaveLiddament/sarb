@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+# Debian 12's PHP matches the lowest supported version in composer.json and CI.
+echo 'Checking PHP 8.2 and Composer system packages...'
+packages=(ca-certificates git unzip composer php8.2-cli php8.2-curl php8.2-mbstring php8.2-xml php8.2-zip php8.2-xdebug)
+missing=()
+for package in "${packages[@]}"; do
+    if ! dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -qx 'install ok installed'; then
+        missing+=("$package")
+    fi
+done
+
+if ((${#missing[@]})); then
+    time sudo env DEBIAN_FRONTEND=noninteractive apt-get update
+    time sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "${missing[@]}"
+fi
+
+# Match Docker's memory limit for PHPStan and coverage runs.
+printf 'memory_limit = -1\n' | sudo tee /etc/php/8.2/cli/conf.d/99-sarb.ini >/dev/null
+
+# Integration tests commit as Anon, not the orb user's signing identity.
+# Scope this exception to disposable test repositories, never SARB itself.
+echo 'Configuring unsigned commits for disposable test repositories...'
+mkdir -p "$HOME/.config/sarb"
+git config --file "$HOME/.config/sarb/orb-test.gitconfig" commit.gpgsign false
+git config --global "includeIf.gitdir:$(pwd)/tests/scratchpad/.path" "$HOME/.config/sarb/orb-test.gitconfig"
+
+echo 'Installing locked dependencies, including development tools...'
+time composer install --no-interaction --no-progress --prefer-dist
+echo "Orb setup finished in ${SECONDS}s. Run composer ci to check the repository."
