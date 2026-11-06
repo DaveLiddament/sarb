@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+# Packages and vendor/ survive snapshots and pause/resume; no installs here.
+echo 'Checking restored PHP dependencies...'
+composer check-platform-reqs --no-interaction
