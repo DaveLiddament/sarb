@@ -54,6 +54,7 @@
   "scripts": {
     "ci" : [
       "@composer-validate",
+      "@security-audit",
       "@lint",
       "@var-dump-checker",
       "@cs",
@@ -61,6 +62,7 @@
       "@phpstan"
     ],
     "composer-validate" : "@composer validate --no-check-all --strict",
+    "security-audit" : "@composer audit",
     "lint" : "parallel-lint src tests",
     "var-dump-checker" : "var-dump-check --ladybug --no-colors src",
     "cs" : "php-cs-fixer fix -v --dry-run",
