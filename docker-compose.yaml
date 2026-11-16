@@ -4,6 +4,14 @@ services:
       args:
         PHP_VERSION: ""
     tty: true
+    # Run as the host user so files written to the mounted volume (vendor, reports, test
+    # scratchpad, caches) are not owned by root on the host.
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      HOME: /tmp
+      COMPOSER_CACHE_DIR: /tmp/composer-cache
+      # Xdebug slows everything down; the composer test scripts enable it when needed.
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
     volumes:
       - .:/app/:delegated
   php82:
