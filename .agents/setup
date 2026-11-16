@@ -3,9 +3,10 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-# Debian 12's PHP matches the lowest supported version in composer.json and CI.
-echo 'Checking PHP 8.2 and Composer system packages...'
-packages=(ca-certificates git unzip composer php8.2-cli php8.2-curl php8.2-mbstring php8.2-xml php8.2-zip php8.2-xdebug)
+# Use the distribution's default PHP (8.2 on Debian 12, 8.4 on Debian 13).
+# CI covers every PHP version composer.json supports.
+echo 'Checking PHP and Composer system packages...'
+packages=(ca-certificates git unzip composer php-cli php-curl php-mbstring php-xml php-zip php-xdebug)
 missing=()
 for package in "${packages[@]}"; do
     if ! dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -qx 'install ok installed'; then
@@ -19,7 +20,8 @@ if ((${#missing[@]})); then
 fi
 
 # Match Docker's memory limit for PHPStan and coverage runs.
-printf 'memory_limit = -1\n' | sudo tee /etc/php/8.2/cli/conf.d/99-sarb.ini >/dev/null
+php_version=$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')
+printf 'memory_limit = -1\n' | sudo tee "/etc/php/$php_version/cli/conf.d/99-sarb.ini" >/dev/null
 
 # Integration tests commit as Anon, not the orb user's signing identity.
 # Scope this exception to disposable test repositories, never SARB itself.
