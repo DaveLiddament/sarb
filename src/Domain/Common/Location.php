@@ -26,6 +26,11 @@ final class Location
     }
 
     /**
+     * NOTE: $relativeFileName is relative to the directory holding the code being analysed
+     * (which is the project root unless --relative-path-to-code is used). The Location's
+     * relative file name is always relative to the project root, so that it uses the same
+     * coordinate system as the git diff based history analyser and the baseline.
+     *
      * @throws InvalidPathException
      */
     public static function fromRelativeFileName(
@@ -35,7 +40,7 @@ final class Location
     ): self {
         $absoluteFileName = $projectRoot->getAbsoluteFileName($relativeFileName);
 
-        return new self($absoluteFileName, $relativeFileName, $lineNumber);
+        return new self($absoluteFileName, $projectRoot->prependRelativePath($relativeFileName), $lineNumber);
     }
 
     private function __construct(
