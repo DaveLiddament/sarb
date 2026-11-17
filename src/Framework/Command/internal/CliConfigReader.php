@@ -48,8 +48,18 @@ final class CliConfigReader
         // If testing this will get input added by `CommandTester::setInputs` method.
         $inputSteam = ($input instanceof StreamableInputInterface) ? $input->getStream() : null;
 
-        // If nothing from input stream use STDIN instead.
-        $inputSteam ??= \STDIN;
+        if (null === $inputSteam) {
+            // @codeCoverageIgnoreStart
+            // Not possible to cover in tests: CommandTester always supplies an input stream.
+            // Reading STDIN from an interactive terminal would block forever waiting for input.
+            if (stream_isatty(\STDIN)) {
+                throw new SarbException('No static analysis results provided. Pipe the output of the static analysis tool into sarb.');
+            }
+
+            // If nothing from input stream use STDIN instead.
+            $inputSteam = \STDIN;
+            // @codeCoverageIgnoreEnd
+        }
 
         $input = stream_get_contents($inputSteam);
 

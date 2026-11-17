@@ -147,6 +147,23 @@ final class BaseLineAnalysisResultTest extends TestCase
                     'type' => self::TYPE_1,
                 ],
             ],
+            'negativeLineNumber' => [
+                [
+                    'lineNumber' => -1,
+                    'fileName' => self::FILE_NAME_1,
+                    'type' => self::TYPE_1,
+                    'message' => self::MESSAGE_1,
+                ],
+            ],
+            'invalidSeverity' => [
+                [
+                    'lineNumber' => self::LINE_NUMBER_1,
+                    'fileName' => self::FILE_NAME_1,
+                    'type' => self::TYPE_1,
+                    'message' => self::MESSAGE_1,
+                    'severity' => 'rubbish',
+                ],
+            ],
         ];
     }
 
@@ -158,6 +175,19 @@ final class BaseLineAnalysisResultTest extends TestCase
     {
         $this->expectException(ArrayParseException::class);
         BaseLineAnalysisResult::fromArray($asArray);
+    }
+
+    public function testSeverityIsCaseInsensitive(): void
+    {
+        $baseLineAnalysisResult = BaseLineAnalysisResult::fromArray([
+            'lineNumber' => self::LINE_NUMBER_1,
+            'fileName' => self::FILE_NAME_1,
+            'type' => self::TYPE_1,
+            'message' => self::MESSAGE_1,
+            'severity' => 'Warning',
+        ]);
+
+        $this->assertTrue($baseLineAnalysisResult->getSeverity()->isWarning());
     }
 
     private function createBaseLineResult(): BaseLineAnalysisResult

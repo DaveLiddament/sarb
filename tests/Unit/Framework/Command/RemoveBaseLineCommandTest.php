@@ -7,6 +7,7 @@ use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\BaseLine;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\LineNumber;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Location;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\ProjectRoot;
+use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\SarbException;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Severity;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\Common\Type;
 use DaveLiddament\StaticAnalysisResultsBaseliner\Domain\OutputFormatter\OutputFormatter;
@@ -195,6 +196,22 @@ EOF;
         ]);
 
         $this->assertReturnCode(100, $commandTester);
+    }
+
+    public function testSarbException(): void
+    {
+        $commandTester = $this->createCommandTester(
+            $this->getAnalysisResultsWithXResults(1),
+            null,
+            new SarbException('Something went wrong'),
+        );
+
+        $commandTester->execute([
+            self::BASELINE_FILE_ARGUMENT => self::BASELINE_FILENAME,
+        ]);
+
+        $this->assertReturnCode(18, $commandTester);
+        $this->assertResponseContains('Something went wrong', $commandTester);
     }
 
     public function testCleanUpOptions(): void
