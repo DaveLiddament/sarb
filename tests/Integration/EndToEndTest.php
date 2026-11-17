@@ -79,9 +79,6 @@ final class EndToEndTest extends TestCase
             11,
             self::COMMIT_1_RESULTS,
         );
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     public function testInvalidAnalysisResults(): void
@@ -101,9 +98,6 @@ final class EndToEndTest extends TestCase
             13,
             self::INVALID_RESULTS,
         );
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     public function testInvalidProjectRoot(): void
@@ -123,9 +117,6 @@ final class EndToEndTest extends TestCase
             15,
             self::COMMIT_1_RESULTS,
         );
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     public function testInvalidBaselineFileNameSupplied(): void
@@ -140,9 +131,6 @@ final class EndToEndTest extends TestCase
             $arguments,
             14,
             self::COMMIT_1_RESULTS);
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     public function testInvalidBaselineContents(): void
@@ -159,9 +147,6 @@ final class EndToEndTest extends TestCase
             $arguments,
             12,
             self::COMMIT_1_RESULTS);
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     public function testHappyPath(): void
@@ -196,9 +181,6 @@ final class EndToEndTest extends TestCase
             0,
             '',
         );
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     public function testRelativePathFlagHasNoAffectWhenUsingAbsolutePaths(): void
@@ -225,9 +207,6 @@ final class EndToEndTest extends TestCase
             0,
             '',
         );
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     public function testAttemptToCreateBaselineWithNonCleanGitStatus(): void
@@ -248,8 +227,6 @@ final class EndToEndTest extends TestCase
             15,
             self::COMMIT_1_RESULTS,
         );
-
-        $this->removeTestDirectory();
     }
 
     public function testForceCreateBaselineWithNonCleanGitStatus(): void
@@ -271,9 +248,6 @@ final class EndToEndTest extends TestCase
             0,
             self::COMMIT_1_RESULTS,
         );
-
-        // Only delete test directory if tests passed. Keep to investigate test failures
-        $this->removeTestDirectory();
     }
 
     /**
@@ -340,27 +314,33 @@ final class EndToEndTest extends TestCase
             $arguments['--ignore-warnings'] = null;
         }
 
-        $output = $this->runCommand(
+        [$stdOut, $stdErr] = $this->runCommand(
             RemoveBaseLineFromResultsCommand::COMMAND_NAME,
             $arguments,
             $expectedExitCode,
             $psalmResults,
         );
 
-        $output = str_replace('\/', '/', $output);
-
-        $this->assertStringContainsString($expectedResultsJson, $output);
+        // The formatted results (and nothing else) must be on stdout, so that
+        // `sarb remove ... | consumer` receives clean output. Info goes to stderr.
+        $this->assertJsonStringEqualsJsonString(
+            '' === $expectedResultsJson ? '[]' : $expectedResultsJson,
+            $stdOut,
+        );
+        $this->assertStringContainsString('Issue count with baseline removed:', $stdErr);
     }
 
     /**
      * @param array<string, string|null> $arguments
+     *
+     * @return array{string, string} stdout and stderr
      */
     private function runCommand(
         string $commandName,
         array $arguments,
         int $expectedExitCode,
         ?string $resourceContainStdinContents,
-    ): string {
+    ): array {
         $command = $this->application->find($commandName);
         $commandTester = new CommandTester($command);
         $arguments['command'] = $command->getName();
@@ -370,11 +350,12 @@ final class EndToEndTest extends TestCase
             $commandTester->setInputs([$stdin]);
         }
 
-        $actualExitCode = $commandTester->execute($arguments);
-        $output = $commandTester->getDisplay();
-        $this->assertEquals($expectedExitCode, $actualExitCode, $output);
+        $actualExitCode = $commandTester->execute($arguments, ['capture_stderr_separately' => true]);
+        $stdOut = $commandTester->getDisplay();
+        $stdErr = $commandTester->getErrorOutput();
+        $this->assertEquals($expectedExitCode, $actualExitCode, "STDOUT:\n{$stdOut}\nSTDERR:\n{$stdErr}");
 
-        return $output;
+        return [$stdOut, $stdErr];
     }
 
     private function getBaselineFilePath(): string

@@ -95,12 +95,10 @@ final class GitCliWrapperTest extends TestCase
     public function assertNotClean(): void
     {
         Assert::assertFalse($this->gitWrapper->isClean($this->projectRoot));
-        $this->removeTestDirectory();
     }
 
     private function assertClean(): void
     {
         Assert::assertTrue($this->gitWrapper->isClean($this->projectRoot));
-        $this->removeTestDirectory();
     }
 }
