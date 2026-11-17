@@ -35,6 +35,24 @@ final class InvalidDiffParserTest extends TestCase
                 ParseException::UNEXPECTED_END_OF_FILE,
                 'NO_NEW_FILE_NAME',
             ],
+
+            'noPrefix' => [
+                'noPrefix.diff',
+                '5',
+                'UNRECOGNISED_FILE_DIFF_FORMAT',
+            ],
+
+            'mnemonicPrefix' => [
+                'mnemonicPrefix.diff',
+                '5',
+                'UNRECOGNISED_FILE_DIFF_FORMAT',
+            ],
+
+            'quotedFileNames' => [
+                'quotedFileNames.diff',
+                '5',
+                'UNRECOGNISED_FILE_DIFF_FORMAT',
+            ],
         ];
     }
 

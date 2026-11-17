@@ -38,9 +38,11 @@ final class GitCommit implements HistoryMarker
 
     /**
      * Validates the string provided could be a valid git SHA.
+     *
+     * Both SHA-1 (40 characters) and SHA-256 (64 characters) object formats are supported.
      */
     public static function validateGitSha(string $gitSha): bool
     {
-        return 1 === preg_match('/^[0-9a-f]{40}$/', $gitSha);
+        return 1 === preg_match('/^([0-9a-f]{40}|[0-9a-f]{64})$/', $gitSha);
     }
 }

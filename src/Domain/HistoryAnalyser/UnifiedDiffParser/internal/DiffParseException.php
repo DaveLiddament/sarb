@@ -29,6 +29,11 @@ final class DiffParseException extends \Exception
         return new self('RANGE_INFORMATION_PARSE_ERROR', $rangeInformation);
     }
 
+    public static function unrecognisedFileDiffFormat(string $line): self
+    {
+        return new self('UNRECOGNISED_FILE_DIFF_FORMAT', $line);
+    }
+
     /**
      * @var string
      */

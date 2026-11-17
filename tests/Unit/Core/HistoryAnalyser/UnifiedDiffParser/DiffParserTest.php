@@ -228,6 +228,23 @@ final class DiffParserTest extends TestCase
                     ],
                 ],
             ],
+            'noNewlineAtEndOfFile' => [
+                'noNewlineAtEndOfFile.diff',
+                [
+                    [
+                        new OriginalFileName('message.txt'),
+                        new NewFileName('message.txt'),
+                        false,
+                        false,
+                        [
+                            // The "\ No newline at end of file" marker must not be counted as a line
+                            LineMutation::newLineNumber(new LineNumber(1)),
+                            LineMutation::originalLineNumber(new LineNumber(3)),
+                            LineMutation::newLineNumber(new LineNumber(4)),
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
