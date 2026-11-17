@@ -33,7 +33,9 @@ final class PhpMagicNumberDetectorResultsParser implements ResultsParser
 
     public function convertFromString(string $resultsAsString, ProjectRoot $projectRoot): AnalysisResults
     {
-        $lines = explode(\PHP_EOL, $resultsAsString);
+        // Split on any line ending (the tool's output line endings depend on the OS it ran on)
+        $lines = preg_split('/\R/', $resultsAsString);
+        Assert::isArray($lines);
         $analysisResultsBuilder = new AnalysisResultsBuilder();
 
         foreach ($lines as $line) {

@@ -73,6 +73,23 @@ final class PhpmdJsonResultsParserTest extends TestCase
         );
     }
 
+    public function testPriorityMapping(): void
+    {
+        $projectRoot = ProjectRoot::fromProjectRoot('/vagrant/static-analysis-baseliner', '/home');
+        $original = $this->getResource('phpmd/phpmd_priorities.json');
+        $analysisResults = $this->phpmdResultsParser->convertFromString($original, $projectRoot);
+
+        $this->assertCount(4, $analysisResults->getAnalysisResults());
+
+        [$result1, $result2, $result3, $result4] = $analysisResults->getAnalysisResults();
+
+        // PHPMD priorities 1-3 are imported as errors, 4-5 as warnings
+        $this->assertMatch($result1, 'src/Foo.php', 10, 'HighPriorityRule', Severity::error());
+        $this->assertMatch($result2, 'src/Foo.php', 20, 'NormalPriorityRule', Severity::error());
+        $this->assertMatch($result3, 'src/Foo.php', 30, 'LowPriorityRule', Severity::warning());
+        $this->assertMatch($result4, 'src/Foo.php', 40, 'InformationRule', Severity::warning());
+    }
+
     public function testTypeGuesser(): void
     {
         $this->assertFalse($this->phpmdResultsParser->showTypeGuessingWarning());

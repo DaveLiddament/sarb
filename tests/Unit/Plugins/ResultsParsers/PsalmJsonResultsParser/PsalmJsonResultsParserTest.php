@@ -48,11 +48,12 @@ final class PsalmJsonResultsParserTest extends TestCase
     {
         $original = $this->getResource('psalm/psalm.json');
         $this->analysisResults = $this->psalmResultsParser->convertFromString($original, $this->projectRoot);
-        $this->assertCount(3, $this->analysisResults->getAnalysisResults());
+        $this->assertCount(4, $this->analysisResults->getAnalysisResults());
 
         $result1 = $this->analysisResults->getAnalysisResults()[0];
         $result2 = $this->analysisResults->getAnalysisResults()[1];
         $result3 = $this->analysisResults->getAnalysisResults()[2];
+        $result4 = $this->analysisResults->getAnalysisResults()[3];
 
         $this->assertMatch($result1,
             'src/Domain/ResultsParser/AnalysisResults.php',
@@ -65,14 +66,22 @@ final class PsalmJsonResultsParserTest extends TestCase
             $result1->getMessage(),
         );
 
+        // Psalm issues with severity "info" are imported as warnings
         $this->assertMatch($result2,
+            'src/Domain/ResultsParser/AnalysisResults.php',
+            71,
+            'MixedInferredReturnType',
+            Severity::warning(),
+        );
+
+        $this->assertMatch($result3,
             'src/Domain/Utils/JsonUtils.php',
             29,
             'MixedAssignment',
             Severity::error(),
         );
 
-        $this->assertMatch($result3,
+        $this->assertMatch($result4,
             'src/Plugins/PsalmJsonResultsParser/PsalmJsonResultsParser.php',
             90,
             'MixedAssignment',
